@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Control Dashboard — Spec Media SEO & Portfolio CMS</title>
+  <title>Control Dashboard — Spec Media SEO, Branding & Portfolio CMS</title>
   <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>">
+  <link rel="icon" href="{% if site_settings.favicon_image %}{{ site_settings.favicon_image }}{% else %}data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>{% endif %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -66,10 +66,17 @@
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .brand-logo span { color: var(--accent); }
+
+    .brand-logo-img {
+      max-height: 28px;
+      max-width: 140px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(198, 113, 57, 0.4));
+    }
 
     .system-status {
       font-family: var(--font-mono);
@@ -96,25 +103,55 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
     }
 
-    .nav-links a {
+    .operator-badge {
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      transition: color 0.2s;
+      background: var(--surface-elevated);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
     }
 
-    .nav-links a:hover { color: var(--text); }
-    .nav-links .btn-site {
+    .operator-badge strong {
+      color: var(--text);
+    }
+
+    .btn-site {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
       color: var(--accent);
       border: 1px solid var(--border);
       padding: 6px 14px;
       border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .btn-site:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-logout {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: var(--danger);
     }
 
     /* Dashboard Layout */
@@ -132,9 +169,10 @@
     /* Tabs Header */
     .tabs-header {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 16px;
+      overflow-x: auto;
     }
 
     .tab-btn {
@@ -143,7 +181,7 @@
       color: var(--text-muted);
       font-family: var(--font-mono);
       font-size: 13px;
-      padding: 10px 20px;
+      padding: 10px 18px;
       border-radius: 8px;
       cursor: pointer;
       display: flex;
@@ -151,6 +189,7 @@
       gap: 10px;
       transition: all 0.2s ease;
       letter-spacing: 0.04em;
+      white-space: nowrap;
     }
 
     .tab-btn:hover {
@@ -185,7 +224,7 @@
     /* Top Stats Grid */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
       margin-bottom: 28px;
     }
@@ -209,9 +248,12 @@
     }
 
     .stat-card .value {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 700;
       color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .stat-card .sub {
@@ -219,13 +261,13 @@
       color: var(--accent);
     }
 
-    /* Action Bar (Search & Buttons) */
+    /* Action Bar */
     .action-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
       gap: 16px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
     }
 
@@ -233,46 +275,46 @@
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 10px 18px;
-      border-radius: 8px;
       font-family: var(--font-sans);
-      font-size: 14px;
+      font-size: 13px;
+      padding: 10px 16px;
+      border-radius: 8px;
       width: 320px;
       outline: none;
       transition: border-color 0.2s;
     }
 
-    .search-input:focus { border-color: var(--accent); }
+    .search-input:focus { border-color: var(--border-focus); }
 
     .btn-action {
       background: var(--accent);
       color: #fff;
-      border: none;
-      padding: 10px 22px;
-      border-radius: 8px;
       font-family: var(--font-mono);
       font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
       font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
       cursor: pointer;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s ease;
+      transition: all 0.2s;
     }
 
     .btn-action:hover {
-      background: #e08346;
-      box-shadow: 0 4px 16px var(--accent-glow);
+      background: #d47e45;
+      transform: translateY(-1px);
     }
 
-    /* Table Styles */
+    /* Tables */
     .table-wrapper {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      overflow-x: auto;
+      overflow: hidden;
     }
 
     table {
@@ -282,92 +324,73 @@
     }
 
     th {
+      background: var(--surface-elevated);
+      padding: 14px 20px;
       font-family: var(--font-mono);
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       color: var(--text-muted);
-      padding: 16px 20px;
       border-bottom: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.02);
     }
 
     td {
-      padding: 16px 20px;
-      border-bottom: 1px solid rgba(245, 234, 216, 0.05);
+      padding: 14px 20px;
       font-size: 13px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
       vertical-align: middle;
     }
 
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.015);
-    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
     .route-badge {
       font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text);
-      background: var(--surface-elevated);
+      font-size: 11px;
+      background: rgba(198, 113, 57, 0.12);
+      border: 1px solid rgba(198, 113, 57, 0.25);
+      color: var(--accent);
       padding: 4px 10px;
       border-radius: 6px;
-      border: 1px solid var(--border);
-      display: inline-block;
     }
 
     .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-family: var(--font-mono);
       font-size: 10px;
+      text-transform: uppercase;
       padding: 3px 8px;
       border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
 
-    .status-pill.indexable { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-    .status-pill.noindex { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-    .status-pill.featured { background: rgba(198, 113, 57, 0.2); color: var(--accent); }
+    .status-pill.indexable { background: rgba(34, 197, 94, 0.1); color: var(--success); border: 1px solid rgba(34, 197, 94, 0.2); }
+    .status-pill.noindex { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); }
+    .status-pill.featured { background: rgba(198, 113, 57, 0.15); color: var(--accent); border: 1px solid rgba(198, 113, 57, 0.3); }
 
-    .btn-table-edit {
-      background: transparent;
+    .btn-table-edit, .btn-table-del {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
       border: 1px solid var(--border);
+      background: var(--surface-elevated);
       color: var(--text);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      cursor: pointer;
       transition: all 0.2s;
     }
 
-    .btn-table-edit:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(198, 113, 57, 0.08);
-    }
+    .btn-table-edit:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-table-del:hover { border-color: var(--danger); color: var(--danger); }
 
-    .btn-table-del {
-      background: transparent;
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      color: #f87171;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      cursor: pointer;
-      margin-left: 6px;
-      transition: all 0.2s;
-    }
-
-    .btn-table-del:hover {
-      background: rgba(239, 68, 68, 0.15);
-    }
-
-    /* Modal Overlay */
+    /* Modals */
     .modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(8px);
       display: none;
       align-items: center;
       justify-content: center;
@@ -382,14 +405,16 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       width: 100%;
-      max-width: 720px;
+      max-width: 760px;
       max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
     }
 
     .modal-header {
-      padding: 20px 28px;
+      padding: 20px 24px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -397,33 +422,43 @@
     }
 
     .modal-title {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 600;
       color: var(--text);
     }
 
     .modal-close {
-      background: transparent;
+      background: none;
       border: none;
       color: var(--text-muted);
       font-size: 20px;
       cursor: pointer;
-      padding: 4px;
+      line-height: 1;
     }
 
     .modal-close:hover { color: var(--text); }
 
     .modal-body {
-      padding: 28px;
+      padding: 24px;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 20px;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      background: var(--surface-elevated);
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .form-group label {
@@ -436,46 +471,146 @@
       justify-content: space-between;
     }
 
-    .char-counter { color: var(--accent); }
+    .form-group label .char-counter {
+      color: var(--accent);
+    }
 
     .form-input, .form-textarea, .form-select {
       background: var(--surface-elevated);
       border: 1px solid var(--border);
-      color: var(--text);
-      padding: 12px 16px;
       border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text);
       font-family: var(--font-sans);
-      font-size: 14px;
+      font-size: 13px;
       outline: none;
       transition: border-color 0.2s;
     }
 
     .form-input:focus, .form-textarea:focus, .form-select:focus {
-      border-color: var(--accent);
+      border-color: var(--border-focus);
     }
 
     .form-textarea { resize: vertical; min-height: 80px; }
 
-    .modal-footer {
-      padding: 20px 28px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-    }
-
     .btn-secondary {
       background: transparent;
       border: 1px solid var(--border);
-      color: var(--text);
-      padding: 10px 20px;
+      color: var(--text-muted);
+      padding: 8px 16px;
       border-radius: 8px;
       font-family: var(--font-mono);
       font-size: 12px;
       cursor: pointer;
+      transition: all 0.2s;
     }
 
-    /* Toast Notification */
+    .btn-secondary:hover { color: var(--text); border-color: var(--text-muted); }
+
+    /* Dropzones & Media Previews */
+    .dropzone-box {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 20px 16px;
+      text-align: center;
+      background: var(--surface-elevated);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .dropzone-box:hover, .dropzone-box.dragover {
+      border-color: var(--accent);
+      background: rgba(198, 113, 57, 0.08);
+    }
+    .dropzone-box input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .preview-box {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      background: #0b0a09;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 70px;
+      position: relative;
+    }
+    .preview-box img {
+      max-height: 80px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .preview-box video {
+      max-height: 160px;
+      max-width: 100%;
+      border-radius: 6px;
+    }
+
+    .browser-mock {
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 260px;
+    }
+    .browser-mock img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+    }
+
+    .branding-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 960px) {
+      .branding-grid { grid-template-columns: 1fr; }
+    }
+
+    .branding-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .branding-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .branding-card-title span.tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent);
+      background: rgba(198, 113, 57, 0.12);
+      border: 1px solid rgba(198, 113, 57, 0.25);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* Toast */
     .toast {
       position: fixed;
       bottom: 24px;
@@ -483,48 +618,53 @@
       background: var(--surface-elevated);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 14px 22px;
+      padding: 14px 20px;
       border-radius: 8px;
       font-size: 13px;
-      display: none;
-      align-items: center;
-      gap: 10px;
-      z-index: 2000;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      z-index: 2000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
-    .toast.active { display: flex; animation: slideIn 0.3s ease; }
-    .toast.success { border-color: var(--success); }
-    .toast.error { border-color: var(--danger); }
-
-    @keyframes slideIn {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+    .toast.active { transform: translateY(0); opacity: 1; }
+    .toast.success { border-color: var(--success); color: var(--success); }
+    .toast.error { border-color: var(--danger); color: var(--danger); }
   </style>
 </head>
 <body>
+
   <!-- Top Bar -->
   <div class="top-bar">
     <div class="brand-section">
       <a href="/" class="brand-logo">
-        SPEC <span>MEDIA</span> // CMS
+        {% if site_settings.logo_image %}
+          <img src="{{ site_settings.logo_image }}" alt="{{ site_settings.site_name }}" class="brand-logo-img">
+        {% else %}
+          <span>{{ site_settings.site_name|default:"SPEC MEDIA" }}</span>
+        {% endif %}
+        <span style="opacity:0.4; font-size:11px;">// CONTROL PANEL</span>
       </a>
       <div class="system-status">System Operational</div>
     </div>
     <div class="nav-links">
+      <span class="operator-badge">
+        Operator: <strong>{{ user.username|default:"admin" }}</strong>
+      </span>
       <a href="/" target="_blank" class="btn-site">View Live Site &rarr;</a>
-      <a href="/work/" target="_blank">Work</a>
-      <a href="/sitemap.xml" target="_blank">Sitemap</a>
-      <a href="/admin/" target="_blank">Django Admin</a>
+      <a href="/logout/" class="btn-logout">Log Out &times;</a>
     </div>
   </div>
 
-  <!-- Dashboard Main -->
+  <!-- Dashboard Main Container -->
   <div class="dashboard-container">
+
     <!-- Navigation Tabs -->
     <div class="tabs-header">
-      <button class="tab-btn active" onclick="switchTab('seo')">
+      <button class="tab-btn active" onclick="switchTab('branding')">
+        <span>🎨 Branding & Landing CMS</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('seo')">
         <span>🌐 SEO Control Center</span>
         <span class="count-badge" id="seo-count">{{ seo_pages.count }}</span>
       </button>
@@ -541,8 +681,216 @@
       </button>
     </div>
 
-    <!-- TAB 1: SEO CONTROL CENTER -->
-    <div id="tab-seo" class="tab-panel active">
+    <!-- TAB 1: BRANDING & LANDING CMS -->
+    <div id="tab-branding" class="tab-panel active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Site Brand Title</div>
+          <div class="value" id="stat-site-name">{{ site_settings.site_name|default:"SPEC MEDIA" }}</div>
+          <div class="sub">Global header & document title</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Dynamic Logo Asset</div>
+          <div class="value">{% if site_settings.logo_image %}Custom Active{% else %}Default Scalable{% endif %}</div>
+          <div class="sub">Kinetic glow & hover effect on home</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Hero Media Mode</div>
+          <div class="value" id="stat-hero-mode" style="text-transform: capitalize;">{{ site_settings.hero_media_type|default:"canvas" }}</div>
+          <div class="sub">Landing hero background system</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Managed SEO Entities</div>
+          <div class="value">{{ seo_pages.count }} Routes</div>
+          <div class="sub">Dubai, UAE & MENA canonicals</div>
+        </div>
+      </div>
+
+      <form id="branding-form" onsubmit="saveBrandingSettings(event)">
+        <div class="branding-grid">
+          
+          <!-- Column 1: Identity, Logo & Favicon -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            
+            <!-- Card 1: Logo Management -->
+            <div class="branding-card">
+              <div class="branding-card-title">
+                <span>Site Logo Asset</span>
+                <span class="tag">Site-Wide Master Logo</span>
+              </div>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                Replaces the logo across all pages (Home, Work, Studio, Capabilities, Portal, 404, Dashboard, Login) and applies kinetic lighting & hover effects on the homepage.
+              </p>
+
+              <div class="dropzone-box" id="logo-dropzone">
+                <input type="file" id="logo-file-input" accept="image/*" onchange="handleLogoUpload(event)">
+                <div style="font-size: 24px; margin-bottom: 6px;">📁</div>
+                <div style="font-size: 13px; font-weight: 600; color: var(--text);">Drag & Drop Logo Image Here</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Supports PNG, SVG, JPG, WebP (Transparent recommended)</div>
+              </div>
+
+              <div class="preview-box">
+                <img id="logo-preview" src="{{ site_settings.logo_image|default:'' }}" alt="Logo Preview" style="{% if not site_settings.logo_image %}display:none;{% endif %}">
+                <span id="logo-empty-text" style="font-size: 12px; color: var(--text-muted); {% if site_settings.logo_image %}display:none;{% endif %}">
+                  No custom logo uploaded (Default Spec Media SVG active)
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label>Direct Logo Data URI or URL</label>
+                <input type="text" class="form-input" id="setting-logo-image" name="logo_image" value="{{ site_settings.logo_image|default:'' }}" placeholder="data:image/png;base64,... or https://...">
+              </div>
+
+              <div class="form-group">
+                <label>Site Brand Name</label>
+                <input type="text" class="form-input" id="setting-site-name" name="site_name" value="{{ site_settings.site_name|default:'SPEC MEDIA' }}" placeholder="SPEC MEDIA">
+              </div>
+            </div>
+
+            <!-- Card 2: Favicon Management -->
+            <div class="branding-card">
+              <div class="branding-card-title">
+                <span>Browser Favicon</span>
+                <span class="tag">Tab Icon</span>
+              </div>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                Upload the browser tab icon used across every page on Spec Media.
+              </p>
+
+              <div class="dropzone-box" id="favicon-dropzone">
+                <input type="file" id="favicon-file-input" accept="image/*,.ico" onchange="handleFaviconUpload(event)">
+                <div style="font-size: 20px; margin-bottom: 4px;">🔖</div>
+                <div style="font-size: 13px; font-weight: 600; color: var(--text);">Upload Favicon File</div>
+                <div style="font-size: 11px; color: var(--text-muted);">PNG, ICO, or SVG (32x32 or 64x64)</div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">Browser Tab Mockup:</div>
+                <div class="browser-mock">
+                  <img id="favicon-preview" src="{{ site_settings.favicon_image|default:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>' }}" alt="Favicon">
+                  <span style="font-size: 11px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Spec Media — Dubai</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Direct Favicon Data URI or URL</label>
+                <input type="text" class="form-input" id="setting-favicon-image" name="favicon_image" value="{{ site_settings.favicon_image|default:'' }}" placeholder="data:image/... or https://...">
+              </div>
+            </div>
+
+            <!-- Card 3: Contact Coordinates -->
+            <div class="branding-card">
+              <div class="branding-card-title">
+                <span>Global Contact Coordinates</span>
+                <span class="tag">Footer & Contact Drawer</span>
+              </div>
+              <div class="form-group">
+                <label>Inquiries Email</label>
+                <input type="email" class="form-input" id="setting-contact-email" name="contact_email" value="{{ site_settings.contact_email|default:'hello@specmedia.co' }}">
+              </div>
+              <div class="form-group">
+                <label>Direct Phone</label>
+                <input type="text" class="form-input" id="setting-contact-phone" name="contact_phone" value="{{ site_settings.contact_phone|default:'+971 4 000 0000' }}">
+              </div>
+              <div class="form-group">
+                <label>Physical Address</label>
+                <input type="text" class="form-input" id="setting-contact-address" name="contact_address" value="{{ site_settings.contact_address|default:'Dubai Design District, Building 3, Dubai, UAE' }}">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Column 2: Landing Page Hero & Media CMS -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+
+            <!-- Card 4: Landing Page Hero Copy -->
+            <div class="branding-card">
+              <div class="branding-card-title">
+                <span>Landing Page Hero Copy</span>
+                <span class="tag">Hero Section 01</span>
+              </div>
+
+              <div class="form-group">
+                <label>Hero Headline</label>
+                <input type="text" class="form-input" id="setting-hero-headline" name="hero_headline" value="{{ site_settings.hero_headline|default:'You feel the brand before it speaks®' }}" placeholder="You feel the brand before it speaks®">
+              </div>
+
+              <div class="form-group">
+                <label>Hero Subheadline (Brand Narrative)</label>
+                <textarea class="form-textarea" id="setting-hero-subheadline" name="hero_subheadline" style="min-height: 100px;">{{ site_settings.hero_subheadline|default:'Placeholder copy. Spec Media builds campaigns for companies that care how things feel and how they are perceived over time.' }}</textarea>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                  <label>Hero Badge</label>
+                  <input type="text" class="form-input" id="setting-hero-badge" name="hero_badge" value="{{ site_settings.hero_badge|default:'01 / HERO' }}">
+                </div>
+                <div class="form-group">
+                  <label>Hero CTA Scroll Text</label>
+                  <input type="text" class="form-input" id="setting-hero-cta" name="hero_cta_text" value="{{ site_settings.hero_cta_text|default:'[ SCROLL DOWN ]' }}">
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 5: Hero Photo / Video Media Control -->
+            <div class="branding-card">
+              <div class="branding-card-title">
+                <span>Hero Media & Showcase Engine</span>
+                <span class="tag">Visual System</span>
+              </div>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                Control what visual media powers the landing hero showcase: the original procedural kinetic canvas engine, a high-resolution custom photo, or a custom background video loop.
+              </p>
+
+              <div class="form-group">
+                <label>Hero Media Engine Type</label>
+                <select class="form-select" id="setting-hero-media-type" name="hero_media_type" onchange="updateHeroMediaType(this.value)">
+                  <option value="canvas" {% if site_settings.hero_media_type == 'canvas' %}selected{% endif %}>Procedural Kinetic Canvas Engine (WebGL Shaders)</option>
+                  <option value="image" {% if site_settings.hero_media_type == 'image' %}selected{% endif %}>Custom Photo / Graphic Showcase</option>
+                  <option value="video" {% if site_settings.hero_media_type == 'video' %}selected{% endif %}>Custom Video Loop Showcase</option>
+                </select>
+              </div>
+
+              <div class="dropzone-box" id="hero-media-dropzone">
+                <input type="file" id="hero-media-file-input" accept="image/*,video/*" onchange="handleHeroMediaUpload(event)">
+                <div style="font-size: 24px; margin-bottom: 6px;">🎬</div>
+                <div style="font-size: 13px; font-weight: 600; color: var(--text);">Upload Hero Photo or Video</div>
+                <div style="font-size: 11px; color: var(--text-muted);">MP4, WebM, PNG, JPG, WebP (up to 30MB)</div>
+              </div>
+
+              <div class="preview-box" id="hero-media-preview-container">
+                <img id="hero-image-preview" src="{% if site_settings.hero_media_type == 'image' %}{{ site_settings.hero_media_url }}{% endif %}" style="{% if site_settings.hero_media_type != 'image' or not site_settings.hero_media_url %}display:none;{% endif %}; max-height:160px; object-fit:cover; border-radius:6px;">
+                <video id="hero-video-preview" src="{% if site_settings.hero_media_type == 'video' %}{{ site_settings.hero_media_url }}{% endif %}" autoplay muted loop playsinline controls style="{% if site_settings.hero_media_type != 'video' or not site_settings.hero_media_url %}display:none;{% endif %}"></video>
+                <span id="hero-media-placeholder" style="font-size: 12px; color: var(--text-muted); {% if site_settings.hero_media_url and site_settings.hero_media_type != 'canvas' %}display:none;{% endif %}">
+                  Using default kinetic WebGL canvas shaders
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label>Direct Media URL or Data URI</label>
+                <input type="text" class="form-input" id="setting-hero-media-url" name="hero_media_url" value="{{ site_settings.hero_media_url|default:'' }}" placeholder="data:... or https://...">
+              </div>
+            </div>
+
+            <!-- Sticky Save Bar -->
+            <div style="background: var(--surface); border: 1px solid var(--accent); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-weight: 600; font-size: 14px; color: var(--text);">Deploy Branding Changes</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Immediately synchronizes logo, favicon, and hero across live site</div>
+              </div>
+              <button type="submit" class="btn-action" style="padding: 12px 28px;">
+                <span>Save All Changes &rarr;</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+    <!-- TAB 2: SEO CONTROL CENTER -->
+    <div id="tab-seo" class="tab-panel">
       <div class="stats-grid">
         <div class="stat-card">
           <div class="label">Indexed Canonical Routes</div>
@@ -604,7 +952,7 @@
       </div>
     </div>
 
-    <!-- TAB 2: WORKS & PORTFOLIO CMS -->
+    <!-- TAB 3: WORKS & PORTFOLIO CMS -->
     <div id="tab-works" class="tab-panel">
       <div class="action-bar">
         <input type="text" class="search-input" id="search-works" placeholder="Search projects by client or title..." onkeyup="filterWorks()">
@@ -653,50 +1001,49 @@
       </div>
     </div>
 
-    <!-- TAB 3: INBOUND LEADS CRM -->
+    <!-- TAB 4: INBOUND LEADS CRM -->
     <div id="tab-leads" class="tab-panel">
       <div class="action-bar">
-        <input type="text" class="search-input" id="search-leads" placeholder="Filter leads..." onkeyup="filterLeads()">
-        <button class="btn-action" onclick="fetchLiveLeads()">🔄 Refresh Live Leads</button>
+        <div style="font-size: 14px; color: var(--text-muted);">
+          Real-time prospective enterprise inquiries synchronized with Supabase.
+        </div>
+        <button class="btn-action" onclick="fetchLiveLeads()">Refresh Pipeline</button>
       </div>
 
       <div class="table-wrapper">
         <table id="leads-table">
           <thead>
             <tr>
-              <th>Timestamp</th>
-              <th>Name</th>
-              <th>Email / Company</th>
-              <th>Discipline Interest</th>
-              <th>Budget</th>
+              <th>Received At</th>
+              <th>Lead Name</th>
+              <th>Company & Email</th>
+              <th>Requested Service</th>
+              <th>Budget Tier</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody id="leads-tbody">
             <tr>
-              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">Loading live Supabase leads...</td>
+              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">
+                Connecting to live Supabase leads inbox...
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- TAB 4: TECHNICAL SEO & SITEMAPS -->
+    <!-- TAB 5: TECHNICAL SEO & SITEMAPS -->
     <div id="tab-diagnostics" class="tab-panel">
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="label">Canonical Host Policy</div>
+          <div class="label">Canonical Host</div>
           <div class="value" style="font-size: 18px;">https://www.spec-media.com</div>
-          <div class="sub">Lowercase, hyphenated, single 301 hop</div>
+          <div class="sub">Enforced 301 redirects, SSL active</div>
         </div>
         <div class="stat-card">
-          <div class="label">Core Web Vitals Target</div>
-          <div class="value" style="font-size: 18px;">LCP ≤ 2.5s / INP ≤ 200ms</div>
-          <div class="sub">CLS ≤ 0.1 at 75th percentile</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Robots & Crawlers</div>
-          <div class="value" style="font-size: 18px;">robots.txt Active</div>
+          <div class="label">Robots Protocol</div>
+          <div class="value">Active & Valid</div>
           <div class="sub">Sitemap linked, private roots protected</div>
         </div>
       </div>
@@ -719,6 +1066,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
   <!-- MODAL: EDIT / ADD SEO ROUTE -->
@@ -793,7 +1141,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD / EDIT WORK PROJECT -->
+  <!-- MODAL: ADD / EDIT WORK PROJECT (WITH FILE UPLOAD) -->
   <div class="modal-overlay" id="work-modal">
     <div class="modal-card">
       <div class="modal-header">
@@ -842,8 +1190,16 @@
           </div>
 
           <div class="form-group">
-            <label>Hero Image URL</label>
-            <input type="url" class="form-input" id="work-image" name="hero_image" placeholder="https://images.unsplash.com/...">
+            <label>Hero Cover Image (Upload or URL)</label>
+            <div class="dropzone-box" style="padding: 14px; margin-bottom: 8px;">
+              <input type="file" id="work-file-input" accept="image/*" onchange="uploadWorkFile(event)">
+              <div style="font-size: 12px; font-weight: 600; color: var(--text);">Upload Project Cover Photo</div>
+              <div style="font-size: 10px; color: var(--text-muted);">Click to browse or drop image file here</div>
+            </div>
+            <input type="text" class="form-input" id="work-image" name="hero_image" placeholder="Image Data URI or URL (https://...)">
+            <div class="preview-box" id="work-image-preview-box" style="display:none; margin-top:8px;">
+              <img id="work-image-preview" src="" alt="Work Hero Preview" style="max-height:120px; border-radius:6px; object-fit:cover;">
+            </div>
           </div>
 
           <div class="form-group">
@@ -895,13 +1251,16 @@
   <div class="toast" id="toast-msg"></div>
 
   <script>
+    const CSRF_TOKEN = "{{ csrf_token }}";
+
     // Tab Switching
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
 
       event.currentTarget.classList.add('active');
-      document.getElementById('tab-' + tabId).classList.add('active');
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.add('active');
 
       if (tabId === 'leads') fetchLiveLeads();
       if (tabId === 'diagnostics') fetchDiagnostics();
@@ -921,6 +1280,163 @@
     function updateCounter(inputId, counterId, max) {
       const len = document.getElementById(inputId).value.length;
       document.getElementById(counterId).textContent = `${len}/${max}`;
+    }
+
+    // Logo Upload handler
+    function handleLogoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUri = e.target.result;
+        document.getElementById('setting-logo-image').value = dataUri;
+        const img = document.getElementById('logo-preview');
+        img.src = dataUri;
+        img.style.display = 'block';
+        document.getElementById('logo-empty-text').style.display = 'none';
+        showToast('Logo file loaded. Click "Save All Changes" to deploy site-wide.', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Favicon Upload handler
+    function handleFaviconUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUri = e.target.result;
+        document.getElementById('setting-favicon-image').value = dataUri;
+        document.getElementById('favicon-preview').src = dataUri;
+        showToast('Favicon loaded. Click "Save All Changes" to deploy site-wide.', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Hero Media Type switcher
+    function updateHeroMediaType(type) {
+      document.getElementById('stat-hero-mode').textContent = type;
+      const img = document.getElementById('hero-image-preview');
+      const vid = document.getElementById('hero-video-preview');
+      const placeholder = document.getElementById('hero-media-placeholder');
+
+      if (type === 'canvas') {
+        img.style.display = 'none';
+        vid.style.display = 'none';
+        placeholder.style.display = 'block';
+        placeholder.textContent = 'Using default kinetic WebGL canvas shaders';
+      } else if (type === 'image') {
+        vid.style.display = 'none';
+        if (img.src && !img.src.endsWith('/')) {
+          img.style.display = 'block';
+          placeholder.style.display = 'none';
+        } else {
+          placeholder.style.display = 'block';
+          placeholder.textContent = 'Please upload or specify a custom photo';
+        }
+      } else if (type === 'video') {
+        img.style.display = 'none';
+        if (vid.src && !vid.src.endsWith('/')) {
+          vid.style.display = 'block';
+          placeholder.style.display = 'none';
+        } else {
+          placeholder.style.display = 'block';
+          placeholder.textContent = 'Please upload or specify a custom video';
+        }
+      }
+    }
+
+    // Hero Media Upload handler (image or video)
+    function handleHeroMediaUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const isVideo = file.type.startsWith('video');
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUri = e.target.result;
+        document.getElementById('setting-hero-media-url').value = dataUri;
+
+        if (isVideo) {
+          document.getElementById('setting-hero-media-type').value = 'video';
+          updateHeroMediaType('video');
+          const vid = document.getElementById('hero-video-preview');
+          vid.src = dataUri;
+          vid.style.display = 'block';
+          document.getElementById('hero-image-preview').style.display = 'none';
+          document.getElementById('hero-media-placeholder').style.display = 'none';
+        } else {
+          document.getElementById('setting-hero-media-type').value = 'image';
+          updateHeroMediaType('image');
+          const img = document.getElementById('hero-image-preview');
+          img.src = dataUri;
+          img.style.display = 'block';
+          document.getElementById('hero-video-preview').style.display = 'none';
+          document.getElementById('hero-media-placeholder').style.display = 'none';
+        }
+        showToast('Media loaded. Click "Save All Changes" to deploy.', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Work Project Hero Cover Upload
+    function uploadWorkFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUri = e.target.result;
+        document.getElementById('work-image').value = dataUri;
+        const pBox = document.getElementById('work-image-preview-box');
+        const pImg = document.getElementById('work-image-preview');
+        pImg.src = dataUri;
+        pBox.style.display = 'flex';
+        showToast('Project cover image loaded.', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Save Branding & Landing CMS Settings
+    async function saveBrandingSettings(ev) {
+      ev.preventDefault();
+      const payload = {
+        site_name: document.getElementById('setting-site-name').value.trim(),
+        logo_image: document.getElementById('setting-logo-image').value.trim(),
+        favicon_image: document.getElementById('setting-favicon-image').value.trim(),
+        hero_headline: document.getElementById('setting-hero-headline').value.trim(),
+        hero_subheadline: document.getElementById('setting-hero-subheadline').value.trim(),
+        hero_badge: document.getElementById('setting-hero-badge').value.trim(),
+        hero_cta_text: document.getElementById('setting-hero-cta').value.trim(),
+        hero_media_type: document.getElementById('setting-hero-media-type').value,
+        hero_media_url: document.getElementById('setting-hero-media-url').value.trim(),
+        contact_email: document.getElementById('setting-contact-email').value.trim(),
+        contact_phone: document.getElementById('setting-contact-phone').value.trim(),
+        contact_address: document.getElementById('setting-contact-address').value.trim(),
+      };
+
+      try {
+        const resp = await fetch('/api/settings/', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF_TOKEN,
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await resp.json();
+        if (data.success) {
+          showToast('Branding & landing CMS deployed successfully!', 'success');
+          document.getElementById('stat-site-name').textContent = payload.site_name;
+          setTimeout(() => location.reload(), 900);
+        } else {
+          showToast('Error saving: ' + (data.error || 'Failed'), 'error');
+        }
+      } catch (err) {
+        showToast('Network error saving branding: ' + err.message, 'error');
+      }
     }
 
     // Search filters
@@ -995,7 +1511,10 @@
       try {
         const resp = await fetch(url, {
           method: method,
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF_TOKEN
+          },
           body: JSON.stringify(payload)
         });
         const data = await resp.json();
@@ -1016,6 +1535,7 @@
       document.getElementById('work-form').reset();
       document.getElementById('work-id').value = '';
       document.getElementById('work-modal-title').textContent = 'Add Work / Case Study';
+      document.getElementById('work-image-preview-box').style.display = 'none';
       openModal('work-modal');
     }
 
@@ -1038,6 +1558,15 @@
         document.getElementById('work-deliverables').value = w.deliverables || '';
         document.getElementById('work-featured').checked = w.is_featured;
         document.getElementById('work-sort').value = w.sort_order || 0;
+
+        const pBox = document.getElementById('work-image-preview-box');
+        const pImg = document.getElementById('work-image-preview');
+        if (w.hero_image) {
+          pImg.src = w.hero_image;
+          pBox.style.display = 'flex';
+        } else {
+          pBox.style.display = 'none';
+        }
 
         document.getElementById('work-modal-title').textContent = 'Edit Work: ' + w.title;
         openModal('work-modal');
@@ -1069,7 +1598,10 @@
       try {
         const resp = await fetch(url, {
           method: method,
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF_TOKEN
+          },
           body: JSON.stringify(payload)
         });
         const data = await resp.json();
@@ -1088,7 +1620,10 @@
     async function deleteWork(id, title) {
       if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
       try {
-        const resp = await fetch(`/api/works/${id}/`, { method: 'DELETE' });
+        const resp = await fetch(`/api/works/${id}/`, {
+          method: 'DELETE',
+          headers: { 'X-CSRFToken': CSRF_TOKEN }
+        });
         const data = await resp.json();
         if (data.success) {
           showToast('Work project deleted!', 'success');

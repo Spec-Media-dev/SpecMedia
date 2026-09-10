@@ -341,4 +341,22 @@ class Command(BaseCommand):
             action = "Created" if created else "Updated"
             self.stdout.write(f"  {action} Work project: {obj.title}")
 
-        self.stdout.write(self.style.SUCCESS("Successfully seeded all SEO Pages and Work Projects!"))
+        # Ensure Global SiteSettings exist
+        from core.models import SiteSettings
+        SiteSettings.get_settings()
+        self.stdout.write("Initialized global SiteSettings.")
+
+        # Ensure Admin Superuser exists
+        from django.contrib.auth.models import User
+        if not User.objects.filter(username='admin').exists():
+            User.objects.create_superuser('admin', 'admin@specmedia.co', 'specmedia2026!')
+            self.stdout.write(self.style.SUCCESS("Created superuser: admin / specmedia2026!"))
+        else:
+            admin_user = User.objects.get(username='admin')
+            admin_user.set_password('specmedia2026!')
+            admin_user.is_superuser = True
+            admin_user.is_staff = True
+            admin_user.save()
+            self.stdout.write(self.style.SUCCESS("Updated superuser: admin / specmedia2026!"))
+
+        self.stdout.write(self.style.SUCCESS("Successfully seeded all SEO Pages, Work Projects, and Admin User!"))

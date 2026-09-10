@@ -1,13 +1,16 @@
 import os
 import re
+import base64
 from django.conf import settings
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponse
 from django.utils.text import slugify
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import SEOPage, WorkProject
+from .models import SEOPage, WorkProject, SiteSettings
 from .serializers import LeadSubmissionSerializer, EventTrackingSerializer
 from .supabase_service import SupabaseService
 import logging
@@ -21,14 +24,127 @@ logger = logging.getLogger(__name__)
 def landing_page(request):
     """
     Renders the Spec Media main landing page with 100% original frontend
-    kinetic canvas scrubbing, shaders, typography, and text scroll animations.
+    kinetic canvas scrubbing, shaders, typography, and text scroll animations,
+    dynamically binding global site settings (logo, favicon, hero copy, and hero media).
     """
     template_path = os.path.join(settings.BASE_DIR, 'core', 'templates', 'landing.html')
     if not os.path.exists(template_path):
         template_path = os.path.join(settings.BASE_DIR, 'index.html')
-    with open(template_path, 'rb') as f:
-        content = f.read()
-    return HttpResponse(content, content_type='text/html; charset=utf-8')
+    with open(template_path, 'r', encoding='utf-8', errors='ignore') as f:
+        html = f.read()
+
+    try:
+        site_settings = SiteSettings.get_settings()
+    except Exception:
+        site_settings = None
+
+    if site_settings:
+        # Dynamic Favicon injection
+        fav_url = site_settings.favicon_image or 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23201e1d"/><text y=".9em" font-size="80" fill="%23c67139">S</text></svg>'
+        fav_tag = f'<link rel="icon" href="{fav_url}">'
+        if '<link rel="icon"' in html:
+            html = re.sub(r'<link[^>]*rel=["\x27]icon["\x27][^>]*>', fav_tag, html)
+        elif '<head>' in html:
+            html = html.replace('<head>', f'<head>\n  {fav_tag}')
+        elif '<helmet>' in html:
+            html = html.replace('<helmet>', f'<helmet>\n  {fav_tag}')
+
+        # Dynamic Logo replacement with kinetic effects
+        if site_settings.logo_image:
+            html = re.sub(
+                r'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAEUcAAAH3[a-zA-Z0-9+/=]+',
+                site_settings.logo_image,
+                html
+            )
+            # Add dynamic logo kinetic hover & glow effect
+            logo_fx_style = """
+<style id="spec-dynamic-logo-style">
+  [ref="lettersRef"], [ref="logoRef"] img {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+    filter: drop-shadow(0 0 14px rgba(198, 113, 57, 0.35));
+    pointer-events: auto !important;
+    cursor: pointer;
+  }
+  [ref="lettersRef"]:hover, [ref="logoRef"] img:hover {
+    transform: scale(1.05) rotate(-0.5deg);
+    filter: drop-shadow(0 0 24px rgba(198, 113, 57, 0.65));
+  }
+</style>
+"""
+            if '</head>' in html:
+                html = html.replace('</head>', f'{logo_fx_style}\n</head>')
+            elif '</helmet>' in html:
+                html = html.replace('</helmet>', f'{logo_fx_style}\n</helmet>')
+
+        # Dynamic Hero Headline
+        if site_settings.hero_headline and site_settings.hero_headline != "You feel the brand before it speaks®":
+            html = re.sub(
+                r'(<h1[^>]*>)(You feel the brand before it speaks®?)(</h1>)',
+                rf'\g<1>{site_settings.hero_headline}\g<3>',
+                html
+            )
+
+        # Dynamic Hero Subheadline
+        if site_settings.hero_subheadline:
+            default_sub = "Placeholder copy. Spec Media builds campaigns for companies that care how things feel and how they are perceived over time."
+            if default_sub in html and site_settings.hero_subheadline != default_sub:
+                html = html.replace(default_sub, site_settings.hero_subheadline)
+
+        # Dynamic Hero CTA Text
+        if site_settings.hero_cta_text and site_settings.hero_cta_text != "[ scroll down ]":
+            html = html.replace('[ scroll down ]', site_settings.hero_cta_text)
+
+        # Dynamic Hero Custom Media (Photo or Video showcase)
+        if site_settings.hero_media_type in ('image', 'video') and site_settings.hero_media_url:
+            media_overlay = ""
+            if site_settings.hero_media_type == 'image':
+                media_overlay = f'<div class="spec-hero-media-backdrop" style="position:absolute;inset:0;background:url(\'{site_settings.hero_media_url}\') center/cover no-repeat;opacity:0.65;mix-blend-mode:luminosity;pointer-events:none;z-index:0;transition:opacity .5s ease;"></div>'
+            elif site_settings.hero_media_type == 'video':
+                media_overlay = f'<div class="spec-hero-media-backdrop" style="position:absolute;inset:0;overflow:hidden;opacity:0.6;pointer-events:none;z-index:0;"><video src="{site_settings.hero_media_url}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;"></video></div>'
+            
+            if 'data-screen-label="01 Hero"' in html and media_overlay:
+                html = re.sub(
+                    r'(data-screen-label="01 Hero"[^>]*>)',
+                    rf'\g<1>\n    {media_overlay}',
+                    html
+                )
+
+    return HttpResponse(html, content_type='text/html; charset=utf-8')
+
+
+def login_view(request):
+    """
+    Renders custom operator authorization screen and handles user authentication.
+    """
+    if request.user.is_authenticated:
+        return redirect('/dashboard/')
+
+    next_url = request.GET.get('next') or request.POST.get('next') or '/dashboard/'
+    error_message = None
+
+    if request.method == 'POST':
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None and user.is_active:
+            login(request, user)
+            return redirect(next_url)
+        else:
+            error_message = "Invalid operator username or password. Please verify your credentials."
+
+    return render(request, 'login.html', {
+        'next_url': next_url,
+        'error_message': error_message,
+    })
+
+
+def logout_view(request):
+    """
+    Logs out the authenticated operator and returns to the login screen.
+    """
+    logout(request)
+    return redirect('/login/')
 
 
 def work_page(request):
@@ -79,12 +195,15 @@ def portal_page(request):
     })
 
 
+@login_required(login_url='/login/')
 def dashboard_page(request):
     """
     Unified Control Dashboard: SEO Management, Works CMS, and Leads Inbox.
+    Requires verified operator authentication.
     """
     seo_pages = SEOPage.objects.all()
     works = WorkProject.objects.all()
+    site_settings = SiteSettings.get_settings()
     leads_count = 0
     try:
         leads = SupabaseService.fetch_leads(limit=100)
@@ -96,6 +215,8 @@ def dashboard_page(request):
         'seo_pages': seo_pages,
         'works': works,
         'leads_count': leads_count,
+        'site_settings': site_settings,
+        'user': request.user,
     })
 
 
@@ -165,6 +286,101 @@ def robots_txt_view(request):
 
 
 # -------------------------------------------------------------
+# Site Settings & Media Upload REST APIs
+# -------------------------------------------------------------
+
+class SiteSettingsAPIView(APIView):
+    """
+    GET /api/settings/ -> Retrieve active global site branding, logo, favicon, and landing media settings
+    PUT /api/settings/ -> Update site branding and landing page CMS content
+    """
+    def get(self, request):
+        settings_obj = SiteSettings.get_settings()
+        return Response({
+            'success': True,
+            'settings': {
+                'site_name': settings_obj.site_name,
+                'logo_image': settings_obj.logo_image,
+                'logo_text': settings_obj.logo_text,
+                'favicon_image': settings_obj.favicon_image,
+                'hero_headline': settings_obj.hero_headline,
+                'hero_subheadline': settings_obj.hero_subheadline,
+                'hero_badge': settings_obj.hero_badge,
+                'hero_cta_text': settings_obj.hero_cta_text,
+                'hero_media_type': settings_obj.hero_media_type,
+                'hero_media_url': settings_obj.hero_media_url,
+                'contact_email': settings_obj.contact_email,
+                'contact_phone': settings_obj.contact_phone,
+                'contact_address': settings_obj.contact_address,
+                'updated_at': settings_obj.updated_at.isoformat() if settings_obj.updated_at else None,
+            }
+        })
+
+    def put(self, request):
+        if not request.user.is_authenticated:
+            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        settings_obj = SiteSettings.get_settings()
+        d = request.data
+        fields = [
+            'site_name', 'logo_image', 'logo_text', 'favicon_image',
+            'hero_headline', 'hero_subheadline', 'hero_badge', 'hero_cta_text',
+            'hero_media_type', 'hero_media_url',
+            'contact_email', 'contact_phone', 'contact_address'
+        ]
+        for field in fields:
+            if field in d:
+                setattr(settings_obj, field, d.get(field))
+
+        settings_obj.save()
+        return Response({'success': True, 'message': 'Site branding and landing page settings updated successfully.'})
+
+
+class MediaUploadAPIView(APIView):
+    """
+    POST /api/upload/ -> Upload media file (photo or video), processes it,
+    and returns a base64 Data URI + optional static media URL.
+    """
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        file = request.FILES.get('file')
+        if not file:
+            return Response({'success': False, 'error': 'No file uploaded'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 30MB limit
+        if file.size > 30 * 1024 * 1024:
+            return Response({'success': False, 'error': 'File exceeds maximum limit of 30MB'}, status=status.HTTP_400_BAD_REQUEST)
+
+        content_type = file.content_type or 'image/png'
+        file_bytes = file.read()
+        b64_str = base64.b64encode(file_bytes).decode('utf-8')
+        data_uri = f"data:{content_type};base64,{b64_str}"
+
+        media_url = ""
+        try:
+            upload_dir = os.path.join(settings.BASE_DIR, 'media', 'uploads')
+            os.makedirs(upload_dir, exist_ok=True)
+            safe_name = re.sub(r'[^a-zA-Z0-9_\-\.]', '_', file.name)
+            file_path = os.path.join(upload_dir, safe_name)
+            with open(file_path, 'wb') as f_out:
+                f_out.write(file_bytes)
+            media_url = f"/media/uploads/{safe_name}"
+        except Exception:
+            pass
+
+        return Response({
+            'success': True,
+            'data_uri': data_uri,
+            'media_url': media_url or data_uri,
+            'filename': file.name,
+            'size': file.size,
+            'content_type': content_type,
+        })
+
+
+# -------------------------------------------------------------
 # SEO Management REST APIs
 # -------------------------------------------------------------
 
@@ -178,6 +394,9 @@ class SEOPagesAPIView(APIView):
         return Response({'success': True, 'count': len(pages), 'results': pages})
 
     def post(self, request):
+        if not request.user.is_authenticated:
+            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+
         d = request.data
         route_path = d.get('route_path', '').strip()
         if not route_path.startswith('/'):
@@ -222,6 +441,9 @@ class SEOPagesDetailAPIView(APIView):
         })
 
     def put(self, request, pk):
+        if not request.user.is_authenticated:
+            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+
         seo = get_object_or_404(SEOPage, pk=pk)
         d = request.data
         seo.page_name = d.get('page_name', seo.page_name)
@@ -237,6 +459,9 @@ class SEOPagesDetailAPIView(APIView):
         return Response({'success': True, 'message': 'SEO metadata updated.'})
 
     def delete(self, request, pk):
+        if not request.user.is_authenticated:
+            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+
         seo = get_object_or_404(SEOPage, pk=pk)
         seo.delete()
         return Response({'success': True, 'message': 'SEO route deleted.'})
@@ -256,6 +481,9 @@ class WorkProjectsAPIView(APIView):
         return Response({'success': True, 'count': len(works), 'results': works})
 
     def post(self, request):
+        if not request.user.is_authenticated:
+            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+
         d = request.data
         title = d.get('title', '').strip()
         if not title:
@@ -315,6 +543,9 @@ class WorkProjectsDetailAPIView(APIView):
         })
 
     def put(self, request, pk):
+        if not request.user.is_authenticated:
+            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+
         work = get_object_or_404(WorkProject, pk=pk)
         d = request.data
         work.title = d.get('title', work.title)
@@ -336,6 +567,9 @@ class WorkProjectsDetailAPIView(APIView):
         return Response({'success': True, 'message': 'Work updated.'})
 
     def delete(self, request, pk):
+        if not request.user.is_authenticated:
+            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+
         work = get_object_or_404(WorkProject, pk=pk)
         work.delete()
         return Response({'success': True, 'message': 'Work deleted.'})

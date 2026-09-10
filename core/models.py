@@ -65,7 +65,7 @@ class WorkProject(models.Model):
     discipline = models.CharField(max_length=100, choices=DISCIPLINE_CHOICES, default='Web & Experience Systems')
     market = models.CharField(max_length=100, choices=MARKET_CHOICES, default='Dubai')
     year = models.CharField(max_length=10, default='2026')
-    hero_image = models.CharField(max_length=500, blank=True, help_text="Hero image URL or data URI")
+    hero_image = models.TextField(blank=True, help_text="Hero image URL or data URI")
     summary = models.TextField(help_text="Short teaser summary displayed on cards")
     challenge = models.TextField(blank=True, help_text="The commercial challenge faced by the client")
     solution = models.TextField(blank=True, help_text="The strategic execution by Spec Media")
@@ -93,3 +93,51 @@ class WorkProject(models.Model):
         if not self.deliverables:
             return []
         return [d.strip() for d in self.deliverables.split(',') if d.strip()]
+
+
+class SiteSettings(models.Model):
+    """
+    Global site branding, dynamic logo, favicon, and landing page media & content CMS.
+    """
+    MEDIA_CHOICES = [
+        ('canvas', 'Procedural Kinetic Canvas Engine'),
+        ('image', 'Custom Photo / Graphic'),
+        ('video', 'Custom Video Loop'),
+    ]
+
+    site_name = models.CharField(max_length=150, default="SPEC MEDIA")
+    logo_image = models.TextField(blank=True, help_text="Site logo base64 data URI, SVG, or image URL")
+    logo_text = models.CharField(max_length=100, default="SPEC MEDIA")
+    favicon_image = models.TextField(blank=True, help_text="Favicon base64 data URI, ICO, or SVG")
+    
+    # Landing Page Content & Media Controls
+    hero_headline = models.CharField(max_length=255, default="You feel the brand before it speaks®")
+    hero_subheadline = models.TextField(default="Placeholder copy. Spec Media builds campaigns for companies that care how things feel and how they are perceived over time.")
+    hero_badge = models.CharField(max_length=100, default="01 / HERO")
+    hero_cta_text = models.CharField(max_length=100, default="[ SCROLL DOWN ]")
+    hero_media_type = models.CharField(max_length=50, default="canvas", choices=MEDIA_CHOICES)
+    hero_media_url = models.TextField(blank=True, help_text="Uploaded photo or video data URI or URL for hero showcase")
+    
+    # Global Contact & Footer Info
+    contact_email = models.CharField(max_length=150, default="hello@specmedia.co")
+    contact_phone = models.CharField(max_length=100, default="+971 4 000 0000")
+    contact_address = models.CharField(max_length=255, default="Dubai Design District, Building 3, Dubai, UAE")
+    
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Site Settings"
+        verbose_name_plural = "Site Settings"
+
+    def __str__(self):
+        return f"Site Settings ({self.site_name})"
+
+    @classmethod
+    def get_settings(cls):
+        """
+        Singleton getter to retrieve or initialize the active global site settings.
+        """
+        settings_obj = cls.objects.first()
+        if not settings_obj:
+            settings_obj = cls.objects.create()
+        return settings_obj

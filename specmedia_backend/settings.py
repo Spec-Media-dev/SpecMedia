@@ -81,12 +81,22 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.supabase_context',
                 'core.context_processors.seo_context',
+                'core.context_processors.site_settings_context',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'specmedia_backend.wsgi.application'
+
+# Authentication URLs
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/login/'
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path('/tmp/media') if os.getenv('VERCEL') else BASE_DIR / 'media'
 
 # Database
 DB_DIR = Path('/tmp') if os.getenv('VERCEL') else BASE_DIR

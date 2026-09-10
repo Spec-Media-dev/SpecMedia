@@ -13,11 +13,17 @@ urlpatterns = [
     path('capabilities/', views.capabilities_page, name='capabilities'),
     path('portal/', views.portal_page, name='portal'),
     path('dashboard/', views.dashboard_page, name='dashboard'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
     path('404/', views.custom_404_view, name='preview-404'),
 
     # Technical SEO & Crawlers
     path('sitemap.xml', views.sitemap_view, name='sitemap'),
     path('robots.txt', views.robots_txt_view, name='robots'),
+
+    # REST APIs for Settings & Media
+    path('api/settings/', views.SiteSettingsAPIView.as_view(), name='api-settings'),
+    path('api/upload/', views.MediaUploadAPIView.as_view(), name='api-upload'),
 
     # REST APIs for SEO & Works CMS
     path('api/seo-pages/', views.SEOPagesAPIView.as_view(), name='api-seo-pages'),

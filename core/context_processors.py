@@ -1,6 +1,6 @@
 import json
 from django.conf import settings
-from .models import SEOPage
+from .models import SEOPage, SiteSettings
 
 def supabase_context(request):
     """
@@ -12,13 +12,25 @@ def supabase_context(request):
     }
 
 
+def site_settings_context(request):
+    """
+    Exposes active global SiteSettings (logo, favicon, hero text, media) to all templates.
+    """
+    try:
+        settings_obj = SiteSettings.get_settings()
+    except Exception:
+        settings_obj = None
+    return {
+        'site_settings': settings_obj,
+    }
+
+
 def seo_context(request):
     """
     Queries canonical SEO metadata for the current request path
     and injects titles, descriptions, OpenGraph tags, and JSON-LD structured data.
     """
     path = request.path
-    # Normalize path (ensure leading slash, strip redundant trailing if needed)
     lookup_paths = [path]
     if path.endswith('/') and len(path) > 1:
         lookup_paths.append(path[:-1])
@@ -31,6 +43,15 @@ def seo_context(request):
     except Exception:
         pass
 
+    # Retrieve site settings for fallback logo and name
+    try:
+        site_settings = SiteSettings.get_settings()
+        site_name = site_settings.site_name
+        logo_url = site_settings.logo_image or "https://www.spec-media.com/static/img/logo.png"
+    except Exception:
+        site_name = "Spec Media"
+        logo_url = "https://www.spec-media.com/static/img/logo.png"
+
     if seo_obj:
         title = seo_obj.meta_title
         description = seo_obj.meta_description
@@ -41,8 +62,8 @@ def seo_context(request):
         og_image = seo_obj.og_image_url or "https://spec-media.vercel.app/static/img/og-preview.png"
         schema_type = seo_obj.schema_type
     else:
-        title = "Spec Media — Digital Architecture, Growth & Production Agency Dubai"
-        description = "Spec Media is Dubai's premier digital agency specializing in high-performance website development, data-driven SEO, brand architecture, and AI marketing automation."
+        title = f"{site_name} — Digital Architecture, Growth & Production Agency Dubai"
+        description = f"{site_name} is Dubai's premier digital agency specializing in high-performance website development, data-driven SEO, brand architecture, and AI marketing automation."
         canonical = f"https://www.spec-media.com{path}"
         primary_keyword = "digital agency dubai"
         og_title = title
@@ -54,12 +75,12 @@ def seo_context(request):
     json_ld = {
         "@context": "https://schema.org",
         "@type": schema_type,
-        "name": "Spec Media",
+        "name": site_name,
         "url": canonical,
         "description": description,
     }
     if schema_type == "Organization":
-        json_ld["logo"] = "https://www.spec-media.com/static/img/logo.png"
+        json_ld["logo"] = logo_url
         json_ld["address"] = {
             "@type": "PostalAddress",
             "addressLocality": "Dubai",
@@ -73,7 +94,7 @@ def seo_context(request):
     elif schema_type == "Service":
         json_ld["provider"] = {
             "@type": "Organization",
-            "name": "Spec Media",
+            "name": site_name,
             "url": "https://www.spec-media.com"
         }
         json_ld["areaServed"] = ["Dubai", "United Arab Emirates", "MENA"]
