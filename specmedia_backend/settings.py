@@ -15,7 +15,7 @@ load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-specmedia-dev-key-2026-prod")
-DEBUG = os.getenv("DEBUG", "True").lower() in ("true", "1", "yes")
+DEBUG = True
 
 # Explicit ALLOWED_HOSTS for Vercel, localhost, and custom domains
 ALLOWED_HOSTS = [
@@ -87,10 +87,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'specmedia_backend.wsgi.application'
 
 # Database
+DB_DIR = Path('/tmp') if os.getenv('VERCEL') else BASE_DIR
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DB_DIR / 'db.sqlite3',
     }
 }
 
@@ -113,7 +114,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = Path('/tmp/staticfiles') if os.getenv('VERCEL') else BASE_DIR / 'staticfiles'
 
 # WhiteNoise storage
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
