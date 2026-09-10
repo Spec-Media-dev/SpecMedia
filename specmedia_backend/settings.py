@@ -15,7 +15,8 @@ load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-specmedia-dev-key-2026-prod")
-DEBUG = True
+# Debug mode: False on Vercel production, True for local dev unless explicitly overridden
+DEBUG = False   
 
 # Explicit ALLOWED_HOSTS for Vercel, localhost, and custom domains
 ALLOWED_HOSTS = [
@@ -79,6 +80,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.supabase_context',
+                'core.context_processors.seo_context',
             ],
         },
     },

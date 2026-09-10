@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Dashboard — Spec Media SEO & Portfolio CMS</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0e0d;
+      --surface: #181716;
+      --surface-elevated: #22201e;
+      --border: rgba(245, 234, 216, 0.1);
+      --border-focus: #c67139;
+      --text: #f5ead8;
+      --text-muted: #9c9589;
+      --text-subtle: #6b665e;
+      --accent: #c67139;
+      --accent-glow: rgba(198, 113, 57, 0.25);
+      --success: #22c55e;
+      --danger: #ef4444;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation Bar */
+    .top-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-logo {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-logo span { color: var(--accent); }
+
+    .system-status {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--success);
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .system-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links .btn-site {
+      color: var(--accent);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 6px;
+    }
+
+    /* Dashboard Layout */
+    .dashboard-container {
+      flex: 1;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Tabs Header */
+    .tabs-header {
+      display: flex;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      letter-spacing: 0.04em;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .tab-btn.active {
+      color: var(--text);
+      background: var(--surface-elevated);
+      border-color: var(--border);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab-btn .count-badge {
+      font-size: 11px;
+      background: rgba(245, 234, 216, 0.1);
+      padding: 2px 8px;
+      border-radius: 999px;
+      color: var(--text);
+    }
+
+    .tab-btn.active .count-badge {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* Tab Panels */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Top Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-card .label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stat-card .value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .stat-card .sub {
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    /* Action Bar (Search & Buttons) */
+    .action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      width: 320px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus { border-color: var(--accent); }
+
+    .btn-action {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: #e08346;
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+
+    /* Table Styles */
+    .table-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    td {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(245, 234, 216, 0.05);
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .route-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text);
+      background: var(--surface-elevated);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      display: inline-block;
+    }
+
+    .status-pill {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-pill.indexable { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+    .status-pill.noindex { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+    .status-pill.featured { background: rgba(198, 113, 57, 0.2); color: var(--accent); }
+
+    .btn-table-edit {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-table-edit:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(198, 113, 57, 0.08);
+    }
+
+    .btn-table-del {
+      background: transparent;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      margin-left: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-table-del:hover {
+      background: rgba(239, 68, 68, 0.15);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 24px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 720px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .modal-close:hover { color: var(--text); }
+
+    .modal-body {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .char-counter { color: var(--accent); }
+
+    .form-input, .form-textarea, .form-select {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--accent);
+    }
+
+    .form-textarea { resize: vertical; min-height: 80px; }
+
+    .modal-footer {
+      padding: 20px 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px 22px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 2000;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .toast.active { display: flex; animation: slideIn 0.3s ease; }
+    .toast.success { border-color: var(--success); }
+    .toast.error { border-color: var(--danger); }
+
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="brand-section">
+      <a href="/" class="brand-logo">
+        SPEC <span>MEDIA</span> // CMS
+      </a>
+      <div class="system-status">System Operational</div>
+    </div>
+    <div class="nav-links">
+      <a href="/" target="_blank" class="btn-site">View Live Site &rarr;</a>
+      <a href="/work/" target="_blank">Work</a>
+      <a href="/sitemap.xml" target="_blank">Sitemap</a>
+      <a href="/admin/" target="_blank">Django Admin</a>
+    </div>
+  </div>
+
+  <!-- Dashboard Main -->
+  <div class="dashboard-container">
+    <!-- Navigation Tabs -->
+    <div class="tabs-header">
+      <button class="tab-btn active" onclick="switchTab('seo')">
+        <span>🌐 SEO Control Center</span>
+        <span class="count-badge" id="seo-count">{{ seo_pages.count }}</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('works')">
+        <span>⚡ Works & Portfolio CMS</span>
+        <span class="count-badge" id="works-count">{{ works.count }}</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('leads')">
+        <span>📥 Inbound Leads CRM</span>
+        <span class="count-badge" id="leads-count">{{ leads_count|default:"Live" }}</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('diagnostics')">
+        <span>🔍 Technical SEO & Sitemaps</span>
+      </button>
+    </div>
+
+    <!-- TAB 1: SEO CONTROL CENTER -->
+    <div id="tab-seo" class="tab-panel active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Indexed Canonical Routes</div>
+          <div class="value">{{ seo_pages.count }}</div>
+          <div class="sub">Dubai, UAE & MENA entities mapped</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Primary Market Focus</div>
+          <div class="value">Dubai / UAE</div>
+          <div class="sub">High-intent commercial intent</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Structured Schema</div>
+          <div class="value">100% Valid</div>
+          <div class="sub">Organization, Service, BreadcrumbList</div>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <input type="text" class="search-input" id="search-seo" placeholder="Search routes or keywords..." onkeyup="filterSEO()">
+        <button class="btn-action" onclick="openAddSEOModal()">+ Add New SEO Route</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="seo-table">
+          <thead>
+            <tr>
+              <th>Canonical Route</th>
+              <th>Page Name</th>
+              <th>Meta Title</th>
+              <th>Primary Keyword</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for page in seo_pages %}
+            <tr data-route="{{ page.route_path }}" data-title="{{ page.meta_title }}" data-keyword="{{ page.primary_keyword }}">
+              <td><span class="route-badge">{{ page.route_path }}</span></td>
+              <td><strong>{{ page.page_name }}</strong></td>
+              <td style="max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                {{ page.meta_title }}
+              </td>
+              <td><span style="color: var(--accent);">{{ page.primary_keyword }}</span></td>
+              <td>
+                {% if page.is_indexable %}
+                  <span class="status-pill indexable">Indexable</span>
+                {% else %}
+                  <span class="status-pill noindex">NoIndex</span>
+                {% endif %}
+              </td>
+              <td>
+                <button class="btn-table-edit" onclick="editSEO({{ page.id }})">Edit SEO</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 2: WORKS & PORTFOLIO CMS -->
+    <div id="tab-works" class="tab-panel">
+      <div class="action-bar">
+        <input type="text" class="search-input" id="search-works" placeholder="Search projects by client or title..." onkeyup="filterWorks()">
+        <button class="btn-action" onclick="openAddWorkModal()">+ Add New Work / Case Study</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="works-table">
+          <thead>
+            <tr>
+              <th>Project Title</th>
+              <th>Client</th>
+              <th>Discipline</th>
+              <th>Market</th>
+              <th>Year</th>
+              <th>Featured</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for work in works %}
+            <tr data-title="{{ work.title }}" data-client="{{ work.client }}" data-discipline="{{ work.discipline }}">
+              <td>
+                <strong>{{ work.title }}</strong><br>
+                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">/work/{{ work.slug }}/</span>
+              </td>
+              <td>{{ work.client }}</td>
+              <td><span class="route-badge">{{ work.discipline }}</span></td>
+              <td>{{ work.market }}</td>
+              <td>{{ work.year }}</td>
+              <td>
+                {% if work.is_featured %}
+                  <span class="status-pill featured">★ Featured</span>
+                {% else %}
+                  <span class="status-pill" style="color: var(--text-muted); border: 1px solid var(--border);">Standard</span>
+                {% endif %}
+              </td>
+              <td>
+                <button class="btn-table-edit" onclick="editWork({{ work.id }})">Edit</button>
+                <button class="btn-table-del" onclick="deleteWork({{ work.id }}, '{{ work.title|escapejs }}')">Delete</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3: INBOUND LEADS CRM -->
+    <div id="tab-leads" class="tab-panel">
+      <div class="action-bar">
+        <input type="text" class="search-input" id="search-leads" placeholder="Filter leads..." onkeyup="filterLeads()">
+        <button class="btn-action" onclick="fetchLiveLeads()">🔄 Refresh Live Leads</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="leads-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Name</th>
+              <th>Email / Company</th>
+              <th>Discipline Interest</th>
+              <th>Budget</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="leads-tbody">
+            <tr>
+              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">Loading live Supabase leads...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 4: TECHNICAL SEO & SITEMAPS -->
+    <div id="tab-diagnostics" class="tab-panel">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Canonical Host Policy</div>
+          <div class="value" style="font-size: 18px;">https://www.spec-media.com</div>
+          <div class="sub">Lowercase, hyphenated, single 301 hop</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Core Web Vitals Target</div>
+          <div class="value" style="font-size: 18px;">LCP ≤ 2.5s / INP ≤ 200ms</div>
+          <div class="sub">CLS ≤ 0.1 at 75th percentile</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Robots & Crawlers</div>
+          <div class="value" style="font-size: 18px;">robots.txt Active</div>
+          <div class="sub">Sitemap linked, private roots protected</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div class="stat-card" style="gap: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="label">Live XML Sitemap Preview</div>
+            <a href="/sitemap.xml" target="_blank" class="btn-site" style="font-family: var(--font-mono); font-size: 11px;">Open Raw /sitemap.xml &rarr;</a>
+          </div>
+          <pre id="sitemap-preview" style="background: var(--surface-elevated); padding: 16px; border-radius: 8px; font-family: var(--font-mono); font-size: 12px; max-height: 280px; overflow: auto; color: var(--text-muted);"></pre>
+        </div>
+
+        <div class="stat-card" style="gap: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="label">Live robots.txt Preview</div>
+            <a href="/robots.txt" target="_blank" class="btn-site" style="font-family: var(--font-mono); font-size: 11px;">Open Raw /robots.txt &rarr;</a>
+          </div>
+          <pre id="robots-preview" style="background: var(--surface-elevated); padding: 16px; border-radius: 8px; font-family: var(--font-mono); font-size: 12px; max-height: 280px; overflow: auto; color: var(--text-muted);"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT / ADD SEO ROUTE -->
+  <div class="modal-overlay" id="seo-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title" id="seo-modal-title">Edit SEO Page Metadata</div>
+        <button class="modal-close" onclick="closeModal('seo-modal')">&times;</button>
+      </div>
+      <form id="seo-form" onsubmit="saveSEO(event)">
+        <input type="hidden" id="seo-id" name="id">
+        <div class="modal-body">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label>Canonical Route Path *</label>
+              <input type="text" class="form-input" id="seo-route" name="route_path" required placeholder="/services/seo-agency-dubai/">
+            </div>
+            <div class="form-group">
+              <label>Internal Page Name *</label>
+              <input type="text" class="form-input" id="seo-name" name="page_name" required placeholder="SEO Agency Dubai">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Browser Meta Title (Optimal: 50-60 chars) <span class="char-counter" id="title-counter">0/60</span></label>
+            <input type="text" class="form-input" id="seo-title" name="meta_title" required placeholder="SEO Agency in Dubai — Spec Media" oninput="updateCounter('seo-title', 'title-counter', 60)">
+          </div>
+
+          <div class="form-group">
+            <label>Meta Description (Optimal: 150-160 chars) <span class="char-counter" id="desc-counter">0/160</span></label>
+            <textarea class="form-textarea" id="seo-desc" name="meta_description" required placeholder="Describe the page's commercial value for search engine results..." oninput="updateCounter('seo-desc', 'desc-counter', 160)"></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label>Primary Keyword *</label>
+              <input type="text" class="form-input" id="seo-keyword" name="primary_keyword" placeholder="seo agency dubai">
+            </div>
+            <div class="form-group">
+              <label>Schema.org Type</label>
+              <select class="form-select" id="seo-schema" name="schema_type">
+                <option value="Service">Service</option>
+                <option value="Organization">Organization</option>
+                <option value="WebPage">WebPage</option>
+                <option value="CollectionPage">CollectionPage</option>
+                <option value="AboutPage">AboutPage</option>
+                <option value="ContactPage">ContactPage</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Secondary Keywords (Comma-separated)</label>
+            <input type="text" class="form-input" id="seo-secondary" name="secondary_keywords" placeholder="technical seo, enterprise search dubai, organic growth">
+          </div>
+
+          <div class="form-group">
+            <label>Full Canonical URL</label>
+            <input type="url" class="form-input" id="seo-canonical" name="canonical_url" placeholder="https://www.spec-media.com/services/seo-agency-dubai/">
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <input type="checkbox" id="seo-indexable" name="is_indexable" checked style="width: 18px; height: 18px; accent-color: var(--accent);">
+            <label for="seo-indexable" style="font-size: 13px; color: var(--text); cursor: pointer;">Allow Search Engines to Index this Route (index, follow)</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('seo-modal')">Cancel</button>
+          <button type="submit" class="btn-action">Save SEO Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT WORK PROJECT -->
+  <div class="modal-overlay" id="work-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title" id="work-modal-title">Add Work / Case Study</div>
+        <button class="modal-close" onclick="closeModal('work-modal')">&times;</button>
+      </div>
+      <form id="work-form" onsubmit="saveWork(event)">
+        <input type="hidden" id="work-id" name="id">
+        <div class="modal-body">
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label>Project Title *</label>
+              <input type="text" class="form-input" id="work-title" name="title" required placeholder="Aether MENA — Regional Search Dominance">
+            </div>
+            <div class="form-group">
+              <label>Client Name *</label>
+              <input type="text" class="form-input" id="work-client" name="client" required placeholder="Aether Technologies">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label>Discipline *</label>
+              <select class="form-select" id="work-discipline" name="discipline">
+                <option value="SEO & Organic Growth">SEO & Organic Growth</option>
+                <option value="Web & Experience Systems">Web & Experience Systems</option>
+                <option value="AI Marketing & Automation">AI Marketing & Automation</option>
+                <option value="Brand Architecture & Design">Brand Architecture & Design</option>
+                <option value="Paid Performance Media">Paid Performance Media</option>
+                <option value="Content & Motion Production">Content & Motion Production</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Market</label>
+              <select class="form-select" id="work-market" name="market">
+                <option value="Dubai">Dubai</option>
+                <option value="UAE">UAE</option>
+                <option value="MENA">MENA</option>
+                <option value="Global">Global</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Year</label>
+              <input type="text" class="form-input" id="work-year" name="year" value="2026">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Hero Image URL</label>
+            <input type="url" class="form-input" id="work-image" name="hero_image" placeholder="https://images.unsplash.com/...">
+          </div>
+
+          <div class="form-group">
+            <label>Card Teaser Summary *</label>
+            <textarea class="form-textarea" id="work-summary" name="summary" required placeholder="Short 1-2 sentence overview shown on portfolio cards..."></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label>Challenge</label>
+              <textarea class="form-textarea" id="work-challenge" name="challenge" placeholder="The commercial challenge faced by the client..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Solution</label>
+              <textarea class="form-textarea" id="work-solution" name="solution" placeholder="Strategic execution and systems built by Spec Media..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Verified Key Performance Indicators (Semicolon-separated)</label>
+            <input type="text" class="form-input" id="work-kpis" name="kpis" placeholder="+340% Organic Traffic; #1 Organic Rank in UAE; 3.8x Pipeline Leads">
+          </div>
+
+          <div class="form-group">
+            <label>Deliverables (Comma-separated)</label>
+            <input type="text" class="form-input" id="work-deliverables" name="deliverables" placeholder="Technical SEO, Entity Graph, Bilingual Arabic Content">
+          </div>
+
+          <div style="display: flex; gap: 24px; align-items: center;">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <input type="checkbox" id="work-featured" name="is_featured" style="width: 18px; height: 18px; accent-color: var(--accent);">
+              <label for="work-featured" style="font-size: 13px; color: var(--text); cursor: pointer;">Feature on Homepage Grid</label>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <label style="font-size: 12px; color: var(--text-muted);">Sort Order:</label>
+              <input type="number" id="work-sort" name="sort_order" value="0" style="width: 60px; background: var(--surface-elevated); border: 1px solid var(--border); color: #fff; padding: 4px 8px; border-radius: 4px;">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('work-modal')">Cancel</button>
+          <button type="submit" class="btn-action">Save Work Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast-msg"></div>
+
+  <script>
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+      event.currentTarget.classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+
+      if (tabId === 'leads') fetchLiveLeads();
+      if (tabId === 'diagnostics') fetchDiagnostics();
+    }
+
+    // Modal helpers
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast-msg');
+      toast.textContent = msg;
+      toast.className = 'toast active ' + type;
+      setTimeout(() => toast.classList.remove('active'), 3500);
+    }
+
+    function updateCounter(inputId, counterId, max) {
+      const len = document.getElementById(inputId).value.length;
+      document.getElementById(counterId).textContent = `${len}/${max}`;
+    }
+
+    // Search filters
+    function filterSEO() {
+      const q = document.getElementById('search-seo').value.toLowerCase();
+      document.querySelectorAll('#seo-table tbody tr').forEach(tr => {
+        const text = tr.innerText.toLowerCase();
+        tr.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
+    function filterWorks() {
+      const q = document.getElementById('search-works').value.toLowerCase();
+      document.querySelectorAll('#works-table tbody tr').forEach(tr => {
+        const text = tr.innerText.toLowerCase();
+        tr.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
+    // SEO Edit
+    async function editSEO(id) {
+      const resp = await fetch(`/api/seo-pages/${id}/`);
+      const data = await resp.json();
+      if (data.success && data.seo) {
+        const s = data.seo;
+        document.getElementById('seo-id').value = s.id;
+        document.getElementById('seo-route').value = s.route_path;
+        document.getElementById('seo-name').value = s.page_name;
+        document.getElementById('seo-title').value = s.meta_title;
+        document.getElementById('seo-desc').value = s.meta_description;
+        document.getElementById('seo-keyword').value = s.primary_keyword || '';
+        document.getElementById('seo-secondary').value = s.secondary_keywords || '';
+        document.getElementById('seo-canonical').value = s.canonical_url || '';
+        document.getElementById('seo-schema').value = s.schema_type || 'Service';
+        document.getElementById('seo-indexable').checked = s.is_indexable;
+
+        updateCounter('seo-title', 'title-counter', 60);
+        updateCounter('seo-desc', 'desc-counter', 160);
+
+        document.getElementById('seo-modal-title').textContent = 'Edit SEO Page: ' + s.route_path;
+        openModal('seo-modal');
+      }
+    }
+
+    function openAddSEOModal() {
+      document.getElementById('seo-form').reset();
+      document.getElementById('seo-id').value = '';
+      document.getElementById('seo-modal-title').textContent = 'Add New SEO Route';
+      updateCounter('seo-title', 'title-counter', 60);
+      updateCounter('seo-desc', 'desc-counter', 160);
+      openModal('seo-modal');
+    }
+
+    async function saveSEO(ev) {
+      ev.preventDefault();
+      const id = document.getElementById('seo-id').value;
+      const payload = {
+        route_path: document.getElementById('seo-route').value.trim(),
+        page_name: document.getElementById('seo-name').value.trim(),
+        meta_title: document.getElementById('seo-title').value.trim(),
+        meta_description: document.getElementById('seo-desc').value.trim(),
+        primary_keyword: document.getElementById('seo-keyword').value.trim(),
+        secondary_keywords: document.getElementById('seo-secondary').value.trim(),
+        canonical_url: document.getElementById('seo-canonical').value.trim(),
+        schema_type: document.getElementById('seo-schema').value,
+        is_indexable: document.getElementById('seo-indexable').checked,
+      };
+
+      const url = id ? `/api/seo-pages/${id}/` : `/api/seo-pages/`;
+      const method = id ? 'PUT' : 'POST';
+
+      try {
+        const resp = await fetch(url, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await resp.json();
+        if (data.success) {
+          showToast('SEO changes saved successfully!', 'success');
+          closeModal('seo-modal');
+          setTimeout(() => location.reload(), 800);
+        } else {
+          showToast('Error: ' + (data.error || 'Failed to save'), 'error');
+        }
+      } catch (err) {
+        showToast('Network error saving SEO: ' + err.message, 'error');
+      }
+    }
+
+    // Work Projects
+    function openAddWorkModal() {
+      document.getElementById('work-form').reset();
+      document.getElementById('work-id').value = '';
+      document.getElementById('work-modal-title').textContent = 'Add Work / Case Study';
+      openModal('work-modal');
+    }
+
+    async function editWork(id) {
+      const resp = await fetch(`/api/works/${id}/`);
+      const data = await resp.json();
+      if (data.success && data.work) {
+        const w = data.work;
+        document.getElementById('work-id').value = w.id;
+        document.getElementById('work-title').value = w.title;
+        document.getElementById('work-client').value = w.client;
+        document.getElementById('work-discipline').value = w.discipline;
+        document.getElementById('work-market').value = w.market;
+        document.getElementById('work-year').value = w.year;
+        document.getElementById('work-image').value = w.hero_image || '';
+        document.getElementById('work-summary').value = w.summary || '';
+        document.getElementById('work-challenge').value = w.challenge || '';
+        document.getElementById('work-solution').value = w.solution || '';
+        document.getElementById('work-kpis').value = w.kpis || '';
+        document.getElementById('work-deliverables').value = w.deliverables || '';
+        document.getElementById('work-featured').checked = w.is_featured;
+        document.getElementById('work-sort').value = w.sort_order || 0;
+
+        document.getElementById('work-modal-title').textContent = 'Edit Work: ' + w.title;
+        openModal('work-modal');
+      }
+    }
+
+    async function saveWork(ev) {
+      ev.preventDefault();
+      const id = document.getElementById('work-id').value;
+      const payload = {
+        title: document.getElementById('work-title').value.trim(),
+        client: document.getElementById('work-client').value.trim(),
+        discipline: document.getElementById('work-discipline').value,
+        market: document.getElementById('work-market').value,
+        year: document.getElementById('work-year').value.trim(),
+        hero_image: document.getElementById('work-image').value.trim(),
+        summary: document.getElementById('work-summary').value.trim(),
+        challenge: document.getElementById('work-challenge').value.trim(),
+        solution: document.getElementById('work-solution').value.trim(),
+        kpis: document.getElementById('work-kpis').value.trim(),
+        deliverables: document.getElementById('work-deliverables').value.trim(),
+        is_featured: document.getElementById('work-featured').checked,
+        sort_order: parseInt(document.getElementById('work-sort').value) || 0,
+      };
+
+      const url = id ? `/api/works/${id}/` : `/api/works/`;
+      const method = id ? 'PUT' : 'POST';
+
+      try {
+        const resp = await fetch(url, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await resp.json();
+        if (data.success) {
+          showToast('Work project saved successfully!', 'success');
+          closeModal('work-modal');
+          setTimeout(() => location.reload(), 800);
+        } else {
+          showToast('Error: ' + (data.error || 'Failed to save work'), 'error');
+        }
+      } catch (err) {
+        showToast('Network error saving work: ' + err.message, 'error');
+      }
+    }
+
+    async function deleteWork(id, title) {
+      if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
+      try {
+        const resp = await fetch(`/api/works/${id}/`, { method: 'DELETE' });
+        const data = await resp.json();
+        if (data.success) {
+          showToast('Work project deleted!', 'success');
+          setTimeout(() => location.reload(), 800);
+        }
+      } catch (err) {
+        showToast('Failed to delete: ' + err.message, 'error');
+      }
+    }
+
+    // Leads CRM
+    async function fetchLiveLeads() {
+      const tbody = document.getElementById('leads-tbody');
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">Refreshing live leads from Supabase...</td></tr>';
+      try {
+        const resp = await fetch('/api/leads/');
+        const data = await resp.json();
+        if (data.success && data.results) {
+          document.getElementById('leads-count').textContent = data.count;
+          if (data.results.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">No leads recorded yet. Inbound inquiries will appear here automatically.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = data.results.map(l => `
+            <tr>
+              <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">
+                ${l.created_at ? new Date(l.created_at).toLocaleString() : 'Recent'}
+              </td>
+              <td><strong>${l.name || 'Anonymous'}</strong></td>
+              <td>
+                <span style="color: var(--text);">${l.email || ''}</span><br>
+                <span style="font-size: 11px; color: var(--text-muted);">${l.company || 'Direct Client'}</span>
+              </td>
+              <td><span class="route-badge">${l.service || 'General Consultation'}</span></td>
+              <td style="color: var(--accent); font-family: var(--font-mono);">${l.budget || 'Undisclosed'}</td>
+              <td><span class="status-pill indexable">${l.status || 'new'}</span></td>
+            </tr>
+          `).join('');
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger); padding: 32px;">Failed to load leads: ${err.message}</td></tr>`;
+      }
+    }
+
+    // Technical SEO Diagnostics
+    async function fetchDiagnostics() {
+      try {
+        const sResp = await fetch('/sitemap.xml');
+        const sText = await sResp.text();
+        document.getElementById('sitemap-preview').textContent = sText;
+
+        const rResp = await fetch('/robots.txt');
+        const rText = await rResp.text();
+        document.getElementById('robots-preview').textContent = rText;
+      } catch (err) {
+        console.warn('Diagnostics fetch error:', err);
+      }
+    }
+  </script>
+</body>
+</html>

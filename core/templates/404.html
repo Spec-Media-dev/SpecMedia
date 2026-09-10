@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found | Spec Media</title>
+  <meta name="robots" content="noindex, follow">
+  <meta name="description" content="The requested page could not be located in the Spec Media network. Return to the homepage or explore our work and capabilities.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #141312;
+      --card-bg: #1c1a19;
+      --border: rgba(245, 234, 216, 0.12);
+      --text: #f5ead8;
+      --text-muted: #9c9589;
+      --accent: #c67139;
+      --accent-hover: #e08346;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 50% 20%, rgba(198, 113, 57, 0.08) 0%, transparent 50%),
+        linear-gradient(to bottom, #141312 0%, #0d0c0c 100%);
+    }
+
+    header {
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand-logo {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo span {
+      color: var(--accent);
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 24px;
+    }
+
+    .header-nav a {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .header-nav a:hover {
+      color: var(--accent);
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 24px;
+    }
+
+    .error-container {
+      max-width: 760px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .badge-404 {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      background: rgba(198, 113, 57, 0.12);
+      border: 1px solid rgba(198, 113, 57, 0.28);
+      padding: 6px 16px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 24px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .glitch-title {
+      font-family: var(--font-serif);
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      line-height: 1;
+      margin-bottom: 20px;
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .glitch-title span {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .error-desc {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 580px;
+      margin: 0 auto 40px auto;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .actions-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 56px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(198, 113, 57, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(198, 113, 57, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(245, 234, 216, 0.4);
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+
+    .quick-routes-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      text-align: left;
+    }
+
+    .panel-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-label::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .routes-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .route-card {
+      display: block;
+      padding: 14px 18px;
+      background: rgba(20, 19, 18, 0.6);
+      border: 1px solid rgba(245, 234, 216, 0.08);
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .route-card:hover {
+      border-color: var(--accent);
+      background: rgba(198, 113, 57, 0.08);
+      transform: translateX(4px);
+    }
+
+    .route-card .name {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .route-card .path {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    footer {
+      padding: 24px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 20px 24px; }
+      .header-nav { display: none; }
+      footer { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="brand-logo">
+      SPEC <span>MEDIA</span>
+    </a>
+    <nav class="header-nav">
+      <a href="/">Home</a>
+      <a href="/work/">Selected Work</a>
+      <a href="/studio/">Studio</a>
+      <a href="/capabilities/">Capabilities</a>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="error-container">
+      <div class="badge-404">Signal Lost // Error 404</div>
+      <h1 class="glitch-title">404 // <span>Off Grid</span></h1>
+      <p class="error-desc">
+        The coordinate you requested does not exist within the Spec Media network. It may have moved to a canonical route or been archived.
+      </p>
+
+      <div class="actions-grid">
+        <a href="/" class="btn-primary">
+          <span>Return Home</span> &rarr;
+        </a>
+        <a href="/work/" class="btn-secondary">Selected Work</a>
+        <a href="/dashboard/" class="btn-secondary">Control Dashboard</a>
+        <a href="/contact/" class="btn-secondary">Book Consultation</a>
+      </div>
+
+      <div class="quick-routes-panel">
+        <div class="panel-label">Canonical Discovery Pathways</div>
+        <div class="routes-list">
+          <a href="/work/" class="route-card">
+            <div class="name">Selected Work</div>
+            <div class="path">/work/ &rarr; Case studies & verified KPIs</div>
+          </a>
+          <a href="/capabilities/" class="route-card">
+            <div class="name">Capabilities</div>
+            <div class="path">/capabilities/ &rarr; Core disciplines</div>
+          </a>
+          <a href="/studio/" class="route-card">
+            <div class="name">The Studio</div>
+            <div class="path">/studio/ &rarr; Philosophy & Dubai team</div>
+          </a>
+          <a href="/contact/" class="route-card">
+            <div class="name">Transmit Brief</div>
+            <div class="path">/contact/ &rarr; Project intake & audit</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div>&copy; 2026 Spec Media — Digital Architecture & Growth Systems. Dubai, UAE.</div>
+    <div>System Status: Operational // All Engines Healthy</div>
+  </footer>
+</body>
+</html>

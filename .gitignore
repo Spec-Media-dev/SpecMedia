@@ -21,3 +21,18 @@ staticfiles/
 # OS artifacts
 .DS_Store
 Thumbs.db
+
+# Chrome debug temp and local diagnostic scripts
+.chrome_debug_temp/
+screenshot_*.png
+extracted_*.txt
+test_*.py
+cdp_*.py
+capture_*.py
+check_*.py
+inspect_*.py
+find_*.py
+build_*.py
+unbundler.js
+clean_landing.html
+standalone_test.html

@@ -18,3 +18,14 @@ from django.core.wsgi import get_wsgi_application
 
 application = get_wsgi_application()
 app = application
+
+# If running on Vercel serverless, ensure ephemeral /tmp database is initialized
+if os.getenv('VERCEL'):
+    try:
+        from django.core.management import call_command
+        call_command('migrate', interactive=False)
+        from core.models import SEOPage
+        if SEOPage.objects.count() == 0:
+            call_command('seed_seo_data')
+    except Exception as _e:
+        print("Vercel DB initialization note:", _e)

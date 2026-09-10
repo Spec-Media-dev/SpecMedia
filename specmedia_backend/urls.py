@@ -8,5 +8,7 @@ urlpatterns = [
     path('', include('core.urls')),
 ]
 
+handler404 = 'core.views.custom_404_view'
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
