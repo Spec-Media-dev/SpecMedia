@@ -1,0 +1,23 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local database
+db.sqlite3
+db.sqlite3-journal
+
+# Django static collections
+staticfiles/
+
+# Environment / logs
+*.log
+
+# OS artifacts
+.DS_Store
+Thumbs.db

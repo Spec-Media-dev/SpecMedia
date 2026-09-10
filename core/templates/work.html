@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }}</title>
+  <style>
+    :root {
+      --color-bg: #f5ead8;
+      --color-surface: #ebddc5;
+      --color-text: #201e1d;
+      --color-accent: #c67139;
+      --color-accent-2: #7a8a5e;
+      --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+      --font-heading: "Caprasimo", Georgia, serif;
+      --font-body: "Figtree", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #201e1d; color: #f5ead8; font-family: var(--font-body); min-height: 100vh; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.18em; text-transform: uppercase; font-size: 11px; }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 36px; background: rgba(32,30,29,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(245,234,216,0.08); }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 36px; }
+    .work-card { background: #2e2b25; border-radius: 20px; overflow: hidden; transition: transform 0.4s ease, box-shadow 0.4s ease; border: 1px solid #3d382f; }
+    .work-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    .tag { display: inline-block; padding: 6px 14px; border-radius: 999px; background: rgba(32,30,29,0.7); font-size: 10px; color: #f5ead8; }
+    .btn-primary { display: inline-block; background: #c67139; color: #f5ead8; padding: 12px 28px; border-radius: 999px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; }
+    .btn-primary:hover { background: #b2622d; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="nav">
+    <a href="/" style="display:flex; align-items:center; gap:12px;">
+      <span style="font-family:var(--font-heading); font-size:22px; color:#f5ead8;">SPEC MEDIA</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:24px;" class="mono">
+      <a href="/work/" style="color:#c67139;">[ work ]</a>
+      <a href="/studio/">[ studio ]</a>
+      <a href="/capabilities/">[ capabilities ]</a>
+      <a href="/portal/" style="color:#7a8a5e;">[ portal ]</a>
+      <a href="/#contact" style="color:#c67139;">[ start a project &rarr; ]</a>
+    </div>
+  </header>
+
+  <main style="padding: 140px 36px 80px; max-width: 1400px; margin: 0 auto;">
+    <div style="margin-bottom: 60px;">
+      <div class="mono" style="color:#c67139; margin-bottom:12px;">[ Portfolio Archive ]</div>
+      <h1 style="font-family:var(--font-heading); font-size:clamp(36px, 5.5vw, 84px); line-height:1.02; color:#f5ead8; max-width:14ch;">Work that cuts through the noise.</h1>
+      <p style="margin-top:20px; max-width:44ch; color:#a2937c; line-height:1.8; font-size:15px;">
+        Every campaign, identity, and content system we produce is built to establish cultural presence and long-term brand equity.
+      </p>
+    </div>
+
+    <!-- Filter tags -->
+    <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:48px;" class="mono">
+      <span class="tag" style="background:#c67139; color:#f5ead8;">All Projects (08)</span>
+      <span class="tag">Brand Strategy</span>
+      <span class="tag">Campaign Production</span>
+      <span class="tag">Performance Media</span>
+      <span class="tag">Content Systems</span>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid">
+      <!-- Project 1 -->
+      <article class="work-card" style="grid-column: span 7;">
+        <div style="position:relative; aspect-ratio:16/10; background:#1c1a19; display:grid; place-items:center;">
+          <div style="font-family:ui-monospace,monospace; font-size:12px; color:#645c50;">[ 01 // PAYY NETWORK — 16:10 FILM STILL ]</div>
+          <div style="position:absolute; bottom:16px; left:16px; display:flex; gap:6px;">
+            <span class="tag">Creative Direction</span>
+            <span class="tag">Visual Identity</span>
+            <span class="tag">Motion</span>
+          </div>
+        </div>
+        <div style="padding:28px;">
+          <div class="mono" style="color:#c67139; font-size:10px; margin-bottom:6px;">Fintech / Global</div>
+          <h2 style="font-family:var(--font-heading); font-size:28px; margin-bottom:8px;">Payy Network</h2>
+          <p style="color:#a2937c; font-size:13px; line-height:1.7;">Stablecoin payments designed to feel familiar rather than foreign. Rebuilt their full brand narrative, cinematic rollout film, and customer acquisition engine.</p>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="work-card" style="grid-column: span 5;">
+        <div style="position:relative; aspect-ratio:4/3; background:#3a2415; display:grid; place-items:center;">
+          <div style="font-family:ui-monospace,monospace; font-size:12px; color:#c67139;">[ 02 // GATHER AI — 4:3 BRAND MOCKUP ]</div>
+          <div style="position:absolute; bottom:16px; left:16px; display:flex; gap:6px;">
+            <span class="tag">AI Telephony</span>
+            <span class="tag">Web Design</span>
+          </div>
+        </div>
+        <div style="padding:28px;">
+          <div class="mono" style="color:#c67139; font-size:10px; margin-bottom:6px;">Artificial Intelligence</div>
+          <h2 style="font-family:var(--font-heading); font-size:28px; margin-bottom:8px;">Gather AI</h2>
+          <p style="color:#a2937c; font-size:13px; line-height:1.7;">The world’s first autonomous enterprise telco run end-to-end on LLM infrastructure. Identity and interactive website design.</p>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="work-card" style="grid-column: span 5;">
+        <div style="position:relative; aspect-ratio:4/3; background:#28301f; display:grid; place-items:center;">
+          <div style="font-family:ui-monospace,monospace; font-size:12px; color:#7a8a5e;">[ 03 // HEALWELL — 4:3 SOCIAL SYSTEM ]</div>
+          <div style="position:absolute; bottom:16px; left:16px; display:flex; gap:6px;">
+            <span class="tag">Health & Wellness</span>
+            <span class="tag">Paid Social Film</span>
+          </div>
+        </div>
+        <div style="padding:28px;">
+          <div class="mono" style="color:#7a8a5e; font-size:10px; margin-bottom:6px;">Healthtech</div>
+          <h2 style="font-family:var(--font-heading); font-size:28px; margin-bottom:8px;">Healwell</h2>
+          <p style="color:#a2937c; font-size:13px; line-height:1.7;">High-converting video asset production system for preventative medicine across social and connected TV channels.</p>
+        </div>
+      </article>
+
+      <!-- Project 4 -->
+      <article class="work-card" style="grid-column: span 7;">
+        <div style="position:relative; aspect-ratio:16/10; background:#1e1a22; display:grid; place-items:center;">
+          <div style="font-family:ui-monospace,monospace; font-size:12px; color:#968c7c;">[ 04 // ACQUISITION CORP — 16:10 IDENTITY ]</div>
+          <div style="position:absolute; bottom:16px; left:16px; display:flex; gap:6px;">
+            <span class="tag">Brand Strategy</span>
+            <span class="tag">Content Systems</span>
+          </div>
+        </div>
+        <div style="padding:28px;">
+          <div class="mono" style="color:#c67139; font-size:10px; margin-bottom:6px;">Private Equity</div>
+          <h2 style="font-family:var(--font-heading); font-size:28px; margin-bottom:8px;">Acquisition Corp</h2>
+          <p style="color:#a2937c; font-size:13px; line-height:1.7;">Multi-stage corporate rebranding for a top-tier venture studio consolidating media assets across four continents.</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Call to action -->
+    <div style="margin-top:100px; padding:60px 40px; background:#2e2b25; border-radius:28px; border:1px solid #3d382f; text-align:center;">
+      <div class="mono" style="color:#c67139; margin-bottom:14px;">[ Start Your Project ]</div>
+      <h2 style="font-family:var(--font-heading); font-size:clamp(32px, 4vw, 56px); margin-bottom:20px;">Ready to create your next landmark?</h2>
+      <a href="/#contact" class="btn-primary">Initiate Project Inquiry &rarr;</a>
+    </div>
+  </main>
+
+  <footer style="border-top:1px solid #3d382f; padding:36px; text-align:center; color:#645c50;" class="mono">
+    <span>&copy; 2026 SPEC MEDIA. CONNECTED LIVE TO SUPABASE.</span>
+  </footer>
+
+</body>
+</html>

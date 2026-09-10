@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }}</title>
+  <style>
+    :root {
+      --color-bg: #f5ead8;
+      --color-surface: #ebddc5;
+      --color-text: #201e1d;
+      --color-accent: #c67139;
+      --color-accent-2: #7a8a5e;
+      --font-heading: "Caprasimo", Georgia, serif;
+      --font-body: "Figtree", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #201e1d; color: #f5ead8; font-family: var(--font-body); min-height: 100vh; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.18em; text-transform: uppercase; font-size: 11px; }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 36px; background: rgba(32,30,29,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(245,234,216,0.08); }
+    .cap-box { border-bottom: 1px solid #3d382f; padding: 48px 0; display: grid; grid-template-columns: 280px 1fr 180px; gap: 36px; align-items: start; }
+    @media (max-width: 900px) {
+      .cap-box { grid-template-columns: 1fr; gap: 20px; }
+    }
+    .btn-outline { display: inline-block; padding: 10px 22px; border-radius: 999px; border: 1px solid #c67139; color: #c67139; font-size: 13px; font-weight: 600; text-align: center; }
+    .btn-outline:hover { background: #c67139; color: #f5ead8; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="nav">
+    <a href="/" style="display:flex; align-items:center; gap:12px;">
+      <span style="font-family:var(--font-heading); font-size:22px; color:#f5ead8;">SPEC MEDIA</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:24px;" class="mono">
+      <a href="/work/">[ work ]</a>
+      <a href="/studio/">[ studio ]</a>
+      <a href="/capabilities/" style="color:#c67139;">[ capabilities ]</a>
+      <a href="/portal/" style="color:#7a8a5e;">[ portal ]</a>
+      <a href="/#contact" style="color:#c67139;">[ start a project &rarr; ]</a>
+    </div>
+  </header>
+
+  <main style="padding: 140px 36px 80px; max-width: 1400px; margin: 0 auto;">
+    <div style="margin-bottom: 70px;">
+      <div class="mono" style="color:#c67139; margin-bottom:12px;">[ End-to-End Capabilities ]</div>
+      <h1 style="font-family:var(--font-heading); font-size:clamp(36px, 5.5vw, 84px); line-height:1.02; color:#f5ead8; max-width:14ch;">Four disciplines. One singular focus.</h1>
+      <p style="margin-top:20px; max-width:48ch; color:#a2937c; line-height:1.8; font-size:15px;">
+        We dismantle the boundaries between strategy, cinematic production, paid distribution, and iterative content systems.
+      </p>
+    </div>
+
+    <!-- Capabilities List -->
+    <div>
+      <!-- 01 -->
+      <div class="cap-box">
+        <div>
+          <div class="mono" style="color:#c67139; margin-bottom:8px;">01 // DISCIPLINE</div>
+          <h2 style="font-family:var(--font-heading); font-size:32px;">Brand Strategy</h2>
+        </div>
+        <div style="color:#a2937c; font-size:15px; line-height:1.8;">
+          <p style="margin-bottom:16px;">We establish the core positioning, voice, and visual architecture that define category leaders. From founder narrative synthesis to comprehensive brand guidelines, we design systems that remain iconic over decades.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;" class="mono">
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Market Positioning</span>
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Visual Identity Design</span>
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Verbal & Tone of Voice</span>
+          </div>
+        </div>
+        <div>
+          <a href="/#contact" class="btn-outline">Inquire Service &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 02 -->
+      <div class="cap-box">
+        <div>
+          <div class="mono" style="color:#c67139; margin-bottom:8px;">02 // DISCIPLINE</div>
+          <h2 style="font-family:var(--font-heading); font-size:32px;">Campaign Production</h2>
+        </div>
+        <div style="color:#a2937c; font-size:15px; line-height:1.8;">
+          <p style="margin-bottom:16px;">Cinematic live-action film, high-end 3D motion, and editorial craft produced with an obsession for emotional weight. We handle treatment, casting, sound design, grading, and final asset packaging.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;" class="mono">
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Launch Films</span>
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">3D Motion Graphics</span>
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Editorial & Grade</span>
+          </div>
+        </div>
+        <div>
+          <a href="/#contact" class="btn-outline">Inquire Service &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 03 -->
+      <div class="cap-box">
+        <div>
+          <div class="mono" style="color:#c67139; margin-bottom:8px;">03 // DISCIPLINE</div>
+          <h2 style="font-family:var(--font-heading); font-size:32px;">Performance Media</h2>
+        </div>
+        <div style="color:#a2937c; font-size:15px; line-height:1.8;">
+          <p style="margin-bottom:16px;">Creative that directly scales CAC efficiency and ROAS. We engineer multi-variant ad systems tested against real-time conversion models across Meta, TikTok, YouTube, and Programmatic display.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;" class="mono">
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Paid Social Acquisition</span>
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Creative Variant Testing</span>
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Attribution Architecture</span>
+          </div>
+        </div>
+        <div>
+          <a href="/#contact" class="btn-outline">Inquire Service &rarr;</a>
+        </div>
+      </div>
+
+      <!-- 04 -->
+      <div class="cap-box" style="border-bottom:none;">
+        <div>
+          <div class="mono" style="color:#c67139; margin-bottom:8px;">04 // DISCIPLINE</div>
+          <h2 style="font-family:var(--font-heading); font-size:32px;">Content Systems</h2>
+        </div>
+        <div style="color:#a2937c; font-size:15px; line-height:1.8;">
+          <p style="margin-bottom:16px;">Turnkey always-on content operations for hyper-growth enterprises. Continuous asset pipeline from studio to social, podcasts, interactive web drops, and digital editorial.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;" class="mono">
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Modular Asset Engines</span>
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Social First Video</span>
+            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Interactive Media</span>
+          </div>
+        </div>
+        <div>
+          <a href="/#contact" class="btn-outline">Inquire Service &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer style="border-top:1px solid #3d382f; padding:36px; text-align:center; color:#645c50;" class="mono">
+    <span>&copy; 2026 SPEC MEDIA. REALTIME SUPABASE PIPELINE.</span>
+  </footer>
+
+</body>
+</html>

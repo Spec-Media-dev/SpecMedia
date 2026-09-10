@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }}</title>
+  <style>
+    :root {
+      --color-bg: #f5ead8;
+      --color-surface: #ebddc5;
+      --color-text: #201e1d;
+      --color-accent: #c67139;
+      --color-accent-2: #7a8a5e;
+      --font-heading: "Caprasimo", Georgia, serif;
+      --font-body: "Figtree", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #1a1817; color: #f5ead8; font-family: var(--font-body); min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.18em; text-transform: uppercase; font-size: 11px; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 36px; background: #201e1d; border-bottom: 1px solid #2e2b25; }
+    .stat-card { background: #201e1d; border: 1px solid #2e2b25; border-radius: 16px; padding: 20px; }
+    .stat-val { font-family: var(--font-heading); font-size: 32px; color: #f5ead8; margin-top: 8px; }
+    .table-container { background: #201e1d; border: 1px solid #2e2b25; border-radius: 16px; overflow: hidden; margin-top: 24px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    th { padding: 14px 18px; background: #262321; color: #a2937c; font-size: 10px; font-family: ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; border-bottom: 1px solid #2e2b25; }
+    td { padding: 14px 18px; border-bottom: 1px solid #262321; color: #e0d8c8; }
+    tr:hover td { background: #242220; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 10px; font-family: ui-monospace, monospace; text-transform: uppercase; font-weight: 600; }
+    .badge-new { background: #3a2415; color: #f6a06b; border: 1px solid #8c491a; }
+    .badge-contacted { background: #2a251b; color: #e2a978; border: 1px solid #645c50; }
+    .badge-qualified { background: #28301f; color: #aebf92; border: 1px solid #56633f; }
+    .badge-won { background: #1c3524; color: #6ee7b7; border: 1px solid #059669; }
+    .badge-lost { background: #381a1c; color: #fca5a5; border: 1px solid #991b1b; }
+    .status-select { background: #1a1817; color: #f5ead8; border: 1px solid #3d382f; padding: 4px 8px; border-radius: 6px; font-size: 11px; cursor: pointer; }
+    .btn { padding: 8px 18px; border-radius: 999px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-primary { background: #c67139; color: #f5ead8; }
+    .btn-secondary { background: #2e2b25; color: #c9c0af; border: 1px solid #3d382f; }
+    .btn-secondary:hover { background: #3d382f; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="nav">
+    <div style="display:flex; align-items:center; gap:16px;">
+      <a href="/" style="font-family:var(--font-heading); font-size:20px; color:#f5ead8;">SPEC MEDIA</a>
+      <span class="badge" style="background:#28301f; color:#aebf92; border:1px solid #56633f;">LIVE SUPABASE CRM</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:20px;" class="mono">
+      <a href="/">[ &larr; back to site ]</a>
+      <a href="/work/">[ work ]</a>
+      <a href="/portal/" style="color:#c67139;">[ pipeline dashboard ]</a>
+      <button onclick="refreshData()" class="btn btn-secondary" style="padding:6px 14px;">&orarr; Refresh</button>
+    </div>
+  </header>
+
+  <main style="padding: 36px; max-width: 1500px; margin: 0 auto;">
+    
+    <!-- Header info -->
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom: 32px;">
+      <div>
+        <div class="mono" style="color:#c67139; margin-bottom:6px;">[ Database Pipeline Overview ]</div>
+        <h1 style="font-family:var(--font-heading); font-size:36px;">Client Inquiries & CRM Analytics</h1>
+        <p style="color:#a2937c; font-size:13px; margin-top:4px;">
+          Connected live to Supabase: <span class="mono" style="color:#f5ead8;">https://afbvxvknlgsyinqdcend.supabase.co</span>
+        </p>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <button onclick="openTestLeadModal()" class="btn btn-primary">+ Create Test Lead</button>
+      </div>
+    </div>
+
+    <!-- Pipeline Stats Cards -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:16px; margin-bottom: 32px;">
+      <div class="stat-card">
+        <div class="mono" style="color:#a2937c; font-size:10px;">Total Inquiries</div>
+        <div id="stat-total" class="stat-val">--</div>
+        <div style="font-size:11px; color:#645c50; margin-top:4px;">All records in Supabase</div>
+      </div>
+      <div class="stat-card">
+        <div class="mono" style="color:#f6a06b; font-size:10px;">New Inquiries</div>
+        <div id="stat-new" class="stat-val" style="color:#f6a06b;">--</div>
+        <div style="font-size:11px; color:#645c50; margin-top:4px;">Awaiting triage</div>
+      </div>
+      <div class="stat-card">
+        <div class="mono" style="color:#e2a978; font-size:10px;">Contacted</div>
+        <div id="stat-contacted" class="stat-val" style="color:#e2a978;">--</div>
+        <div style="font-size:11px; color:#645c50; margin-top:4px;">In active outreach</div>
+      </div>
+      <div class="stat-card">
+        <div class="mono" style="color:#aebf92; font-size:10px;">Qualified</div>
+        <div id="stat-qualified" class="stat-val" style="color:#aebf92;">--</div>
+        <div style="font-size:11px; color:#645c50; margin-top:4px;">Budget & fit verified</div>
+      </div>
+      <div class="stat-card">
+        <div class="mono" style="color:#6ee7b7; font-size:10px;">Won / Closed</div>
+        <div id="stat-won" class="stat-val" style="color:#6ee7b7;">--</div>
+        <div style="font-size:11px; color:#645c50; margin-top:4px;">Active studio clients</div>
+      </div>
+      <div class="stat-card">
+        <div class="mono" style="color:#c67139; font-size:10px;">Conversion Rate</div>
+        <div id="stat-rate" class="stat-val" style="color:#c67139;">--%</div>
+        <div style="font-size:11px; color:#645c50; margin-top:4px;">Pipeline efficiency</div>
+      </div>
+    </div>
+
+    <!-- Market Breakdown & Health Grid -->
+    <div style="display:grid; grid-template-columns: 1fr 340px; gap:24px; margin-bottom: 32px;">
+      <!-- Market Share -->
+      <div style="background:#201e1d; border:1px solid #2e2b25; border-radius:16px; padding:24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <div class="mono" style="color:#c67139; font-size:10px;">[ Market Distribution // view_leads_by_market ]</div>
+          <span style="font-size:11px; color:#645c50;" class="mono">Source: PostgreSQL View</span>
+        </div>
+        <div id="market-list" style="display:flex; flex-direction:column; gap:12px;">
+          <div style="color:#645c50; font-size:12px;">Loading market metrics...</div>
+        </div>
+      </div>
+
+      <!-- Backend Connection Box -->
+      <div style="background:#201e1d; border:1px solid #2e2b25; border-radius:16px; padding:24px;">
+        <div class="mono" style="color:#7a8a5e; font-size:10px; margin-bottom:12px;">[ System Health ]</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:12px;">
+          <div style="display:flex; justify-content:space-between;">
+            <span style="color:#a2937c;">Django Backend:</span>
+            <span id="health-django" style="color:#6ee7b7; font-weight:600;">Checking...</span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="color:#a2937c;">Supabase Database:</span>
+            <span id="health-supabase" style="color:#6ee7b7; font-weight:600;">Checking...</span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="color:#a2937c;">REST Endpoint:</span>
+            <span class="mono" style="color:#c9c0af;">/api/contact/</span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="color:#a2937c;">Database Table:</span>
+            <span class="mono" style="color:#c9c0af;">public.leads</span>
+          </div>
+        </div>
+        <div style="margin-top:16px; padding-top:12px; border-top:1px solid #2e2b25;">
+          <a href="/api/health/" target="_blank" class="mono" style="font-size:10px; color:#c67139;">View JSON Health Report &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Filter Controls -->
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px;">
+      <div style="display:flex; gap:8px;" class="mono" id="status-filters">
+        <button onclick="setFilter('')" class="btn btn-secondary filter-btn active" style="background:#c67139; color:#f5ead8;">All</button>
+        <button onclick="setFilter('new')" class="btn btn-secondary filter-btn">New</button>
+        <button onclick="setFilter('contacted')" class="btn btn-secondary filter-btn">Contacted</button>
+        <button onclick="setFilter('qualified')" class="btn btn-secondary filter-btn">Qualified</button>
+        <button onclick="setFilter('won')" class="btn btn-secondary filter-btn">Won</button>
+        <button onclick="setFilter('lost')" class="btn btn-secondary filter-btn">Lost</button>
+      </div>
+      <div>
+        <input id="search-input" onkeyup="filterTable()" type="text" placeholder="Search by name, company, email..." style="background:#201e1d; border:1px solid #2e2b25; border-radius:999px; padding:8px 18px; color:#f5ead8; font-size:12px; width:260px;">
+      </div>
+    </div>
+
+    <!-- Live Leads Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Created</th>
+            <th>Client Name</th>
+            <th>Company</th>
+            <th>Service</th>
+            <th>Market</th>
+            <th>Budget</th>
+            <th>Status (Supabase)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="leads-body">
+          <tr><td colspan="8" style="text-align:center; padding:32px; color:#645c50;">Querying Supabase database...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- Create Test Lead Modal -->
+  <div id="test-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); z-index:9999; place-items:center;">
+    <div style="background:#201e1d; border:1px solid #3d382f; border-radius:20px; padding:32px; max-width:480px; width:90%;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h3 style="font-family:var(--font-heading); font-size:22px;">Insert Test Record</h3>
+        <button onclick="closeTestLeadModal()" style="background:none; border:none; color:#c67139; font-size:20px; cursor:pointer;">&times;</button>
+      </div>
+      <form id="test-form" onsubmit="submitTestLead(event)" style="display:flex; flex-direction:column; gap:12px;">
+        <input type="text" name="name" required placeholder="Name (e.g. Marc Jacobs)" style="background:#1a1817; border:1px solid #3d382f; padding:8px 12px; border-radius:8px; color:#f5ead8;">
+        <input type="email" name="email" required placeholder="Email (e.g. marc@fashion.com)" style="background:#1a1817; border:1px solid #3d382f; padding:8px 12px; border-radius:8px; color:#f5ead8;">
+        <input type="text" name="company" placeholder="Company (e.g. LVMH Luxury)" style="background:#1a1817; border:1px solid #3d382f; padding:8px 12px; border-radius:8px; color:#f5ead8;">
+        <select name="service" style="background:#1a1817; border:1px solid #3d382f; padding:8px 12px; border-radius:8px; color:#f5ead8;">
+          <option value="Brand strategy">Brand strategy</option>
+          <option value="Campaign production">Campaign production</option>
+          <option value="Performance media">Performance media</option>
+          <option value="Content systems">Content systems</option>
+        </select>
+        <input type="text" name="market" placeholder="Market (e.g. us, europe, mena)" style="background:#1a1817; border:1px solid #3d382f; padding:8px 12px; border-radius:8px; color:#f5ead8;">
+        <textarea name="message" rows="2" placeholder="Message / Brief notes..." style="background:#1a1817; border:1px solid #3d382f; padding:8px 12px; border-radius:8px; color:#f5ead8;"></textarea>
+        <button type="submit" class="btn btn-primary" style="margin-top:8px; justify-content:center;">Write to Supabase &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentFilter = '';
+    let leadsData = [];
+
+    async function refreshData() {
+      await Promise.all([
+        fetchHealth(),
+        fetchPipelineStats(),
+        fetchMarketStats(),
+        fetchLeads()
+      ]);
+    }
+
+    async function fetchHealth() {
+      try {
+        const res = await fetch('/api/health/');
+        const data = await res.json();
+        document.getElementById('health-django').textContent = data.django === 'ok' ? 'Online 200 OK' : 'Error';
+        const sb = data.supabase;
+        document.getElementById('health-supabase').textContent = sb.status === 'healthy' ? 'Connected (PostgreSQL)' : 'Degraded';
+      } catch (e) {
+        document.getElementById('health-django').textContent = 'Error';
+        document.getElementById('health-supabase').textContent = 'Offline';
+      }
+    }
+
+    async function fetchPipelineStats() {
+      try {
+        const res = await fetch('/api/stats/pipeline/');
+        const json = await res.json();
+        const p = json.pipeline || {};
+        document.getElementById('stat-total').textContent = p.total_leads ?? 0;
+        document.getElementById('stat-new').textContent = p.count_new ?? 0;
+        document.getElementById('stat-contacted').textContent = p.count_contacted ?? 0;
+        document.getElementById('stat-qualified').textContent = p.count_qualified ?? 0;
+        document.getElementById('stat-won').textContent = p.count_won ?? 0;
+        document.getElementById('stat-rate').textContent = (p.qualification_rate_percent ?? 0) + '%';
+      } catch (e) {
+        console.error("Failed to load pipeline stats:", e);
+      }
+    }
+
+    async function fetchMarketStats() {
+      try {
+        const res = await fetch('/api/stats/market/');
+        const json = await res.json();
+        const markets = json.markets || [];
+        const container = document.getElementById('market-list');
+        if (!markets.length) {
+          container.innerHTML = '<div style="color:#645c50; font-size:12px;">No market data yet.</div>';
+          return;
+        }
+        container.innerHTML = markets.map(m => `
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+              <span style="text-transform:capitalize; font-weight:600; color:#e0d8c8;">${m.market || 'Global'}</span>
+              <span class="mono" style="color:#c67139;">${m.lead_count} leads (${m.share_percentage || 0}%)</span>
+            </div>
+            <div style="height:4px; background:#2e2b25; border-radius:999px; overflow:hidden;">
+              <div style="height:100%; width:${Math.min(100, m.share_percentage || 20)}%; background:#c67139;"></div>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        console.error("Failed to load market stats:", e);
+      }
+    }
+
+    async function fetchLeads() {
+      const tbody = document.getElementById('leads-body');
+      try {
+        let url = '/api/leads/?limit=100';
+        if (currentFilter) url += '&status=' + currentFilter;
+        const res = await fetch(url);
+        const json = await res.json();
+        leadsData = json.results || [];
+        renderLeadsTable(leadsData);
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#fca5a5;">Failed to load leads from Supabase.</td></tr>';
+      }
+    }
+
+    function renderLeadsTable(list) {
+      const tbody = document.getElementById('leads-body');
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:32px; color:#645c50;">No leads found in this view.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(item => {
+        const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString(undefined, {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}) : 'N/A';
+        const st = (item.status || 'new').toLowerCase();
+        let badgeClass = 'badge-new';
+        if (st === 'contacted') badgeClass = 'badge-contacted';
+        if (st === 'qualified') badgeClass = 'badge-qualified';
+        if (st === 'won') badgeClass = 'badge-won';
+        if (st === 'lost') badgeClass = 'badge-lost';
+
+        return `
+          <tr>
+            <td class="mono" style="font-size:11px; color:#a2937c;">${dateStr}</td>
+            <td>
+              <div style="font-weight:600; color:#f5ead8;">${escapeHtml(item.name || 'Anonymous')}</div>
+              <div style="font-size:11px; color:#a2937c;">${escapeHtml(item.email || '')}</div>
+            </td>
+            <td>${escapeHtml(item.company || '—')}</td>
+            <td><span class="mono" style="font-size:11px; color:#c67139;">${escapeHtml(item.service || 'General')}</span></td>
+            <td style="text-transform:capitalize;">${escapeHtml(item.market || 'Global')}</td>
+            <td>${escapeHtml(item.budget || '—')}</td>
+            <td>
+              <select class="status-select" onchange="updateLeadStatus('${item.id}', this.value)">
+                <option value="new" ${st==='new'?'selected':''}>NEW</option>
+                <option value="contacted" ${st==='contacted'?'selected':''}>CONTACTED</option>
+                <option value="qualified" ${st==='qualified'?'selected':''}>QUALIFIED</option>
+                <option value="won" ${st==='won'?'selected':''}>WON</option>
+                <option value="lost" ${st==='lost'?'selected':''}>LOST</option>
+              </select>
+            </td>
+            <td>
+              <a href="mailto:${escapeHtml(item.email || '')}" class="mono" style="color:#c67139; font-size:11px;" title="${escapeHtml(item.message || 'No notes')}">[ email &rarr; ]</a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function updateLeadStatus(id, newStatus) {
+      try {
+        const res = await fetch(`/api/leads/${id}/`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        });
+        if (res.ok) {
+          fetchPipelineStats();
+        }
+      } catch (e) {
+        alert("Failed to update status in Supabase: " + e.message);
+      }
+    }
+
+    function setFilter(st) {
+      currentFilter = st;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.style.background = '#2e2b25';
+        btn.style.color = '#c9c0af';
+      });
+      event.target.style.background = '#c67139';
+      event.target.style.color = '#f5ead8';
+      fetchLeads();
+    }
+
+    function filterTable() {
+      const q = document.getElementById('search-input').value.toLowerCase();
+      const filtered = leadsData.filter(item => {
+        return (item.name && item.name.toLowerCase().includes(q)) ||
+               (item.email && item.email.toLowerCase().includes(q)) ||
+               (item.company && item.company.toLowerCase().includes(q)) ||
+               (item.service && item.service.toLowerCase().includes(q));
+      });
+      renderLeadsTable(filtered);
+    }
+
+    function openTestLeadModal() {
+      document.getElementById('test-modal').style.display = 'grid';
+    }
+    function closeTestLeadModal() {
+      document.getElementById('test-modal').style.display = 'none';
+    }
+
+    async function submitTestLead(e) {
+      e.preventDefault();
+      const form = document.getElementById('test-form');
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.form_type = 'portal_test';
+      try {
+        const res = await fetch('/api/contact/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const json = await res.json();
+        if (res.ok && json.success) {
+          closeTestLeadModal();
+          form.reset();
+          refreshData();
+        } else {
+          alert(json.message || 'Error creating test lead');
+        }
+      } catch (err) {
+        alert('Network error: ' + err.message);
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Initial load
+    refreshData();
+  </script>
+
+</body>
+</html>
