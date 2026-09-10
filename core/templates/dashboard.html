@@ -5,26 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Control Dashboard — Spec Media SEO, Branding & Portfolio CMS</title>
   <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" href="{% if site_settings.favicon_image %}{{ site_settings.favicon_image }}{% else %}data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>{% endif %}">
+  <link rel="icon" href="{% if site_settings.favicon_image %}{{ site_settings.favicon_image }}{% else %}data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%239e1b24%22>S</text></svg>{% endif %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0f0e0d;
-      --surface: #181716;
-      --surface-elevated: #22201e;
+      --bg: #0e0d0c;
+      --surface: #171514;
+      --surface-elevated: #201e1c;
       --border: rgba(245, 234, 216, 0.1);
-      --border-focus: #c67139;
+      --border-focus: #c51f2e;
       --text: #f5ead8;
       --text-muted: #9c9589;
       --text-subtle: #6b665e;
-      --accent: #c67139;
-      --accent-glow: rgba(198, 113, 57, 0.25);
+      --accent: #9e1b24;
+      --accent-bright: #c51f2e;
+      --accent-dark: #6b0f14;
+      --accent-glow: rgba(158, 27, 36, 0.35);
       --success: #22c55e;
       --danger: #ef4444;
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Lora', Georgia, serif;
       --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,7 +36,7 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--font-sans);
+      font-family: var(--font-body);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -42,7 +46,7 @@
     .top-bar {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 16px 32px;
+      padding: 14px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -58,9 +62,9 @@
     }
 
     .brand-logo {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      letter-spacing: 0.15em;
+      font-family: var(--font-heading);
+      font-size: 18px;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--text);
       text-decoration: none;
@@ -69,13 +73,13 @@
       gap: 10px;
     }
 
-    .brand-logo span { color: var(--accent); }
+    .brand-logo span.dot { color: var(--accent); }
 
     .brand-logo-img {
       max-height: 28px;
       max-width: 140px;
       object-fit: contain;
-      filter: drop-shadow(0 0 10px rgba(198, 113, 57, 0.4));
+      filter: drop-shadow(0 0 10px rgba(158, 27, 36, 0.4));
     }
 
     .system-status {
@@ -116,9 +120,7 @@
       border: 1px solid var(--border);
     }
 
-    .operator-badge strong {
-      color: var(--text);
-    }
+    .operator-badge strong { color: var(--text); }
 
     .btn-site {
       font-family: var(--font-mono);
@@ -126,7 +128,7 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       text-decoration: none;
-      color: var(--accent);
+      color: var(--accent-bright);
       border: 1px solid var(--border);
       padding: 6px 14px;
       border-radius: 6px;
@@ -160,35 +162,36 @@
       max-width: 1440px;
       width: 100%;
       margin: 0 auto;
-      padding: 32px;
+      padding: 28px 32px;
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 24px;
     }
 
-    /* Tabs Header */
+    /* Section Tabs Header */
     .tabs-header {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 16px;
+      padding-bottom: 14px;
       overflow-x: auto;
+      scrollbar-width: none;
     }
 
     .tab-btn {
       background: transparent;
       border: 1px solid transparent;
       color: var(--text-muted);
-      font-family: var(--font-mono);
+      font-family: var(--font-sans);
       font-size: 13px;
-      padding: 10px 18px;
+      font-weight: 500;
+      padding: 9px 16px;
       border-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       transition: all 0.2s ease;
-      letter-spacing: 0.04em;
       white-space: nowrap;
     }
 
@@ -201,13 +204,15 @@
       color: var(--text);
       background: var(--surface-elevated);
       border-color: var(--border);
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      font-weight: 600;
     }
 
     .tab-btn .count-badge {
+      font-family: var(--font-mono);
       font-size: 11px;
       background: rgba(245, 234, 216, 0.1);
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 999px;
       color: var(--text);
     }
@@ -221,22 +226,22 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    /* Top Stats Grid */
+    /* Cards & Grids */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 20px 24px;
+      padding: 20px 22px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .stat-card .label {
@@ -248,65 +253,201 @@
     }
 
     .stat-card .value {
+      font-family: var(--font-heading);
       font-size: 24px;
-      font-weight: 700;
       color: var(--text);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     .stat-card .sub {
       font-size: 12px;
-      color: var(--accent);
+      color: var(--text-muted);
     }
 
-    /* Action Bar */
-    .action-bar {
+    .card-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .card-box-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
     }
 
-    .search-input {
-      background: var(--surface);
+    .card-box-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tag-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent-bright);
+      background: rgba(158, 27, 36, 0.14);
+      border: 1px solid rgba(158, 27, 36, 0.3);
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Forms & Inputs */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    .form-input, .form-textarea, .form-select {
+      background: var(--surface-elevated);
       border: 1px solid var(--border);
       color: var(--text);
       font-family: var(--font-sans);
       font-size: 13px;
-      padding: 10px 16px;
+      padding: 10px 14px;
       border-radius: 8px;
-      width: 320px;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    .search-input:focus { border-color: var(--border-focus); }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .form-textarea { resize: vertical; min-height: 80px; }
+
+    /* Dual Upload + Link Box Component */
+    .dual-media-box {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .dropzone-trigger {
+      border: 1.5px dashed rgba(245, 234, 216, 0.18);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    .dropzone-trigger:hover, .dropzone-trigger.dragover {
+      border-color: var(--accent-bright);
+      background: rgba(158, 27, 36, 0.08);
+    }
+
+    .dropzone-trigger input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .preview-thumb-container {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+
+    .preview-thumb-img {
+      width: 56px;
+      height: 56px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+    }
 
     .btn-action {
       background: var(--accent);
       color: #fff;
-      font-family: var(--font-mono);
+      font-family: var(--font-sans);
       font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       border: none;
       padding: 10px 20px;
       border-radius: 8px;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
       transition: all 0.2s;
     }
-
     .btn-action:hover {
-      background: #d47e45;
-      transform: translateY(-1px);
+      background: var(--accent-bright);
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      background: var(--surface-elevated);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-danger-sm {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-danger-sm:hover {
+      background: var(--danger);
+      color: #fff;
     }
 
     /* Tables */
@@ -325,7 +466,7 @@
 
     th {
       background: var(--surface-elevated);
-      padding: 14px 20px;
+      padding: 12px 18px;
       font-family: var(--font-mono);
       font-size: 11px;
       text-transform: uppercase;
@@ -335,7 +476,7 @@
     }
 
     td {
-      padding: 14px 20px;
+      padding: 14px 18px;
       font-size: 13px;
       border-bottom: 1px solid var(--border);
       color: var(--text);
@@ -345,76 +486,42 @@
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
-    .route-badge {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      background: rgba(198, 113, 57, 0.12);
-      border: 1px solid rgba(198, 113, 57, 0.25);
-      color: var(--accent);
-      padding: 4px 10px;
-      border-radius: 6px;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 999px;
-    }
-
-    .status-pill.indexable { background: rgba(34, 197, 94, 0.1); color: var(--success); border: 1px solid rgba(34, 197, 94, 0.2); }
-    .status-pill.noindex { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); }
-    .status-pill.featured { background: rgba(198, 113, 57, 0.15); color: var(--accent); border: 1px solid rgba(198, 113, 57, 0.3); }
-
-    .btn-table-edit, .btn-table-del {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      background: var(--surface-elevated);
-      color: var(--text);
-      transition: all 0.2s;
-    }
-
-    .btn-table-edit:hover { border-color: var(--accent); color: var(--accent); }
-    .btn-table-del:hover { border-color: var(--danger); color: var(--danger); }
-
     /* Modals */
-    .modal-overlay {
+    .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
+      background: rgba(14, 13, 12, 0.85);
+      backdrop-filter: blur(12px);
       z-index: 1000;
-      padding: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      padding: 20px;
     }
 
-    .modal-overlay.active { display: flex; }
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-    .modal-card {
+    .modal-content {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 14px;
+      max-width: 680px;
       width: 100%;
-      max-width: 760px;
       max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);
       display: flex;
       flex-direction: column;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
-      overflow: hidden;
     }
 
     .modal-header {
-      padding: 20px 24px;
+      padding: 18px 24px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -422,8 +529,8 @@
     }
 
     .modal-title {
-      font-size: 16px;
-      font-weight: 600;
+      font-family: var(--font-heading);
+      font-size: 20px;
       color: var(--text);
     }
 
@@ -431,19 +538,17 @@
       background: none;
       border: none;
       color: var(--text-muted);
-      font-size: 20px;
+      font-size: 22px;
       cursor: pointer;
       line-height: 1;
     }
-
     .modal-close:hover { color: var(--text); }
 
     .modal-body {
       padding: 24px;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
     .modal-footer {
@@ -455,162 +560,78 @@
       background: var(--surface-elevated);
     }
 
-    .form-group {
+    /* Partner Cards Grid in Dashboard */
+    .partner-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .partner-dash-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-    }
-
-    .form-group label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .form-group label .char-counter {
-      color: var(--accent);
-    }
-
-    .form-input, .form-textarea, .form-select {
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 14px;
-      color: var(--text);
-      font-family: var(--font-sans);
-      font-size: 13px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-input:focus, .form-textarea:focus, .form-select:focus {
-      border-color: var(--border-focus);
-    }
-
-    .form-textarea { resize: vertical; min-height: 80px; }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-secondary:hover { color: var(--text); border-color: var(--text-muted); }
-
-    /* Dropzones & Media Previews */
-    .dropzone-box {
-      border: 2px dashed var(--border);
-      border-radius: 10px;
-      padding: 20px 16px;
-      text-align: center;
-      background: var(--surface-elevated);
-      cursor: pointer;
-      transition: all 0.2s ease;
+      gap: 12px;
       position: relative;
     }
-    .dropzone-box:hover, .dropzone-box.dragover {
-      border-color: var(--accent);
-      background: rgba(198, 113, 57, 0.08);
-    }
-    .dropzone-box input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-    }
 
-    .preview-box {
-      margin-top: 10px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      background: #0b0a09;
+    .partner-dash-thumb {
+      width: 100%;
+      height: 90px;
+      background: #11100f;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 70px;
-      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px;
     }
-    .preview-box img {
-      max-height: 80px;
+
+    .partner-dash-thumb img {
+      max-height: 100%;
       max-width: 100%;
       object-fit: contain;
     }
-    .preview-box video {
-      max-height: 160px;
-      max-width: 100%;
-      border-radius: 6px;
-    }
 
-    .browser-mock {
-      background: #000;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      max-width: 260px;
-    }
-    .browser-mock img {
-      width: 18px;
-      height: 18px;
-      object-fit: contain;
-    }
-
-    .branding-grid {
+    /* Capabilities Gallery Grid */
+    .cap-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    @media (max-width: 960px) {
-      .branding-grid { grid-template-columns: 1fr; }
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
     }
 
-    .branding-card {
+    .cap-box {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Instagram Reviews Dashboard Grid */
+    .review-dash-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
       gap: 18px;
     }
 
-    .branding-card-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
+    .review-dash-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
+      flex-direction: column;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
     }
 
-    .branding-card-title span.tag {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--accent);
-      background: rgba(198, 113, 57, 0.12);
-      border: 1px solid rgba(198, 113, 57, 0.25);
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-
-    /* Toast */
+    /* Toast Notification */
     .toast {
       position: fixed;
       bottom: 24px;
@@ -621,7 +642,7 @@
       padding: 14px 20px;
       border-radius: 8px;
       font-size: 13px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
       z-index: 2000;
       transform: translateY(100px);
       opacity: 0;
@@ -641,11 +662,11 @@
         {% if site_settings.logo_image %}
           <img src="{{ site_settings.logo_image }}" alt="{{ site_settings.site_name }}" class="brand-logo-img">
         {% else %}
-          <span>{{ site_settings.site_name|default:"SPEC MEDIA" }}</span>
+          <span>{{ site_settings.site_name|default:"SPEC MEDIA" }}</span><span class="dot">.</span>
         {% endif %}
-        <span style="opacity:0.4; font-size:11px;">// CONTROL PANEL</span>
+        <span style="font-family: var(--font-mono); opacity:0.4; font-size:11px; margin-left: 6px;">// CMS CONTROL PANEL</span>
       </a>
-      <div class="system-status">System Operational</div>
+      <div class="system-status">Live Production Ready</div>
     </div>
     <div class="nav-links">
       <span class="operator-badge">
@@ -659,524 +680,914 @@
   <!-- Dashboard Main Container -->
   <div class="dashboard-container">
 
-    <!-- Navigation Tabs -->
+    <!-- Section Navigation Tabs -->
+    <!-- Section Navigation Tabs -->
     <div class="tabs-header">
-      <button class="tab-btn active" onclick="switchTab('branding')">
-        <span>🎨 Branding & Landing CMS</span>
+      <button class="tab-btn active" onclick="switchTab('hero')">
+        <span>🎬 01. Hero &amp; Scene 01</span>
       </button>
-      <button class="tab-btn" onclick="switchTab('seo')">
-        <span>🌐 SEO Control Center</span>
-        <span class="count-badge" id="seo-count">{{ seo_pages.count }}</span>
+      <button class="tab-btn" onclick="switchTab('scene2')">
+        <span>🧠 02. Scene 02 / Brain Scrub</span>
       </button>
       <button class="tab-btn" onclick="switchTab('works')">
-        <span>⚡ Works & Portfolio CMS</span>
-        <span class="count-badge" id="works-count">{{ works.count }}</span>
+        <span>💼 03. Selected Works</span>
+        <span class="count-badge">{{ works.count }}</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('reel')">
+        <span>🎞️ 04. The Reel &amp; Partners</span>
+        <span class="count-badge" id="badge-partners-count">{{ site_settings.partner_logos|length|default:"7" }}</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('capabilities')">
+        <span>⚡ 05. Capabilities</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('studio')">
+        <span>🏛️ 06. Studio &amp; Ethos</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('reviews')">
+        <span>⭐ 07. Instagram Reviews</span>
+        <span class="count-badge" id="badge-reviews-count">{{ site_settings.client_reviews|length|default:"4" }}</span>
       </button>
       <button class="tab-btn" onclick="switchTab('leads')">
-        <span>📥 Inbound Leads CRM</span>
-        <span class="count-badge" id="leads-count">{{ leads_count|default:"Live" }}</span>
+        <span>📥 08. Inbound Leads CRM</span>
+        <span class="count-badge" id="badge-leads-count">{{ leads_count|default:"0" }}</span>
       </button>
-      <button class="tab-btn" onclick="switchTab('diagnostics')">
-        <span>🔍 Technical SEO & Sitemaps</span>
+      <button class="tab-btn" onclick="switchTab('branding')">
+        <span>🎨 Global Branding &amp; SEO</span>
+        <span class="count-badge">{{ seo_pages.count }}</span>
       </button>
     </div>
 
-    <!-- TAB 1: BRANDING & LANDING CMS -->
-    <div id="tab-branding" class="tab-panel active">
+    <!-- ============================================================= -->
+    <!-- TAB 1: HERO & SCENE 01 -->
+    <!-- ============================================================= -->
+    <div id="tab-hero" class="tab-panel active">
       <div class="stats-grid">
-        <div class="stat-card">
-          <div class="label">Site Brand Title</div>
-          <div class="value" id="stat-site-name">{{ site_settings.site_name|default:"SPEC MEDIA" }}</div>
-          <div class="sub">Global header & document title</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Dynamic Logo Asset</div>
-          <div class="value">{% if site_settings.logo_image %}Custom Active{% else %}Default Scalable{% endif %}</div>
-          <div class="sub">Kinetic glow & hover effect on home</div>
-        </div>
         <div class="stat-card">
           <div class="label">Hero Media Mode</div>
           <div class="value" id="stat-hero-mode" style="text-transform: capitalize;">{{ site_settings.hero_media_type|default:"canvas" }}</div>
-          <div class="sub">Landing hero background system</div>
+          <div class="sub">Kinetic WebGL Scrubbing Engine</div>
         </div>
         <div class="stat-card">
-          <div class="label">Managed SEO Entities</div>
-          <div class="value">{{ seo_pages.count }} Routes</div>
-          <div class="sub">Dubai, UAE & MENA canonicals</div>
+          <div class="label">First Scene Theme</div>
+          <div class="value">Light &rarr; Dark</div>
+          <div class="sub">Warm cream canvas interpolating to deep obsidian</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Logo Reveal</div>
+          <div class="value">Kinetic Stagger</div>
+          <div class="sub">Hidden by default &middot; Character-by-character reveal</div>
         </div>
       </div>
 
-      <form id="branding-form" onsubmit="saveBrandingSettings(event)">
-        <div class="branding-grid">
-          
-          <!-- Column 1: Identity, Logo & Favicon -->
-          <div style="display: flex; flex-direction: column; gap: 24px;">
-            
-            <!-- Card 1: Logo Management -->
-            <div class="branding-card">
-              <div class="branding-card-title">
-                <span>Site Logo Asset</span>
-                <span class="tag">Site-Wide Master Logo</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
-                Replaces the logo across all pages (Home, Work, Studio, Capabilities, Portal, 404, Dashboard, Login) and applies kinetic lighting & hover effects on the homepage.
-              </p>
-
-              <div class="dropzone-box" id="logo-dropzone">
-                <input type="file" id="logo-file-input" accept="image/*" onchange="handleLogoUpload(event)">
-                <div style="font-size: 24px; margin-bottom: 6px;">📁</div>
-                <div style="font-size: 13px; font-weight: 600; color: var(--text);">Drag & Drop Logo Image Here</div>
-                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Supports PNG, SVG, JPG, WebP (Transparent recommended)</div>
-              </div>
-
-              <div class="preview-box">
-                <img id="logo-preview" src="{{ site_settings.logo_image|default:'' }}" alt="Logo Preview" style="{% if not site_settings.logo_image %}display:none;{% endif %}">
-                <span id="logo-empty-text" style="font-size: 12px; color: var(--text-muted); {% if site_settings.logo_image %}display:none;{% endif %}">
-                  No custom logo uploaded (Default Spec Media SVG active)
-                </span>
-              </div>
-
-              <div class="form-group">
-                <label>Direct Logo Data URI or URL</label>
-                <input type="text" class="form-input" id="setting-logo-image" name="logo_image" value="{{ site_settings.logo_image|default:'' }}" placeholder="data:image/png;base64,... or https://...">
-              </div>
-
-              <div class="form-group">
-                <label>Site Brand Name</label>
-                <input type="text" class="form-input" id="setting-site-name" name="site_name" value="{{ site_settings.site_name|default:'SPEC MEDIA' }}" placeholder="SPEC MEDIA">
-              </div>
-            </div>
-
-            <!-- Card 2: Favicon Management -->
-            <div class="branding-card">
-              <div class="branding-card-title">
-                <span>Browser Favicon</span>
-                <span class="tag">Tab Icon</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
-                Upload the browser tab icon used across every page on Spec Media.
-              </p>
-
-              <div class="dropzone-box" id="favicon-dropzone">
-                <input type="file" id="favicon-file-input" accept="image/*,.ico" onchange="handleFaviconUpload(event)">
-                <div style="font-size: 20px; margin-bottom: 4px;">🔖</div>
-                <div style="font-size: 13px; font-weight: 600; color: var(--text);">Upload Favicon File</div>
-                <div style="font-size: 11px; color: var(--text-muted);">PNG, ICO, or SVG (32x32 or 64x64)</div>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">Browser Tab Mockup:</div>
-                <div class="browser-mock">
-                  <img id="favicon-preview" src="{{ site_settings.favicon_image|default:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>' }}" alt="Favicon">
-                  <span style="font-size: 11px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Spec Media — Dubai</span>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label>Direct Favicon Data URI or URL</label>
-                <input type="text" class="form-input" id="setting-favicon-image" name="favicon_image" value="{{ site_settings.favicon_image|default:'' }}" placeholder="data:image/... or https://...">
-              </div>
-            </div>
-
-            <!-- Card 3: Contact Coordinates -->
-            <div class="branding-card">
-              <div class="branding-card-title">
-                <span>Global Contact Coordinates</span>
-                <span class="tag">Footer & Contact Drawer</span>
-              </div>
-              <div class="form-group">
-                <label>Inquiries Email</label>
-                <input type="email" class="form-input" id="setting-contact-email" name="contact_email" value="{{ site_settings.contact_email|default:'hello@specmedia.co' }}">
-              </div>
-              <div class="form-group">
-                <label>Direct Phone</label>
-                <input type="text" class="form-input" id="setting-contact-phone" name="contact_phone" value="{{ site_settings.contact_phone|default:'+971 4 000 0000' }}">
-              </div>
-              <div class="form-group">
-                <label>Physical Address</label>
-                <input type="text" class="form-input" id="setting-contact-address" name="contact_address" value="{{ site_settings.contact_address|default:'Dubai Design District, Building 3, Dubai, UAE' }}">
-              </div>
-            </div>
-
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">
+            <span>Hero &amp; Scene 01 Content Controls</span>
+            <span class="tag-badge">Section 01</span>
           </div>
-
-          <!-- Column 2: Landing Page Hero & Media CMS -->
-          <div style="display: flex; flex-direction: column; gap: 24px;">
-
-            <!-- Card 4: Landing Page Hero Copy -->
-            <div class="branding-card">
-              <div class="branding-card-title">
-                <span>Landing Page Hero Copy</span>
-                <span class="tag">Hero Section 01</span>
-              </div>
-
-              <div class="form-group">
-                <label>Hero Headline</label>
-                <input type="text" class="form-input" id="setting-hero-headline" name="hero_headline" value="{{ site_settings.hero_headline|default:'You feel the brand before it speaks®' }}" placeholder="You feel the brand before it speaks®">
-              </div>
-
-              <div class="form-group">
-                <label>Hero Subheadline (Brand Narrative)</label>
-                <textarea class="form-textarea" id="setting-hero-subheadline" name="hero_subheadline" style="min-height: 100px;">{{ site_settings.hero_subheadline|default:'Placeholder copy. Spec Media builds campaigns for companies that care how things feel and how they are perceived over time.' }}</textarea>
-              </div>
-
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                <div class="form-group">
-                  <label>Hero Badge</label>
-                  <input type="text" class="form-input" id="setting-hero-badge" name="hero_badge" value="{{ site_settings.hero_badge|default:'01 / HERO' }}">
-                </div>
-                <div class="form-group">
-                  <label>Hero CTA Scroll Text</label>
-                  <input type="text" class="form-input" id="setting-hero-cta" name="hero_cta_text" value="{{ site_settings.hero_cta_text|default:'[ SCROLL DOWN ]' }}">
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 5: Hero Photo / Video Media Control -->
-            <div class="branding-card">
-              <div class="branding-card-title">
-                <span>Hero Media & Showcase Engine</span>
-                <span class="tag">Visual System</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
-                Control what visual media powers the landing hero showcase: the original procedural kinetic canvas engine, a high-resolution custom photo, or a custom background video loop.
-              </p>
-
-              <div class="form-group">
-                <label>Hero Media Engine Type</label>
-                <select class="form-select" id="setting-hero-media-type" name="hero_media_type" onchange="updateHeroMediaType(this.value)">
-                  <option value="canvas" {% if site_settings.hero_media_type == 'canvas' %}selected{% endif %}>Procedural Kinetic Canvas Engine (WebGL Shaders)</option>
-                  <option value="image" {% if site_settings.hero_media_type == 'image' %}selected{% endif %}>Custom Photo / Graphic Showcase</option>
-                  <option value="video" {% if site_settings.hero_media_type == 'video' %}selected{% endif %}>Custom Video Loop Showcase</option>
-                </select>
-              </div>
-
-              <div class="dropzone-box" id="hero-media-dropzone">
-                <input type="file" id="hero-media-file-input" accept="image/*,video/*" onchange="handleHeroMediaUpload(event)">
-                <div style="font-size: 24px; margin-bottom: 6px;">🎬</div>
-                <div style="font-size: 13px; font-weight: 600; color: var(--text);">Upload Hero Photo or Video</div>
-                <div style="font-size: 11px; color: var(--text-muted);">MP4, WebM, PNG, JPG, WebP (up to 30MB)</div>
-              </div>
-
-              <div class="preview-box" id="hero-media-preview-container">
-                <img id="hero-image-preview" src="{% if site_settings.hero_media_type == 'image' %}{{ site_settings.hero_media_url }}{% endif %}" style="{% if site_settings.hero_media_type != 'image' or not site_settings.hero_media_url %}display:none;{% endif %}; max-height:160px; object-fit:cover; border-radius:6px;">
-                <video id="hero-video-preview" src="{% if site_settings.hero_media_type == 'video' %}{{ site_settings.hero_media_url }}{% endif %}" autoplay muted loop playsinline controls style="{% if site_settings.hero_media_type != 'video' or not site_settings.hero_media_url %}display:none;{% endif %}"></video>
-                <span id="hero-media-placeholder" style="font-size: 12px; color: var(--text-muted); {% if site_settings.hero_media_url and site_settings.hero_media_type != 'canvas' %}display:none;{% endif %}">
-                  Using default kinetic WebGL canvas shaders
-                </span>
-              </div>
-
-              <div class="form-group">
-                <label>Direct Media URL or Data URI</label>
-                <input type="text" class="form-input" id="setting-hero-media-url" name="hero_media_url" value="{{ site_settings.hero_media_url|default:'' }}" placeholder="data:... or https://...">
-              </div>
-            </div>
-
-            <!-- Sticky Save Bar -->
-            <div style="background: var(--surface); border: 1px solid var(--accent); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-weight: 600; font-size: 14px; color: var(--text);">Deploy Branding Changes</div>
-                <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Immediately synchronizes logo, favicon, and hero across live site</div>
-              </div>
-              <button type="submit" class="btn-action" style="padding: 12px 28px;">
-                <span>Save All Changes &rarr;</span>
-              </button>
-            </div>
-
-          </div>
-
-        </div>
-      </form>
-    </div>
-
-    <!-- TAB 2: SEO CONTROL CENTER -->
-    <div id="tab-seo" class="tab-panel">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="label">Indexed Canonical Routes</div>
-          <div class="value">{{ seo_pages.count }}</div>
-          <div class="sub">Dubai, UAE & MENA entities mapped</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Primary Market Focus</div>
-          <div class="value">Dubai / UAE</div>
-          <div class="sub">High-intent commercial intent</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Structured Schema</div>
-          <div class="value">100% Valid</div>
-          <div class="sub">Organization, Service, BreadcrumbList</div>
-        </div>
-      </div>
-
-      <div class="action-bar">
-        <input type="text" class="search-input" id="search-seo" placeholder="Search routes or keywords..." onkeyup="filterSEO()">
-        <button class="btn-action" onclick="openAddSEOModal()">+ Add New SEO Route</button>
-      </div>
-
-      <div class="table-wrapper">
-        <table id="seo-table">
-          <thead>
-            <tr>
-              <th>Canonical Route</th>
-              <th>Page Name</th>
-              <th>Meta Title</th>
-              <th>Primary Keyword</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for page in seo_pages %}
-            <tr data-route="{{ page.route_path }}" data-title="{{ page.meta_title }}" data-keyword="{{ page.primary_keyword }}">
-              <td><span class="route-badge">{{ page.route_path }}</span></td>
-              <td><strong>{{ page.page_name }}</strong></td>
-              <td style="max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                {{ page.meta_title }}
-              </td>
-              <td><span style="color: var(--accent);">{{ page.primary_keyword }}</span></td>
-              <td>
-                {% if page.is_indexable %}
-                  <span class="status-pill indexable">Indexable</span>
-                {% else %}
-                  <span class="status-pill noindex">NoIndex</span>
-                {% endif %}
-              </td>
-              <td>
-                <button class="btn-table-edit" onclick="editSEO({{ page.id }})">Edit SEO</button>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 3: WORKS & PORTFOLIO CMS -->
-    <div id="tab-works" class="tab-panel">
-      <div class="action-bar">
-        <input type="text" class="search-input" id="search-works" placeholder="Search projects by client or title..." onkeyup="filterWorks()">
-        <button class="btn-action" onclick="openAddWorkModal()">+ Add New Work / Case Study</button>
-      </div>
-
-      <div class="table-wrapper">
-        <table id="works-table">
-          <thead>
-            <tr>
-              <th>Project Title</th>
-              <th>Client</th>
-              <th>Discipline</th>
-              <th>Market</th>
-              <th>Year</th>
-              <th>Featured</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for work in works %}
-            <tr data-title="{{ work.title }}" data-client="{{ work.client }}" data-discipline="{{ work.discipline }}">
-              <td>
-                <strong>{{ work.title }}</strong><br>
-                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">/work/{{ work.slug }}/</span>
-              </td>
-              <td>{{ work.client }}</td>
-              <td><span class="route-badge">{{ work.discipline }}</span></td>
-              <td>{{ work.market }}</td>
-              <td>{{ work.year }}</td>
-              <td>
-                {% if work.is_featured %}
-                  <span class="status-pill featured">★ Featured</span>
-                {% else %}
-                  <span class="status-pill" style="color: var(--text-muted); border: 1px solid var(--border);">Standard</span>
-                {% endif %}
-              </td>
-              <td>
-                <button class="btn-table-edit" onclick="editWork({{ work.id }})">Edit</button>
-                <button class="btn-table-del" onclick="deleteWork({{ work.id }}, '{{ work.title|escapejs }}')">Delete</button>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 4: INBOUND LEADS CRM -->
-    <div id="tab-leads" class="tab-panel">
-      <div class="action-bar">
-        <div style="font-size: 14px; color: var(--text-muted);">
-          Real-time prospective enterprise inquiries synchronized with Supabase.
-        </div>
-        <button class="btn-action" onclick="fetchLiveLeads()">Refresh Pipeline</button>
-      </div>
-
-      <div class="table-wrapper">
-        <table id="leads-table">
-          <thead>
-            <tr>
-              <th>Received At</th>
-              <th>Lead Name</th>
-              <th>Company & Email</th>
-              <th>Requested Service</th>
-              <th>Budget Tier</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="leads-tbody">
-            <tr>
-              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">
-                Connecting to live Supabase leads inbox...
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 5: TECHNICAL SEO & SITEMAPS -->
-    <div id="tab-diagnostics" class="tab-panel">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="label">Canonical Host</div>
-          <div class="value" style="font-size: 18px;">https://www.spec-media.com</div>
-          <div class="sub">Enforced 301 redirects, SSL active</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Robots Protocol</div>
-          <div class="value">Active & Valid</div>
-          <div class="sub">Sitemap linked, private roots protected</div>
-        </div>
-      </div>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-        <div class="stat-card" style="gap: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div class="label">Live XML Sitemap Preview</div>
-            <a href="/sitemap.xml" target="_blank" class="btn-site" style="font-family: var(--font-mono); font-size: 11px;">Open Raw /sitemap.xml &rarr;</a>
-          </div>
-          <pre id="sitemap-preview" style="background: var(--surface-elevated); padding: 16px; border-radius: 8px; font-family: var(--font-mono); font-size: 12px; max-height: 280px; overflow: auto; color: var(--text-muted);"></pre>
+          <button type="button" class="btn-action" onclick="saveHeroSection()">Save Hero Changes</button>
         </div>
 
-        <div class="stat-card" style="gap: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div class="label">Live robots.txt Preview</div>
-            <a href="/robots.txt" target="_blank" class="btn-site" style="font-family: var(--font-mono); font-size: 11px;">Open Raw /robots.txt &rarr;</a>
-          </div>
-          <pre id="robots-preview" style="background: var(--surface-elevated); padding: 16px; border-radius: 8px; font-family: var(--font-mono); font-size: 12px; max-height: 280px; overflow: auto; color: var(--text-muted);"></pre>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- MODAL: EDIT / ADD SEO ROUTE -->
-  <div class="modal-overlay" id="seo-modal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <div class="modal-title" id="seo-modal-title">Edit SEO Page Metadata</div>
-        <button class="modal-close" onclick="closeModal('seo-modal')">&times;</button>
-      </div>
-      <form id="seo-form" onsubmit="saveSEO(event)">
-        <input type="hidden" id="seo-id" name="id">
-        <div class="modal-body">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
             <div class="form-group">
-              <label>Canonical Route Path *</label>
-              <input type="text" class="form-input" id="seo-route" name="route_path" required placeholder="/services/seo-agency-dubai/">
+              <label>Hero Headline (H1)</label>
+              <input type="text" class="form-input" id="hero-headline" value="{{ site_settings.hero_headline|default:'You feel the brand before it speaks®' }}">
             </div>
+
             <div class="form-group">
-              <label>Internal Page Name *</label>
-              <input type="text" class="form-input" id="seo-name" name="page_name" required placeholder="SEO Agency Dubai">
+              <label>Hero Subheadline &amp; Agency Narrative</label>
+              <textarea class="form-textarea" id="hero-subheadline" rows="4">{{ site_settings.hero_subheadline|default:'Placeholder copy. Spec Media builds campaigns for companies that care how things feel and how they are perceived over time.' }}</textarea>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label>Hero Section Badge</label>
+                <input type="text" class="form-input" id="hero-badge" value="{{ site_settings.hero_badge|default:'01 / HERO' }}">
+              </div>
+              <div class="form-group">
+                <label>Hero CTA Prompt</label>
+                <input type="text" class="form-input" id="hero-cta" value="{{ site_settings.hero_cta_text|default:'[ SCROLL DOWN ]' }}">
+              </div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Browser Meta Title (Optimal: 50-60 chars) <span class="char-counter" id="title-counter">0/60</span></label>
-            <input type="text" class="form-input" id="seo-title" name="meta_title" required placeholder="SEO Agency in Dubai — Spec Media" oninput="updateCounter('seo-title', 'title-counter', 60)">
-          </div>
-
-          <div class="form-group">
-            <label>Meta Description (Optimal: 150-160 chars) <span class="char-counter" id="desc-counter">0/160</span></label>
-            <textarea class="form-textarea" id="seo-desc" name="meta_description" required placeholder="Describe the page's commercial value for search engine results..." oninput="updateCounter('seo-desc', 'desc-counter', 160)"></textarea>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <!-- Column 2: Hero Media Mode & Dual Upload/Link -->
+          <div style="display: flex; flex-direction: column; gap: 16px;">
             <div class="form-group">
-              <label>Primary Keyword *</label>
-              <input type="text" class="form-input" id="seo-keyword" name="primary_keyword" placeholder="seo agency dubai">
-            </div>
-            <div class="form-group">
-              <label>Schema.org Type</label>
-              <select class="form-select" id="seo-schema" name="schema_type">
-                <option value="Service">Service</option>
-                <option value="Organization">Organization</option>
-                <option value="WebPage">WebPage</option>
-                <option value="CollectionPage">CollectionPage</option>
-                <option value="AboutPage">AboutPage</option>
-                <option value="ContactPage">ContactPage</option>
+              <label>Hero Media Type</label>
+              <select class="form-select" id="hero-media-type" onchange="handleHeroMediaTypeChange(this.value)">
+                <option value="canvas" {% if site_settings.hero_media_type == 'canvas' %}selected{% endif %}>Procedural Kinetic Canvas Engine (Recommended)</option>
+                <option value="image" {% if site_settings.hero_media_type == 'image' %}selected{% endif %}>Custom Static Photo / Graphic</option>
+                <option value="video" {% if site_settings.hero_media_type == 'video' %}selected{% endif %}>Custom Video Background Loop</option>
               </select>
             </div>
+
+            <!-- Dual Media Input for Hero Media -->
+            <div class="dual-media-box" id="hero-media-box">
+              <div style="font-size: 12px; font-weight: 600; color: var(--text);">Custom Hero Photo / Video Asset</div>
+              
+              <!-- Dropzone File Upload -->
+              <div class="dropzone-trigger" id="hero-dropzone">
+                <input type="file" id="hero-file-input" accept="image/*,video/*" onchange="handleGenericFileUpload(event, 'hero-media-url', 'hero-preview-thumb')">
+                <div style="font-size: 22px;">📤</div>
+                <div style="font-size: 12px; font-weight: 600; margin-top: 4px;">Drag &amp; Drop Image or Video File</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Automatically uploaded to /media/uploads/</div>
+              </div>
+
+              <!-- Direct Link Input -->
+              <div class="form-group">
+                <label>Direct Image or Video URL / Link</label>
+                <input type="text" class="form-input" id="hero-media-url" value="{{ site_settings.hero_media_url|default:'' }}" placeholder="https://images.unsplash.com/... or /media/uploads/..." oninput="updatePreviewFromInput('hero-media-url', 'hero-preview-thumb')">
+              </div>
+
+              <!-- Preview Box -->
+              <div class="preview-thumb-container" id="hero-preview-box">
+                <img id="hero-preview-thumb" class="preview-thumb-img" src="{{ site_settings.hero_media_url|default:'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=200' }}" alt="Hero Preview">
+                <div style="font-size: 12px; color: var(--text-muted); flex: 1;">
+                  Active Asset Preview (Supports PNG, JPG, WebP, MP4)
+                </div>
+                <button type="button" class="btn-danger-sm" onclick="clearInputAndPreview('hero-media-url', 'hero-preview-thumb')">Clear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+
+
+    <!-- ============================================================= -->
+    <!-- TAB 2: SCENE 02 / BRAIN SCRUB (SECTION 02) -->
+    <!-- ============================================================= -->
+    <div id="tab-scene2" class="tab-panel">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Scrub Engine</div>
+          <div class="value">60 FPS Native</div>
+          <div class="sub">192-frame kinetic sequence preloaded with video fallback</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Interaction Mode</div>
+          <div class="value">Scroll + Mouse Scrub</div>
+          <div class="sub">Instant frame lock on mouse pointer scrub &amp; wheel scroll</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Primary Asset</div>
+          <div class="value" style="font-size:16px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ site_settings.scene2_video_url|default:'/static/scene2_brain.mp4' }}</div>
+          <div class="sub">Dual-buffered WebGL shader texture loop</div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div>
+            <div class="card-box-title">
+              <span>Scene 02 &mdash; Brain Scrub &amp; Motion Controls</span>
+              <span class="tag-badge">Section 02</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              Configures the kinetic brain scrub experience, badge typography, scrub guidance prompt, and custom video loop.
+            </div>
+          </div>
+          <button type="button" class="btn-action" onclick="saveScene2Section()">Save Scene 02 Changes</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="form-group">
+              <label>Scene 02 Section Badge</label>
+              <input type="text" class="form-input" id="scene2-badge" value="{{ site_settings.scene2_badge|default:'02 / SCENE 02' }}">
+            </div>
+
+            <div class="form-group">
+              <label>Interactive Scrub Guidance Prompt</label>
+              <textarea class="form-textarea" id="scene2-hint" rows="3">{{ site_settings.scene2_hint|default:'keep scrolling or drag mouse to play · frame pauses instantly' }}</textarea>
+            </div>
+
+            <div class="stat-card" style="margin-top: 8px;">
+              <div class="label">Engine Diagnostics</div>
+              <div style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: 6px;">
+                Frame sequence loads 24 high-priority keyframes for 0ms cold-start response, then streams remaining 168 frames asynchronously in the background. The video player acts as hardware fallback on low-power devices.
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Video Asset & Upload -->
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="dual-media-box">
+              <div style="font-size: 12px; font-weight: 600; color: var(--text);">Scene 02 Video Loop Asset</div>
+              
+              <!-- Dropzone File Upload -->
+              <div class="dropzone-trigger">
+                <input type="file" accept="video/*" onchange="handleGenericFileUpload(event, 'scene2-video-url', 'scene2-video-preview')">
+                <div style="font-size: 22px;">📹</div>
+                <div style="font-size: 12px; font-weight: 600; margin-top: 4px;">Drag &amp; Drop Video Asset (.mp4, .webm)</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Automatically uploaded to /media/uploads/</div>
+              </div>
+
+              <!-- Direct Link Input -->
+              <div class="form-group">
+                <label>Direct Video URL or Static Media Path</label>
+                <input type="text" class="form-input" id="scene2-video-url" value="{{ site_settings.scene2_video_url|default:'/static/scene2_brain.mp4' }}" placeholder="/static/scene2_brain.mp4 or https://..." oninput="updateVideoPreview('scene2-video-url', 'scene2-video-preview')">
+              </div>
+
+              <!-- Video Preview Box -->
+              <div style="background:#11100f; border:1px solid rgba(255,255,255,0.08); border-radius:8px; overflow:hidden; height:180px; position:relative; display:flex; align-items:center; justify-content:center;">
+                <video id="scene2-video-preview" src="{{ site_settings.scene2_video_url|default:'/static/scene2_brain.mp4' }}" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                <div style="position:absolute; bottom:8px; left:8px; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); padding:3px 8px; border-radius:4px; font-family:var(--font-mono); font-size:10px; color:#fff;">
+                  LIVE PREVIEW
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- TAB 4: SELECTED WORKS (SECTION 03) -->
+    <!-- ============================================================= -->
+    <div id="tab-works" class="tab-panel">
+      <div class="card-box">
+        <div class="card-box-header">
+          <div>
+            <div class="card-box-title">
+              <span>Selected Works &amp; Case Studies</span>
+              <span class="tag-badge">Section 03</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              Featured project cards displayed across homepage showcase grid and the /work/ portfolio archive.
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" class="form-input" id="search-works" placeholder="Search projects..." oninput="filterWorks()" style="width: 240px;">
+            <button type="button" class="btn-action" onclick="openAddWorkModal()">+ Add Work Project</button>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table id="works-table">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Client / Market</th>
+                <th>Discipline</th>
+                <th>Year</th>
+                <th>Homepage Grid</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for w in works %}
+              <tr data-work-id="{{ w.id }}">
+                <td>
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="{{ w.hero_image|default:'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=120' }}" style="width: 44px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div>
+                      <strong>{{ w.title }}</strong><br>
+                      <span style="font-size: 11px; color: var(--text-muted);">/work/{{ w.slug }}/</span>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ w.client }} &middot; <span style="color: var(--accent-bright);">{{ w.market }}</span></td>
+                <td>{{ w.discipline }}</td>
+                <td>{{ w.year }}</td>
+                <td>
+                  {% if w.is_featured %}
+                    <span style="color: var(--success); font-family: var(--font-mono); font-size: 11px;">&#10003; Featured</span>
+                  {% else %}
+                    <span style="color: var(--text-subtle); font-size: 11px;">Archive</span>
+                  {% endif %}
+                </td>
+                <td style="text-align: right;">
+                  <button type="button" class="btn-secondary" onclick="editWork({{ w.id }})">Edit</button>
+                  <button type="button" class="btn-danger-sm" onclick="deleteWork({{ w.id }}, '{{ w.title|escapejs }}')">Delete</button>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">
+                  No projects recorded yet. Click &quot;+ Add Work Project&quot; to create one.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+
+
+    <!-- TAB 2: THE REEL & BRAND PARTNERS (SECTION 04) -->
+    <!-- ============================================================= -->
+    <div id="tab-reel" class="tab-panel">
+      <!-- Cinema Showreel Video Controls -->
+      <div class="card-box" style="margin-bottom: 24px;">
+        <div class="card-box-header">
+          <div>
+            <div class="card-box-title">
+              <span>THE REEL &mdash; Background Cinema Showreel</span>
+              <span class="tag-badge">Section 04 Video</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              Cinematic showreel video loop playing behind partner constellation and kinetic typography in Section 04.
+            </div>
+          </div>
+          <button type="button" class="btn-action" onclick="saveReelVideo()">Save Reel Video</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start;">
+          <div class="dual-media-box">
+            <div style="font-size: 12px; font-weight: 600; color: var(--text);">Showreel Video Asset (.mp4, .webm)</div>
+            <div class="dropzone-trigger">
+              <input type="file" accept="video/*" onchange="handleGenericFileUpload(event, 'reel-video-url', 'reel-video-preview')">
+              <div style="font-size: 22px;">🎞️</div>
+              <div style="font-size: 12px; font-weight: 600; margin-top: 4px;">Upload Cinematic Showreel File</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Automatically uploaded to /media/uploads/</div>
+            </div>
+            <div class="form-group">
+              <label>Direct Video URL or Static Media Path</label>
+              <input type="text" class="form-input" id="reel-video-url" value="{{ site_settings.reel_video_url|default:'/static/reference_video.mp4' }}" placeholder="/static/reference_video.mp4 or https://..." oninput="updateVideoPreview('reel-video-url', 'reel-video-preview')">
+            </div>
+          </div>
+
+          <div style="background:#11100f; border:1px solid rgba(255,255,255,0.08); border-radius:10px; overflow:hidden; height:196px; position:relative; display:flex; align-items:center; justify-content:center;">
+            <video id="reel-video-preview" src="{{ site_settings.reel_video_url|default:'/static/reference_video.mp4' }}" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+            <div style="position:absolute; bottom:8px; left:8px; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); padding:3px 8px; border-radius:4px; font-family:var(--font-mono); font-size:10px; color:#fff;">
+              CINEMA PREVIEW
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div>
+            <div class="card-box-title">
+              <span>THE REEL &mdash; Brand Partners Manager</span>
+              <span class="tag-badge">Section 04</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              Renders as dark square logo cards (180px &times; 180px, #141312) with floating categories, auto-ticker scroll, and mouse catch-and-drag.
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn-secondary" onclick="openModal('add-partner-modal')">+ Add New Partner</button>
+            <button type="button" class="btn-action" onclick="savePartnersList()">Save All Partners</button>
+          </div>
+        </div>
+
+        <!-- Active Partners Grid -->
+        <div class="partner-cards-grid" id="dash-partners-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+
+
+    <!-- TAB 3: CAPABILITIES (SECTION 05) -->
+    <!-- ============================================================= -->
+    <div id="tab-capabilities" class="tab-panel">
+      <div class="card-box">
+        <div class="card-box-header">
+          <div>
+            <div class="card-box-title">
+              <span>Capabilities Photo Collages (&quot;Where We Contribute&quot;)</span>
+              <span class="tag-badge">Section 05</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              Hovering over each discipline reveals a floating multi-photo collage stack populated by the images configured below.
+            </div>
+          </div>
+          <button type="button" class="btn-action" onclick="saveCapabilityPhotos()">Save Capabilities</button>
+        </div>
+
+        <div class="cap-grid">
+          <!-- 1. Brand strategy -->
+          <div class="cap-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 15px; font-family: var(--font-heading);">Brand Strategy</strong>
+              <span class="tag-badge">Discipline 01</span>
+            </div>
+            <div class="dual-media-box">
+              <div class="dropzone-trigger">
+                <input type="file" accept="image/*" onchange="handleCapMultiUpload(event, 'Brand strategy')">
+                <div style="font-size: 18px;">📁</div>
+                <div style="font-size: 11px; font-weight: 600;">Upload Photo to Stack</div>
+              </div>
+              <div class="form-group">
+                <label>Direct Image Link</label>
+                <div style="display: flex; gap: 6px;">
+                  <input type="text" class="form-input" id="cap-link-0" placeholder="Paste image URL...">
+                  <button type="button" class="btn-secondary" onclick="addCapPhotoByLink('Brand strategy', 'cap-link-0')">Add</button>
+                </div>
+              </div>
+              <div id="cap-thumbs-brand" style="display: flex; flex-wrap: wrap; gap: 8px; min-height: 50px;"></div>
+            </div>
+          </div>
+
+          <!-- 2. Campaign production -->
+          <div class="cap-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 15px; font-family: var(--font-heading);">Campaign Production</strong>
+              <span class="tag-badge">Discipline 02</span>
+            </div>
+            <div class="dual-media-box">
+              <div class="dropzone-trigger">
+                <input type="file" accept="image/*" onchange="handleCapMultiUpload(event, 'Campaign production')">
+                <div style="font-size: 18px;">📁</div>
+                <div style="font-size: 11px; font-weight: 600;">Upload Photo to Stack</div>
+              </div>
+              <div class="form-group">
+                <label>Direct Image Link</label>
+                <div style="display: flex; gap: 6px;">
+                  <input type="text" class="form-input" id="cap-link-1" placeholder="Paste image URL...">
+                  <button type="button" class="btn-secondary" onclick="addCapPhotoByLink('Campaign production', 'cap-link-1')">Add</button>
+                </div>
+              </div>
+              <div id="cap-thumbs-campaign" style="display: flex; flex-wrap: wrap; gap: 8px; min-height: 50px;"></div>
+            </div>
+          </div>
+
+          <!-- 3. Performance media -->
+          <div class="cap-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 15px; font-family: var(--font-heading);">Performance Media</strong>
+              <span class="tag-badge">Discipline 03</span>
+            </div>
+            <div class="dual-media-box">
+              <div class="dropzone-trigger">
+                <input type="file" accept="image/*" onchange="handleCapMultiUpload(event, 'Performance media')">
+                <div style="font-size: 18px;">📁</div>
+                <div style="font-size: 11px; font-weight: 600;">Upload Photo to Stack</div>
+              </div>
+              <div class="form-group">
+                <label>Direct Image Link</label>
+                <div style="display: flex; gap: 6px;">
+                  <input type="text" class="form-input" id="cap-link-2" placeholder="Paste image URL...">
+                  <button type="button" class="btn-secondary" onclick="addCapPhotoByLink('Performance media', 'cap-link-2')">Add</button>
+                </div>
+              </div>
+              <div id="cap-thumbs-media" style="display: flex; flex-wrap: wrap; gap: 8px; min-height: 50px;"></div>
+            </div>
+          </div>
+
+          <!-- 4. Content systems -->
+          <div class="cap-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 15px; font-family: var(--font-heading);">Content Systems</strong>
+              <span class="tag-badge">Discipline 04</span>
+            </div>
+            <div class="dual-media-box">
+              <div class="dropzone-trigger">
+                <input type="file" accept="image/*" onchange="handleCapMultiUpload(event, 'Content systems')">
+                <div style="font-size: 18px;">📁</div>
+                <div style="font-size: 11px; font-weight: 600;">Upload Photo to Stack</div>
+              </div>
+              <div class="form-group">
+                <label>Direct Image Link</label>
+                <div style="display: flex; gap: 6px;">
+                  <input type="text" class="form-input" id="cap-link-3" placeholder="Paste image URL...">
+                  <button type="button" class="btn-secondary" onclick="addCapPhotoByLink('Content systems', 'cap-link-3')">Add</button>
+                </div>
+              </div>
+              <div id="cap-thumbs-content" style="display: flex; flex-wrap: wrap; gap: 8px; min-height: 50px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+
+
+    <!-- ============================================================= -->
+    <!-- TAB 6: STUDIO & ETHOS (SECTION 06) -->
+    <!-- ============================================================= -->
+    <div id="tab-studio" class="tab-panel">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Dedicated Route</div>
+          <div class="value"><a href="/studio/" target="_blank" style="color:var(--text); text-decoration:none;">/studio/ &rarr;</a></div>
+          <div class="sub">Indexed high-intent public agency portfolio page</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Ethos Pillars</div>
+          <div class="value">3 Pillars</div>
+          <div class="sub">01 Craft &middot; 02 Systems &middot; 03 Velocity</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Aesthetic Palette</div>
+          <div class="value">Brutalist Obsidian</div>
+          <div class="sub">Playfair Display &middot; Lora &middot; Dark Amber</div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div>
+            <div class="card-box-title">
+              <span>The Studio &amp; Agency Narrative</span>
+              <span class="tag-badge">Section 06</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              Configures agency ethos, mission headline, and strategic overview across landing page and dedicated /studio/ page.
+            </div>
+          </div>
+          <button type="button" class="btn-action" onclick="saveStudioSection()">Save Studio Changes</button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div class="form-group">
+            <label>Studio Headline</label>
+            <input type="text" class="form-input" id="studio-headline" value="{{ site_settings.studio_headline|default:'Built for brands that demand cultural resonance.' }}">
           </div>
 
           <div class="form-group">
-            <label>Secondary Keywords (Comma-separated)</label>
-            <input type="text" class="form-input" id="seo-secondary" name="secondary_keywords" placeholder="technical seo, enterprise search dubai, organic growth">
+            <label>Studio Narrative / Agency Manifesto</label>
+            <textarea class="form-textarea" id="studio-subheadline" rows="4">{{ site_settings.studio_subheadline|default:'Spec Media is an independent creative studio operating at the intersection of cinematic craft, digital infrastructure, and high-velocity performance marketing.' }}</textarea>
           </div>
 
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px;">
+            <div class="stat-card">
+              <div class="tag-badge" style="width: fit-content;">01 // CRAFT</div>
+              <strong style="margin-top: 6px; font-size: 14px;">Precision &amp; Taste</strong>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                Aesthetic conviction is the single highest-leverage competitive moat a modern brand can possess.
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="tag-badge" style="width: fit-content;">02 // SYSTEMS</div>
+              <strong style="margin-top: 6px; font-size: 14px;">Scalable Architecture</strong>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                Web systems engineered for 60fps kinetic interaction, headless flexibility, and technical SEO supremacy.
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="tag-badge" style="width: fit-content;">03 // VELOCITY</div>
+              <strong style="margin-top: 6px; font-size: 14px;">Performance &amp; Scale</strong>
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                High-converting acquisition engines converting cultural attention into measurable enterprise revenue.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- TAB 5: INSTAGRAM REVIEWS (SECTION 07) -->
+    <!-- ============================================================= -->
+    <div id="tab-reviews" class="tab-panel">
+      <div class="card-box">
+        <div class="card-box-header">
+          <div>
+            <div class="card-box-title">
+              <span>Instagram Review Cards</span>
+              <span class="tag-badge">Section 07</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              Authentic Instagram post cards with deep atmospheric shadows, interactive double-tap heart pop, like toggle, and auto-ticker drag.
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn-secondary" onclick="openModal('add-review-modal')">+ Add Review Card</button>
+            <button type="button" class="btn-action" onclick="saveReviewsList()">Save All Reviews</button>
+          </div>
+        </div>
+
+        <div class="review-dash-grid" id="dash-reviews-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- TAB 6: GLOBAL BRANDING & SEO -->
+
+
+    <!-- ============================================================= -->
+    <!-- TAB 7: INBOUND LEADS CRM -->
+    <!-- ============================================================= -->
+    <div id="tab-leads" class="tab-panel">
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">
+            <span>Live Inbound Leads Pipeline</span>
+            <span class="tag-badge">CRM Sync</span>
+          </div>
+          <button type="button" class="btn-secondary" onclick="fetchLiveLeads()">Refresh Leads</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Prospect Name</th>
+                <th>Contact &amp; Entity</th>
+                <th>Service Requested</th>
+                <th>Estimated Budget</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="leads-tbody">
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">
+                  Loading live client inquiries...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- ============================================================= -->
+    <!-- TAB 6: GLOBAL BRANDING & SEO -->
+    <!-- ============================================================= -->
+    <div id="tab-branding" class="tab-panel">
+      <div class="card-box" style="margin-bottom: 24px;">
+        <div class="card-box-header">
+          <div class="card-box-title">
+            <span>Master Branding &amp; Contact Credentials</span>
+            <span class="tag-badge">Site-Wide</span>
+          </div>
+          <button type="button" class="btn-action" onclick="saveMasterBranding()">Save Branding</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <!-- Logo & Favicon Dual Inputs -->
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="form-group">
+              <label>Site Brand Name</label>
+              <input type="text" class="form-input" id="brand-site-name" value="{{ site_settings.site_name|default:'SPEC MEDIA' }}">
+            </div>
+
+            <!-- Master Logo Dual Input -->
+            <div class="dual-media-box">
+              <div style="font-size: 12px; font-weight: 600;">Master Site Logo</div>
+              <div class="dropzone-trigger">
+                <input type="file" accept="image/*" onchange="handleGenericFileUpload(event, 'brand-logo-url', 'brand-logo-thumb')">
+                <div style="font-size: 18px;">📁</div>
+                <div style="font-size: 11px; font-weight: 600;">Upload Custom Logo File</div>
+              </div>
+              <div class="form-group">
+                <label>Direct Logo URL or Data URI</label>
+                <input type="text" class="form-input" id="brand-logo-url" value="{{ site_settings.logo_image|default:'' }}" placeholder="Paste URL..." oninput="updatePreviewFromInput('brand-logo-url', 'brand-logo-thumb')">
+              </div>
+              <div class="preview-thumb-container">
+                <img id="brand-logo-thumb" class="preview-thumb-img" src="{{ site_settings.logo_image|default:'' }}" style="{% if not site_settings.logo_image %}display:none;{% endif %}" alt="Logo">
+                <span id="brand-logo-empty" style="font-size: 12px; color: var(--text-muted); {% if site_settings.logo_image %}display:none;{% endif %}">Default kinetic SVG active</span>
+                <button type="button" class="btn-danger-sm" style="margin-left: auto;" onclick="clearInputAndPreview('brand-logo-url', 'brand-logo-thumb'); document.getElementById('brand-logo-empty').style.display='block';">Clear</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Details -->
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="form-group">
+              <label>Official Inbound Contact Email</label>
+              <input type="email" class="form-input" id="brand-email" value="{{ site_settings.contact_email|default:'hello@specmedia.co' }}">
+            </div>
+            <div class="form-group">
+              <label>Phone / WhatsApp Hotline</label>
+              <input type="text" class="form-input" id="brand-phone" value="{{ site_settings.contact_phone|default:'+971 4 000 0000' }}">
+            </div>
+            <div class="form-group">
+              <label>Physical Office HQ Address</label>
+              <input type="text" class="form-input" id="brand-address" value="{{ site_settings.contact_address|default:'Dubai Design District, Building 3, Dubai, UAE' }}">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canonical SEO Routes Table -->
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">
+            <span>Search Engine Optimization &amp; Schema Routes</span>
+            <span class="tag-badge">SEO Engine</span>
+          </div>
+          <button type="button" class="btn-secondary" onclick="openAddSEOModal()">+ Add SEO Route</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table id="seo-table">
+            <thead>
+              <tr>
+                <th>Canonical Path</th>
+                <th>Page Name</th>
+                <th>Meta Title</th>
+                <th>Primary Keyword</th>
+                <th>Schema</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for s in seo_pages %}
+              <tr data-seo-id="{{ s.id }}">
+                <td><code style="font-family: var(--font-mono); font-size: 11px; color: var(--accent-bright);">{{ s.route_path }}</code></td>
+                <td><strong>{{ s.page_name }}</strong></td>
+                <td>{{ s.meta_title|truncatechars:48 }}</td>
+                <td><span class="tag-badge">{{ s.primary_keyword|default:"Unassigned" }}</span></td>
+                <td><span style="font-family: var(--font-mono); font-size: 11px;">{{ s.schema_type }}</span></td>
+                <td style="text-align: right;">
+                  <button type="button" class="btn-secondary" onclick="editSEO({{ s.id }})">Edit</button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div> <!-- End Dashboard Container -->
+
+  <!-- ============================================================= -->
+  <!-- MODALS -->
+  <!-- ============================================================= -->
+
+  <!-- Modal 1: Add Partner Card -->
+  <div class="modal-backdrop" id="add-partner-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Brand Partner to THE REEL</h3>
+        <button type="button" class="modal-close" onclick="closeModal('add-partner-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Brand / Partner Name</label>
+          <input type="text" class="form-input" id="new-partner-name" placeholder="e.g. Google, Virgin, Healwell AI">
+        </div>
+
+        <div class="form-group">
+          <label>Category Badge Text</label>
+          <input type="text" class="form-input" id="new-partner-badge" placeholder="e.g. GLOBAL TELCO, HEALTHCARE AI, LUXURY SPATIAL">
+        </div>
+
+        <!-- Dual Input for Logo -->
+        <div class="dual-media-box">
+          <div style="font-size: 12px; font-weight: 600;">Partner Logo (Upload File OR Paste Direct Link)</div>
+          <div class="dropzone-trigger">
+            <input type="file" accept="image/*" onchange="handleGenericFileUpload(event, 'new-partner-img', 'new-partner-thumb')">
+            <div style="font-size: 18px;">📁</div>
+            <div style="font-size: 11px; font-weight: 600;">Upload Logo (PNG, SVG, WebP)</div>
+          </div>
           <div class="form-group">
-            <label>Full Canonical URL</label>
-            <input type="url" class="form-input" id="seo-canonical" name="canonical_url" placeholder="https://www.spec-media.com/services/seo-agency-dubai/">
+            <label>Direct Logo URL</label>
+            <input type="text" class="form-input" id="new-partner-img" placeholder="https://... or /media/uploads/..." oninput="updatePreviewFromInput('new-partner-img', 'new-partner-thumb')">
           </div>
-
-          <div style="display: flex; gap: 12px; align-items: center;">
-            <input type="checkbox" id="seo-indexable" name="is_indexable" checked style="width: 18px; height: 18px; accent-color: var(--accent);">
-            <label for="seo-indexable" style="font-size: 13px; color: var(--text); cursor: pointer;">Allow Search Engines to Index this Route (index, follow)</label>
+          <div class="preview-thumb-container">
+            <img id="new-partner-thumb" class="preview-thumb-img" src="" style="display:none;" alt="Logo Preview">
+            <span id="new-partner-thumb-empty" style="font-size: 12px; color: var(--text-muted);">No logo uploaded yet</span>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn-secondary" onclick="closeModal('seo-modal')">Cancel</button>
-          <button type="submit" class="btn-action">Save SEO Changes</button>
-        </div>
-      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="closeModal('add-partner-modal')">Cancel</button>
+        <button type="button" class="btn-action" onclick="confirmAddPartner()">Add to THE REEL</button>
+      </div>
     </div>
   </div>
 
-  <!-- MODAL: ADD / EDIT WORK PROJECT (WITH FILE UPLOAD) -->
-  <div class="modal-overlay" id="work-modal">
-    <div class="modal-card">
+  <!-- Modal 2: Add / Edit Instagram Review -->
+  <div class="modal-backdrop" id="add-review-modal">
+    <div class="modal-content">
       <div class="modal-header">
-        <div class="modal-title" id="work-modal-title">Add Work / Case Study</div>
-        <button class="modal-close" onclick="closeModal('work-modal')">&times;</button>
+        <h3 class="modal-title" id="review-modal-title">Add Instagram Review Card</h3>
+        <button type="button" class="modal-close" onclick="closeModal('add-review-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="review-edit-idx" value="-1">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label>Instagram Handle</label>
+            <input type="text" class="form-input" id="rev-handle" placeholder="@faisal.almarri">
+          </div>
+          <div class="form-group">
+            <label>Role / Descriptor</label>
+            <input type="text" class="form-input" id="rev-role" placeholder="Founding Principal · Dubai Design District">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label>Location Tag</label>
+            <input type="text" class="form-input" id="rev-location" placeholder="📍 Downtown Dubai">
+          </div>
+          <div class="form-group">
+            <label>Initial Likes Count</label>
+            <input type="number" class="form-input" id="rev-likes" value="3420">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Review Caption / Quote</label>
+          <textarea class="form-textarea" id="rev-quote" rows="3" placeholder="What the client said about working with Spec Media..."></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label>Hashtags</label>
+            <input type="text" class="form-input" id="rev-tags" placeholder="#SpecMedia #DubaiLuxury">
+          </div>
+          <div class="form-group">
+            <label>Timestamp Label</label>
+            <input type="text" class="form-input" id="rev-time" placeholder="2 DAYS AGO · VERIFIED">
+          </div>
+        </div>
+
+        <!-- Avatar Dual Input -->
+        <div class="dual-media-box">
+          <div style="font-size: 12px; font-weight: 600;">Client Avatar Profile Photo</div>
+          <div class="dropzone-trigger">
+            <input type="file" accept="image/*" onchange="handleGenericFileUpload(event, 'rev-avatar-url', 'rev-avatar-thumb')">
+            <div style="font-size: 16px;">👤</div>
+            <div style="font-size: 11px;">Upload Avatar Photo</div>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-input" id="rev-avatar-url" placeholder="Or paste avatar photo link..." oninput="updatePreviewFromInput('rev-avatar-url', 'rev-avatar-thumb')">
+          </div>
+          <div class="preview-thumb-container">
+            <img id="rev-avatar-thumb" class="preview-thumb-img" src="" style="display:none;" alt="Avatar">
+            <span style="font-size: 11px; color: var(--text-muted);">Avatar Preview</span>
+          </div>
+        </div>
+
+        <!-- Showcase Media Dual Input -->
+        <div class="dual-media-box">
+          <div style="font-size: 12px; font-weight: 600;">Instagram Showcase Photo (Card Main Media)</div>
+          <div class="dropzone-trigger">
+            <input type="file" accept="image/*" onchange="handleGenericFileUpload(event, 'rev-image-url', 'rev-image-thumb')">
+            <div style="font-size: 16px;">🖼️</div>
+            <div style="font-size: 11px;">Upload Showcase Media</div>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-input" id="rev-image-url" placeholder="Or paste showcase image link..." oninput="updatePreviewFromInput('rev-image-url', 'rev-image-thumb')">
+          </div>
+          <div class="preview-thumb-container">
+            <img id="rev-image-thumb" class="preview-thumb-img" src="" style="display:none;" alt="Showcase">
+            <span style="font-size: 11px; color: var(--text-muted);">Showcase Media Preview</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="closeModal('add-review-modal')">Cancel</button>
+        <button type="button" class="btn-action" onclick="confirmSaveReview()">Save Review Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Work Project Modal -->
+  <div class="modal-backdrop" id="work-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="work-modal-title">Work Project</h3>
+        <button type="button" class="modal-close" onclick="closeModal('work-modal')">&times;</button>
       </div>
       <form id="work-form" onsubmit="saveWork(event)">
-        <input type="hidden" id="work-id" name="id">
         <div class="modal-body">
-          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;">
+          <input type="hidden" id="work-id" value="">
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
             <div class="form-group">
-              <label>Project Title *</label>
-              <input type="text" class="form-input" id="work-title" name="title" required placeholder="Aether MENA — Regional Search Dominance">
+              <label>Project Title</label>
+              <input type="text" class="form-input" id="work-title" required>
             </div>
             <div class="form-group">
-              <label>Client Name *</label>
-              <input type="text" class="form-input" id="work-client" name="client" required placeholder="Aether Technologies">
+              <label>Client Name</label>
+              <input type="text" class="form-input" id="work-client" required>
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
             <div class="form-group">
-              <label>Discipline *</label>
-              <select class="form-select" id="work-discipline" name="discipline">
-                <option value="SEO & Organic Growth">SEO & Organic Growth</option>
-                <option value="Web & Experience Systems">Web & Experience Systems</option>
-                <option value="AI Marketing & Automation">AI Marketing & Automation</option>
-                <option value="Brand Architecture & Design">Brand Architecture & Design</option>
+              <label>Discipline</label>
+              <select class="form-select" id="work-discipline">
+                <option value="Web &amp; Experience Systems">Web &amp; Experience Systems</option>
+                <option value="SEO &amp; Organic Growth">SEO &amp; Organic Growth</option>
+                <option value="AI Marketing &amp; Automation">AI Marketing &amp; Automation</option>
+                <option value="Brand Architecture &amp; Design">Brand Architecture &amp; Design</option>
                 <option value="Paid Performance Media">Paid Performance Media</option>
-                <option value="Content & Motion Production">Content & Motion Production</option>
+                <option value="Content &amp; Motion Production">Content &amp; Motion Production</option>
               </select>
             </div>
             <div class="form-group">
-              <label>Market</label>
-              <select class="form-select" id="work-market" name="market">
+              <label>Market Sector</label>
+              <select class="form-select" id="work-market">
                 <option value="Dubai">Dubai</option>
                 <option value="UAE">UAE</option>
                 <option value="MENA">MENA</option>
@@ -1185,57 +1596,61 @@
             </div>
             <div class="form-group">
               <label>Year</label>
-              <input type="text" class="form-input" id="work-year" name="year" value="2026">
+              <input type="text" class="form-input" id="work-year" value="2026">
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Hero Cover Image (Upload or URL)</label>
-            <div class="dropzone-box" style="padding: 14px; margin-bottom: 8px;">
-              <input type="file" id="work-file-input" accept="image/*" onchange="uploadWorkFile(event)">
-              <div style="font-size: 12px; font-weight: 600; color: var(--text);">Upload Project Cover Photo</div>
-              <div style="font-size: 10px; color: var(--text-muted);">Click to browse or drop image file here</div>
-            </div>
-            <input type="text" class="form-input" id="work-image" name="hero_image" placeholder="Image Data URI or URL (https://...)">
-            <div class="preview-box" id="work-image-preview-box" style="display:none; margin-top:8px;">
-              <img id="work-image-preview" src="" alt="Work Hero Preview" style="max-height:120px; border-radius:6px; object-fit:cover;">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Card Teaser Summary *</label>
-            <textarea class="form-textarea" id="work-summary" name="summary" required placeholder="Short 1-2 sentence overview shown on portfolio cards..."></textarea>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            <div class="form-group">
-              <label>Challenge</label>
-              <textarea class="form-textarea" id="work-challenge" name="challenge" placeholder="The commercial challenge faced by the client..."></textarea>
+          <!-- Dual Hero Image Input -->
+          <div class="dual-media-box">
+            <div style="font-size: 12px; font-weight: 600;">Project Hero Cover Photo</div>
+            <div class="dropzone-trigger">
+              <input type="file" accept="image/*" onchange="handleGenericFileUpload(event, 'work-image', 'work-image-preview')">
+              <div style="font-size: 18px;">📁</div>
+              <div style="font-size: 11px; font-weight: 600;">Upload Project Cover Photo</div>
             </div>
             <div class="form-group">
-              <label>Solution</label>
-              <textarea class="form-textarea" id="work-solution" name="solution" placeholder="Strategic execution and systems built by Spec Media..."></textarea>
+              <label>Direct Cover Photo URL</label>
+              <input type="text" class="form-input" id="work-image" placeholder="https://... or /media/uploads/..." oninput="updatePreviewFromInput('work-image', 'work-image-preview')">
+            </div>
+            <div class="preview-thumb-container" id="work-image-preview-box">
+              <img id="work-image-preview" class="preview-thumb-img" src="" alt="Work Preview">
+              <span style="font-size: 11px; color: var(--text-muted);">Cover Preview</span>
             </div>
           </div>
 
           <div class="form-group">
-            <label>Verified Key Performance Indicators (Semicolon-separated)</label>
-            <input type="text" class="form-input" id="work-kpis" name="kpis" placeholder="+340% Organic Traffic; #1 Organic Rank in UAE; 3.8x Pipeline Leads">
+            <label>Short Summary / Hook</label>
+            <textarea class="form-textarea" id="work-summary" rows="2" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Commercial Challenge</label>
+            <textarea class="form-textarea" id="work-challenge" rows="2"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Strategic Solution</label>
+            <textarea class="form-textarea" id="work-solution" rows="2"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Verified KPIs (Semicolon-separated)</label>
+            <input type="text" class="form-input" id="work-kpis" placeholder="+312% Organic Growth; 4.8x ROAS; #1 Dubai Ranking">
           </div>
 
           <div class="form-group">
             <label>Deliverables (Comma-separated)</label>
-            <input type="text" class="form-input" id="work-deliverables" name="deliverables" placeholder="Technical SEO, Entity Graph, Bilingual Arabic Content">
+            <input type="text" class="form-input" id="work-deliverables" placeholder="Design System, Custom Shaders, Headless CMS">
           </div>
 
           <div style="display: flex; gap: 24px; align-items: center;">
             <div style="display: flex; gap: 8px; align-items: center;">
-              <input type="checkbox" id="work-featured" name="is_featured" style="width: 18px; height: 18px; accent-color: var(--accent);">
+              <input type="checkbox" id="work-featured" style="width: 18px; height: 18px; accent-color: var(--accent);">
               <label for="work-featured" style="font-size: 13px; color: var(--text); cursor: pointer;">Feature on Homepage Grid</label>
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
-              <label style="font-size: 12px; color: var(--text-muted);">Sort Order:</label>
-              <input type="number" id="work-sort" name="sort_order" value="0" style="width: 60px; background: var(--surface-elevated); border: 1px solid var(--border); color: #fff; padding: 4px 8px; border-radius: 4px;">
+              <label style="font-size: 12px; color: var(--text-muted);\">Sort Order:</label>
+              <input type="number" id="work-sort" value="0" style="width: 60px; background: var(--surface-elevated); border: 1px solid var(--border); color: #fff; padding: 4px 8px; border-radius: 4px;">
             </div>
           </div>
         </div>
@@ -1247,26 +1662,109 @@
     </div>
   </div>
 
+  <!-- Modal 4: SEO Modal -->
+  <div class="modal-backdrop" id="seo-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="seo-modal-title">Edit SEO Route</h3>
+        <button type="button" class="modal-close" onclick="closeModal('seo-modal')">&times;</button>
+      </div>
+      <form id="seo-form" onsubmit="saveSEO(event)">
+        <div class="modal-body">
+          <input type="hidden" id="seo-id" value="">
+          <div class="form-group">
+            <label>Route Path</label>
+            <input type="text" class="form-input" id="seo-route" required>
+          </div>
+          <div class="form-group">
+            <label>Page Name</label>
+            <input type="text" class="form-input" id="seo-name" required>
+          </div>
+          <div class="form-group">
+            <label>Meta Title</label>
+            <input type="text" class="form-input" id="seo-title" required>
+          </div>
+          <div class="form-group">
+            <label>Meta Description</label>
+            <textarea class="form-textarea" id="seo-desc" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Primary Keyword</label>
+            <input type="text" class="form-input" id="seo-keyword">
+          </div>
+          <div class="form-group">
+            <label>Secondary Keywords</label>
+            <input type="text" class="form-input" id="seo-secondary">
+          </div>
+          <div class="form-group">
+            <label>Canonical URL</label>
+            <input type="text" class="form-input" id="seo-canonical">
+          </div>
+          <div class="form-group">
+            <label>Schema Type</label>
+            <select class="form-select" id="seo-schema">
+              <option value="Service">Service</option>
+              <option value="Organization">Organization</option>
+              <option value="WebPage">WebPage</option>
+              <option value="CollectionPage">CollectionPage</option>
+              <option value="ContactPage">ContactPage</option>
+              <option value="AboutPage">AboutPage</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="checkbox" id="seo-indexable" checked style="width: 18px; height: 18px; accent-color: var(--accent);">
+            <label for="seo-indexable" style="font-size: 13px; color: var(--text); cursor: pointer;">Allow Search Engines to Index</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('seo-modal')">Cancel</button>
+          <button type="submit" class="btn-action">Save SEO Route</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION -->
   <div class="toast" id="toast-msg"></div>
 
   <script>
     const CSRF_TOKEN = "{{ csrf_token }}";
 
+    // Global in-memory lists for dynamic editing
+    let currentPartners = {{ site_settings.partner_logos|safe|default:"[]" }};
+    let currentReviews = {{ site_settings.client_reviews|safe|default:"[]" }};
+    let currentCapabilities = {{ site_settings.capability_photos|safe|default:"{}" }};
+
+    // Fallback defaults if partners list is empty
+    const defaultPartnersList = [
+      { name: "Google", badge: "ENTERPRISE CLOUD", image: "" },
+      { name: "HEALWELL AI", badge: "HEALTHCARE AI", image: "" },
+      { name: "Nolana", badge: "LUXURY SPATIAL", image: "" },
+      { name: "Virgin", badge: "GLOBAL TELCO", image: "" },
+      { name: "Aqua.", badge: "WATER SYSTEMS", image: "" },
+      { name: "Gather", badge: "AI TELCO NETWORK", image: "" },
+      { name: "FanMaker", badge: "FAN ENGAGEMENT", image: "" },
+      { name: "Parker", badge: "LUXURY ATELIER", image: "" },
+      { name: "Niamato", badge: "SPATIAL DESIGN", image: "" }
+    ];
+
+    if (!Array.isArray(currentPartners) || currentPartners.length === 0) {
+      currentPartners = defaultPartnersList;
+    }
+
     // Tab Switching
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
 
-      event.currentTarget.classList.add('active');
+      const btn = event ? event.currentTarget : document.querySelector(`.tab-btn[onclick*="'${tabId}'"]`);
+      if (btn) btn.classList.add('active');
       const target = document.getElementById('tab-' + tabId);
       if (target) target.classList.add('active');
 
       if (tabId === 'leads') fetchLiveLeads();
-      if (tabId === 'diagnostics') fetchDiagnostics();
     }
 
-    // Modal helpers
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
@@ -1277,177 +1775,408 @@
       setTimeout(() => toast.classList.remove('active'), 3500);
     }
 
-    function updateCounter(inputId, counterId, max) {
-      const len = document.getElementById(inputId).value.length;
-      document.getElementById(counterId).textContent = `${len}/${max}`;
-    }
-
-    // Logo Upload handler
-    function handleLogoUpload(event) {
+    // Generic Image File Upload handler calling /api/upload/
+    async function handleGenericFileUpload(event, targetInputId, targetPreviewImgId) {
       const file = event.target.files[0];
       if (!file) return;
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const dataUri = e.target.result;
-        document.getElementById('setting-logo-image').value = dataUri;
-        const img = document.getElementById('logo-preview');
-        img.src = dataUri;
-        img.style.display = 'block';
-        document.getElementById('logo-empty-text').style.display = 'none';
-        showToast('Logo file loaded. Click "Save All Changes" to deploy site-wide.', 'success');
-      };
-      reader.readAsDataURL(file);
-    }
+      const formData = new FormData();
+      formData.append('file', file);
 
-    // Favicon Upload handler
-    function handleFaviconUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
+      showToast('Uploading asset to server...', 'info');
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const dataUri = e.target.result;
-        document.getElementById('setting-favicon-image').value = dataUri;
-        document.getElementById('favicon-preview').src = dataUri;
-        showToast('Favicon loaded. Click "Save All Changes" to deploy site-wide.', 'success');
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // Hero Media Type switcher
-    function updateHeroMediaType(type) {
-      document.getElementById('stat-hero-mode').textContent = type;
-      const img = document.getElementById('hero-image-preview');
-      const vid = document.getElementById('hero-video-preview');
-      const placeholder = document.getElementById('hero-media-placeholder');
-
-      if (type === 'canvas') {
-        img.style.display = 'none';
-        vid.style.display = 'none';
-        placeholder.style.display = 'block';
-        placeholder.textContent = 'Using default kinetic WebGL canvas shaders';
-      } else if (type === 'image') {
-        vid.style.display = 'none';
-        if (img.src && !img.src.endsWith('/')) {
-          img.style.display = 'block';
-          placeholder.style.display = 'none';
+      try {
+        const resp = await fetch('/api/upload/', {
+          method: 'POST',
+          headers: { 'X-CSRFToken': CSRF_TOKEN },
+          body: formData
+        });
+        const data = await resp.json();
+        if (data.success) {
+          const finalUrl = data.media_url || data.data_uri;
+          const input = document.getElementById(targetInputId);
+          if (input) input.value = finalUrl;
+          const preview = document.getElementById(targetPreviewImgId);
+          if (preview) {
+            preview.src = finalUrl;
+            preview.style.display = 'block';
+          }
+          showToast('Media uploaded and linked successfully!', 'success');
         } else {
-          placeholder.style.display = 'block';
-          placeholder.textContent = 'Please upload or specify a custom photo';
+          showToast('Upload failed: ' + (data.error || 'Server error'), 'error');
         }
-      } else if (type === 'video') {
-        img.style.display = 'none';
-        if (vid.src && !vid.src.endsWith('/')) {
-          vid.style.display = 'block';
-          placeholder.style.display = 'none';
+      } catch (err) {
+        showToast('Upload network error: ' + err.message, 'error');
+      }
+    }
+
+    function updatePreviewFromInput(inputId, previewImgId) {
+      const val = document.getElementById(inputId).value.trim();
+      const preview = document.getElementById(previewImgId);
+      if (preview) {
+        if (val) {
+          preview.src = val;
+          preview.style.display = 'block';
         } else {
-          placeholder.style.display = 'block';
-          placeholder.textContent = 'Please upload or specify a custom video';
+          preview.style.display = 'none';
         }
       }
     }
 
-    // Hero Media Upload handler (image or video)
-    function handleHeroMediaUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const isVideo = file.type.startsWith('video');
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const dataUri = e.target.result;
-        document.getElementById('setting-hero-media-url').value = dataUri;
-
-        if (isVideo) {
-          document.getElementById('setting-hero-media-type').value = 'video';
-          updateHeroMediaType('video');
-          const vid = document.getElementById('hero-video-preview');
-          vid.src = dataUri;
-          vid.style.display = 'block';
-          document.getElementById('hero-image-preview').style.display = 'none';
-          document.getElementById('hero-media-placeholder').style.display = 'none';
-        } else {
-          document.getElementById('setting-hero-media-type').value = 'image';
-          updateHeroMediaType('image');
-          const img = document.getElementById('hero-image-preview');
-          img.src = dataUri;
-          img.style.display = 'block';
-          document.getElementById('hero-video-preview').style.display = 'none';
-          document.getElementById('hero-media-placeholder').style.display = 'none';
-        }
-        showToast('Media loaded. Click "Save All Changes" to deploy.', 'success');
-      };
-      reader.readAsDataURL(file);
+    function clearInputAndPreview(inputId, previewImgId) {
+      const input = document.getElementById(inputId);
+      if (input) input.value = '';
+      const preview = document.getElementById(previewImgId);
+      if (preview) {
+        preview.src = '';
+        preview.style.display = 'none';
+      }
     }
 
-    // Work Project Hero Cover Upload
-    function uploadWorkFile(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const dataUri = e.target.result;
-        document.getElementById('work-image').value = dataUri;
-        const pBox = document.getElementById('work-image-preview-box');
-        const pImg = document.getElementById('work-image-preview');
-        pImg.src = dataUri;
-        pBox.style.display = 'flex';
-        showToast('Project cover image loaded.', 'success');
-      };
-      reader.readAsDataURL(file);
+    // =============================================================
+    // HERO & SCENE 01 LOGIC
+    // =============================================================
+    function handleHeroMediaTypeChange(val) {
+      document.getElementById('stat-hero-mode').textContent = val;
     }
 
-    // Save Branding & Landing CMS Settings
-    async function saveBrandingSettings(ev) {
-      ev.preventDefault();
+    
+    function updateVideoPreview(inputId, videoPreviewId) {
+      const val = document.getElementById(inputId).value.trim();
+      const video = document.getElementById(videoPreviewId);
+      if (video && val) {
+        video.src = val;
+        video.play().catch(() => {});
+      }
+    }
+
+    async function saveScene2Section() {
       const payload = {
-        site_name: document.getElementById('setting-site-name').value.trim(),
-        logo_image: document.getElementById('setting-logo-image').value.trim(),
-        favicon_image: document.getElementById('setting-favicon-image').value.trim(),
-        hero_headline: document.getElementById('setting-hero-headline').value.trim(),
-        hero_subheadline: document.getElementById('setting-hero-subheadline').value.trim(),
-        hero_badge: document.getElementById('setting-hero-badge').value.trim(),
-        hero_cta_text: document.getElementById('setting-hero-cta').value.trim(),
-        hero_media_type: document.getElementById('setting-hero-media-type').value,
-        hero_media_url: document.getElementById('setting-hero-media-url').value.trim(),
-        contact_email: document.getElementById('setting-contact-email').value.trim(),
-        contact_phone: document.getElementById('setting-contact-phone').value.trim(),
-        contact_address: document.getElementById('setting-contact-address').value.trim(),
+        scene2_video_url: document.getElementById('scene2-video-url').value.trim(),
+        scene2_badge: document.getElementById('scene2-badge').value.trim(),
+        scene2_hint: document.getElementById('scene2-hint').value.trim(),
+      };
+      await updateSiteSettings(payload, 'Scene 02 Brain Scrub settings updated!');
+    }
+
+    async function saveReelVideo() {
+      const payload = {
+        reel_video_url: document.getElementById('reel-video-url').value.trim(),
+      };
+      await updateSiteSettings(payload, 'Background Cinema Showreel updated!');
+    }
+
+    async function saveStudioSection() {
+      const payload = {
+        studio_headline: document.getElementById('studio-headline').value.trim(),
+        studio_subheadline: document.getElementById('studio-subheadline').value.trim(),
+      };
+      await updateSiteSettings(payload, 'Studio & Ethos narrative updated!');
+    }
+
+    async function saveHeroSection() {
+      const payload = {
+        hero_headline: document.getElementById('hero-headline').value.trim(),
+        hero_subheadline: document.getElementById('hero-subheadline').value.trim(),
+        hero_badge: document.getElementById('hero-badge').value.trim(),
+        hero_cta_text: document.getElementById('hero-cta').value.trim(),
+        hero_media_type: document.getElementById('hero-media-type').value,
+        hero_media_url: document.getElementById('hero-media-url').value.trim(),
       };
 
+      await updateSiteSettings(payload, 'Hero & Scene 01 updated and deployed!');
+    }
+
+    // =============================================================
+    // THE REEL PARTNERS LOGIC
+    // =============================================================
+    function renderDashPartners() {
+      const container = document.getElementById('dash-partners-grid');
+      const badgeCount = document.getElementById('badge-partners-count');
+      if (badgeCount) badgeCount.textContent = currentPartners.length;
+
+      if (!container) return;
+      if (currentPartners.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); padding: 24px; grid-column: 1/-1; text-align: center;">No brand partners configured. Click "+ Add New Partner".</div>';
+        return;
+      }
+
+      container.innerHTML = currentPartners.map((p, idx) => {
+        const name = typeof p === 'object' ? (p.name || `Partner ${idx+1}`) : `Partner ${idx+1}`;
+        const badge = typeof p === 'object' ? (p.badge || 'BRAND PARTNER') : 'BRAND PARTNER';
+        const img = typeof p === 'object' ? (p.image || '') : p;
+
+        return `
+          <div class="partner-dash-card">
+            <div class="partner-dash-thumb">
+              ${img ? `<img src="${img}" alt="${name}">` : `<span style="font-family: var(--font-heading); font-size: 16px; color: #fff;">${name}</span>`}
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <strong style="font-size: 14px;">${name}</strong>
+              <span class="tag-badge">${badge}</span>
+            </div>
+            <button type="button" class="btn-danger-sm" style="align-self: flex-start;" onclick="removePartnerCard(${idx})">Remove</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function confirmAddPartner() {
+      const name = document.getElementById('new-partner-name').value.trim();
+      const badge = document.getElementById('new-partner-badge').value.trim() || 'BRAND PARTNER';
+      const img = document.getElementById('new-partner-img').value.trim();
+
+      if (!name) {
+        showToast('Please specify the Brand Partner Name', 'error');
+        return;
+      }
+
+      currentPartners.push({ name, badge, image: img });
+      renderDashPartners();
+      closeModal('add-partner-modal');
+
+      // Reset modal fields
+      document.getElementById('new-partner-name').value = '';
+      document.getElementById('new-partner-badge').value = '';
+      clearInputAndPreview('new-partner-img', 'new-partner-thumb');
+
+      showToast(`Added ${name} to THE REEL! Click "Save All Partners" to deploy.`, 'success');
+    }
+
+    function removePartnerCard(idx) {
+      if (idx >= 0 && idx < currentPartners.length) {
+        const removed = currentPartners.splice(idx, 1);
+        renderDashPartners();
+        showToast(`Removed partner card.`, 'info');
+      }
+    }
+
+    async function savePartnersList() {
+      await updateSiteSettings({ partner_logos: currentPartners }, 'THE REEL brand partners deployed to website!');
+    }
+
+    // =============================================================
+    // CAPABILITIES PHOTOS LOGIC
+    // =============================================================
+    function renderCapabilityThumbs() {
+      const mapping = [
+        { key: 'Brand strategy', containerId: 'cap-thumbs-brand' },
+        { key: 'Campaign production', containerId: 'cap-thumbs-campaign' },
+        { key: 'Performance media', containerId: 'cap-thumbs-media' },
+        { key: 'Content systems', containerId: 'cap-thumbs-content' }
+      ];
+
+      mapping.forEach(m => {
+        const box = document.getElementById(m.containerId);
+        if (!box) return;
+        const list = currentCapabilities[m.key] || [];
+
+        if (list.length === 0) {
+          box.innerHTML = '<span style="font-size: 11px; color: var(--text-muted);">No images in floating stack.</span>';
+          return;
+        }
+
+        box.innerHTML = list.map((url, i) => `
+          <div style="position: relative; width: 48px; height: 48px; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15);">
+            <img src="${url}" style="width:100%; height:100%; object-fit: cover;">
+            <button type="button" onclick="removeCapPhoto('${m.key}', ${i})" style="position: absolute; top: 2px; right: 2px; background: rgba(220,38,38,0.85); color: #fff; border: none; border-radius: 50%; width: 14px; height: 14px; font-size: 9px; cursor: pointer;">&times;</button>
+          </div>
+        `).join('');
+      });
+    }
+
+    async function handleCapMultiUpload(event, capability) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+      showToast(`Uploading image for ${capability}...`, 'info');
+
+      try {
+        const resp = await fetch('/api/upload/', {
+          method: 'POST',
+          headers: { 'X-CSRFToken': CSRF_TOKEN },
+          body: formData
+        });
+        const data = await resp.json();
+        if (data.success) {
+          const url = data.media_url || data.data_uri;
+          if (!currentCapabilities[capability]) currentCapabilities[capability] = [];
+          currentCapabilities[capability].push(url);
+          renderCapabilityThumbs();
+          showToast(`Photo added to ${capability} collage!`, 'success');
+        }
+      } catch(err) {
+        showToast('Upload error: ' + err.message, 'error');
+      }
+    }
+
+    function addCapPhotoByLink(capability, inputId) {
+      const val = document.getElementById(inputId).value.trim();
+      if (!val) return;
+      if (!currentCapabilities[capability]) currentCapabilities[capability] = [];
+      currentCapabilities[capability].push(val);
+      document.getElementById(inputId).value = '';
+      renderCapabilityThumbs();
+      showToast(`Photo link added to ${capability}!`, 'success');
+    }
+
+    function removeCapPhoto(capability, idx) {
+      if (currentCapabilities[capability] && currentCapabilities[capability][idx]) {
+        currentCapabilities[capability].splice(idx, 1);
+        renderCapabilityThumbs();
+        showToast('Photo removed from stack.', 'info');
+      }
+    }
+
+    async function saveCapabilityPhotos() {
+      await updateSiteSettings({ capability_photos: currentCapabilities }, 'Capabilities photo stacks saved and deployed!');
+    }
+
+    // =============================================================
+    // INSTAGRAM REVIEWS LOGIC
+    // =============================================================
+    function renderDashReviews() {
+      const container = document.getElementById('dash-reviews-grid');
+      const badgeCount = document.getElementById('badge-reviews-count');
+      if (badgeCount) badgeCount.textContent = currentReviews.length;
+
+      if (!container) return;
+      if (currentReviews.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); padding: 24px; grid-column: 1/-1; text-align: center;">No Instagram reviews configured. Click "+ Add Review Card".</div>';
+        return;
+      }
+
+      container.innerHTML = currentReviews.map((rev, idx) => `
+        <div class="review-dash-card">
+          <div style="padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <img src="${rev.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100'}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+              <div>
+                <strong style="font-size: 13px;">${rev.handle || '@partner'}</strong>
+                <div style="font-size: 10px; color: var(--text-muted);">${rev.role || 'Partner'}</div>
+              </div>
+            </div>
+            <span class="tag-badge">${rev.likes ? rev.likes.toLocaleString() : '3,420'} likes</span>
+          </div>
+
+          <div style="width: 100%; aspect-ratio: 4/3; background: #141312; overflow: hidden;">
+            <img src="${rev.image || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600'}" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+
+          <div style="padding: 12px 14px; font-size: 12px; line-height: 1.5;">
+            <p style="color: var(--text-muted); margin-bottom: 8px;">&quot;${rev.quote || ''}&quot;</p>
+            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--accent-bright);">${rev.tags || '#SpecMedia'}</div>
+          </div>
+
+          <div style="padding: 10px 14px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between;">
+            <button type="button" class="btn-secondary" onclick="editReviewCard(${idx})">Edit</button>
+            <button type="button" class="btn-danger-sm" onclick="removeReviewCard(${idx})">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function editReviewCard(idx) {
+      const r = currentReviews[idx];
+      if (!r) return;
+      document.getElementById('review-edit-idx').value = idx;
+      document.getElementById('rev-handle').value = r.handle || '';
+      document.getElementById('rev-role').value = r.role || '';
+      document.getElementById('rev-location').value = r.location || '';
+      document.getElementById('rev-likes').value = r.likes || 3420;
+      document.getElementById('rev-quote').value = r.quote || '';
+      document.getElementById('rev-tags').value = r.tags || '';
+      document.getElementById('rev-time').value = r.time || '';
+
+      document.getElementById('rev-avatar-url').value = r.avatar || '';
+      updatePreviewFromInput('rev-avatar-url', 'rev-avatar-thumb');
+
+      document.getElementById('rev-image-url').value = r.image || '';
+      updatePreviewFromInput('rev-image-url', 'rev-image-thumb');
+
+      document.getElementById('review-modal-title').textContent = 'Edit Instagram Review Card';
+      openModal('add-review-modal');
+    }
+
+    function removeReviewCard(idx) {
+      if (idx >= 0 && idx < currentReviews.length) {
+        currentReviews.splice(idx, 1);
+        renderDashReviews();
+        showToast('Review card deleted.', 'info');
+      }
+    }
+
+    function confirmSaveReview() {
+      const idx = parseInt(document.getElementById('review-edit-idx').value);
+      const reviewObj = {
+        handle: document.getElementById('rev-handle').value.trim() || '@specmedia.partner',
+        role: document.getElementById('rev-role').value.trim(),
+        location: document.getElementById('rev-location').value.trim() || 'Dubai, UAE',
+        likes: parseInt(document.getElementById('rev-likes').value) || 3420,
+        quote: document.getElementById('rev-quote').value.trim(),
+        tags: document.getElementById('rev-tags').value.trim() || '#SpecMedia #Verified',
+        time: document.getElementById('rev-time').value.trim() || 'RECENT · VERIFIED',
+        avatar: document.getElementById('rev-avatar-url').value.trim() || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200',
+        image: document.getElementById('rev-image-url').value.trim() || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800',
+      };
+
+      if (idx >= 0 && idx < currentReviews.length) {
+        currentReviews[idx] = reviewObj;
+      } else {
+        currentReviews.push(reviewObj);
+      }
+
+      renderDashReviews();
+      closeModal('add-review-modal');
+      showToast('Instagram review saved! Click "Save All Reviews" to deploy.', 'success');
+    }
+
+    async function saveReviewsList() {
+      await updateSiteSettings({ client_reviews: currentReviews }, 'Instagram reviews deployed to homepage!');
+    }
+
+    // =============================================================
+    // GLOBAL BRANDING LOGIC
+    // =============================================================
+    async function saveMasterBranding() {
+      const payload = {
+        site_name: document.getElementById('brand-site-name').value.trim(),
+        logo_image: document.getElementById('brand-logo-url').value.trim(),
+        contact_email: document.getElementById('brand-email').value.trim(),
+        contact_phone: document.getElementById('brand-phone').value.trim(),
+        contact_address: document.getElementById('brand-address').value.trim(),
+      };
+      await updateSiteSettings(payload, 'Master branding updated site-wide!');
+    }
+
+    // Unified API caller to /api/settings/
+    async function updateSiteSettings(partialData, successMessage) {
       try {
         const resp = await fetch('/api/settings/', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': CSRF_TOKEN,
+            'X-CSRFToken': CSRF_TOKEN
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(partialData)
         });
-        const data = await resp.json();
-        if (data.success) {
-          showToast('Branding & landing CMS deployed successfully!', 'success');
-          document.getElementById('stat-site-name').textContent = payload.site_name;
+        const res = await resp.json();
+        if (res.success) {
+          showToast(successMessage || 'Settings deployed successfully!', 'success');
           setTimeout(() => location.reload(), 900);
         } else {
-          showToast('Error saving: ' + (data.error || 'Failed'), 'error');
+          showToast('Error saving: ' + (res.error || 'Failed'), 'error');
         }
-      } catch (err) {
-        showToast('Network error saving branding: ' + err.message, 'error');
+      } catch(err) {
+        showToast('Network error saving settings: ' + err.message, 'error');
       }
     }
 
-    // Search filters
-    function filterSEO() {
-      const q = document.getElementById('search-seo').value.toLowerCase();
-      document.querySelectorAll('#seo-table tbody tr').forEach(tr => {
-        const text = tr.innerText.toLowerCase();
-        tr.style.display = text.includes(q) ? '' : 'none';
-      });
-    }
-
+    // =============================================================
+    // WORK PROJECTS LOGIC
+    // =============================================================
     function filterWorks() {
       const q = document.getElementById('search-works').value.toLowerCase();
       document.querySelectorAll('#works-table tbody tr').forEach(tr => {
@@ -1456,120 +2185,42 @@
       });
     }
 
-    // SEO Edit
-    async function editSEO(id) {
-      const resp = await fetch(`/api/seo-pages/${id}/`);
-      const data = await resp.json();
-      if (data.success && data.seo) {
-        const s = data.seo;
-        document.getElementById('seo-id').value = s.id;
-        document.getElementById('seo-route').value = s.route_path;
-        document.getElementById('seo-name').value = s.page_name;
-        document.getElementById('seo-title').value = s.meta_title;
-        document.getElementById('seo-desc').value = s.meta_description;
-        document.getElementById('seo-keyword').value = s.primary_keyword || '';
-        document.getElementById('seo-secondary').value = s.secondary_keywords || '';
-        document.getElementById('seo-canonical').value = s.canonical_url || '';
-        document.getElementById('seo-schema').value = s.schema_type || 'Service';
-        document.getElementById('seo-indexable').checked = s.is_indexable;
-
-        updateCounter('seo-title', 'title-counter', 60);
-        updateCounter('seo-desc', 'desc-counter', 160);
-
-        document.getElementById('seo-modal-title').textContent = 'Edit SEO Page: ' + s.route_path;
-        openModal('seo-modal');
-      }
-    }
-
-    function openAddSEOModal() {
-      document.getElementById('seo-form').reset();
-      document.getElementById('seo-id').value = '';
-      document.getElementById('seo-modal-title').textContent = 'Add New SEO Route';
-      updateCounter('seo-title', 'title-counter', 60);
-      updateCounter('seo-desc', 'desc-counter', 160);
-      openModal('seo-modal');
-    }
-
-    async function saveSEO(ev) {
-      ev.preventDefault();
-      const id = document.getElementById('seo-id').value;
-      const payload = {
-        route_path: document.getElementById('seo-route').value.trim(),
-        page_name: document.getElementById('seo-name').value.trim(),
-        meta_title: document.getElementById('seo-title').value.trim(),
-        meta_description: document.getElementById('seo-desc').value.trim(),
-        primary_keyword: document.getElementById('seo-keyword').value.trim(),
-        secondary_keywords: document.getElementById('seo-secondary').value.trim(),
-        canonical_url: document.getElementById('seo-canonical').value.trim(),
-        schema_type: document.getElementById('seo-schema').value,
-        is_indexable: document.getElementById('seo-indexable').checked,
-      };
-
-      const url = id ? `/api/seo-pages/${id}/` : `/api/seo-pages/`;
-      const method = id ? 'PUT' : 'POST';
-
-      try {
-        const resp = await fetch(url, {
-          method: method,
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': CSRF_TOKEN
-          },
-          body: JSON.stringify(payload)
-        });
-        const data = await resp.json();
-        if (data.success) {
-          showToast('SEO changes saved successfully!', 'success');
-          closeModal('seo-modal');
-          setTimeout(() => location.reload(), 800);
-        } else {
-          showToast('Error: ' + (data.error || 'Failed to save'), 'error');
-        }
-      } catch (err) {
-        showToast('Network error saving SEO: ' + err.message, 'error');
-      }
-    }
-
-    // Work Projects
     function openAddWorkModal() {
       document.getElementById('work-form').reset();
       document.getElementById('work-id').value = '';
-      document.getElementById('work-modal-title').textContent = 'Add Work / Case Study';
-      document.getElementById('work-image-preview-box').style.display = 'none';
+      document.getElementById('work-modal-title').textContent = 'Add Work Project';
+      clearInputAndPreview('work-image', 'work-image-preview');
       openModal('work-modal');
     }
 
     async function editWork(id) {
-      const resp = await fetch(`/api/works/${id}/`);
-      const data = await resp.json();
-      if (data.success && data.work) {
-        const w = data.work;
-        document.getElementById('work-id').value = w.id;
-        document.getElementById('work-title').value = w.title;
-        document.getElementById('work-client').value = w.client;
-        document.getElementById('work-discipline').value = w.discipline;
-        document.getElementById('work-market').value = w.market;
-        document.getElementById('work-year').value = w.year;
-        document.getElementById('work-image').value = w.hero_image || '';
-        document.getElementById('work-summary').value = w.summary || '';
-        document.getElementById('work-challenge').value = w.challenge || '';
-        document.getElementById('work-solution').value = w.solution || '';
-        document.getElementById('work-kpis').value = w.kpis || '';
-        document.getElementById('work-deliverables').value = w.deliverables || '';
-        document.getElementById('work-featured').checked = w.is_featured;
-        document.getElementById('work-sort').value = w.sort_order || 0;
+      try {
+        const resp = await fetch(`/api/works/${id}/`);
+        const data = await resp.json();
+        if (data.success && data.work) {
+          const w = data.work;
+          document.getElementById('work-id').value = w.id;
+          document.getElementById('work-title').value = w.title;
+          document.getElementById('work-client').value = w.client;
+          document.getElementById('work-discipline').value = w.discipline;
+          document.getElementById('work-market').value = w.market;
+          document.getElementById('work-year').value = w.year;
+          document.getElementById('work-image').value = w.hero_image || '';
+          updatePreviewFromInput('work-image', 'work-image-preview');
 
-        const pBox = document.getElementById('work-image-preview-box');
-        const pImg = document.getElementById('work-image-preview');
-        if (w.hero_image) {
-          pImg.src = w.hero_image;
-          pBox.style.display = 'flex';
-        } else {
-          pBox.style.display = 'none';
+          document.getElementById('work-summary').value = w.summary || '';
+          document.getElementById('work-challenge').value = w.challenge || '';
+          document.getElementById('work-solution').value = w.solution || '';
+          document.getElementById('work-kpis').value = w.kpis || '';
+          document.getElementById('work-deliverables').value = w.deliverables || '';
+          document.getElementById('work-featured').checked = w.is_featured;
+          document.getElementById('work-sort').value = w.sort_order || 0;
+
+          document.getElementById('work-modal-title').textContent = 'Edit Work: ' + w.title;
+          openModal('work-modal');
         }
-
-        document.getElementById('work-modal-title').textContent = 'Edit Work: ' + w.title;
-        openModal('work-modal');
+      } catch(e) {
+        showToast('Error loading work project: ' + e.message, 'error');
       }
     }
 
@@ -1610,10 +2261,10 @@
           closeModal('work-modal');
           setTimeout(() => location.reload(), 800);
         } else {
-          showToast('Error: ' + (data.error || 'Failed to save work'), 'error');
+          showToast('Error: ' + (data.error || 'Failed to save'), 'error');
         }
       } catch (err) {
-        showToast('Network error saving work: ' + err.message, 'error');
+        showToast('Error saving work: ' + err.message, 'error');
       }
     }
 
@@ -1626,7 +2277,7 @@
         });
         const data = await resp.json();
         if (data.success) {
-          showToast('Work project deleted!', 'success');
+          showToast('Work project deleted.', 'success');
           setTimeout(() => location.reload(), 800);
         }
       } catch (err) {
@@ -1634,15 +2285,92 @@
       }
     }
 
-    // Leads CRM
+    // =============================================================
+    // SEO LOGIC
+    // =============================================================
+    function openAddSEOModal() {
+      document.getElementById('seo-form').reset();
+      document.getElementById('seo-id').value = '';
+      document.getElementById('seo-modal-title').textContent = 'Add New SEO Route';
+      openModal('seo-modal');
+    }
+
+    async function editSEO(id) {
+      try {
+        const resp = await fetch(`/api/seo-pages/${id}/`);
+        const data = await resp.json();
+        if (data.success && data.seo) {
+          const s = data.seo;
+          document.getElementById('seo-id').value = s.id;
+          document.getElementById('seo-route').value = s.route_path;
+          document.getElementById('seo-name').value = s.page_name;
+          document.getElementById('seo-title').value = s.meta_title;
+          document.getElementById('seo-desc').value = s.meta_description;
+          document.getElementById('seo-keyword').value = s.primary_keyword || '';
+          document.getElementById('seo-secondary').value = s.secondary_keywords || '';
+          document.getElementById('seo-canonical').value = s.canonical_url || '';
+          document.getElementById('seo-schema').value = s.schema_type || 'Service';
+          document.getElementById('seo-indexable').checked = s.is_indexable;
+
+          document.getElementById('seo-modal-title').textContent = 'Edit SEO Route: ' + s.route_path;
+          openModal('seo-modal');
+        }
+      } catch(e) {
+        showToast('Error loading SEO page: ' + e.message, 'error');
+      }
+    }
+
+    async function saveSEO(ev) {
+      ev.preventDefault();
+      const id = document.getElementById('seo-id').value;
+      const payload = {
+        route_path: document.getElementById('seo-route').value.trim(),
+        page_name: document.getElementById('seo-name').value.trim(),
+        meta_title: document.getElementById('seo-title').value.trim(),
+        meta_description: document.getElementById('seo-desc').value.trim(),
+        primary_keyword: document.getElementById('seo-keyword').value.trim(),
+        secondary_keywords: document.getElementById('seo-secondary').value.trim(),
+        canonical_url: document.getElementById('seo-canonical').value.trim(),
+        schema_type: document.getElementById('seo-schema').value,
+        is_indexable: document.getElementById('seo-indexable').checked,
+      };
+
+      const url = id ? `/api/seo-pages/${id}/` : `/api/seo-pages/`;
+      const method = id ? 'PUT' : 'POST';
+
+      try {
+        const resp = await fetch(url, {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF_TOKEN
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await resp.json();
+        if (data.success) {
+          showToast('SEO changes saved successfully!', 'success');
+          closeModal('seo-modal');
+          setTimeout(() => location.reload(), 800);
+        } else {
+          showToast('Error: ' + (data.error || 'Failed'), 'error');
+        }
+      } catch (err) {
+        showToast('Error saving SEO: ' + err.message, 'error');
+      }
+    }
+
+    // =============================================================
+    // INBOUND LEADS LOGIC
+    // =============================================================
     async function fetchLiveLeads() {
       const tbody = document.getElementById('leads-tbody');
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">Refreshing live leads from Supabase...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">Refreshing live inbound inquiries...</td></tr>';
       try {
         const resp = await fetch('/api/leads/');
         const data = await resp.json();
         if (data.success && data.results) {
-          document.getElementById('leads-count').textContent = data.count;
+          document.getElementById('badge-leads-count').textContent = data.count;
           if (data.results.length === 0) {
             tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">No leads recorded yet. Inbound inquiries will appear here automatically.</td></tr>';
             return;
@@ -1652,14 +2380,14 @@
               <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">
                 ${l.created_at ? new Date(l.created_at).toLocaleString() : 'Recent'}
               </td>
-              <td><strong>${l.name || 'Anonymous'}</strong></td>
+              <td><strong>${l.name || 'Anonymous Prospect'}</strong></td>
               <td>
                 <span style="color: var(--text);">${l.email || ''}</span><br>
                 <span style="font-size: 11px; color: var(--text-muted);">${l.company || 'Direct Client'}</span>
               </td>
-              <td><span class="route-badge">${l.service || 'General Consultation'}</span></td>
-              <td style="color: var(--accent); font-family: var(--font-mono);">${l.budget || 'Undisclosed'}</td>
-              <td><span class="status-pill indexable">${l.status || 'new'}</span></td>
+              <td><span class="tag-badge">${l.service || 'General Consultation'}</span></td>
+              <td style="color: var(--accent-bright); font-family: var(--font-mono);">${l.budget || 'Undisclosed'}</td>
+              <td><span style="color: var(--success); font-family: var(--font-mono); font-size: 11px;">&#9679; ${l.status || 'New'}</span></td>
             </tr>
           `).join('');
         }
@@ -1668,20 +2396,12 @@
       }
     }
 
-    // Technical SEO Diagnostics
-    async function fetchDiagnostics() {
-      try {
-        const sResp = await fetch('/sitemap.xml');
-        const sText = await sResp.text();
-        document.getElementById('sitemap-preview').textContent = sText;
-
-        const rResp = await fetch('/robots.txt');
-        const rText = await rResp.text();
-        document.getElementById('robots-preview').textContent = rText;
-      } catch (err) {
-        console.warn('Diagnostics fetch error:', err);
-      }
-    }
+    // Initialize all components on DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+      renderDashPartners();
+      renderDashReviews();
+      renderCapabilityThumbs();
+    });
   </script>
 </body>
 </html>

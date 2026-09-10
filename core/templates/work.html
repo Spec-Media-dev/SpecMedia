@@ -10,17 +10,17 @@
   <meta property="og:description" content="{{ page_seo.og_description }}">
   <meta property="og:image" content="{{ page_seo.og_image }}">
   <script type="application/ld+json">{{ page_seo.schema_json|safe }}</script>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%239e1b24%22>S</text></svg>">
   <style>
     :root {
       --color-bg: #f5ead8;
       --color-surface: #ebddc5;
       --color-text: #201e1d;
-      --color-accent: #c67139;
+      --color-accent: #9e1b24;
       --color-accent-2: #7a8a5e;
       --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
-      --font-heading: "Caprasimo", Georgia, serif;
-      --font-body: "Figtree", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Lora', Georgia, serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #201e1d; color: #f5ead8; font-family: var(--font-body); min-height: 100vh; overflow-x: hidden; }
@@ -31,11 +31,14 @@
     .work-card { background: #2e2b25; border-radius: 20px; overflow: hidden; transition: transform 0.4s ease, box-shadow 0.4s ease; border: 1px solid #3d382f; display: flex; flex-direction: column; }
     .work-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
     .tag { display: inline-block; padding: 6px 14px; border-radius: 999px; background: rgba(32,30,29,0.7); font-size: 10px; color: #f5ead8; cursor: pointer; transition: all 0.2s; }
-    .tag.active { background: #c67139; color: #fff; }
-    .btn-primary { display: inline-block; background: #c67139; color: #f5ead8; padding: 14px 32px; border-radius: 999px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; }
-    .btn-primary:hover { background: #b2622d; transform: translateY(-2px); }
-    .kpi-badge { background: rgba(198, 113, 57, 0.15); border: 1px solid rgba(198, 113, 57, 0.3); color: #c67139; padding: 4px 10px; border-radius: 6px; font-family: ui-monospace, monospace; font-size: 11px; font-weight: 600; }
+    .tag.active { background: #9e1b24; color: #fff; }
+    .btn-primary { display: inline-block; background: #9e1b24; color: #f5ead8; padding: 14px 32px; border-radius: 999px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; }
+    .btn-primary:hover { background: #c51f2e; transform: translateY(-2px); }
+    .kpi-badge { background: rgba(158, 27, 36, 0.15); border: 1px solid rgba(158, 27, 36, 0.3); color: #c51f2e; padding: 4px 10px; border-radius: 6px; font-family: ui-monospace, monospace; font-size: 11px; font-weight: 600; }
   </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -45,17 +48,17 @@
       <span style="font-family:var(--font-heading); font-size:22px; color:#f5ead8;">SPEC MEDIA</span>
     </a>
     <div style="display:flex; align-items:center; gap:24px;" class="mono">
-      <a href="/work/" style="color:#c67139;">[ work ]</a>
+      <a href="/work/" style="color:#9e1b24;">[ work ]</a>
       <a href="/studio/">[ studio ]</a>
       <a href="/capabilities/">[ capabilities ]</a>
       <a href="/dashboard/" style="color:#7a8a5e;">[ dashboard ]</a>
-      <a href="/#contact" style="color:#c67139;">[ start a project &rarr; ]</a>
+      <a href="/#contact" style="color:#9e1b24;">[ start a project &rarr; ]</a>
     </div>
   </header>
 
   <main style="padding: 140px 36px 80px; max-width: 1400px; margin: 0 auto;">
     <div style="margin-bottom: 50px;">
-      <div class="mono" style="color:#c67139; margin-bottom:12px;">[ Portfolio Archive & Case Studies ]</div>
+      <div class="mono" style="color:#9e1b24; margin-bottom:12px;">[ Portfolio Archive & Case Studies ]</div>
       <h1 style="font-family:var(--font-heading); font-size:clamp(36px, 5.5vw, 84px); line-height:1.02; color:#f5ead8; max-width:14ch;">Work that cuts through the noise.</h1>
       <p style="margin-top:20px; max-width:52ch; color:#a2937c; line-height:1.8; font-size:15px;">
         Every campaign, identity, and content system we produce is built to establish cultural presence, technical dominance, and measurable acquisition equity.
@@ -90,7 +93,7 @@
           </div>
           <div style="padding:28px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
             <div>
-              <div class="mono" style="color:#c67139; font-size:10px; margin-bottom:6px;">{{ project.client }} // {{ project.year }}</div>
+              <div class="mono" style="color:#9e1b24; font-size:10px; margin-bottom:6px;">{{ project.client }} // {{ project.year }}</div>
               <h2 style="font-family:var(--font-heading); font-size:26px; margin-bottom:10px; color:#f5ead8;">{{ project.title }}</h2>
               <p style="color:#a2937c; font-size:13px; line-height:1.7; margin-bottom:16px;">{{ project.summary }}</p>
             </div>
@@ -107,14 +110,14 @@
       </article>
       {% empty %}
       <div style="grid-column: span 12; text-align: center; padding: 60px; color: #a2937c;">
-        No work projects published yet. You can add new projects directly from the <a href="/dashboard/" style="color: #c67139; text-decoration: underline;">Control Dashboard</a>.
+        No work projects published yet. You can add new projects directly from the <a href="/dashboard/" style="color: #9e1b24; text-decoration: underline;">Control Dashboard</a>.
       </div>
       {% endfor %}
     </div>
 
     <!-- Call to action -->
     <div style="margin-top:100px; padding:60px 40px; background:#2e2b25; border-radius:28px; border:1px solid #3d382f; text-align:center;">
-      <div class="mono" style="color:#c67139; margin-bottom:14px;">[ Start Your Project ]</div>
+      <div class="mono" style="color:#9e1b24; margin-bottom:14px;">[ Start Your Project ]</div>
       <h2 style="font-family:var(--font-heading); font-size:clamp(32px, 4vw, 56px); margin-bottom:20px;">Ready to create your next landmark?</h2>
       <a href="/#contact" class="btn-primary">Initiate Project Inquiry &rarr;</a>
     </div>

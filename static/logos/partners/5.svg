@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 120" fill="none">
+  <circle cx="48" cy="55" r="4" fill="white"/>
+  <g stroke="white" stroke-width="1.5">
+    <line x1="48" y1="35" x2="48" y2="42"/>
+    <line x1="48" y1="68" x2="48" y2="75"/>
+    <line x1="28" y1="55" x2="35" y2="55"/>
+    <line x1="61" y1="55" x2="68" y2="55"/>
+    <line x1="34" y1="41" x2="39" y2="46"/>
+    <line x1="57" y1="64" x2="62" y2="69"/>
+    <line x1="62" y1="41" x2="57" y2="46"/>
+    <line x1="39" y1="64" x2="34" y2="69"/>
+  </g>
+  <text x="80" y="55" font-family="'Segoe UI',system-ui,sans-serif" font-size="20" font-weight="700" fill="white" letter-spacing="2">NOVA</text>
+  <text x="80" y="75" font-family="'Segoe UI',system-ui,sans-serif" font-size="11" font-weight="400" fill="rgba(255,255,255,0.6)" letter-spacing="4">DIGITAL</text>
+</svg>

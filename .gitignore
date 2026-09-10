@@ -23,7 +23,9 @@ staticfiles/
 Thumbs.db
 
 # Chrome debug temp and local diagnostic scripts
-.chrome_debug_temp/
+.chrome_debug*/
+screen_*.png
+scratch/
 screenshot_*.png
 extracted_*.txt
 test_*.py

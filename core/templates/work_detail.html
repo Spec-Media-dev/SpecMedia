@@ -9,20 +9,22 @@
   <meta property="og:title" content="{{ project.title }} — Spec Media Proof">
   <meta property="og:description" content="{{ project.summary }}">
   <meta property="og:image" content="{{ project.hero_image|default:'https://spec-media.vercel.app/static/img/og-preview.png' }}">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%239e1b24%22>S</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Lora', Georgia, serif;
       --bg: #141312;
       --card-bg: #1c1a19;
       --border: rgba(245, 234, 216, 0.1);
       --text: #f5ead8;
       --text-muted: #9c9589;
-      --accent: #c67139;
-      --accent-hover: #e08346;
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --accent: #9e1b24;
+      --accent-hover: #c51f2e;
+      --font-sans: 'Lora', Georgia, serif;
       --font-serif: 'Playfair Display', Georgia, serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
@@ -100,8 +102,8 @@
     }
 
     .meta-pill {
-      background: rgba(198, 113, 57, 0.12);
-      border: 1px solid rgba(198, 113, 57, 0.3);
+      background: rgba(158, 27, 36, 0.12);
+      border: 1px solid rgba(158, 27, 36, 0.3);
       padding: 4px 12px;
       border-radius: 999px;
     }
@@ -227,8 +229,8 @@
     }
 
     .cta-banner {
-      background: linear-gradient(135deg, rgba(198, 113, 57, 0.15) 0%, rgba(20, 19, 18, 0.8) 100%);
-      border: 1px solid rgba(198, 113, 57, 0.3);
+      background: linear-gradient(135deg, rgba(158, 27, 36, 0.15) 0%, rgba(20, 19, 18, 0.8) 100%);
+      border: 1px solid rgba(158, 27, 36, 0.3);
       border-radius: 20px;
       padding: 56px 40px;
       text-align: center;
@@ -268,6 +270,9 @@
       .nav-links { display: none; }
     }
   </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Navigation -->

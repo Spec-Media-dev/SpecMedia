@@ -108,6 +108,9 @@ class SiteSettings(models.Model):
     site_name = models.CharField(max_length=150, default="SPEC MEDIA")
     logo_image = models.TextField(blank=True, help_text="Site logo base64 data URI, SVG, or image URL")
     logo_text = models.CharField(max_length=100, default="SPEC MEDIA")
+    partner_logos = models.JSONField(default=list, blank=True, help_text="Partner logo URLs or image data URIs displayed in the landing reel")
+    capability_photos = models.JSONField(default=dict, blank=True, help_text="Capability example photos keyed by capability name")
+    client_reviews = models.JSONField(default=list, blank=True, help_text="Custom client reviews for Instagram cards")
     favicon_image = models.TextField(blank=True, help_text="Favicon base64 data URI, ICO, or SVG")
     
     # Landing Page Content & Media Controls
@@ -117,7 +120,17 @@ class SiteSettings(models.Model):
     hero_cta_text = models.CharField(max_length=100, default="[ SCROLL DOWN ]")
     hero_media_type = models.CharField(max_length=50, default="canvas", choices=MEDIA_CHOICES)
     hero_media_url = models.TextField(blank=True, help_text="Uploaded photo or video data URI or URL for hero showcase")
-    
+
+    # Scene 02 Brain Scrub & The Reel Media Controls
+    scene2_video_url = models.CharField(max_length=500, blank=True, default="/static/scene2_brain.mp4", help_text="Scene 02 brain scrub video loop or canvas fallback")
+    scene2_badge = models.CharField(max_length=100, blank=True, default="02 / SCENE 02")
+    scene2_hint = models.CharField(max_length=255, blank=True, default="keep scrolling or drag mouse to play · frame pauses instantly")
+    reel_video_url = models.CharField(max_length=500, blank=True, default="/static/reference_video.mp4", help_text="The Reel background showcase video")
+
+    # Studio & Ethos Controls
+    studio_headline = models.CharField(max_length=255, blank=True, default="Built for brands that demand cultural resonance.")
+    studio_subheadline = models.TextField(blank=True, default="Spec Media is an independent creative studio operating at the intersection of cinematic craft, digital infrastructure, and high-velocity performance marketing.")
+
     # Global Contact & Footer Info
     contact_email = models.CharField(max_length=150, default="hello@specmedia.co")
     contact_phone = models.CharField(max_length=100, default="+971 4 000 0000")

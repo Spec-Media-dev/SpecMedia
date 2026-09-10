@@ -6,20 +6,22 @@
   <title>404 — Page Not Found | Spec Media</title>
   <meta name="robots" content="noindex, follow">
   <meta name="description" content="The requested page could not be located in the Spec Media network. Return to the homepage or explore our work and capabilities.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%239e1b24%22>S</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Lora', Georgia, serif;
       --bg: #141312;
       --card-bg: #1c1a19;
       --border: rgba(245, 234, 216, 0.12);
       --text: #f5ead8;
       --text-muted: #9c9589;
-      --accent: #c67139;
-      --accent-hover: #e08346;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --accent: #9e1b24;
+      --accent-hover: #c51f2e;
+      --font-sans: 'Lora', Georgia, serif;
       --font-serif: 'Playfair Display', Georgia, serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
@@ -36,7 +38,7 @@
       justify-content: space-between;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 50% 20%, rgba(198, 113, 57, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 20%, rgba(158, 27, 36, 0.08) 0%, transparent 50%),
         linear-gradient(to bottom, #141312 0%, #0d0c0c 100%);
     }
 
@@ -101,8 +103,8 @@
       font-family: var(--font-mono);
       font-size: 13px;
       color: var(--accent);
-      background: rgba(198, 113, 57, 0.12);
-      border: 1px solid rgba(198, 113, 57, 0.28);
+      background: rgba(158, 27, 36, 0.12);
+      border: 1px solid rgba(158, 27, 36, 0.28);
       padding: 6px 16px;
       border-radius: 999px;
       display: inline-block;
@@ -158,13 +160,13 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 20px rgba(198, 113, 57, 0.25);
+      box-shadow: 0 4px 20px rgba(158, 27, 36, 0.25);
     }
 
     .btn-primary:hover {
       background: var(--accent-hover);
       transform: translateY(-2px);
-      box-shadow: 0 6px 28px rgba(198, 113, 57, 0.4);
+      box-shadow: 0 6px 28px rgba(158, 27, 36, 0.4);
     }
 
     .btn-secondary {
@@ -235,7 +237,7 @@
 
     .route-card:hover {
       border-color: var(--accent);
-      background: rgba(198, 113, 57, 0.08);
+      background: rgba(158, 27, 36, 0.08);
       transform: translateX(4px);
     }
 
@@ -270,6 +272,9 @@
       footer { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>

@@ -5,23 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Control Dashboard Authentication — Spec Media</title>
   <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" href="{% if site_settings.favicon_image %}{{ site_settings.favicon_image }}{% else %}data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%23c67139%22>S</text></svg>{% endif %}">
+  <link rel="icon" href="{% if site_settings.favicon_image %}{{ site_settings.favicon_image }}{% else %}data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%239e1b24%22>S</text></svg>{% endif %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Lora', Georgia, serif;
       --bg: #0b0a09;
       --surface: #141312;
       --surface-elevated: #1c1a18;
       --border: rgba(245, 234, 216, 0.1);
-      --border-focus: #c67139;
+      --border-focus: #9e1b24;
       --text: #f5ead8;
       --text-muted: #9c9589;
-      --accent: #c67139;
-      --accent-glow: rgba(198, 113, 57, 0.35);
+      --accent: #9e1b24;
+      --accent-glow: rgba(158, 27, 36, 0.35);
       --danger: #ef4444;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-sans: 'Lora', Georgia, serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -80,13 +82,13 @@
       max-height: 48px;
       max-width: 200px;
       object-fit: contain;
-      filter: drop-shadow(0 0 16px rgba(198, 113, 57, 0.4));
+      filter: drop-shadow(0 0 16px rgba(158, 27, 36, 0.4));
       transition: transform 0.3s ease, filter 0.3s ease;
     }
 
     .brand-logo-img:hover {
       transform: scale(1.05);
-      filter: drop-shadow(0 0 24px rgba(198, 113, 57, 0.6));
+      filter: drop-shadow(0 0 24px rgba(158, 27, 36, 0.6));
     }
 
     .brand-title {
@@ -108,8 +110,8 @@
       font-size: 11px;
       letter-spacing: 0.08em;
       color: var(--accent);
-      background: rgba(198, 113, 57, 0.12);
-      border: 1px solid rgba(198, 113, 57, 0.25);
+      background: rgba(158, 27, 36, 0.12);
+      border: 1px solid rgba(158, 27, 36, 0.25);
       padding: 4px 12px;
       border-radius: 999px;
     }
@@ -185,7 +187,7 @@
 
     .form-input:focus {
       border-color: var(--border-focus);
-      box-shadow: 0 0 0 3px rgba(198, 113, 57, 0.2);
+      box-shadow: 0 0 0 3px rgba(158, 27, 36, 0.2);
     }
 
     .btn-submit {
@@ -207,13 +209,13 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 4px 16px rgba(198, 113, 57, 0.35);
+      box-shadow: 0 4px 16px rgba(158, 27, 36, 0.35);
     }
 
     .btn-submit:hover {
-      background: #d47e45;
+      background: #c51f2e;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(198, 113, 57, 0.5);
+      box-shadow: 0 6px 20px rgba(158, 27, 36, 0.5);
     }
 
     .btn-submit:active {
@@ -242,6 +244,9 @@
       color: var(--text);
     }
   </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
