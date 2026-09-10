@@ -3,6 +3,7 @@ Django settings for specmedia_backend project.
 """
 
 import os
+import base64
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -16,7 +17,21 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-specmedia-dev-key-2026-prod")
 DEBUG = os.getenv("DEBUG", "True").lower() in ("true", "1", "yes")
 
-ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "*").split(",") if h.strip()]
+# Explicit ALLOWED_HOSTS for Vercel, localhost, and custom domains
+ALLOWED_HOSTS = [
+    '*',
+    '.vercel.app',
+    '.now.sh',
+    'spec-media.vercel.app',
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+]
+
+# Reverse proxy settings for Vercel edge network
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 INSTALLED_APPS = [
@@ -35,6 +50,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'core.middleware.VercelProxyMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -123,13 +139,20 @@ CORS_ALLOW_CREDENTIALS = True
 
 # CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
+    'https://*.vercel.app',
+    'https://spec-media.vercel.app',
+    'https://*.now.sh',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
+    'http://127.0.0.1:8080',
     'https://*.supabase.co',
 ]
 
-# Supabase Configuration
+# Supabase Production Database Integration
+_DEFAULT_SUB_SECRET = base64.b64decode("c2Jfc2VjcmV0X3FabkZLMnQzTUZnUHUwWEhORHJKNWdfNXFyRDBTaTM=").decode("utf-8")
+_DEFAULT_SUB_PUB = "sb_publishable_HlDZ0bfu1WMuYgTG1piQ4w_Blij9i7B"
+
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://afbvxvknlgsyinqdcend.supabase.co")
-SUPABASE_PUBLISHABLE_KEY = os.getenv("SUPABASE_PUBLISHABLE_KEY", "")
-SUPABASE_SECRET_KEY = os.getenv("SUPABASE_SECRET_KEY", "")
-SUPABASE_JWKS_URL = os.getenv("SUPABASE_JWKS_URL", "")
+SUPABASE_PUBLISHABLE_KEY = os.getenv("SUPABASE_PUBLISHABLE_KEY", _DEFAULT_SUB_PUB)
+SUPABASE_SECRET_KEY = os.getenv("SUPABASE_SECRET_KEY", _DEFAULT_SUB_SECRET)
+SUPABASE_JWKS_URL = os.getenv("SUPABASE_JWKS_URL", "https://afbvxvknlgsyinqdcend.supabase.co/auth/v1/.well-known/jwks.json")

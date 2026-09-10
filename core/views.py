@@ -21,6 +21,8 @@ def landing_page(request):
     animations, assets, and unbundler runtime preserved byte-for-byte.
     """
     template_path = os.path.join(settings.BASE_DIR, 'core', 'templates', 'landing.html')
+    if not os.path.exists(template_path):
+        template_path = os.path.join(settings.BASE_DIR, 'index.html')
     with open(template_path, 'rb') as f:
         content = f.read()
     return HttpResponse(content, content_type='text/html; charset=utf-8')
