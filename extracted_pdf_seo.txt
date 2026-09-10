@@ -1,0 +1,467 @@
+
+--- PAGE 1 ---
+FINAL-STATE IMPLEMENTATION DECK
+Website Architecture 
+& SEO
+Development 
+Specification
+Canonical Website Structure · Page System · Entity 
+Model · Schema · Launch Gates
+--- PAGE 2 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Build Relationships First
+02
+CORE PRINCIPLE
+A scalable agency website is not a 
+collection of pages. It is a connected system 
+of services, proof, markets and insights.
+provides serves
+proven by
+supported by authored by
+Organization
+Spec Media
+Service
+SEO · Web · Paid · Social 
+· AI
+Market
+Dubai · UAE · MENA
+Case Study / Work
+Insight / Guide Person / Team
+ContactPoint
+Lead capture
+--- PAGE 3 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+The Approved Website System
+03
+01 Discovery & commercial hubs
+Homepage, services hub and service landing pages
+02 Service entity pages
+SEO, web, design, paid media, social, branding, production and AI
+03 Proof system
+Work, case studies, clients, deliverables and result modules
+04 Knowledge layer
+Insights that support service pages without competing
+05 Technical discovery
+HTML, schema, sitemaps, robots, redirects and AI/search access
+SEO is part of the product 
+architecture, not an after-build 
+checklist.
+--- PAGE 4 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Canonical Sitemap
+04
+Home
+/
+Services
+/services/
+/services/seo-agency-dubai/
+/services/web-design-agency-dubai/
+/services/ai-marketing-agency-dubai/
+Markets
+/markets/mena-digital-marketing/
+/services/seo-agency-uae/
+/services/digital-marketing-agency-uae/
+Work
+/work/
+/work/{case-study-slug}/
+Insights
+/insights/
+/insights/{article-slug}/
+Trust / utility
+/about/ · /team/ · /contact/
+/privacy-policy/ · /terms/
+Canonical host: https://www.spec-media.com · lowercase · hyphenated slugs · trailing slash policy applied consistently.
+--- PAGE 5 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Primary Navigation & Crawl Entry Points
+05
+Home Work Services Clients About Let’s Connect Now
+Homepage
+/ P0 service routes
+/services/seo-agency-dubai/
+/services/website-development-dubai/
+Conversion route
+/contact/
+lead form + service selector
+Search, filters and case-study browsing enhance discovery — they do not replace crawlable HTML links.
+--- PAGE 6 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Service vs Work vs Insight
+06
+Service landing page
+/services/seo-agency-dubai/
+Owns commercial service + location intent
+Case study / work
+/work/{case-study-slug}/
+Proves delivery and links back to services
+Insight / article
+/insights/{article-slug}/
+Answers informational intent and supports 
+service pages
+proof links to supports
+Commercial intent has one owner. Work and insights strengthen 
+authority without cannibalizing service pages.
+--- PAGE 7 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Organic Visitor Journeys
+07
+Search Service Contact Lead
+Search Market Service Proposal
+Search Work Service Lead
+Search Insight Commercial page Lead
+/services/seo-agency-dubai/  →  /contact/
+/markets/mena-digital-marketing/  →  /services/digital-marketing-agency-uae/
+/work/{case-study-slug}/  →  /services/content-creation-agency-dubai/
+/insights/{article-slug}/  →  /services/ai-marketing-automation/
+--- PAGE 8 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Entity & Data Relationship Model
+08
+provides serves
+proven by
+supported by
+authored by
+owns
+Organization Service Market
+Case Study
+Insight
+Person
+ContactPoint
+Relationship labels in the CMS/API: provides · serves · provenBy · supportedBy · authoredBy · ownsContactPoint
+--- PAGE 9 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Template System Overview
+09
+Commercial discovery
+T01 Homepage
+T02 Service Hub
+T03 Service Detail
+Market + proof
+T04 Market Detail
+T05 Case Study Hub
+T06 Case Study Detail
+Knowledge
+T07 Insights Hub
+T08 Article
+Trust + conversion
+T09 Company / Trust
+T10 Contact
+The build focuses on reusable templates because engineering should build page contracts, not dozens of bespoke pages.
+--- PAGE 10 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Shared Component Library
+10
+Global Header Mega Nav Breadcrumbs Hero
+Service Card Work Card Insight Card Proof Block
+Process Steps FAQ/Q&A Author / Reviewer Trust Signals
+Related Links Lead Form CTA Footer
+Every component has two jobs: help a buyer decide and expose reliable crawl / schema / internal-link signals.
+--- PAGE 11 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Homepage Anatomy
+11
+/
+Hero: value proposition + CTA
+Primary service pathways
+Featured work / proof Service cluster summaries
+Why Spec Media + process
+Insights preview FAQ + conversion CTA
+SEO IMPACT
+Establishes Spec Media business entity
+Exposes priority service paths
+Links proof to commercial pages
+Connects brand, service and CTA
+First viewport: identity, clear promise, 
+proof cue and CTA.
+--- PAGE 12 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Service Hub & Service Page Anatomy
+12
+/services/
+Service hub hero
+Service category grid
+Priority Dubai services
+UAE / regional services
+Proof + process + FAQ + CTA
+/services/seo-agency-dubai/
+Service hero + H1
+Problem / solution + outcomes
+Scope modules + process
+Proof / case studies
+Related services + FAQ + lead form
+Permanent service URLs own keyword demand. Filters and browsing do not create automatic SEO routes.
+--- PAGE 13 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Market Page Anatomy
+13
+/markets/mena-digital-marketing/
+Market hero + positioning
+Services available in market
+Regional execution model
+Relevant work / proof
+Relevant insights
+FAQ + CTA
+serves
+proven by
+supports
+Market
+MENA / UAE / Dubai
+Service
+Digital marketing
+Work
+Insight
+--- PAGE 14 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Work / Case Study Page Anatomy
+14
+/work/{case-study-slug}/
+Case study hero
+Client / context
+Challenge
+Solution
+Deliverables
+Results / KPIs
+Gallery / assets
+Related services + CTA
+SEO EMPHASIS
+Work pages are proof entities. They validate services, 
+industries and deliverables, then route users back to 
+commercial landing pages.
+Link rule
+Every case study has related service anchors 
+based on service IDs, not manual text guesses.
+--- PAGE 15 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Insight / Article Page Anatomy
+15
+/insights/{article-slug}/
+Article header + H1
+Author / reviewer / date
+Intro summary
+Main content
+Checklist / comparison modules
+FAQ
+Related service CTA
+Related articles
+Content ownership
+Articles support commercial pages through education, 
+topical depth and author signals. They must not target the 
+exact same primary keyword as a service page.
+Schema
+Article / BlogPosting + Person + Organization + 
+BreadcrumbList
+--- PAGE 16 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Contact & Lead Capture Anatomy
+16
+/contact/
+Contact hero
+Contact options: call / email / form
+Lead form
+Service interest selector
+Office / service area
+FAQ
+Footer NAP
+FORM RULES
+Labels + clear errors
+Phone input support
+Service intent captured
+Thank-you/CRM handoff
+CTA events tracked once
+ContactPoint schema uses the same phone, 
+email and service-area data shown to users.
+--- PAGE 17 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Services, Insights & Trust Pages
+17
+Services
+Conversion / advisory intent
+SEO agency Dubai
+Web development Dubai
+AI marketing automation
+Insights
+Informational intent + topical support
+Guides, explainers, checklists
+Related commercial target
+Trust / entity pages
+Company, people and contact disambiguation
+About · Team · Clients · Contact
+Each supporting page includes one clear next action and contextual links back into the commercial service graph.
+--- PAGE 18 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Internal Linking Engine
+18
+Service Market · Case Studies · Related Services · Insights
+Case Study Primary Service · Related Services · Next Work
+Insight One primary Service · Related Insights · Author
+Market Services · Work · Insights
+Team / Person Authored articles · Organization · Contact
+Internal links should be generated from entity relationships, not hardcoded page by page.
+--- PAGE 19 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Faceted Navigation & Indexation
+19
+Indexable permanent landing pages
+/services/seo-agency-dubai/
+/services/digital-marketing-agency-uae/
+/markets/mena-digital-marketing/
+Clean canonical path
+Keyword-validated demand
+Server-rendered content
+XML sitemap inclusion
+User filter / browsing states
+/work/?service=seo&industry=retail
+/insights/?topic=ai-marketing
+/search/?q=seo
+Query parameters
+noindex, follow where appropriate
+Excluded from XML sitemaps
+No automatic SEO route creation
+Approved SEO URLs are registered routes. Interactive search and filters are product functionality.
+--- PAGE 20 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Rendering Architecture
+20
+SSG / ISR Homepage, services, guides, trust, legal
+ISR Service detail, market, work hub, insights hub
+SSR / ISR Fresh case-study pages and rapidly updated content where needed
+CSR Interactive filters, search enhancement, animations, forms and app-like behavior
+Server output must contain: title · description · H1 · canonical · main content · core links · JSON-LD.
+--- PAGE 21 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Structured Data Architecture: One @graph
+21
+#website
+WebSite
+#organization
+Organization
+#webpage
+WebPage / CollectionPage
+#breadcrumb
+BreadcrumbList
+#primaryentity
+Service / Article / Work
+#contactpoint / #itemlist
+ContactPoint or ItemList
+JSON-LD is generated server-side from the same factual data shown on the page. Stable @id values connect entities.
+--- PAGE 22 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Schema Composition by Page Type
+22
+Homepage WebPage + WebSite + Organization
+Service hub CollectionPage + ItemList + BreadcrumbList
+Service detail WebPage + Service + Organization + BreadcrumbList
+Market page CollectionPage/WebPage + Place/AdministrativeArea + ItemList
+Work detail CreativeWork / Article-like case study + Organization + Service links
+Insight detail Article/BlogPosting + Person + Organization + BreadcrumbList
+About / Team / Contact AboutPage / ProfilePage / ContactPage + Organization/Person/ContactPoint
+Structured data improves machine understanding; rich-result eligibility depends on search-engine guidelines.
+--- PAGE 23 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Service & Case Study Schema Deep Dive
+23
+SERVICE PAGE GRAPH
+WebPage Service Organization
+FAQ / Offer-like
+CTA facts
+CASE STUDY PAGE GRAPH
+WebPage CreativeWork
+Case Study Service
+Results / Media
+when visible
+Service schema describes a capability 
+Spec Media provides. Case-study schema 
+describes a proof asset and its service 
+relationships.
+--- PAGE 24 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Component-to-Schema Data Contract
+24
+Breadcrumb UI BreadcrumbList.itemListElement
+H1 / service title WebPage.name / Service.name
+Service scope modules Service.description / serviceType
+Contact block ContactPoint.telephone / email
+Proof / work cards ItemList only for visible items
+Author block Person + worksFor Organization
+Dates datePublished / dateModified
+Logo + NAP Organization.logo / address / sameAs
+Rule: one data source drives both visible content and JSON-LD.
+--- PAGE 25 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Sitemap, Robots & AI/Search Discovery
+25
+/sitemap.xml
+sitemap-static.xml
+sitemap-services.xml
+sitemap-markets.xml
+sitemap-work.xml
+sitemap-insights.xml
+INCLUSION RULE
+200 status
+Indexable
+Self-canonical
+Published
+Meaningful content
+DISCOVERY STACK
+Crawlable internal links
+Robots.txt permissions
+Canonical tags
+Structured entity data
+Crawler-friendly WAF/CDN
+IndexNow events
+Googlebot, Bingbot, OAI-SearchBot and legitimate crawlers must receive public HTML, not bot challenges.
+--- PAGE 26 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+Mobile & Performance Architecture
+26
+Hero + promise
+Proof cue
+CTA
+Service scope
+FAQ accordion
+Related links
+Identity, promise, proof and CTA appear early Mobile menu uses accessible accordions
+No hover-only actions Sticky CTA where appropriate
+Stable image/video aspect ratios LCP media prioritized
+Heavy video/maps load after content Primary text works without heavy JS
+--- PAGE 27 ---
+WEBSITE ARCHITECTURE / SEO DEVELOPMENT
+URL Lifecycle, Redirects & Technical Reliability
+27
+Active canonical URL 200
+Old slug / same entity 301
+/portfolio/ legacy equivalent 301 to /work/
+Permanently removed 404 / 410
+Backend outage 503
+Invalid route / entity 404
+Canonical host + one-hop redirects + no 
+soft-404 service/work/article shells.
+Examples:
+/home → / · 301
+/portfolio/{slug}/ → /work/{slug}/ · 301
+HTTP/non-www/uppercase → canonical HTTPS www lowercase
+--- PAGE 28 ---
+Build Sequence & Launch Gates
+01
+Entity/data model
+02
+Routing + canonicals
+03
+Shared components
+04
+Page templates
+05
+Metadata + schema
+06
+Internal linking
+07
+Facets + indexation
+08
+Sitemaps + robots
+09
+Mobile + performance
+10
+Crawl/schema QA
+11
+Launch monitoring
+SEO acceptance criteria are part of “done” for every reusable template.

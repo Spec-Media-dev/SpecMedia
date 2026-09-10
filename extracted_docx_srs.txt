@@ -1,0 +1,258 @@
+DEVELOPMENT REQUIREMENTS SPECIFICATION
+SPEC Media Website — SEO, Lead Generation, CMS & Conversion Architecture
+To: Website developers, UI/UX, SEO, content and management
+From: SPEC Media
+Version: 1.0 — implementation baseline
+Date: 2026-09-05
+Source: SEO strategy “spec media”.xlsx
+Status: Ready for Sprint 0 and phased implementation
+1. Purpose and authority
+This document converts the supplied SEO workbook into an executable development baseline for rebuilding SPEC Media. It defines what developers must build, what SEO/content teams must supply, and how acceptance will be tested.
+Primary markets: Dubai first, UAE second, then selected GCC/MENA demand. Egypt may be represented operationally without displacing the UAE commercial positioning.
+Primary audiences: founders, CEOs, marketing leaders and business owners seeking measurable growth, web, SEO, paid media, social, branding, content production or AI marketing services.
+Primary conversion: qualified consultation, audit, proposal or campaign request captured with source and service intent.
+The SEO workbook is the source for route priorities, keywords, page briefs and historical audit evidence. Approved business positioning, legal copy and final design supersede placeholders.
+2. Evidence baseline and rebuild priorities
+3. Product surfaces and ownership
+OWN-01 — Company ownership [MUST]
+Domain, DNS, source repository, hosting, database, media storage, CMS, analytics, Search Console, Tag Manager and all administrator credentials must be owned by SPEC Media.
+OWN-02 — Environment separation [MUST]
+Use separate development, staging and production environments with controlled deployment and no production secrets in source control.
+4. Information architecture and canonical routes
+4.1 Top-level navigation
+Home
+Services
+Work / Case Studies
+Markets
+Insights
+About
+Contact / Book a Call
+4.2 Route rules
+URL-01 — Canonical style [MUST]
+Use lowercase, hyphen-separated URLs. Select one canonical hostname (recommended: https://spec-media.com) and one trailing-slash policy, then enforce it consistently.
+URL-02 — No route aliases [MUST]
+/home must redirect to /. Do not expose duplicate /case-study and /portfolio structures unless each has distinct approved purpose.
+URL-03 — Real links [MUST]
+Primary navigation, cards, breadcrumbs and contextual links must use crawlable HTML anchors to canonical URLs; essential discovery must not depend on JavaScript click handlers.
+URL-04 — Language strategy [MUST]
+If Arabic launches, use a complete /ar/ tree with localized metadata/content and reciprocal hreflang. Never publish thin auto-translated duplicates.
+5. Required template system
+6. Commercial landing-page backlog
+The following routes are explicitly supported by the SEO workbook. P1 pages launch first; P2/P3 follow after content approval. Similar keywords do not justify duplicate thin pages.
+LAND-01 — Intent ownership [MUST]
+Each landing page owns one primary commercial intent and has unique copy, proof, FAQs, metadata and internal links. Pages must not be programmatic location swaps.
+LAND-02 — Publication gate [MUST]
+A route is indexable only when its content, proof, metadata, structured data and CTA are complete. Draft/placeholder pages remain unpublished or noindex outside sitemaps.
+7. CMS and data model
+CMS-01 — Structured editing [MUST]
+Editors choose structured sections/components; do not store whole pages as uncontrolled HTML blobs.
+CMS-02 — Workflow [MUST]
+Support Draft → Review → Approved → Scheduled/Published → Archived with role restrictions and revision history.
+CMS-03 — Validation [MUST]
+Block publication when required H1, title, description, canonical, CTA, image alt text or route ownership is missing/invalid.
+8. Lead-generation and qualification system
+Every high-intent page must end in a contextual conversion, not the same generic “Contact Us” button everywhere.
+LEAD-01 — Attribution [MUST]
+Persist landing page, referrer, first/last UTM, campaign IDs where available, language, form type, service, market, consent version and submission timestamp.
+LEAD-02 — Reliability [MUST]
+Validate server-side, rate-limit, use spam controls, prevent duplicate retry submissions and return clear success/error states.
+LEAD-03 — Privacy [MUST]
+Do not send sensitive form data to analytics. Uploaded files must be private, scanned, access-controlled and excluded from public storage/indexing.
+LEAD-04 — CRM handoff [MUST]
+Use an API/webhook or export with idempotency and delivery status. Failure must enter a retry queue and alert an administrator; no lead may disappear silently.
+9. Case studies, proof and E-E-A-T
+PROOF-01 — Evidence hierarchy [MUST]
+Case studies must describe verified challenge, actions and outcomes. Portfolio imagery alone is not a case study.
+PROOF-02 — Claims [MUST]
+Metrics and testimonials require internal source/approval. Do not publish invented percentages, client logos or confidential results.
+PROOF-03 — Relationships [MUST]
+Each case study links to its services, sector/market and relevant insights; each service page surfaces approved related cases.
+PROOF-04 — Media accessibility [MUST]
+Galleries include descriptive alt text/captions where meaningful, correct dimensions and responsive loading. Decorative assets use empty alt text.
+10. Technical SEO contract
+SEO-01 — Metadata safety [MUST]
+Never output placeholders, [object Object], blank canonicals, duplicated global descriptions or unpublished CMS values.
+SEO-02 — HTTP behavior [MUST]
+200 only for valid pages; 301 for permanent migration; 404/410 for missing/removed content. Soft 404s and redirect chains fail acceptance.
+11. Migration and redirect requirements
+Build a complete old-to-new URL inventory using the supplied “All URLs Master”, GSC exports, database backup, analytics and a fresh crawl where possible.
+Resolve host variants (http/https and www/non-www) to one canonical host with a single 301 hop.
+Redirect /home to / and consolidate overlapping portfolio/case-study routes only after a signed mapping.
+Replace encoded spaces and uppercase paths with lowercase hyphenated slugs, preserving value through exact 301 mappings.
+Update all internal links to final canonical 200 URLs rather than relying on redirects.
+Retain migration monitoring for at least 30/60/90 days: 404s, redirect loops, sitemap processing, indexation and traffic.
+MIG-01 — Redirect register [MUST]
+No bulk redirect to the homepage. Every high-value historical URL maps to the closest relevant successor or intentionally returns 410 when no replacement exists.
+12. Performance, accessibility and security
+13. Analytics and conversion measurement
+Configure GA4, Google Tag Manager and Search Console under company ownership.
+Define conversions separately from micro-events. Primary KPI is qualified leads/opportunities by service and market.
+Consent management must reflect operating markets and block non-essential tags where required.
+Provide a test sheet proving events fire once with correct parameters and no personally identifiable information.
+14. Delivery phases and realistic first release
+15. Acceptance criteria / release blockers
+16. Required developer response before full implementation
+Architecture diagram: Next.js rendering, CMS/database, media pipeline, lead processing, analytics and deployment environments.
+Exact Phase 1 and Phase 2 deliverables, split by developer and day, with live staging URLs.
+Chosen CMS/data model and migration strategy; repository structure and coding standards.
+Canonical URL tree and old-to-new redirect sheet before route development expands.
+Hosting comparison, expected production cost, media capacity, backups and recovery objective.
+Tracking plan and CRM/lead-delivery integration with retry behavior.
+QA matrix covering SEO, responsive states, accessibility, security, performance and content approval.
+Dependency list: Figma screens/states, copy, case-study evidence, media rights, legal text, credentials and named approvers.
+Appendix A — Priority editorial support
+
+--- TABLE ---
+Product decision: This is a B2B acquisition website, not a decorative portfolio. Every major page must attract the correct market, prove capability, and move a qualified prospect to one measurable conversion action.
+
+--- TABLE ---
+Evidence from supplied workbook | Development implication
+Only one page reported indexed. | Build crawlable server-rendered routes, correct canonicals, sitemap inclusion and internal links for all approved pages.
+27 organic clicks over the noted 3-month view; mostly branded queries. | Create non-branded commercial landing pages mapped to distinct search intent.
+Existing pages reused the same title and 233-character meta description. | Generate unique validated metadata per route; prevent fallback duplication.
+Mobile audit recorded FCP 3.5s and LCP 6.0s. | Set mobile performance budgets and optimize hero media, fonts, scripts and rendering.
+32 images over 100 KB; 58.18% of checked images. | Use responsive dimensions, AVIF/WebP, CDN optimization, lazy loading and asset limits.
+Internal links used temporary redirects from www to non-www. | Pick one canonical host and link directly to final 200 URLs; migrations use single-hop 301.
+Security headers were missing on 60 URLs. | Apply CSP, nosniff, frame protection/frame-ancestors and strict referrer policy.
+Service, blog, FAQ and case-study coverage was missing/incomplete. | Implement reusable templates and CMS entities so SEO/content can publish without code releases.
+
+--- TABLE ---
+Important: Because this workbook audits the previous site, developers must run a fresh baseline crawl against staging and production. Do not copy outdated URLs, assets or metadata blindly.
+
+--- TABLE ---
+Surface | Owner | Purpose
+Public website | Marketing + Product | Organic discovery, positioning, proof and conversion.
+CMS | Content/SEO with approval roles | Manage pages, services, markets, case studies, articles, FAQs, people, media and redirects.
+Lead inbox / CRM integration | Sales + Marketing | Capture, route, qualify and attribute every enquiry.
+Admin/configuration | Company administrators | Users, roles, forms, integrations, consent, redirects and publishing controls.
+Analytics layer | Marketing + Management | Measure qualified leads and commercial journeys, not vanity traffic only.
+
+--- TABLE ---
+ID | Template | Required modules
+T01 | Homepage | Value proposition; service paths; proof/case studies; sectors/markets; process; trust; insights; conversion CTA.
+T02 | Services hub | Service taxonomy; outcomes; featured work; process; related insights; qualification CTA.
+T03 | Service landing page | Unique hero; pain/outcome; deliverables; approach; proof; process; reporting; FAQs; related services; CTA.
+T04 | Market page | Market context; relevant services; bilingual/regional capability; sectors; proof; FAQs; CTA.
+T05 | Case-study index | Filterable cards by service/sector/market; curated static links; pagination.
+T06 | Case-study detail | Client context; challenge; strategy; execution; outputs; verified results; gallery; testimonial; related services; CTA.
+T07 | Portfolio/gallery | Visual proof with accessible media, captions and route links; never replace case-study evidence.
+T08 | Insights index | Topics, featured articles, authors, pagination and canonical filters.
+T09 | Article | Author/reviewer; dates; TOC; body; FAQ where relevant; sources; related services/cases; CTA.
+T10 | About/team | Positioning; leadership; capabilities; footprint; values; trust; contact CTA.
+T11 | Contact/brief | Qualified lead form; office/contact details; response expectation; privacy consent.
+T12 | Careers | Vacancies, role details, application flow and private upload controls.
+T13 | Legal | Privacy, terms, cookie/consent and accessibility information.
+T14 | System pages | Custom 404/500, empty/search results, maintenance and thank-you pages.
+
+--- TABLE ---
+Priority | Canonical route | Page / primary intent | Primary CTA
+P1 | /services/seo-agency-dubai/ | SEO Agency in Dubai | Request SEO audit
+P1 | /services/website-development-dubai/ | Website Development Company in Dubai | Request website proposal
+P1 | /services/web-design-agency-dubai/ | Web Design Agency in Dubai | Book design consultation
+P1 | /services/digital-marketing-agency-dubai/ | Digital Marketing Agency in Dubai | Book growth strategy call
+P1 | /services/ai-marketing-agency-dubai/ | AI Marketing Agency in Dubai | Book AI growth consultation
+P1 | /services/ai-marketing-automation/ | AI Marketing Automation Services | Map automation opportunities
+P1 | /services/seo-agency-uae/ | SEO Agency in UAE | Request UAE SEO audit
+P1 | /services/digital-marketing-agency-uae/ | Digital Marketing Agency in UAE | Book UAE growth call
+P2 | /services/google-ads-agency-dubai/ | Google Ads Agency in Dubai | Request paid-media audit
+P2 | /services/advertising-agency-dubai/ | Advertising Agency in Dubai | Plan advertising campaign
+P2 | /services/social-media-marketing-agency-dubai/ | Social Media Marketing Agency in Dubai | Request social-media plan
+P2 | /markets/mena-digital-marketing/ | Digital Marketing Across MENA | Discuss regional growth
+P3 | /services/branding-agency-dubai/ | Branding Agency in Dubai | Start brand project
+P3 | /services/content-creation-agency-dubai/ | Content Creation Agency in Dubai | Build content plan
+P3 | /services/video-production-dubai/ | Video Production Company in Dubai | Request video concept
+
+--- TABLE ---
+Entity | Minimum fields / relationships
+Service | Stable ID, name, slug, market scope, summary, deliverables, process, FAQs, CTAs, related cases/articles/services, SEO fields, status.
+Market | Country/region, localized positioning, services, sectors, proof, FAQs, SEO fields.
+Case Study | Client/approved anonymity, sector, market, services, challenge, approach, deliverables, verified metrics, testimonial, media, related content.
+Article | Title, slug, topic, funnel stage, author/reviewer, publish/modified dates, body, sources, FAQs, related services/cases, SEO fields.
+Person | Name, role, bio, expertise, image, public status and author relationship.
+Media Asset | File, alt text, caption, credit/rights, focal point, dimensions, variants, usage and archive status.
+Lead / Form Definition | Form type, service, market, fields, consent version, source/UTM, routing, notification and lifecycle status.
+Redirect | Incoming path, target, HTTP status, reason, owner, test result and activation dates.
+
+--- TABLE ---
+Form | Required data | Post-submit behavior
+Book strategy call | Name, company, role, work email/phone, country, service interest, budget band, timing, challenge, consent. | Create lead; capture attribution; notify owner; show confirmation/calendar where configured.
+Audit request | Contact/company, website, service type, market, core issue, consent. | Route to SEO/Web/Paid owner with page/query context.
+Proposal request | Contact/company, required services, scope, market, expected start, budget band, attachment optional. | Create qualified opportunity input and acknowledgement.
+Content/production brief | Contact/company, production type, location, dates, deliverables, usage, budget. | Route to production pipeline.
+Careers application | Applicant details, vacancy, private CV/portfolio links, consent. | Separate from sales leads; private retention policy.
+
+--- TABLE ---
+Area | Mandatory implementation
+Rendering | Public indexable routes return meaningful HTML from the server/SSG/ISR. Critical copy and links cannot require client JavaScript.
+Metadata | Unique title, meta description, canonical, robots, Open Graph/Twitter data, locale and social image per page type.
+Headings | One descriptive H1; logical H2/H3 hierarchy; no heading tags used only for styling.
+Canonicals | Self-referencing on indexable pages; canonical host/path policy identical in raw and rendered HTML.
+Indexation | Only published, canonical 200 pages index. Draft, preview, admin, search, internal filters and thank-you pages are noindex.
+Sitemaps | Sitemap index split by page type/language when useful; only canonical 200 indexable URLs; accurate lastmod.
+Robots | Reference sitemap; protect private/preview utilities without blocking required rendering assets.
+Structured data | Organization/WebSite globally; Service, BreadcrumbList, Article and Person where factually applicable. FAQ markup only for visible page-specific FAQs and policy-compliant use.
+Internal linking | HTML links among hubs, service pages, markets, cases and articles based on approved relationships; no orphan commercial pages.
+Pagination/filters | Stable paginated URLs; curated indexable archives only. Filter combinations default to noindex/canonical strategy.
+International | Localized pages use correct language, hreflang clusters and self-canonicals; no forced IP redirects.
+
+--- TABLE ---
+Control | Acceptance target
+Core Web Vitals | At launch, target LCP ≤2.5s, INP ≤200ms and CLS ≤0.1 at the 75th percentile where field data is available.
+Image budget | Responsive AVIF/WebP; no routine content image above 100 KB without documented visual exception; correct width/height.
+JavaScript | Ship only necessary client code; defer third parties; no autoplay heavy hero that destroys mobile performance.
+Accessibility | WCAG 2.2 AA target: keyboard navigation, focus states, labels/errors, contrast, reduced motion and semantic landmarks.
+Headers | HTTPS/HSTS after validation; CSP; nosniff; referrer policy; permissions policy; frame-ancestors/X-Frame-Options as appropriate.
+Forms | CSRF protection where applicable, server validation, sanitization, rate limits and secure upload controls.
+Dependencies | Lockfiles, vulnerability scanning, secrets management and update procedure.
+Resilience | Backups, documented restore, deployment rollback, error monitoring and uptime alerts.
+
+--- TABLE ---
+Event | Minimum parameters
+cta_click | CTA name, page, service, market, position, language
+form_start / form_submit / form_error | Form type, page, service, market, error category; never form-field PII
+calendar_booked | Service, market, source page, booking provider status
+case_study_view | Case ID, service, sector, market
+portfolio_interaction | Asset/case ID and interaction type
+article_engagement | Article ID, topic, depth band, related-service click
+contact_action | Email/phone/WhatsApp action and page context
+
+--- TABLE ---
+Phase | Target | Definition of done
+Phase 1 — Recovery foundation | Maximum 3 working days | Company-owned repository/hosting; domain/SSL; deployable Next.js foundation; global shell; approved homepage skeleton; responsive base; contact/RFQ path; analytics placeholders; staging + production pipeline; custom 404. No claim that full SEO site is complete.
+Phase 2 — Public MVP | By end of first implementation week, if Figma/content are ready | Approved homepage, services hub, work/case index, about, contact, legal basics; T03/T06/T09 reusable templates; P1 route shells populated only where approved content exists; CMS foundation; working lead capture; canonical/sitemap/robots baseline; responsive/loading/error states.
+Phase 3 — SEO/content release | Next 3–5 weeks | All approved P1 pages and priority case studies/articles; metadata/schema/internal linking; migration redirects; Arabic only if complete; performance/security/accessibility QA; tracking validation.
+Phase 4 — Growth releases | Ongoing 4–8 week cycles | P2/P3 services, market/industry pages, content calendar, CRO tests, CRM automation and evidence-led improvements.
+
+--- TABLE ---
+Speed rule: Templates and coding agents may accelerate implementation, but Phase approval is based on live functionality, unique content, security and test evidence—not screenshots, Figma completion or generated code volume.
+
+--- TABLE ---
+ID | Release-blocking acceptance test
+AC-01 | Every approved public route returns a canonical 200 URL with unique H1/title/description and meaningful server HTML.
+AC-02 | No duplicate host/path variant requires more than one redirect; internal navigation links directly to final URLs.
+AC-03 | Draft/private/admin/preview/search/thank-you URLs are not indexable or included in sitemaps.
+AC-04 | All submitted leads reach the configured owner/CRM exactly once with attribution and visible delivery status.
+AC-05 | Mobile navigation, forms, media, loading, empty, validation, success, error and 404 states pass approved devices/browsers.
+AC-06 | No critical/major authorization, injection, upload, secret-exposure or dependency vulnerability remains open.
+AC-07 | Structured data validates and matches visible factual content; no placeholder or unsupported review claims.
+AC-08 | Performance budgets pass agreed Lighthouse/lab checks and production field monitoring is enabled.
+AC-09 | GA4/GTM/Search Console are company-owned; conversion events fire once without PII.
+AC-10 | Backup restore, rollback, access handover and deployment documentation are demonstrated.
+
+--- TABLE ---
+Priority topic from workbook | Supports
+Why SEO Still Matters for UAE Businesses in 2026 | SEO Dubai / UAE
+Website Development Cost in Dubai | Website Development Dubai
+Digital Marketing Trends in UAE | Digital Marketing UAE / AI
+Branding vs Marketing | Branding and Digital Marketing
+Best CMS Platforms for UAE Business Websites | Website Development
+SEO vs Google Ads in Dubai | SEO and Paid Media
+Local SEO Checklist for UAE Businesses | SEO UAE / Dubai
+Corporate Photography Guide for Dubai Businesses | Content Production
+Video Marketing ROI for UAE Brands | Video, Social and Paid Media
+AI Marketing Trends in UAE | AI Marketing
+Marketing Automation Guide for UAE Companies | AI Automation
+Technical SEO Checklist for Indexability and Growth | SEO / Website Development
+
+--- TABLE ---
+Source note: Route priorities, keywords, volume signals, audit observations and editorial topics were derived from “SEO strategy spec media.xlsx”. Search-volume figures are planning signals from the supplied file, not guaranteed forecasts; SEO must validate them before publication prioritization.
