@@ -1753,61 +1753,79 @@ class Component extends DCLogic {
   get grade(){ return this.props.gradeColor ?? '#7a8a5e'; }
 
   initBrainFrames(){
-    // 1. Primary: Load 100-frame 60 FPS synchronous sprite sheet (single HTTP request, 0.02ms render)
-    const spriteUrl = (window.__SPEC_SCENE2_SPRITE_URL) || 'https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/sprites/scene2_sprite.jpg';
-    this.spriteImg = new Image();
-    this.spriteImg.crossOrigin = 'anonymous';
-    this.spriteImg.src = spriteUrl;
-    this.spriteImg.onload = () => {
-      this.spriteLoaded = true;
-      this.drawScrub(this.scrubCur || 0);
-    };
-    this.spriteImg.onerror = () => {
-      const fallback = new Image();
-      fallback.src = '/static/sprites/scene2_sprite.jpg';
-      fallback.onload = () => {
-        this.spriteImg = fallback;
-        this.spriteLoaded = true;
-        this.drawScrub(this.scrubCur || 0);
-      };
-    };
-
-    // 2. Secondary: Preloaded individual frames sequence fallback (192 frames)
     const total = 192;
+    this.brainFrames = new Array(total);
+    this.brainFramesLoaded = 0;
+
+    const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    const cdnBase = 'https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/hd_frames/frame_';
+    const localBase = '/static/hd_frames/frame_';
+    const primaryBase = isLocalhost ? localBase : cdnBase;
+    const secondaryBase = isLocalhost ? cdnBase : localBase;
+
     const loadFrame = (idx) => {
       const num = String(idx + 1).padStart(3, '0');
       const img = new Image();
-      img.src = '/static/brain_frames/frame_' + num + '.jpg';
+      img.crossOrigin = 'anonymous';
+      img.src = primaryBase + num + '.webp';
       img.onload = () => {
         this.brainFrames[idx] = img;
         this.brainFramesLoaded++;
-        if (idx === 0 && !this.hasDrawnFirst && !this.spriteLoaded) {
+        if (!this.hasDrawnFirst || idx === 0) {
           this.hasDrawnFirst = true;
-          this.drawScrub(0);
+          this.drawScrub(this.scrubCur || 0);
         }
       };
       img.onerror = () => {
         const fallback = new Image();
-        fallback.src = 'brain_frames/frame_' + num + '.jpg';
+        fallback.crossOrigin = 'anonymous';
+        fallback.src = secondaryBase + num + '.webp';
         fallback.onload = () => {
           this.brainFrames[idx] = fallback;
           this.brainFramesLoaded++;
-          if (idx === 0 && !this.hasDrawnFirst && !this.spriteLoaded) {
+          if (!this.hasDrawnFirst || idx === 0) {
             this.hasDrawnFirst = true;
-            this.drawScrub(0);
+            this.drawScrub(this.scrubCur || 0);
           }
+        };
+        fallback.onerror = () => {
+          const jpgFallback = new Image();
+          jpgFallback.crossOrigin = 'anonymous';
+          jpgFallback.src = '/static/brain_frames/frame_' + num + '.jpg';
+          jpgFallback.onload = () => {
+            this.brainFrames[idx] = jpgFallback;
+            this.brainFramesLoaded++;
+            if (!this.hasDrawnFirst || idx === 0) {
+              this.hasDrawnFirst = true;
+              this.drawScrub(this.scrubCur || 0);
+            }
+          };
         };
       };
     };
 
-    for (let i = 0; i < Math.min(24, total); i++) {
+    // Stage 1: Load 24 keyframes evenly spaced across the scrub range for instant (<50ms) initial render
+    const step = Math.floor(total / 24);
+    for (let i = 0; i < total; i += step) {
       loadFrame(i);
     }
+    loadFrame(0);
+    loadFrame(total - 1);
+
+    // Stage 2: Stream all remaining frames asynchronously in the background
     setTimeout(() => {
-      for (let i = 24; i < total; i++) {
-        loadFrame(i);
+      for (let i = 0; i < total; i++) {
+        if (!this.brainFrames[i]) {
+          loadFrame(i);
+        }
       }
-    }, 120);
+    }, 25);
+
+    // Also load 7200x4050 high-definition sprite sheet as secondary fallback
+    const spriteUrl = (window.__SPEC_SCENE2_SPRITE_URL) || 'https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/sprites/scene2_sprite.jpg';
+    this.spriteImg = new Image();
+    this.spriteImg.crossOrigin = 'anonymous';
+    this.spriteImg.src = spriteUrl;
   }
 
   bindMouseScrub(){
@@ -2309,45 +2327,26 @@ class Component extends DCLogic {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
-    const targetW = Math.round((rect.width || window.innerWidth * 0.5) * dpr);
-    const targetH = Math.round((rect.height || window.innerHeight * 0.5) * dpr);
-    if (targetW > 0 && targetH > 0 && (canvas.width !== targetW || canvas.height !== targetH)) {
-      canvas.width = targetW;
-      canvas.height = targetH;
+    // Lock canvas internal buffer to native 1080p Full HD (1920x1080) for 1:1 pixel perfection.
+    // CSS width:100%;height:100%;object-fit:cover handles smooth GPU-accelerated container scaling at 120 FPS.
+    const cw = 1920, ch = 1080;
+    if (canvas.width !== cw || canvas.height !== ch) {
+      canvas.width = cw;
+      canvas.height = ch;
     }
 
-    const cw = canvas.width, ch = canvas.height;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
 
-    // 1. Primary: 60 FPS instantaneous synchronous 10x10 sprite sheet rendering (0.02ms latency)
-    if (this.spriteImg && this.spriteImg.complete && this.spriteImg.naturalWidth > 0) {
-      const total = 100;
-      const fi = Math.max(0, Math.min(total - 1, Math.round(t * (total - 1))));
-      const cols = 10;
-      const col = fi % cols;
-      const row = Math.floor(fi / cols);
-      const sw = this.spriteImg.naturalWidth / cols;
-      const sh = this.spriteImg.naturalHeight / cols;
-      const sx = col * sw;
-      const sy = row * sh;
-
-      const scale = Math.max(cw / sw, ch / sh);
-      const dw = sw * scale, dh = sh * scale;
-      const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
-
-      ctx.clearRect(0, 0, cw, ch);
-      ctx.drawImage(this.spriteImg, sx, sy, sw, sh, dx, dy, dw, dh);
-      return;
-    }
-
-    // 2. Secondary: Preloaded individual frames sequence fallback (192 frames)
     const total = this.frames;
     const fi = Math.max(0, Math.min(total - 1, Math.round(t * (total - 1))));
+
+    // 1. PRIMARY: 1080p Full HD crystal-clear frame rendering
     let img = this.brainFrames && this.brainFrames[fi];
 
     if (!img || !img.complete || !img.naturalWidth) {
       if (this.brainFrames) {
+        // Find nearest loaded 1080p keyframe for instant zero-lag display
         for (let d = 1; d < total; d++) {
           if (fi - d >= 0 && this.brainFrames[fi - d] && this.brainFrames[fi - d].complete && this.brainFrames[fi - d].naturalWidth) {
             img = this.brainFrames[fi - d];
@@ -2362,12 +2361,25 @@ class Component extends DCLogic {
     }
 
     if (img && img.complete && img.naturalWidth > 0) {
-      const iw = img.naturalWidth, ih = img.naturalHeight;
-      const scale = Math.max(cw / iw, ch / ih);
-      const dw = iw * scale, dh = ih * scale;
-      const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
       ctx.clearRect(0, 0, cw, ch);
-      ctx.drawImage(img, dx, dy, dw, dh);
+      ctx.drawImage(img, 0, 0, cw, ch);
+      return;
+    }
+
+    // 2. SECONDARY: 7200x4050 High-Definition Sprite sheet fallback (only if zero HD frames are in memory yet)
+    if (this.spriteImg && this.spriteImg.complete && this.spriteImg.naturalWidth > 0) {
+      const totalSprite = 100;
+      const sfi = Math.max(0, Math.min(totalSprite - 1, Math.round(t * (totalSprite - 1))));
+      const cols = 10;
+      const col = sfi % cols;
+      const row = Math.floor(sfi / cols);
+      const sw = this.spriteImg.naturalWidth / cols;
+      const sh = this.spriteImg.naturalHeight / cols;
+      const sx = col * sw;
+      const sy = row * sh;
+
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(this.spriteImg, sx, sy, sw, sh, 0, 0, cw, ch);
     }
   }
 

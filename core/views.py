@@ -699,9 +699,54 @@ class SiteSettingsAPIView(APIView):
         return Response({'success': True, 'message': 'Site branding and landing page settings updated successfully.'})
 
 
-def generate_video_sprite_sheet(video_bytes, num_frames=100, cols=10, frame_w=480, frame_h=270):
+def extract_video_hd_frames(video_bytes, out_dir, max_frames=192):
     """
-    Extracts num_frames from video_bytes into a cols x rows grid sprite sheet.
+    Extracts high-resolution WebP & JPG frames into out_dir for ultra-crisp 60fps canvas scrubbing.
+    """
+    try:
+        import cv2
+        import tempfile
+        os.makedirs(out_dir, exist_ok=True)
+        with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as tmp:
+            tmp.write(video_bytes)
+            tmp_path = tmp.name
+
+        try:
+            cap = cv2.VideoCapture(tmp_path)
+            total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            if total <= 0:
+                cap.release()
+                return 0
+
+            step = max(1, total // max_frames)
+            idx = 0
+            count = 0
+            while True:
+                ret, frame = cap.read()
+                if not ret:
+                    break
+                if idx % step == 0 and count < max_frames:
+                    count += 1
+                    cv2.imwrite(os.path.join(out_dir, f"frame_{count:03d}.webp"), frame, [cv2.IMWRITE_WEBP_QUALITY, 88])
+                    cv2.imwrite(os.path.join(out_dir, f"frame_{count:03d}.jpg"), frame, [cv2.IMWRITE_JPEG_QUALITY, 88])
+                idx += 1
+            cap.release()
+            return count
+        finally:
+            if os.path.exists(tmp_path):
+                try:
+                    os.remove(tmp_path)
+                except Exception:
+                    pass
+    except Exception as e:
+        logger.warning(f"HD frame extraction warning: {e}")
+        return 0
+
+
+def generate_video_sprite_sheet(video_bytes, num_frames=100, cols=10, frame_w=720, frame_h=405):
+    """
+    Extracts num_frames from video_bytes into a cols x rows grid sprite sheet at 720x405 per cell (7200x4050 high definition).
+    Uses high-quality Lanczos4 interpolation for crystal-clear frame fidelity.
     Returns JPEG bytes or None if extraction fails or cv2 is not available.
     """
     try:
@@ -731,7 +776,7 @@ def generate_video_sprite_sheet(video_bytes, num_frames=100, cols=10, frame_w=48
                 if not ret:
                     break
                 if cur in indices:
-                    resized = cv2.resize(frame, (frame_w, frame_h), interpolation=cv2.INTER_AREA)
+                    resized = cv2.resize(frame, (frame_w, frame_h), interpolation=cv2.INTER_LANCZOS4)
                     r = slot // cols
                     c = slot % cols
                     if r < rows and c < cols:
@@ -743,7 +788,7 @@ def generate_video_sprite_sheet(video_bytes, num_frames=100, cols=10, frame_w=48
             if slot == 0:
                 return None
 
-            success, buf = cv2.imencode('.jpg', grid, [cv2.IMWRITE_JPEG_QUALITY, 80])
+            success, buf = cv2.imencode('.jpg', grid, [cv2.IMWRITE_JPEG_QUALITY, 92])
             if success:
                 return buf.tobytes()
             return None
@@ -809,10 +854,15 @@ class MediaUploadAPIView(APIView):
         except Exception:
             pass
 
-        # 3. Automatic 60 FPS Sprite Sheet Extraction for Videos
+        # 3. Automatic 60 FPS Sprite Sheet & Full HD Frame Extraction for Videos
         sprite_url = ""
         is_video = content_type.startswith('video/')
         if is_video:
+            try:
+                extract_video_hd_frames(file_bytes, os.path.join(settings.BASE_DIR, 'static', 'hd_frames'))
+            except Exception as e:
+                logger.warning(f"HD frame extraction error: {e}")
+
             sprite_bytes = generate_video_sprite_sheet(file_bytes)
             if sprite_bytes:
                 sprite_filename = f"sprites/{os.path.splitext(safe_name)[0]}_sprite.jpg"
