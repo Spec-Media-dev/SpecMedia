@@ -23,7 +23,7 @@ staticfiles/
 Thumbs.db
 
 # Chrome debug temp and local diagnostic scripts
-.chrome_debug*/
+.chrome_*/
 screen_*.png
 scratch/
 screenshot_*.png

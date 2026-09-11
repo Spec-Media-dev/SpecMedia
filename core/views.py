@@ -7,9 +7,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponse
 from django.utils.text import slugify
 from django.contrib.auth import authenticate, login, logout
+from functools import wraps
 from django.contrib.auth.decorators import login_required
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
 from rest_framework import status
 from .models import SEOPage, WorkProject, SiteSettings
 from .serializers import LeadSubmissionSerializer, EventTrackingSerializer
@@ -67,11 +69,13 @@ def landing_page(request):
             count=1,
         )
 
-    # Dynamic Instagram Reviews
+        # Dynamic Instagram Reviews
     client_reviews = site_settings.client_reviews if site_settings and isinstance(site_settings.client_reviews, list) else []
     if client_reviews:
+        # Loop into 8 cards pool for seamless infinite carousel
+        reviews_pool = client_reviews * 2 if len(client_reviews) <= 4 else client_reviews
         ig_cards = []
-        for rev in client_reviews:
+        for rev in reviews_pool:
             if not isinstance(rev, dict):
                 continue
             handle = escape(rev.get('handle', 'partner.voice'))
@@ -85,10 +89,10 @@ def landing_page(request):
             time_ago = escape(rev.get('time', 'RECENT · VERIFIED'))
 
             ig_cards.append(
-                f'<article data-rv="1" class="ig-card" style="flex:none;width:clamp(320px,30vw,390px);background:color-mix(in oklab, var(--color-neutral-900) 94%, black);border:1px solid rgba(255,255,255,0.09);border-radius:18px;overflow:hidden;box-shadow:0 16px 44px rgba(0,0,0,0.55);display:flex;flex-direction:column;transition:filter .5s cubic-bezier(.22,1,.36,1),opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)">'
+                f'<article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">'
                 f'<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">'
                 f'<div style="display:flex;align-items:center;gap:10px">'
-                f'<div style="width:40px;height:40px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">'
+                f'<div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">'
                 f'<div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">'
                 f'<img src="{avatar}" alt="{handle}" style="width:100%;height:100%;object-fit:cover;display:block"></div></div>'
                 f'<div style="line-height:1.25"><div style="display:flex;align-items:center;gap:4px">'
@@ -97,10 +101,10 @@ def landing_page(request):
                 f'</div><div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">{role}</div></div></div>'
                 f'<div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px"><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span></div></div>'
                 f'<div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">'
-                f'<img data-media="1" src="{img}" alt="{handle} Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease">'
+                f'<img data-media="1" src="{img}" alt="{handle} Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">'
                 f'<div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">'
                 f'<svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>'
-                f'<div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">{location}</div></div>'
+                f'<div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">{location}</div></div>'
                 f'<div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">'
                 f'<div style="display:flex;align-items:center;gap:14px">'
                 f'<button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">'
@@ -125,54 +129,83 @@ def landing_page(request):
         if ig_cards:
             reviews_markup = ''.join(ig_cards)
             html = re.sub(
-                r'(<div data-rvrow="1"[^>]*>)[\s\S]*?(</div>\s*</section>)',
+                r'(<div data-rvrow="1"[^>]*>)[\s\S]*?(</div>\s*(?:</div>\s*)?</section>)',
                 rf'\g<1>{reviews_markup}\g<2>',
                 html,
                 count=1,
             )
-
     capability_photos = site_settings.capability_photos if site_settings and isinstance(site_settings.capability_photos, dict) else {}
     if capability_photos:
         default_fallbacks = {
             'Brand strategy': [
-                'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=800&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1200&auto=format&fit=crop'
             ],
             'Campaign production': [
-                'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=800&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1200&auto=format&fit=crop'
             ],
             'Performance media': [
-                'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop'
             ],
             'Content systems': [
-                'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1200&auto=format&fit=crop'
             ],
         }
         all_disciplines = ['Brand strategy', 'Campaign production', 'Performance media', 'Content systems']
         panels_html = []
         for cap in all_disciplines:
             photos = capability_photos.get(cap) or default_fallbacks.get(cap, [])
-            valid = [p for p in photos if isinstance(p, str) and p.strip()][:4]
+            valid = [p for p in photos if isinstance(p, str) and p.strip()]
+            if len(valid) < 2 and cap in default_fallbacks:
+                for fb in default_fallbacks[cap]:
+                    if fb not in valid:
+                        valid.append(fb)
             if not valid:
                 valid = default_fallbacks.get(cap, [])
-            cols = 1 if len(valid) == 1 else 2
-            imgs = ''.join(
-                f'<img src="{escape(p, quote=True)}" alt="{escape(cap, quote=True)} {i+1}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block">'
-                for i, p in enumerate(valid)
-            )
+
+            total_slides = len(valid)
+            slides_html = []
+            for i, p in enumerate(valid):
+                is_first = (i == 0)
+                opacity = '1' if is_first else '0'
+                transform = 'scale(1)' if is_first else 'scale(1.04)'
+                z_index = '2' if is_first else '1'
+                slides_html.append(
+                    f'<div data-pv-slide="{i}" class="spec-pv-slide" style="position:absolute;inset:0;opacity:{opacity};transform:{transform};transition:opacity .35s cubic-bezier(.16,1,.3,1),transform .4s ease;pointer-events:none;z-index:{z_index};overflow:hidden">'
+                    f'<img src="{escape(p, quote=True)}" alt="{escape(cap, quote=True)} {i+1}" style="width:100%;height:100%;object-fit:cover;display:block">'
+                    f'</div>'
+                )
+            slides_markup = '\n            '.join(slides_html)
+
+            dashes_html = []
+            for i in range(total_slides):
+                w = '16px' if i == 0 else '5px'
+                bg = '#c51f2e' if i == 0 else 'rgba(255,255,255,0.3)'
+                dashes_html.append(
+                    f'<span data-pv-dash="{i}" style="display:inline-block;height:2px;width:{w};border-radius:2px;background:{bg};transition:all .25s ease"></span>'
+                )
+            dashes_markup = '\n              '.join(dashes_html)
+
             panels_html.append(
-                f'<!-- Collage: {escape(cap)} -->\n'
-                f'          <div data-pv="{escape(cap)}" style="position:absolute;inset:0;display:grid;grid-template-columns:repeat({cols},1fr);gap:6px;padding:8px;background:#141312;opacity:0;transform:scale(1.04);transition:opacity .45s ease,transform .55s ease">\n'
-                f'            {imgs}\n'
+                f'<!-- Gallery: {escape(cap)} -->\n'
+                f'          <div data-pv="{escape(cap)}" class="spec-pv-panel" style="position:absolute;inset:0;background:#141312;opacity:0;transform:scale(0.96);filter:blur(4px);transition:opacity .24s cubic-bezier(.16,1,.3,1),transform .26s cubic-bezier(.16,1,.3,1),filter .24s ease;overflow:hidden">\n'
+                f'            {slides_markup}\n'
+                f'            <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%);pointer-events:none;z-index:3"></div>\n'
+                f'            <div class="spec-pv-dashes" style="position:absolute;bottom:10px;left:12px;display:flex;align-items:center;gap:4px;z-index:5">\n'
+                f'              {dashes_markup}\n'
+                f'            </div>\n'
+                f'            <div class="spec-pv-counter" style="position:absolute;bottom:8px;right:10px;display:flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.1);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;color:rgba(255,255,255,0.85);letter-spacing:.08em;z-index:5">\n'
+                f'              <span class="spec-pv-num">01</span><span style="opacity:0.4">/</span><span>{total_slides:02d}</span>\n'
+                f'            </div>\n'
                 f'          </div>'
             )
         idle_html = '<div data-pvidle="1" style="position:absolute;inset:0;display:grid;place-items:center;background:#141312;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500);transition:opacity .45s ease">SELECT A DISCIPLINE</div>'
         all_panels = '\n          '.join(panels_html) + '\n          ' + idle_html
 
-        collage_container_pattern = r'(<div style="position:relative;aspect-ratio:4/3;overflow:hidden;background:#0d0c0c">)[\s\S]*?(</div>\s*<div ref="\{\{ previewLabelRef \}\}")'
+        collage_container_pattern = r'(<div style="position:relative;aspect-ratio:4/3;overflow:hidden;background:#0d0c0c">)[\s\S]*?(</div>\s*<div ref="\{\{\s*previewLabelRef\s*\}\}")'
         html = re.sub(
             collage_container_pattern,
             rf'\g<1>\n          {all_panels}\n        \g<2>',
@@ -367,15 +400,39 @@ def landing_page(request):
     return HttpResponse(html, content_type='text/html; charset=utf-8')
 
 
+def admin_required(view_func):
+    """
+    Decorator that restricts view access exclusively to authenticated staff/superuser administrators.
+    Unauthenticated visitors are redirected to the login screen with ?next=.
+    Authenticated non-admins receive a 403 Forbidden with an access-denied message.
+    """
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(f'/login/?next={request.path}')
+        if not (request.user.is_staff or request.user.is_superuser):
+            return render(request, 'login.html', {
+                'error_message': 'Access denied. The portal is restricted to administrators only.',
+                'next_url': request.path,
+            }, status=403)
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view
+
+
 def login_view(request):
     """
     Renders custom operator authorization screen and handles user authentication.
+    Only allows administrators / staff to log in to access the portal.
     """
-    if request.user.is_authenticated:
-        return redirect('/dashboard/')
-
     next_url = request.GET.get('next') or request.POST.get('next') or '/dashboard/'
     error_message = None
+
+    if request.user.is_authenticated:
+        if request.user.is_staff or request.user.is_superuser:
+            return redirect(next_url)
+        else:
+            logout(request)
+            error_message = "Access denied. The portal is restricted to administrators only."
 
     if request.method == 'POST':
         username = request.POST.get('username', '').strip()
@@ -383,8 +440,11 @@ def login_view(request):
 
         user = authenticate(request, username=username, password=password)
         if user is not None and user.is_active:
-            login(request, user)
-            return redirect(next_url)
+            if not (user.is_staff or user.is_superuser):
+                error_message = "Access denied. Only administrators have access to this portal."
+            else:
+                login(request, user)
+                return redirect(next_url)
         else:
             error_message = "Invalid operator username or password. Please verify your credentials."
 
@@ -446,16 +506,19 @@ def capabilities_page(request):
     })
 
 
+@admin_required
 def portal_page(request):
     """
     Lead Management and Supabase Pipeline Analytics Dashboard.
+    Requires verified administrator authentication.
     """
     return render(request, 'portal.html', {
         'page_title': 'Pipeline & CRM Portal — Spec Media',
+        'user': request.user,
     })
 
 
-@login_required(login_url='/login/')
+@admin_required
 def dashboard_page(request):
     """
     Unified Control Dashboard: SEO Management, Works CMS, and Leads Inbox.
@@ -598,8 +661,8 @@ class SiteSettingsAPIView(APIView):
         })
 
     def put(self, request):
-        if not request.user.is_authenticated:
-            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_authenticated or not (request.user.is_staff or request.user.is_superuser):
+            return Response({'success': False, 'error': 'Administrator authorization required'}, status=status.HTTP_403_FORBIDDEN)
 
         settings_obj = SiteSettings.get_settings()
         d = request.data
@@ -625,12 +688,13 @@ class SiteSettingsAPIView(APIView):
 
 class MediaUploadAPIView(APIView):
     """
-    POST /api/upload/ -> Upload media file (photo or video), processes it,
-    and returns a base64 Data URI + optional static media URL.
+    POST /api/upload/ -> Secure media upload endpoint restricted to administrators.
     """
+    permission_classes = [IsAdminUser]
+
     def post(self, request):
-        if not request.user.is_authenticated:
-            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_authenticated or not (request.user.is_staff or request.user.is_superuser):
+            return Response({'success': False, 'error': 'Administrator authorization required'}, status=status.HTTP_403_FORBIDDEN)
 
         file = request.FILES.get('file')
         if not file:
@@ -681,8 +745,8 @@ class SEOPagesAPIView(APIView):
         return Response({'success': True, 'count': len(pages), 'results': pages})
 
     def post(self, request):
-        if not request.user.is_authenticated:
-            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_authenticated or not (request.user.is_staff or request.user.is_superuser):
+            return Response({'success': False, 'error': 'Administrator authorization required'}, status=status.HTTP_403_FORBIDDEN)
 
         d = request.data
         route_path = d.get('route_path', '').strip()
@@ -728,8 +792,8 @@ class SEOPagesDetailAPIView(APIView):
         })
 
     def put(self, request, pk):
-        if not request.user.is_authenticated:
-            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_authenticated or not (request.user.is_staff or request.user.is_superuser):
+            return Response({'success': False, 'error': 'Administrator authorization required'}, status=status.HTTP_403_FORBIDDEN)
 
         seo = get_object_or_404(SEOPage, pk=pk)
         d = request.data
@@ -746,8 +810,8 @@ class SEOPagesDetailAPIView(APIView):
         return Response({'success': True, 'message': 'SEO metadata updated.'})
 
     def delete(self, request, pk):
-        if not request.user.is_authenticated:
-            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_authenticated or not (request.user.is_staff or request.user.is_superuser):
+            return Response({'success': False, 'error': 'Administrator authorization required'}, status=status.HTTP_403_FORBIDDEN)
 
         seo = get_object_or_404(SEOPage, pk=pk)
         seo.delete()
@@ -768,8 +832,8 @@ class WorkProjectsAPIView(APIView):
         return Response({'success': True, 'count': len(works), 'results': works})
 
     def post(self, request):
-        if not request.user.is_authenticated:
-            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_authenticated or not (request.user.is_staff or request.user.is_superuser):
+            return Response({'success': False, 'error': 'Administrator authorization required'}, status=status.HTTP_403_FORBIDDEN)
 
         d = request.data
         title = d.get('title', '').strip()
@@ -830,8 +894,8 @@ class WorkProjectsDetailAPIView(APIView):
         })
 
     def put(self, request, pk):
-        if not request.user.is_authenticated:
-            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_authenticated or not (request.user.is_staff or request.user.is_superuser):
+            return Response({'success': False, 'error': 'Administrator authorization required'}, status=status.HTTP_403_FORBIDDEN)
 
         work = get_object_or_404(WorkProject, pk=pk)
         d = request.data
@@ -854,8 +918,8 @@ class WorkProjectsDetailAPIView(APIView):
         return Response({'success': True, 'message': 'Work updated.'})
 
     def delete(self, request, pk):
-        if not request.user.is_authenticated:
-            return Response({'success': False, 'error': 'Operator authorization required'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_authenticated or not (request.user.is_staff or request.user.is_superuser):
+            return Response({'success': False, 'error': 'Administrator authorization required'}, status=status.HTTP_403_FORBIDDEN)
 
         work = get_object_or_404(WorkProject, pk=pk)
         work.delete()
@@ -912,7 +976,10 @@ class LeadsListAPIView(APIView):
     """
     GET /api/leads/
     Returns leads stored in Supabase with optional filters for status or market.
+    Restricted exclusively to administrators.
     """
+    permission_classes = [IsAdminUser]
+
     def get(self, request):
         limit = int(request.query_params.get("limit", 50))
         offset = int(request.query_params.get("offset", 0))
@@ -931,7 +998,10 @@ class LeadDetailAPIView(APIView):
     """
     GET, PATCH /api/leads/<id>/
     Fetches or updates a single lead in Supabase.
+    Restricted exclusively to administrators.
     """
+    permission_classes = [IsAdminUser]
+
     def get(self, request, lead_id):
         lead = SupabaseService.fetch_lead_by_id(lead_id)
         if not lead:
@@ -950,7 +1020,10 @@ class PipelineStatsAPIView(APIView):
     """
     GET /api/stats/pipeline/
     Returns live pipeline metrics from Supabase view_lead_pipeline_stats.
+    Restricted exclusively to administrators.
     """
+    permission_classes = [IsAdminUser]
+
     def get(self, request):
         stats = SupabaseService.fetch_pipeline_stats()
         return Response({
@@ -963,7 +1036,10 @@ class MarketStatsAPIView(APIView):
     """
     GET /api/stats/market/
     Returns market breakdown from Supabase view_leads_by_market.
+    Restricted exclusively to administrators.
     """
+    permission_classes = [IsAdminUser]
+
     def get(self, request):
         market_stats = SupabaseService.fetch_market_stats()
         return Response({
