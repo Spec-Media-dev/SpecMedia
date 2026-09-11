@@ -3,107 +3,866 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ page_title }}</title>
+  <title>{{ page_title|default:"The Studio & Ethos — Spec Media" }}</title>
+  <meta name="description" content="Spec Media is an independent creative studio operating at the intersection of cinematic craft, digital infrastructure, and high-velocity performance marketing.">
+  <link rel="canonical" href="https://www.spec-media.com/studio/">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%239e1b24%22>S</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/cursor.css">
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
   <style>
     :root {
       --color-bg: #f5ead8;
       --color-surface: #ebddc5;
-      --color-text: #201e1d;
+      --color-dark: #121110;
+      --color-dark-surface: #1a1816;
+      --color-dark-card: #201e1c;
       --color-accent: #9e1b24;
-      --color-accent-2: #7a8a5e;
+      --color-accent-light: #e26b72;
+      --color-accent-gold: #c5a880;
+      --color-accent-olive: #7a8a5e;
+      --color-muted: #8c8273;
+      --color-text-dim: #b5a998;
       --font-heading: 'Playfair Display', Georgia, serif;
+      --font-display: 'Syne', sans-serif;
       --font-body: 'Lora', Georgia, serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
+
+    /* Universal Scrollbar Suppressed */
+    html, body, * {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    ::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #201e1d; color: #f5ead8; font-family: var(--font-body); min-height: 100vh; overflow-x: hidden; }
+    body {
+      background-color: var(--color-dark);
+      color: var(--color-bg);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.65;
+      position: relative;
+    }
+
     a { color: inherit; text-decoration: none; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.18em; text-transform: uppercase; font-size: 11px; }
-    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 36px; background: rgba(32,30,29,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(245,234,216,0.08); }
-    .hero-title { font-family: var(--font-heading); font-size: clamp(38px, 6vw, 92px); line-height: 1.0; color: #f5ead8; }
-    .studio-card { background: #2e2b25; border-radius: 20px; padding: 36px; border: 1px solid #3d382f; }
+
+    .mono {
+      font-family: var(--font-mono);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    /* Top Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: clamp(16px, 2.5vw, 24px) clamp(20px, 4vw, 48px);
+      background: rgba(18, 17, 16, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(245, 234, 216, 0.08);
+      transition: all 0.3s ease;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--color-accent);
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 16px rgba(158, 27, 36, 0.5);
+    }
+    .nav-logo-text {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      letter-spacing: 0.04em;
+      color: var(--color-bg);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2.2vw, 28px);
+    }
+    .nav-link {
+      color: var(--color-text-dim);
+      padding: 6px 0;
+      border-bottom: 1px solid transparent;
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--color-bg);
+      border-bottom-color: var(--color-accent);
+    }
+    .nav-cta {
+      color: var(--color-accent-light) !important;
+      border-bottom-color: rgba(226, 107, 114, 0.35) !important;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow-wrap {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .ambient-glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.25;
+      animation: ambientDrift 20s infinite alternate ease-in-out;
+    }
+    .ambient-glow-1 {
+      top: -10%;
+      left: 15%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(158, 27, 36, 0.4) 0%, transparent 70%);
+    }
+    .ambient-glow-2 {
+      top: 45%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(122, 138, 94, 0.2) 0%, transparent 70%);
+      animation-duration: 26s;
+    }
+    @keyframes ambientDrift {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, 60px) scale(1.15); }
+      100% { transform: translate(-30px, 30px) scale(0.95); }
+    }
+
+    /* Main Container */
+    main {
+      position: relative;
+      z-index: 1;
+      padding: clamp(120px, 14vw, 180px) clamp(20px, 4vw, 48px) 100px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .studio-hero {
+      margin-bottom: clamp(70px, 9vw, 130px);
+      position: relative;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(158, 27, 36, 0.12);
+      border: 1px solid rgba(226, 107, 114, 0.3);
+      border-radius: 999px;
+      color: var(--color-accent-light);
+      margin-bottom: 24px;
+      box-shadow: 0 0 20px rgba(158, 27, 36, 0.15);
+    }
+    .hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent-light);
+      box-shadow: 0 0 8px var(--color-accent-light);
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.6; }
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(40px, 6.5vw, 98px);
+      line-height: 1.02;
+      color: #ffffff;
+      max-width: 16ch;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+    .hero-sub {
+      max-width: 58ch;
+      color: var(--color-text-dim);
+      font-size: clamp(16px, 1.4vw, 20px);
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+
+    /* Interactive Live Status Ribbon */
+    .status-ribbon {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px clamp(20px, 3vw, 40px);
+      padding: 16px 24px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      backdrop-filter: blur(10px);
+      width: fit-content;
+      margin-bottom: 80px;
+    }
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--color-text-dim);
+    }
+    .status-item span.highlight {
+      color: var(--color-bg);
+      font-weight: 700;
+    }
+
+    /* Section Headers */
+    .section-header {
+      margin-bottom: 40px;
+    }
+    .section-eyebrow {
+      color: var(--color-accent-light);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(28px, 3.8vw, 54px);
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    /* 4 Pillars Grid with 3D Magnetic Tilt */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: clamp(20px, 2.5vw, 32px);
+      margin-bottom: clamp(80px, 10vw, 140px);
+      perspective: 1200px;
+    }
+    .pillar-card {
+      position: relative;
+      background: linear-gradient(145deg, rgba(32, 30, 28, 0.8) 0%, rgba(20, 19, 18, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: clamp(30px, 3vw, 42px);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+      cursor: default;
+      will-change: transform;
+    }
+    .pillar-card:hover {
+      border-color: rgba(226, 107, 114, 0.4);
+      box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.85), 0 0 30px rgba(158, 27, 36, 0.2);
+    }
+    .pillar-card-spotlight {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(380px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(226, 107, 114, 0.16), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .pillar-card:hover .pillar-card-spotlight {
+      opacity: 1;
+    }
+    .pillar-index {
+      font-size: 11px;
+      color: var(--color-accent-light);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .pillar-num {
+      font-size: 28px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      opacity: 0.25;
+      color: var(--color-bg);
+      line-height: 1;
+    }
+    .pillar-title {
+      font-family: var(--font-heading);
+      font-size: clamp(22px, 2vw, 28px);
+      color: #ffffff;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .pillar-desc {
+      color: var(--color-text-dim);
+      font-size: 14px;
+      line-height: 1.85;
+    }
+
+    /* Live Global Hubs Clocks */
+    .hubs-section {
+      background: linear-gradient(160deg, rgba(26, 24, 23, 0.9) 0%, rgba(16, 15, 14, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: clamp(36px, 5vw, 64px);
+      margin-bottom: clamp(80px, 10vw, 140px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+    }
+    .hubs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: clamp(24px, 3vw, 40px);
+      margin-top: 36px;
+    }
+    .hub-box {
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .hub-box:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(226, 107, 114, 0.3);
+      transform: translateY(-4px);
+    }
+    .hub-clock {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .hub-clock-sec {
+      font-size: 13px;
+      color: var(--color-accent-light);
+    }
+    .hub-city {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .hub-meta {
+      color: var(--color-text-dim);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .hub-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 14px;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(122, 138, 94, 0.15);
+      color: #9ab376;
+      border: 1px solid rgba(122, 138, 94, 0.3);
+    }
+    .hub-status.night {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--color-text-dim);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Verified Impact Statistics Counter */
+    .metrics-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: clamp(20px, 3vw, 36px);
+      margin-bottom: clamp(80px, 10vw, 140px);
+    }
+    .metric-card {
+      padding: clamp(28px, 3vw, 40px);
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .metric-card:hover {
+      border-color: rgba(158, 27, 36, 0.4);
+      background: rgba(158, 27, 36, 0.05);
+      transform: translateY(-5px);
+    }
+    .metric-num {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 4.5vw, 62px);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .metric-num span.accent {
+      color: var(--color-accent-light);
+    }
+    .metric-label {
+      color: var(--color-text-dim);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+
+
+    /* Direct Transmission CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(32, 28, 27, 0.95) 0%, rgba(20, 18, 17, 0.98) 100%);
+      border: 1px solid rgba(158, 27, 36, 0.35);
+      border-radius: 28px;
+      padding: clamp(48px, 6vw, 84px) clamp(24px, 5vw, 64px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.8), 0 0 50px rgba(158, 27, 36, 0.15);
+    }
+    .cta-banner::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(158, 27, 36, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-title {
+      font-family: var(--font-heading);
+      font-size: clamp(32px, 4.5vw, 64px);
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .cta-sub {
+      color: var(--color-text-dim);
+      font-size: clamp(15px, 1.2vw, 18px);
+      max-width: 48ch;
+      margin: 0 auto 36px;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #9e1b24 0%, #7d121a 100%);
+      color: #ffffff;
+      padding: 16px 36px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      box-shadow: 0 12px 32px rgba(158, 27, 36, 0.5), 0 0 20px rgba(158, 27, 36, 0.2) inset;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 44px rgba(158, 27, 36, 0.8), 0 0 24px rgba(255, 255, 255, 0.25) inset;
+      filter: brightness(1.1);
+    }
+    .cta-btn svg {
+      transition: transform 0.25s ease;
+    }
+    .cta-btn:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 40px clamp(20px, 4vw, 48px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      color: var(--color-muted);
+      position: relative;
+      z-index: 1;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
   </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
+  <!-- Ambient Backdrop Orbs -->
+  <div class="ambient-glow-wrap" aria-hidden="true">
+    <div class="ambient-glow-orb ambient-glow-1"></div>
+    <div class="ambient-glow-orb ambient-glow-2"></div>
+  </div>
+
   <!-- Top Navigation -->
   <header class="nav">
-    <a href="/" style="display:flex; align-items:center; gap:12px;">
-      <span style="font-family:var(--font-heading); font-size:22px; color:#f5ead8;">SPEC MEDIA</span>
+    <a href="/" class="nav-logo" aria-label="Spec Media Home">
+      <span class="nav-logo-mark">
+        <svg width="16" height="16" viewBox="0 0 40 40" fill="none">
+          <path d="M12 28L28 12M28 28L12 12" stroke="#f5ead8" stroke-width="4.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="nav-logo-text">SPEC MEDIA</span>
     </a>
-    <div style="display:flex; align-items:center; gap:24px;" class="mono">
-      <a href="/work/">[ work ]</a>
-      <a href="/studio/" style="color:#9e1b24;">[ studio ]</a>
-      <a href="/capabilities/">[ capabilities ]</a>
-      <a href="/portal/" style="color:#7a8a5e;">[ portal ]</a>
-      <a href="/#contact" style="color:#9e1b24;">[ start a project &rarr; ]</a>
-    </div>
+    <nav class="nav-links mono">
+      <a href="/work/" class="nav-link">[ work ]</a>
+      <a href="/studio/" class="nav-link active">[ studio ]</a>
+      <a href="/capabilities/" class="nav-link">[ capabilities ]</a>
+      <a href="/#contact" class="nav-link nav-cta" id="nav-contact-link">[ initiate inquiry &rarr; ]</a>
+    </nav>
   </header>
 
-  <main style="padding: 140px 36px 80px; max-width: 1400px; margin: 0 auto;">
-    <div style="margin-bottom: 80px;">
-      <div class="mono" style="color:#9e1b24; margin-bottom:12px;">[ The Studio & Ethos ]</div>
-      <h1 class="hero-title" style="max-width:15ch;">{{ site_settings.studio_headline|default:"Built for brands that demand cultural resonance." }}</h1>
-      <p style="margin-top:24px; max-width:52ch; color:#a2937c; line-height:1.8; font-size:16px;">
+  <main>
+    <!-- Studio Hero -->
+    <section class="studio-hero">
+      <div class="hero-eyebrow mono">
+        <span class="hero-eyebrow-dot"></span>
+        <span>The Studio // Cultural Gravity</span>
+      </div>
+      <h1 class="hero-title">{{ site_settings.studio_headline|default:"Built for brands that demand cultural resonance." }}</h1>
+      <p class="hero-sub">
         {{ site_settings.studio_subheadline|default:"Spec Media is an independent creative studio operating at the intersection of cinematic craft, digital infrastructure, and high-velocity performance marketing." }}
       </p>
-    </div>
 
-    <!-- 3 Pillars Grid -->
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:28px; margin-bottom:80px;">
-      <div class="studio-card">
-        <div class="mono" style="color:#9e1b24; margin-bottom:12px;">01 // CRAFT</div>
-        <h3 style="font-family:var(--font-heading); font-size:26px; margin-bottom:12px;">Precision & Taste</h3>
-        <p style="color:#a2937c; font-size:14px; line-height:1.8;">We believe aesthetic conviction is not an afterthought—it is the single highest-leverage competitive moat a modern brand can possess.</p>
-      </div>
-
-      <div class="studio-card">
-        <div class="mono" style="color:#7a8a5e; margin-bottom:12px;">02 // VELOCITY</div>
-        <h3 style="font-family:var(--font-heading); font-size:26px; margin-bottom:12px;">Rapid Execution</h3>
-        <p style="color:#a2937c; font-size:14px; line-height:1.8;">From concept to worldwide deployment in weeks, not quarters. We replace committee bureaucracy with agile, senior-led execution teams.</p>
-      </div>
-
-      <div class="studio-card">
-        <div class="mono" style="color:#9e1b24; margin-bottom:12px;">03 // MEASUREMENT</div>
-        <h3 style="font-family:var(--font-heading); font-size:26px; margin-bottom:12px;">Data & Growth</h3>
-        <p style="color:#a2937c; font-size:14px; line-height:1.8;">Creative excellence paired with algorithmic attribution. Every pixel and frame is designed to convert and build sustainable pipeline.</p>
-      </div>
-    </div>
-
-    <!-- Global Offices -->
-    <div style="padding:48px; background:#2e2b25; border-radius:24px; border:1px solid #3d382f; margin-bottom:80px;">
-      <div class="mono" style="color:#9e1b24; margin-bottom:16px;">[ Global Presence ]</div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:32px;">
-        <div>
-          <h4 style="font-family:var(--font-heading); font-size:22px; margin-bottom:6px;">New York</h4>
-          <p style="color:#a2937c; font-size:13px; line-height:1.6;">SoHo Studio & Edit Suite<br>Spring St, NY 10012</p>
+      <!-- Live Status Ribbon -->
+      <div class="status-ribbon mono">
+        <div class="status-item">
+          <span>PIPELINE:</span>
+          <span class="highlight" style="color:var(--color-accent-light)">LIVE & INTAKE ACTIVE</span>
         </div>
-        <div>
-          <h4 style="font-family:var(--font-heading); font-size:22px; margin-bottom:6px;">London</h4>
-          <p style="color:#a2937c; font-size:13px; line-height:1.6;">Shoreditch Soundstage<br>Redchurch St, E2 7DD</p>
+        <div style="width:1px; height:12px; background:rgba(255,255,255,0.12)"></div>
+        <div class="status-item">
+          <span>CAPITAL CATALYZED:</span>
+          <span class="highlight">$480M+</span>
         </div>
-        <div>
-          <h4 style="font-family:var(--font-heading); font-size:22px; margin-bottom:6px;">Dubai</h4>
-          <p style="color:#a2937c; font-size:13px; line-height:1.6;">DIFC Media Hub<br>Gate Avenue, UAE</p>
-        </div>
-        <div>
-          <h4 style="font-family:var(--font-heading); font-size:22px; margin-bottom:6px;">Tokyo</h4>
-          <p style="color:#a2937c; font-size:13px; line-height:1.6;">Daikanyama Creative Lab<br>Shibuya, Tokyo 150</p>
+        <div style="width:1px; height:12px; background:rgba(255,255,255,0.12)"></div>
+        <div class="status-item">
+          <span>ACTIVE HUBS:</span>
+          <span class="highlight">04 (GLOBAL)</span>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Direct CTA -->
-    <div style="text-align:center;">
-      <a href="/#contact" style="display:inline-block; background:#9e1b24; color:#f5ead8; padding:16px 36px; border-radius:999px; font-weight:600; font-size:15px;">Initiate a Dialogue with our Partners &rarr;</a>
-    </div>
+    <!-- 4 Philosophy Pillars Grid with 3D Magnetic Tilt -->
+    <section>
+      <div class="section-header">
+        <div class="section-eyebrow mono">[ Core Philosophy & Moats ]</div>
+        <h2 class="section-title">The principles that govern our work.</h2>
+      </div>
+
+      <div class="pillars-grid" id="pillars-container">
+        <!-- Pillar 01 -->
+        <article class="pillar-card" data-tilt-card>
+          <div class="pillar-card-spotlight"></div>
+          <div class="pillar-index mono">
+            <span>01 // CRAFT</span>
+            <span class="pillar-num">01</span>
+          </div>
+          <h3 class="pillar-title">Aesthetic Conviction</h3>
+          <p class="pillar-desc">
+            We believe aesthetic conviction is not cosmetic—it is the single highest-leverage competitive moat a modern brand can possess. When the visual and kinetic craft is undeniable, consumer friction dissolves.
+          </p>
+        </article>
+
+        <!-- Pillar 02 -->
+        <article class="pillar-card" data-tilt-card>
+          <div class="pillar-card-spotlight"></div>
+          <div class="pillar-index mono">
+            <span>02 // VELOCITY</span>
+            <span class="pillar-num">02</span>
+          </div>
+          <h3 class="pillar-title">Velocity of Thought</h3>
+          <p class="pillar-desc">
+            From strategic concept to worldwide deployment in weeks, not quarters. We eliminate committee bureaucracy and layers of account management in favor of agile, senior-led multidisciplinary squads.
+          </p>
+        </article>
+
+        <!-- Pillar 03 -->
+        <article class="pillar-card" data-tilt-card>
+          <div class="pillar-card-spotlight"></div>
+          <div class="pillar-index mono">
+            <span>03 // ATTRIBUTION</span>
+            <span class="pillar-num">03</span>
+          </div>
+          <h3 class="pillar-title">Algorithmic Rigor</h3>
+          <p class="pillar-desc">
+            Creative brilliance paired with uncompromising quantitative feedback loops. Every pixel, layout, and frame is engineered to capture attention, accelerate pipeline velocity, and establish durable enterprise value.
+          </p>
+        </article>
+
+        <!-- Pillar 04 -->
+        <article class="pillar-card" data-tilt-card>
+          <div class="pillar-card-spotlight"></div>
+          <div class="pillar-index mono">
+            <span>04 // SPATIAL & 3D</span>
+            <span class="pillar-num">04</span>
+          </div>
+          <h3 class="pillar-title">Next-Gen Kinetics</h3>
+          <p class="pillar-desc">
+            Interactive WebGL canvas engines, realtime GPU shaders, and fluid spatial storytelling. We build digital flagships that feel alive, physical, and memorable long after the tab is closed.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Live Global Hubs Clocks Section -->
+    <section class="hubs-section">
+      <div class="section-eyebrow mono" style="color:var(--color-accent-light)">[ Worldwide Presence ]</div>
+      <h2 class="section-title">Synchronized across 4 strategic time zones.</h2>
+      <p style="color:var(--color-text-dim); max-width:54ch; margin-top:12px; font-size:15px;">
+        Our senior leadership operates continuously across key global financial and cultural capitals, ensuring rapid deployment and cultural nuance in every market.
+      </p>
+
+      <div class="hubs-grid">
+        <!-- New York -->
+        <div class="hub-box">
+          <div class="hub-clock" id="clock-nyc">--:--:-- <span class="hub-clock-sec">EDT</span></div>
+          <h3 class="hub-city">New York</h3>
+          <p class="hub-meta">SoHo Creative Studio<br>Spring & Mercer St, NY</p>
+          <div class="hub-status" id="status-nyc"><span>●</span> LIVE DESK</div>
+        </div>
+
+        <!-- London -->
+        <div class="hub-box">
+          <div class="hub-clock" id="clock-lon">--:--:-- <span class="hub-clock-sec">BST</span></div>
+          <h3 class="hub-city">London</h3>
+          <p class="hub-meta">Shoreditch Edit Suite<br>Redchurch St, E2</p>
+          <div class="hub-status" id="status-lon"><span>●</span> LIVE DESK</div>
+        </div>
+
+        <!-- Dubai -->
+        <div class="hub-box">
+          <div class="hub-clock" id="clock-dxb">--:--:-- <span class="hub-clock-sec">GST</span></div>
+          <h3 class="hub-city">Dubai</h3>
+          <p class="hub-meta">DIFC Innovation Hub<br>Gate Avenue, Level 4</p>
+          <div class="hub-status" id="status-dxb"><span>●</span> REGIONAL HQ</div>
+        </div>
+
+        <!-- Tokyo -->
+        <div class="hub-box">
+          <div class="hub-clock" id="clock-tyo">--:--:-- <span class="hub-clock-sec">JST</span></div>
+          <h3 class="hub-city">Tokyo</h3>
+          <p class="hub-meta">Daikanyama Design Lab<br>Sarugakucho, Shibuya</p>
+          <div class="hub-status" id="status-tyo"><span>●</span> LIVE DESK</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verified Impact Statistics Counter -->
+    <section>
+      <div class="section-header" style="text-align:center;">
+        <div class="section-eyebrow mono">[ Quantitative Milestones ]</div>
+        <h2 class="section-title">Measurable outcomes at sovereign scale.</h2>
+      </div>
+
+      <div class="metrics-section" id="metrics-counter-wrap">
+        <div class="metric-card">
+          <div class="metric-num"><span class="counter" data-target="480">0</span><span class="accent">M+</span></div>
+          <p class="metric-label">Capital & Enterprise Value Catalyzed for Clients</p>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num"><span class="counter" data-target="14">0</span><span class="accent"></span></div>
+          <p class="metric-label">International Design & Creative Direction Honors</p>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num"><span class="counter" data-target="98">0</span><span class="accent">.4%</span></div>
+          <p class="metric-label">Multi-Year Enterprise Partner Retention Rate</p>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num"><span class="counter" data-target="12">0</span><span class="accent"></span></div>
+          <p class="metric-label">Sovereign & Tier-1 Global Markets Deployed</p>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Direct Transmission CTA Banner -->
+    <section class="cta-banner">
+      <div class="mono" style="color:var(--color-accent-light); margin-bottom:14px;">[ INITIATE COLLABORATION ]</div>
+      <h2 class="cta-title">Ready to construct your cultural landmark?</h2>
+      <p class="cta-sub">
+        We accept a limited roster of enterprise and founder-led engagements each quarter to preserve our senior attention density.
+      </p>
+      <a href="/#contact" class="cta-btn" id="studio-contact-cta">
+        <span>Transmit Project Inquiry</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </section>
   </main>
 
-  <footer style="border-top:1px solid #3d382f; padding:36px; text-align:center; color:#645c50;" class="mono">
-    <span>&copy; 2026 SPEC MEDIA. CONNECTED TO SUPABASE.</span>
+  <!-- Footer -->
+  <footer>
+    <div class="mono">
+      <span>&copy; 2026 SPEC MEDIA. ALL RIGHTS RESERVED.</span>
+    </div>
+    <div class="mono" style="display:flex; gap:20px;">
+      <a href="/work/" class="nav-link">Work</a>
+      <a href="/studio/" class="nav-link">Studio</a>
+      <a href="/capabilities/" class="nav-link">Capabilities</a>
+      <a href="#top" class="nav-link" id="back-to-top">&uarr; Back to Top</a>
+    </div>
   </footer>
 
+  <!-- Scripts -->
+  <script src="/static/cursor.js" defer></script>
+  <script>
+    // 1. Butter-Smooth Inertial Scroll via Lenis
+    (function() {
+      if (typeof Lenis !== 'undefined') {
+        const lenis = new Lenis({
+          duration: 1.25,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: 'vertical',
+          smoothWheel: true,
+          wheelMultiplier: 1.0,
+        });
+        window.lenis = lenis;
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+      }
+    })();
+
+    // 2. Real-Time Global Hubs Clocks Engine
+    function updateWorldClocks() {
+      const now = new Date();
+      const options = { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+
+      const timezones = [
+        { id: 'clock-nyc', statusId: 'status-nyc', tz: 'America/New_York', label: 'EDT' },
+        { id: 'clock-lon', statusId: 'status-lon', tz: 'Europe/London', label: 'BST' },
+        { id: 'clock-dxb', statusId: 'status-dxb', tz: 'Asia/Dubai', label: 'GST' },
+        { id: 'clock-tyo', statusId: 'status-tyo', tz: 'Asia/Tokyo', label: 'JST' }
+      ];
+
+      timezones.forEach(({ id, statusId, tz, label }) => {
+        try {
+          const formatter = new Intl.DateTimeFormat('en-US', { ...options, timeZone: tz });
+          const parts = formatter.formatToParts(now);
+          const h = parts.find(p => p.type === 'hour').value;
+          const m = parts.find(p => p.type === 'minute').value;
+          const s = parts.find(p => p.type === 'second').value;
+
+          const el = document.getElementById(id);
+          if (el) {
+            el.innerHTML = `${h}:${m} <span class="hub-clock-sec">${s} ${label}</span>`;
+          }
+
+          // Active vs Night desk indicator
+          const hourNum = parseInt(h, 10);
+          const statusEl = document.getElementById(statusId);
+          if (statusEl) {
+            if (hourNum >= 8 && hourNum < 20) {
+              statusEl.className = 'hub-status';
+              statusEl.innerHTML = '<span>●</span> ACTIVE DESK';
+            } else {
+              statusEl.className = 'hub-status night';
+              statusEl.innerHTML = '<span>○</span> OFF-HOURS SYNC';
+            }
+          }
+        } catch (e) {}
+      });
+    }
+    setInterval(updateWorldClocks, 1000);
+    updateWorldClocks();
+
+    // 3. 3D Magnetic Perspective Tilt for Pillar Cards
+    document.querySelectorAll('[data-tilt-card]').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const relX = e.clientX - rect.left;
+        const relY = e.clientY - rect.top;
+        card.style.setProperty('--spot-x', `${relX}px`);
+        card.style.setProperty('--spot-y', `${relY}px`);
+
+        const normX = (relX / rect.width) - 0.5;
+        const normY = (relY / rect.height) - 0.5;
+        const tiltX = (-normY * 12).toFixed(2);
+        const tiltY = (normX * 12).toFixed(2);
+        card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-8px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+      });
+    });
+
+    // 4. Animated Number Counters on Scroll
+    let countersAnimated = false;
+    function animateCounters() {
+      const targetWrap = document.getElementById('metrics-counter-wrap');
+      if (!targetWrap || countersAnimated) return;
+
+      const r = targetWrap.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.85) {
+        countersAnimated = true;
+        document.querySelectorAll('.counter').forEach(counter => {
+          const target = parseInt(counter.getAttribute('data-target'), 10);
+          const duration = 2000;
+          const startTime = performance.now();
+
+          function step(now) {
+            const progress = Math.min(1, (now - startTime) / duration);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            counter.textContent = Math.round(target * ease);
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            } else {
+              counter.textContent = target;
+            }
+          }
+          requestAnimationFrame(step);
+        });
+      }
+    }
+    window.addEventListener('scroll', animateCounters, { passive: true });
+    animateCounters();
+
+    // 5. Back to top smooth glide
+    const backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+      backToTop.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window.lenis) {
+          window.lenis.scrollTo(0);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    }
+  </script>
 </body>
 </html>

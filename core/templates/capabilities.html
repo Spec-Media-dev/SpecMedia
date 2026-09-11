@@ -3,141 +3,1022 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ page_title }}</title>
+  <title>{{ page_title|default:"End-to-End Capabilities — Spec Media" }}</title>
+  <meta name="description" content="Explore Spec Media's four core disciplines: Brand Strategy, Cinematic Campaign Production, Performance Media, and Always-On Content Systems.">
+  <link rel="canonical" href="https://www.spec-media.com/capabilities/">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%239e1b24%22>S</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/cursor.css">
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
   <style>
     :root {
       --color-bg: #f5ead8;
       --color-surface: #ebddc5;
-      --color-text: #201e1d;
+      --color-dark: #121110;
+      --color-dark-surface: #1a1816;
+      --color-dark-card: #201e1c;
       --color-accent: #9e1b24;
-      --color-accent-2: #7a8a5e;
+      --color-accent-light: #e26b72;
+      --color-accent-gold: #c5a880;
+      --color-accent-olive: #7a8a5e;
+      --color-muted: #8c8273;
+      --color-text-dim: #b5a998;
       --font-heading: 'Playfair Display', Georgia, serif;
+      --font-display: 'Syne', sans-serif;
       --font-body: 'Lora', Georgia, serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
+
+    /* Universal Scrollbar Suppressed */
+    html, body, * {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    ::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #201e1d; color: #f5ead8; font-family: var(--font-body); min-height: 100vh; overflow-x: hidden; }
-    a { color: inherit; text-decoration: none; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.18em; text-transform: uppercase; font-size: 11px; }
-    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 36px; background: rgba(32,30,29,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(245,234,216,0.08); }
-    .cap-box { border-bottom: 1px solid #3d382f; padding: 48px 0; display: grid; grid-template-columns: 280px 1fr 180px; gap: 36px; align-items: start; }
-    @media (max-width: 900px) {
-      .cap-box { grid-template-columns: 1fr; gap: 20px; }
+    body {
+      background-color: var(--color-dark);
+      color: var(--color-bg);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.65;
+      position: relative;
     }
-    .btn-outline { display: inline-block; padding: 10px 22px; border-radius: 999px; border: 1px solid #9e1b24; color: #9e1b24; font-size: 13px; font-weight: 600; text-align: center; }
-    .btn-outline:hover { background: #9e1b24; color: #f5ead8; }
+
+    a { color: inherit; text-decoration: none; }
+
+    .mono {
+      font-family: var(--font-mono);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    /* Top Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: clamp(16px, 2.5vw, 24px) clamp(20px, 4vw, 48px);
+      background: rgba(18, 17, 16, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(245, 234, 216, 0.08);
+      transition: all 0.3s ease;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--color-accent);
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 16px rgba(158, 27, 36, 0.5);
+    }
+    .nav-logo-text {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      letter-spacing: 0.04em;
+      color: var(--color-bg);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2.2vw, 28px);
+    }
+    .nav-link {
+      color: var(--color-text-dim);
+      padding: 6px 0;
+      border-bottom: 1px solid transparent;
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--color-bg);
+      border-bottom-color: var(--color-accent);
+    }
+    .nav-cta {
+      color: var(--color-accent-light) !important;
+      border-bottom-color: rgba(226, 107, 114, 0.35) !important;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow-wrap {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .ambient-glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(130px);
+      opacity: 0.22;
+      animation: ambientDrift 22s infinite alternate ease-in-out;
+    }
+    .ambient-glow-1 {
+      top: -10%;
+      left: 10%;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(158, 27, 36, 0.4) 0%, transparent 70%);
+    }
+    .ambient-glow-2 {
+      top: 55%;
+      right: -5%;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(122, 138, 94, 0.2) 0%, transparent 70%);
+      animation-duration: 26s;
+    }
+    @keyframes ambientDrift {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(35px, 45px) scale(1.1); }
+      100% { transform: translate(-30px, 25px) scale(0.95); }
+    }
+
+    /* Main Container */
+    main {
+      position: relative;
+      z-index: 1;
+      padding: clamp(120px, 14vw, 180px) clamp(20px, 4vw, 48px) 100px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .cap-hero {
+      margin-bottom: clamp(60px, 8vw, 110px);
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(158, 27, 36, 0.12);
+      border: 1px solid rgba(226, 107, 114, 0.3);
+      border-radius: 999px;
+      color: var(--color-accent-light);
+      margin-bottom: 24px;
+      box-shadow: 0 0 20px rgba(158, 27, 36, 0.15);
+    }
+    .hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent-light);
+      box-shadow: 0 0 8px var(--color-accent-light);
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(40px, 6.5vw, 98px);
+      line-height: 1.02;
+      color: #ffffff;
+      max-width: 16ch;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      max-width: 58ch;
+      color: var(--color-text-dim);
+      font-size: clamp(16px, 1.4vw, 20px);
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+
+    /* Live Capabilities Index Ticker */
+    .cap-ticker {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px clamp(16px, 2.5vw, 32px);
+      padding: 16px 24px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      backdrop-filter: blur(10px);
+      width: fit-content;
+      margin-bottom: 70px;
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--color-text-dim);
+      transition: color 0.2s ease;
+    }
+    .ticker-item:hover {
+      color: #ffffff;
+    }
+    .ticker-item span.num {
+      color: var(--color-accent-light);
+      font-weight: 700;
+    }
+
+    /* Section Headers */
+    .section-header {
+      margin-bottom: 40px;
+    }
+    .section-eyebrow {
+      color: var(--color-accent-light);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(28px, 3.8vw, 54px);
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    /* 4 Disciplines Architecture Cards */
+    .disciplines-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(28px, 4vw, 48px);
+      margin-bottom: clamp(90px, 11vw, 150px);
+      perspective: 1200px;
+    }
+    .discipline-card {
+      position: relative;
+      background: linear-gradient(145deg, rgba(28, 26, 25, 0.9) 0%, rgba(18, 17, 16, 0.98) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: clamp(32px, 4vw, 54px);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+      will-change: transform;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr 240px;
+      gap: clamp(24px, 3.5vw, 48px);
+      align-items: start;
+    }
+    .discipline-card:hover {
+      border-color: rgba(226, 107, 114, 0.4);
+      box-shadow: 0 32px 80px -16px rgba(0, 0, 0, 0.9), 0 0 30px rgba(158, 27, 36, 0.2);
+    }
+    .discipline-card-spotlight {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(460px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(226, 107, 114, 0.18), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+    .discipline-card:hover .discipline-card-spotlight {
+      opacity: 1;
+    }
+
+    .disc-col-1 {
+      position: relative;
+      z-index: 2;
+    }
+    .disc-idx {
+      font-size: 11px;
+      color: var(--color-accent-light);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .disc-idx::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent-light);
+      box-shadow: 0 0 6px var(--color-accent-light);
+    }
+    .disc-title {
+      font-family: var(--font-heading);
+      font-size: clamp(26px, 2.5vw, 38px);
+      color: #ffffff;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .disc-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(158, 27, 36, 0.18);
+      border: 1px solid rgba(226, 107, 114, 0.3);
+      color: var(--color-accent-light);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .disc-col-2 {
+      position: relative;
+      z-index: 2;
+    }
+    .disc-desc {
+      color: var(--color-text-dim);
+      font-size: clamp(14px, 1.1vw, 16px);
+      line-height: 1.85;
+      margin-bottom: 24px;
+    }
+    .deliverables-title {
+      font-size: 11px;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+    .deliverables-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .deliverable-chip {
+      padding: 7px 14px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 999px;
+      color: var(--color-bg);
+      font-size: 11px;
+      transition: all 0.25s ease;
+      cursor: default;
+    }
+    .deliverable-chip:hover {
+      background: rgba(158, 27, 36, 0.15);
+      border-color: rgba(226, 107, 114, 0.4);
+      color: #ffffff;
+    }
+
+    .disc-col-3 {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+      height: 100%;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      padding-left: clamp(16px, 2.5vw, 32px);
+    }
+    .outcome-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .outcome-label {
+      font-size: 10px;
+      color: var(--color-muted);
+      margin-bottom: 6px;
+    }
+    .outcome-val {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .outcome-val span.accent {
+      color: var(--color-accent-light);
+    }
+    .outcome-sub {
+      color: var(--color-text-dim);
+      font-size: 11px;
+    }
+    .disc-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 20px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(226, 107, 114, 0.4);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+    .disc-action-btn:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent-light);
+      box-shadow: 0 0 20px rgba(158, 27, 36, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* 5-Stage Sprint Engine (The Production Pipeline) */
+    .pipeline-section {
+      background: linear-gradient(160deg, rgba(26, 24, 23, 0.9) 0%, rgba(16, 15, 14, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: clamp(36px, 5vw, 64px);
+      margin-bottom: clamp(90px, 11vw, 150px);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+    }
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: clamp(16px, 2vw, 24px);
+      margin-top: 36px;
+      position: relative;
+    }
+    .pipeline-step {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .pipeline-step:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(226, 107, 114, 0.35);
+      transform: translateY(-5px);
+    }
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .step-idx {
+      font-size: 11px;
+      color: var(--color-accent-light);
+      font-weight: 700;
+    }
+    .step-duration {
+      font-size: 10px;
+      color: var(--color-muted);
+    }
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .step-desc {
+      color: var(--color-text-dim);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    /* Technical & Production Tech Stack */
+    .stack-section {
+      margin-bottom: clamp(90px, 11vw, 150px);
+    }
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: clamp(20px, 2.5vw, 32px);
+      margin-top: 36px;
+    }
+    .stack-card {
+      padding: clamp(24px, 3vw, 36px);
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+    .stack-card:hover {
+      border-color: rgba(158, 27, 36, 0.4);
+      background: rgba(158, 27, 36, 0.04);
+      transform: translateY(-4px);
+    }
+    .stack-cat {
+      color: var(--color-accent-light);
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+    .stack-title {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+    .stack-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .stack-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-text-dim);
+      font-size: 13px;
+    }
+    .stack-item::before {
+      content: "▪";
+      color: var(--color-accent-light);
+    }
+
+    /* Direct Transmission CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(32, 28, 27, 0.95) 0%, rgba(20, 18, 17, 0.98) 100%);
+      border: 1px solid rgba(158, 27, 36, 0.35);
+      border-radius: 28px;
+      padding: clamp(48px, 6vw, 84px) clamp(24px, 5vw, 64px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.8), 0 0 50px rgba(158, 27, 36, 0.15);
+    }
+    .cta-banner::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(158, 27, 36, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-title {
+      font-family: var(--font-heading);
+      font-size: clamp(32px, 4.5vw, 64px);
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .cta-sub {
+      color: var(--color-text-dim);
+      font-size: clamp(15px, 1.2vw, 18px);
+      max-width: 48ch;
+      margin: 0 auto 36px;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #9e1b24 0%, #7d121a 100%);
+      color: #ffffff;
+      padding: 16px 36px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      box-shadow: 0 12px 32px rgba(158, 27, 36, 0.5), 0 0 20px rgba(158, 27, 36, 0.2) inset;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 44px rgba(158, 27, 36, 0.8), 0 0 24px rgba(255, 255, 255, 0.25) inset;
+      filter: brightness(1.1);
+    }
+    .cta-btn svg {
+      transition: transform 0.25s ease;
+    }
+    .cta-btn:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 40px clamp(20px, 4vw, 48px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      color: var(--color-muted);
+      position: relative;
+      z-index: 1;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 992px) {
+      .discipline-card {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .disc-col-3 {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-left: 0;
+        padding-top: 24px;
+      }
+    }
   </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
+  <!-- Ambient Backdrop Orbs -->
+  <div class="ambient-glow-wrap" aria-hidden="true">
+    <div class="ambient-glow-orb ambient-glow-1"></div>
+    <div class="ambient-glow-orb ambient-glow-2"></div>
+  </div>
+
   <!-- Top Navigation -->
   <header class="nav">
-    <a href="/" style="display:flex; align-items:center; gap:12px;">
-      <span style="font-family:var(--font-heading); font-size:22px; color:#f5ead8;">SPEC MEDIA</span>
+    <a href="/" class="nav-logo" aria-label="Spec Media Home">
+      <span class="nav-logo-mark">
+        <svg width="16" height="16" viewBox="0 0 40 40" fill="none">
+          <path d="M12 28L28 12M28 28L12 12" stroke="#f5ead8" stroke-width="4.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="nav-logo-text">SPEC MEDIA</span>
     </a>
-    <div style="display:flex; align-items:center; gap:24px;" class="mono">
-      <a href="/work/">[ work ]</a>
-      <a href="/studio/">[ studio ]</a>
-      <a href="/capabilities/" style="color:#9e1b24;">[ capabilities ]</a>
-      <a href="/portal/" style="color:#7a8a5e;">[ portal ]</a>
-      <a href="/#contact" style="color:#9e1b24;">[ start a project &rarr; ]</a>
-    </div>
+    <nav class="nav-links mono">
+      <a href="/work/" class="nav-link">[ work ]</a>
+      <a href="/studio/" class="nav-link">[ studio ]</a>
+      <a href="/capabilities/" class="nav-link active">[ capabilities ]</a>
+      <a href="/#contact" class="nav-link nav-cta" id="nav-contact-link">[ initiate inquiry &rarr; ]</a>
+    </nav>
   </header>
 
-  <main style="padding: 140px 36px 80px; max-width: 1400px; margin: 0 auto;">
-    <div style="margin-bottom: 70px;">
-      <div class="mono" style="color:#9e1b24; margin-bottom:12px;">[ End-to-End Capabilities ]</div>
-      <h1 style="font-family:var(--font-heading); font-size:clamp(36px, 5.5vw, 84px); line-height:1.02; color:#f5ead8; max-width:14ch;">Four disciplines. One singular focus.</h1>
-      <p style="margin-top:20px; max-width:48ch; color:#a2937c; line-height:1.8; font-size:15px;">
-        We dismantle the boundaries between strategy, cinematic production, paid distribution, and iterative content systems.
+  <main>
+    <!-- Hero Section -->
+    <section class="cap-hero">
+      <div class="hero-eyebrow mono">
+        <span class="hero-eyebrow-dot"></span>
+        <span>Full-Spectrum Architecture // End-to-End Suite</span>
+      </div>
+      <h1 class="hero-title">Four disciplines. One singular focus.</h1>
+      <p class="hero-sub">
+        We dismantle the friction between upstream brand strategy, cinematic production, paid distribution, and iterative content systems.
       </p>
-    </div>
 
-    <!-- Capabilities List -->
-    <div>
-      <!-- 01 -->
-      <div class="cap-box">
-        <div>
-          <div class="mono" style="color:#9e1b24; margin-bottom:8px;">01 // DISCIPLINE</div>
-          <h2 style="font-family:var(--font-heading); font-size:32px;">Brand Strategy</h2>
-        </div>
-        <div style="color:#a2937c; font-size:15px; line-height:1.8;">
-          <p style="margin-bottom:16px;">We establish the core positioning, voice, and visual architecture that define category leaders. From founder narrative synthesis to comprehensive brand guidelines, we design systems that remain iconic over decades.</p>
-          <div style="display:flex; flex-wrap:wrap; gap:8px;" class="mono">
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Market Positioning</span>
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Visual Identity Design</span>
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Verbal & Tone of Voice</span>
-          </div>
-        </div>
-        <div>
-          <a href="/#contact" class="btn-outline">Inquire Service &rarr;</a>
-        </div>
+      <!-- Live Capabilities Ticker -->
+      <div class="cap-ticker mono">
+        <div class="ticker-item"><span class="num">01</span> STRATEGY</div>
+        <div style="width:1px; height:12px; background:rgba(255,255,255,0.12)"></div>
+        <div class="ticker-item"><span class="num">02</span> PRODUCTION</div>
+        <div style="width:1px; height:12px; background:rgba(255,255,255,0.12)"></div>
+        <div class="ticker-item"><span class="num">03</span> PERFORMANCE MEDIA</div>
+        <div style="width:1px; height:12px; background:rgba(255,255,255,0.12)"></div>
+        <div class="ticker-item"><span class="num">04</span> CONTENT SYSTEMS</div>
+      </div>
+    </section>
+
+    <!-- 4 Disciplines Architecture Cards -->
+    <section>
+      <div class="section-header">
+        <div class="section-eyebrow mono">[ The Core Disciplines ]</div>
+        <h2 class="section-title">Engineered to compound enterprise equity.</h2>
       </div>
 
-      <!-- 02 -->
-      <div class="cap-box">
-        <div>
-          <div class="mono" style="color:#9e1b24; margin-bottom:8px;">02 // DISCIPLINE</div>
-          <h2 style="font-family:var(--font-heading); font-size:32px;">Campaign Production</h2>
-        </div>
-        <div style="color:#a2937c; font-size:15px; line-height:1.8;">
-          <p style="margin-bottom:16px;">Cinematic live-action film, high-end 3D motion, and editorial craft produced with an obsession for emotional weight. We handle treatment, casting, sound design, grading, and final asset packaging.</p>
-          <div style="display:flex; flex-wrap:wrap; gap:8px;" class="mono">
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Launch Films</span>
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">3D Motion Graphics</span>
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Editorial & Grade</span>
+      <div class="disciplines-wrap" id="disciplines-container">
+        <!-- Discipline 01 -->
+        <article class="discipline-card" data-tilt-card>
+          <div class="discipline-card-spotlight"></div>
+          <div class="disc-col-1">
+            <div class="disc-idx mono">01 // DISCIPLINE</div>
+            <h3 class="disc-title">Brand Strategy & Architecture</h3>
+            <span class="disc-badge">Upstream Moat</span>
           </div>
+
+          <div class="disc-col-2">
+            <p class="disc-desc">
+              We synthesize the core positioning, voice, and visual architecture that define category leaders. From founder narrative synthesis to comprehensive brand guidelines, we design systems that remain iconic and culturally dominant over decades.
+            </p>
+            <div class="deliverables-title mono">Core Deliverables:</div>
+            <div class="deliverables-grid mono">
+              <span class="deliverable-chip">Market Positioning Matrix</span>
+              <span class="deliverable-chip">Visual Identity Systems</span>
+              <span class="deliverable-chip">Typography & Token Libraries</span>
+              <span class="deliverable-chip">Brand Architecture Blueprint</span>
+              <span class="deliverable-chip">Verbal Voice & Tone Guidelines</span>
+            </div>
+          </div>
+
+          <div class="disc-col-3">
+            <div class="outcome-box">
+              <div class="outcome-label mono">EXPECTED OUTCOME</div>
+              <div class="outcome-val">+240<span class="accent">%</span></div>
+              <div class="outcome-sub">Target Valuation & Brand Equity</div>
+            </div>
+            <a href="/#contact" class="disc-action-btn">Inquire Service &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Discipline 02 -->
+        <article class="discipline-card" data-tilt-card>
+          <div class="discipline-card-spotlight"></div>
+          <div class="disc-col-1">
+            <div class="disc-idx mono">02 // DISCIPLINE</div>
+            <h3 class="disc-title">Campaign Production & Film</h3>
+            <span class="disc-badge">Cinema Craft</span>
+          </div>
+
+          <div class="disc-col-2">
+            <p class="disc-desc">
+              Cinematic live-action film, high-end 3D motion graphics, and editorial craft produced with an obsession for emotional resonance. We orchestrate treatment, casting, bespoke sound design, master color grading, and final asset packaging.
+            </p>
+            <div class="deliverables-title mono">Core Deliverables:</div>
+            <div class="deliverables-grid mono">
+              <span class="deliverable-chip">Hero Launch Films</span>
+              <span class="deliverable-chip">3D CGI & Spatial VFX</span>
+              <span class="deliverable-chip">Sonic Scoring & Sound Design</span>
+              <span class="deliverable-chip">High-Speed Visual Cuts</span>
+              <span class="deliverable-chip">Master Color Grading (ACES)</span>
+            </div>
+          </div>
+
+          <div class="disc-col-3">
+            <div class="outcome-box">
+              <div class="outcome-label mono">EXPECTED OUTCOME</div>
+              <div class="outcome-val">12<span class="accent">M+</span></div>
+              <div class="outcome-sub">High-Intent Organic Views</div>
+            </div>
+            <a href="/#contact" class="disc-action-btn">Inquire Service &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Discipline 03 -->
+        <article class="discipline-card" data-tilt-card>
+          <div class="discipline-card-spotlight"></div>
+          <div class="disc-col-1">
+            <div class="disc-idx mono">03 // DISCIPLINE</div>
+            <h3 class="disc-title">Performance Media & Growth</h3>
+            <span class="disc-badge">Algorithmic Moat</span>
+          </div>
+
+          <div class="disc-col-2">
+            <p class="disc-desc">
+              Creative that directly scales customer acquisition efficiency and lifetime value. We engineer multi-variant ad systems tested against real-time conversion models across Meta, TikTok, YouTube, and programmatic inventory.
+            </p>
+            <div class="deliverables-title mono">Core Deliverables:</div>
+            <div class="deliverables-grid mono">
+              <span class="deliverable-chip">Multi-Variant Creative Testing</span>
+              <span class="deliverable-chip">Algorithmic Acquisition Funnels</span>
+              <span class="deliverable-chip">Retention & LTV Architecture</span>
+              <span class="deliverable-chip">Server-Side Attribution (CAPI)</span>
+              <span class="deliverable-chip">Real-Time Performance Dashboards</span>
+            </div>
+          </div>
+
+          <div class="disc-col-3">
+            <div class="outcome-box">
+              <div class="outcome-label mono">EXPECTED OUTCOME</div>
+              <div class="outcome-val">3.8<span class="accent">x</span></div>
+              <div class="outcome-sub">Blended ROAS at Scale</div>
+            </div>
+            <a href="/#contact" class="disc-action-btn">Inquire Service &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Discipline 04 -->
+        <article class="discipline-card" data-tilt-card>
+          <div class="discipline-card-spotlight"></div>
+          <div class="disc-col-1">
+            <div class="disc-idx mono">04 // DISCIPLINE</div>
+            <h3 class="disc-title">Content Systems & Kinetics</h3>
+            <span class="disc-badge">Always-On Scale</span>
+          </div>
+
+          <div class="disc-col-2">
+            <p class="disc-desc">
+              Turnkey always-on content operations for hyper-growth enterprises. Continuous asset pipeline from our studio to social feeds, podcasts, interactive WebGL drops, and high-velocity digital editorial.
+            </p>
+            <div class="deliverables-title mono">Core Deliverables:</div>
+            <div class="deliverables-grid mono">
+              <span class="deliverable-chip">Modular Creative Asset Engines</span>
+              <span class="deliverable-chip">Social-First Vertical Formats (9:16)</span>
+              <span class="deliverable-chip">Interactive WebGL Experiences</span>
+              <span class="deliverable-chip">Podcast & Audio Studio Drops</span>
+              <span class="deliverable-chip">Digital Editorial Publishing</span>
+            </div>
+          </div>
+
+          <div class="disc-col-3">
+            <div class="outcome-box">
+              <div class="outcome-label mono">EXPECTED OUTCOME</div>
+              <div class="outcome-val">100<span class="accent">+</span></div>
+              <div class="outcome-sub">High-Res Assets / Month</div>
+            </div>
+            <a href="/#contact" class="disc-action-btn">Inquire Service &rarr;</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5-Stage Sprint Engine (The Production Pipeline) -->
+    <section class="pipeline-section">
+      <div class="section-eyebrow mono" style="color:var(--color-accent-light)">[ The Sprint Engine ]</div>
+      <h2 class="section-title">How we deploy category dominance in weeks.</h2>
+      <p style="color:var(--color-text-dim); max-width:54ch; margin-top:12px; font-size:15px;">
+        A phased, deterministic deployment framework refined over dozens of global enterprise transformations.
+      </p>
+
+      <div class="pipeline-grid">
+        <div class="pipeline-step">
+          <div class="step-header mono">
+            <span class="step-idx">PHASE 01</span>
+            <span class="step-duration">WEEKS 1–2</span>
+          </div>
+          <h3 class="step-title">Discovery & Synthesis</h3>
+          <p class="step-desc">Deep-dive interviews, competitive positioning audit, quantitative market sizing, and brand archetype extraction.</p>
         </div>
-        <div>
-          <a href="/#contact" class="btn-outline">Inquire Service &rarr;</a>
+
+        <div class="pipeline-step">
+          <div class="step-header mono">
+            <span class="step-idx">PHASE 02</span>
+            <span class="step-duration">WEEKS 2–3</span>
+          </div>
+          <h3 class="step-title">Creative Direction</h3>
+          <p class="step-desc">Treatment scripts, 3D moodboards, typographic system definition, and sonic identity architecture.</p>
         </div>
+
+        <div class="pipeline-step">
+          <div class="step-header mono">
+            <span class="step-idx">PHASE 03</span>
+            <span class="step-duration">WEEKS 3–5</span>
+          </div>
+          <h3 class="step-title">High-Fidelity Production</h3>
+          <p class="step-desc">Cinema production, studio shoot, 3D CGI rendering, WebGL engineering, and master color grading.</p>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-header mono">
+            <span class="step-idx">PHASE 04</span>
+            <span class="step-duration">WEEK 5+</span>
+          </div>
+          <h3 class="step-title">Algorithmic Launch</h3>
+          <p class="step-desc">Global rollout, multi-variant paid distribution, conversion tracking calibration, and PR seeding.</p>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-header mono">
+            <span class="step-idx">PHASE 05</span>
+            <span class="step-duration">ONGOING</span>
+          </div>
+          <h3 class="step-title">Iterative Systems</h3>
+          <p class="step-desc">Continuous asset delivery, ROAS optimization, community content, and quarterly creative refreshes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical & Production Tech Stack Matrix -->
+    <section class="stack-section">
+      <div class="section-header">
+        <div class="section-eyebrow mono">[ Production Infrastructure ]</div>
+        <h2 class="section-title">Industry-standard cinema & digital tooling.</h2>
       </div>
 
-      <!-- 03 -->
-      <div class="cap-box">
-        <div>
-          <div class="mono" style="color:#9e1b24; margin-bottom:8px;">03 // DISCIPLINE</div>
-          <h2 style="font-family:var(--font-heading); font-size:32px;">Performance Media</h2>
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="stack-cat mono">01 // CAMERAS & GLASS</div>
+          <h3 class="stack-title">Cinema Systems</h3>
+          <ul class="stack-list">
+            <li class="stack-item">RED V-Raptor XL 8K VV</li>
+            <li class="stack-item">ARRI Alexa Mini LF Large Format</li>
+            <li class="stack-item">Sony Venice 2 CineAlta</li>
+            <li class="stack-item">Cooke Anamorphic /i Full Frame Primes</li>
+          </ul>
         </div>
-        <div style="color:#a2937c; font-size:15px; line-height:1.8;">
-          <p style="margin-bottom:16px;">Creative that directly scales CAC efficiency and ROAS. We engineer multi-variant ad systems tested against real-time conversion models across Meta, TikTok, YouTube, and Programmatic display.</p>
-          <div style="display:flex; flex-wrap:wrap; gap:8px;" class="mono">
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Paid Social Acquisition</span>
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Creative Variant Testing</span>
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Attribution Architecture</span>
-          </div>
-        </div>
-        <div>
-          <a href="/#contact" class="btn-outline">Inquire Service &rarr;</a>
-        </div>
-      </div>
 
-      <!-- 04 -->
-      <div class="cap-box" style="border-bottom:none;">
-        <div>
-          <div class="mono" style="color:#9e1b24; margin-bottom:8px;">04 // DISCIPLINE</div>
-          <h2 style="font-family:var(--font-heading); font-size:32px;">Content Systems</h2>
+        <div class="stack-card">
+          <div class="stack-cat mono">02 // 3D & REALTIME GPU</div>
+          <h3 class="stack-title">Spatial Engines</h3>
+          <ul class="stack-list">
+            <li class="stack-item">Unreal Engine 5.4 Virtual Production</li>
+            <li class="stack-item">SideFX Houdini Procedural Systems</li>
+            <li class="stack-item">Maxon Cinema 4D & Redshift</li>
+            <li class="stack-item">Custom WebGL / GLSL Realtime Shaders</li>
+          </ul>
         </div>
-        <div style="color:#a2937c; font-size:15px; line-height:1.8;">
-          <p style="margin-bottom:16px;">Turnkey always-on content operations for hyper-growth enterprises. Continuous asset pipeline from studio to social, podcasts, interactive web drops, and digital editorial.</p>
-          <div style="display:flex; flex-wrap:wrap; gap:8px;" class="mono">
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Modular Asset Engines</span>
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Social First Video</span>
-            <span style="background:#2e2b25; padding:6px 12px; border-radius:999px; color:#f5ead8; font-size:10px;">Interactive Media</span>
-          </div>
+
+        <div class="stack-card">
+          <div class="stack-cat mono">03 // POST & ACOUSTICS</div>
+          <h3 class="stack-title">Finishing Suites</h3>
+          <ul class="stack-list">
+            <li class="stack-item">DaVinci Resolve Studio 19 (ACEScc)</li>
+            <li class="stack-item">Dolby Atmos Spatial Audio Mastering</li>
+            <li class="stack-item">Ableton Live 12 Sonic Architecture</li>
+            <li class="stack-item">Pro Tools Ultimate Sound Design</li>
+          </ul>
         </div>
-        <div>
-          <a href="/#contact" class="btn-outline">Inquire Service &rarr;</a>
+
+        <div class="stack-card">
+          <div class="stack-cat mono">04 // ATTRIBUTION & DATA</div>
+          <h3 class="stack-title">Growth Infrastructure</h3>
+          <ul class="stack-list">
+            <li class="stack-item">Meta Conversions API (CAPI Gateway)</li>
+            <li class="stack-item">TikTok Events API & Pixel Systems</li>
+            <li class="stack-item">Triple Whale Multi-Touch Attribution</li>
+            <li class="stack-item">Supabase Real-Time Event Pipeline</li>
+          </ul>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- Direct Transmission CTA Banner -->
+    <section class="cta-banner">
+      <div class="mono" style="color:var(--color-accent-light); margin-bottom:14px;">[ INITIATE ENGAGEMENT ]</div>
+      <h2 class="cta-title">Ready to construct your cultural landmark?</h2>
+      <p class="cta-sub">
+        Discuss your brand parameters and commercial objectives with our senior strategy partners.
+      </p>
+      <a href="/#contact" class="cta-btn" id="cap-contact-cta">
+        <span>Transmit Project Inquiry</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </section>
   </main>
 
-  <footer style="border-top:1px solid #3d382f; padding:36px; text-align:center; color:#645c50;" class="mono">
-    <span>&copy; 2026 SPEC MEDIA. REALTIME SUPABASE PIPELINE.</span>
+  <!-- Footer -->
+  <footer>
+    <div class="mono">
+      <span>&copy; 2026 SPEC MEDIA. ALL RIGHTS RESERVED.</span>
+    </div>
+    <div class="mono" style="display:flex; gap:20px;">
+      <a href="/work/" class="nav-link">Work</a>
+      <a href="/studio/" class="nav-link">Studio</a>
+      <a href="/capabilities/" class="nav-link">Capabilities</a>
+      <a href="#top" class="nav-link" id="back-to-top">&uarr; Back to Top</a>
+    </div>
   </footer>
 
+  <!-- Scripts -->
+  <script src="/static/cursor.js" defer></script>
+  <script>
+    // 1. Butter-Smooth Inertial Scroll via Lenis
+    (function() {
+      if (typeof Lenis !== 'undefined') {
+        const lenis = new Lenis({
+          duration: 1.25,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: 'vertical',
+          smoothWheel: true,
+          wheelMultiplier: 1.0,
+        });
+        window.lenis = lenis;
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+      }
+    })();
+
+    // 2. 3D Magnetic Perspective Tilt for Discipline Cards
+    document.querySelectorAll('[data-tilt-card]').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const relX = e.clientX - rect.left;
+        const relY = e.clientY - rect.top;
+        card.style.setProperty('--spot-x', `${relX}px`);
+        card.style.setProperty('--spot-y', `${relY}px`);
+
+        const normX = (relX / rect.width) - 0.5;
+        const normY = (relY / rect.height) - 0.5;
+        const tiltX = (-normY * 8).toFixed(2);
+        const tiltY = (normX * 8).toFixed(2);
+        card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-6px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+      });
+    });
+
+    // 3. Back to top smooth glide
+    const backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+      backToTop.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window.lenis) {
+          window.lenis.scrollTo(0);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    }
+  </script>
 </body>
 </html>

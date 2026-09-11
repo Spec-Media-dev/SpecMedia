@@ -1,0 +1,181 @@
+/* ============================================================
+   SPEC MEDIA — INVERTED FLUID GLASS ORB CURSOR SYSTEM
+   ============================================================ */
+
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+/* Inverted Fluid Glass Orb */
+.spec-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999998;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  mix-blend-mode: difference;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: width 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease,
+              border 0.25s ease,
+              box-shadow 0.28s ease,
+              opacity 0.22s ease;
+  will-change: transform, width, height;
+}
+
+/* Zero-delay center precision pin */
+.spec-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.15s ease, width 0.2s ease, height 0.2s ease;
+}
+
+/* Hovering interactive links, buttons, and navigation: Expands into large inverted lens */
+.spec-cursor-ring.is-hovering {
+  width: 68px;
+  height: 68px;
+  background-color: #ffffff;
+  mix-blend-mode: difference;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.3);
+}
+
+.spec-cursor-dot.is-hovering {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+/* Work Cards Hover: Morphs into signature Spec Crimson VIEW ↗ badge */
+.spec-cursor-ring.is-card-hover {
+  width: 98px;
+  height: 38px;
+  border-radius: 999px;
+  background-color: #9e1b24;
+  mix-blend-mode: normal;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 14px 40px rgba(158, 27, 36, 0.75), 0 0 16px rgba(255, 255, 255, 0.2) inset;
+}
+
+.spec-cursor-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  opacity: 0;
+  transform: scale(0.65);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #ffffff;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spec-cursor-ring.is-card-hover .spec-cursor-badge {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.spec-cursor-dot.is-card-hover {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+/* Mousedown click compression physics */
+.spec-cursor-ring.is-active {
+  transform: translate(-50%, -50%) scale(0.72) !important;
+}
+
+.spec-cursor-dot.is-active {
+  transform: translate(-50%, -50%) scale(0.6) !important;
+}
+
+/* Touch fallback */
+@media (hover: none) or (pointer: coarse) {
+  .spec-cursor-dot,
+  .spec-cursor-ring {
+    display: none !important;
+  }
+}
+
+/* --- SELECTED WORK CARDS HOVER & 3D TILT --- */
+[data-card], .work-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+[data-card] > div:first-child,
+.work-card > a > div:first-child,
+.work-card > div:first-child {
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.45s ease, box-shadow 0.45s ease;
+}
+
+[data-card]:hover > div:first-child,
+.work-card:hover > a > div:first-child,
+.work-card:hover > div:first-child {
+  border-color: rgba(158, 27, 36, 0.65) !important;
+  box-shadow: 0 26px 65px rgba(0, 0, 0, 0.8), 0 0 35px rgba(158, 27, 36, 0.35);
+}
+
+.spec-card-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(400px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(158, 27, 36, 0.35) 0%, rgba(255, 255, 255, 0.08) 40%, transparent 75%);
+  mix-blend-mode: screen;
+}
+
+[data-card]:hover .spec-card-spotlight,
+.work-card:hover .spec-card-spotlight {
+  opacity: 1;
+}
+
+[data-card]:hover h3,
+.work-card:hover h2,
+.work-card:hover h3 {
+  color: #e26b72 !important;
+  text-shadow: 0 0 20px rgba(158, 27, 36, 0.5);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+[data-card]:hover [data-media] img,
+[data-card]:hover [data-media],
+.work-card:hover img {
+  transform: scale(1.08) !important;
+  filter: brightness(1.12) saturate(1.15) !important;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease !important;
+}
