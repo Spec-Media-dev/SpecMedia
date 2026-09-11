@@ -706,25 +706,48 @@ class MediaUploadAPIView(APIView):
 
         content_type = file.content_type or 'image/png'
         file_bytes = file.read()
-        b64_str = base64.b64encode(file_bytes).decode('utf-8')
-        data_uri = f"data:{content_type};base64,{b64_str}"
+        safe_name = re.sub(r'[^a-zA-Z0-9_\-\.]', '_', file.name)
+        b64_str = base64.b64encode(file_bytes[:1024*500]).decode('utf-8') if not content_type.startswith('video/') else ""
+        data_uri = f"data:{content_type};base64,{b64_str}" if b64_str else ""
 
         media_url = ""
+        # 1. Primary: Upload to Supabase Storage for global CDN streaming
+        try:
+            client = SupabaseService.get_client()
+            storage_path = f"uploads/{safe_name}"
+            client.storage.from_('media').upload(
+                storage_path,
+                file_bytes,
+                file_options={'upsert': 'true', 'content-type': content_type}
+            )
+            media_url = client.storage.from_('media').get_public_url(storage_path)
+        except Exception as e:
+            logger.warning(f"Supabase Storage upload fallback: {e}")
+
+        # 2. Local disk fallback
         try:
             upload_dir = os.path.join(settings.BASE_DIR, 'media', 'uploads')
             os.makedirs(upload_dir, exist_ok=True)
-            safe_name = re.sub(r'[^a-zA-Z0-9_\-\.]', '_', file.name)
             file_path = os.path.join(upload_dir, safe_name)
             with open(file_path, 'wb') as f_out:
                 f_out.write(file_bytes)
-            media_url = f"/media/uploads/{safe_name}"
+            if not media_url:
+                media_url = f"/media/uploads/{safe_name}"
         except Exception:
             pass
 
+        # 3. Validate media URL (never use huge base64 data URIs for videos)
+        is_video = content_type.startswith('video/')
+        if not media_url:
+            if not is_video and len(file_bytes) < 1024 * 1024:
+                media_url = data_uri
+            else:
+                return Response({'success': False, 'error': 'Failed to store video asset in Supabase or local storage'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
         return Response({
             'success': True,
-            'data_uri': data_uri,
-            'media_url': media_url or data_uri,
+            'data_uri': data_uri or media_url,
+            'media_url': media_url,
             'filename': file.name,
             'size': file.size,
             'content_type': content_type,

@@ -2072,14 +2072,69 @@ class Component extends DCLogic {
     const vid = document.getElementById('spec-scene2-video');
     if (vid) {
       const isCustomVid = vid.currentSrc && !vid.currentSrc.includes('scene2_brain.mp4');
-      if (isCustomVid && vid.style.display !== 'block') {
-        vid.style.display = 'block';
-        if (this.canvasScrubRef.current) this.canvasScrubRef.current.style.display = 'none';
-      }
-      if (vid.style.display === 'block' && vid.duration) {
-        const vidTarget = this.scrubCur * vid.duration;
-        if (Math.abs(vid.currentTime - vidTarget) > 0.03) {
-          vid.currentTime = vidTarget;
+      if (isCustomVid) {
+        if (vid.style.display !== 'block') {
+          vid.style.display = 'block';
+          if (this.canvasScrubRef.current) this.canvasScrubRef.current.style.display = 'none';
+        }
+
+        // Preload video into memory Blob to eliminate network byte-range seeking latency
+        if (!vid._blobPrefetched && vid.currentSrc && !vid.currentSrc.startsWith('blob:') && !vid.currentSrc.startsWith('data:')) {
+          vid._blobPrefetched = true;
+          fetch(vid.currentSrc)
+            .then(res => res.ok ? res.blob() : null)
+            .then(blob => {
+              if (blob && blob.size > 2000) {
+                const blobUrl = URL.createObjectURL(blob);
+                const curTime = vid.currentTime || 0;
+                vid.src = blobUrl;
+                vid.currentTime = curTime;
+              }
+            })
+            .catch(() => {});
+        }
+
+        if (vid.duration && !isNaN(vid.duration)) {
+          const vidTarget = Math.max(0, Math.min(vid.duration - 0.04, this.scrubCur * vid.duration));
+          const now = performance.now();
+          const timeSinceLastSeek = now - (vid._lastSeekTime || 0);
+
+          if (this.scene2AutoPlaying) {
+            // During auto-play, utilize native hardware video playback for flawless 60 FPS
+            if (vid.paused) {
+              try { vid.playbackRate = 1.0; vid.play().catch(() => {}); } catch (_) {}
+            }
+          } else {
+            // When scrubbing manually or stopped, pause and seek using non-blocking RAF gating
+            if (!vid.paused) vid.pause();
+
+            if (!vid.seeking && timeSinceLastSeek > 28) {
+              if (Math.abs(vid.currentTime - vidTarget) > 0.02) {
+                vid._lastSeekTime = now;
+                if (typeof vid.fastSeek === 'function') {
+                  vid.fastSeek(vidTarget);
+                } else {
+                  vid.currentTime = vidTarget;
+                }
+              }
+            } else {
+              vid._pendingTarget = vidTarget;
+              if (!vid._hasSeekedListener) {
+                vid._hasSeekedListener = true;
+                vid.addEventListener('seeked', () => {
+                  if (typeof vid._pendingTarget === 'number' && Math.abs(vid.currentTime - vid._pendingTarget) > 0.025) {
+                    const target = vid._pendingTarget;
+                    vid._pendingTarget = null;
+                    if (typeof vid.fastSeek === 'function') {
+                      vid.fastSeek(target);
+                    } else {
+                      vid.currentTime = target;
+                    }
+                  }
+                });
+              }
+            }
+          }
         }
       }
     }
