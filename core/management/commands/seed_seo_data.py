@@ -341,22 +341,34 @@ class Command(BaseCommand):
             action = "Created" if created else "Updated"
             self.stdout.write(f"  {action} Work project: {obj.title}")
 
-        # Ensure Global SiteSettings exist
+        # Ensure Global SiteSettings exist with complete partners and reviews
         from core.models import SiteSettings
-        SiteSettings.get_settings()
+        site_settings = SiteSettings.get_settings()
+        if not site_settings.partner_logos:
+            site_settings.partner_logos = [
+                {'name': 'Apex Global', 'badge': 'ENTERPRISE CLOUD', 'image': '/static/logos/partners/1.svg'},
+                {'name': 'Vistara Hospitality', 'badge': 'LUXURY HOSPITALITY', 'image': '/static/logos/partners/2.svg'},
+                {'name': 'Meridian Ventures', 'badge': 'VENTURE CAPITAL', 'image': '/static/logos/partners/3.svg'},
+                {'name': 'Zenith Technology', 'badge': 'AI INFRASTRUCTURE', 'image': '/static/logos/partners/4.svg'},
+                {'name': 'Nova Digital', 'badge': 'FINTECH ECOSYSTEM', 'image': '/static/logos/partners/5.svg'},
+                {'name': 'Haven Brands', 'badge': 'GLOBAL RETAIL', 'image': '/static/logos/partners/6.svg'},
+                {'name': 'Prism Creative', 'badge': 'SPATIAL MEDIA', 'image': '/static/logos/partners/7.svg'},
+                {'name': 'Google', 'badge': 'TECHNOLOGY', 'image': '/media/uploads/google-icon-logo-svgrepo-com.svg'}
+            ]
+            site_settings.save()
         self.stdout.write("Initialized global SiteSettings.")
 
-        # Ensure Admin Superuser exists
+        # Ensure Admin Superuser exists with admin123 credentials
         from django.contrib.auth.models import User
         if not User.objects.filter(username='admin').exists():
-            User.objects.create_superuser('admin', 'admin@specmedia.co', 'specmedia2026!')
-            self.stdout.write(self.style.SUCCESS("Created superuser: admin / specmedia2026!"))
+            User.objects.create_superuser('admin', 'admin@specmedia.co', 'admin123')
+            self.stdout.write(self.style.SUCCESS("Created superuser: admin / admin123"))
         else:
             admin_user = User.objects.get(username='admin')
-            admin_user.set_password('specmedia2026!')
+            admin_user.set_password('admin123')
             admin_user.is_superuser = True
             admin_user.is_staff = True
             admin_user.save()
-            self.stdout.write(self.style.SUCCESS("Updated superuser: admin / specmedia2026!"))
+            self.stdout.write(self.style.SUCCESS("Updated superuser: admin / admin123"))
 
         self.stdout.write(self.style.SUCCESS("Successfully seeded all SEO Pages, Work Projects, and Admin User!"))

@@ -9,7 +9,7 @@ __pycache__/
 *$py.class
 
 # Local database
-db.sqlite3
+# db.sqlite3 is tracked so deployment receives identical data & site settings
 db.sqlite3-journal
 
 # Django static collections
