@@ -384,6 +384,18 @@ def landing_page(request):
             default_hint = "keep scrolling or drag mouse to play · frame pauses instantly"
             html = html.replace(default_hint, escape(site_settings.scene2_hint))
 
+        # Dynamic Scene 02 60 FPS Sprite Sheet Config
+        scene2_sprite = getattr(site_settings, 'scene2_sprite_url', '') or "https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/sprites/scene2_sprite.jpg"
+        scene2_video = getattr(site_settings, 'scene2_video_url', '') or "https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/videos/scene2_brain.mp4"
+        scene2_cfg = f"""<script id="spec-scene2-config">
+  window.__SPEC_SCENE2_SPRITE_URL = "{escape(scene2_sprite, quote=True)}";
+  window.__SPEC_SCENE2_VIDEO_URL = "{escape(scene2_video, quote=True)}";
+</script>"""
+        if '</head>' in html:
+            html = html.replace('</head>', f'{scene2_cfg}\n</head>')
+        elif '</helmet>' in html:
+            html = html.replace('</helmet>', f'{scene2_cfg}\n</helmet>')
+
         # Dynamic The Reel Video URL
         if hasattr(site_settings, 'reel_video_url') and site_settings.reel_video_url:
             html = re.sub(
@@ -648,6 +660,7 @@ class SiteSettingsAPIView(APIView):
                 'hero_media_type': settings_obj.hero_media_type,
                 'hero_media_url': settings_obj.hero_media_url,
                 'scene2_video_url': settings_obj.scene2_video_url,
+                'scene2_sprite_url': settings_obj.scene2_sprite_url,
                 'scene2_badge': settings_obj.scene2_badge,
                 'scene2_hint': settings_obj.scene2_hint,
                 'reel_video_url': settings_obj.reel_video_url,
@@ -673,7 +686,7 @@ class SiteSettingsAPIView(APIView):
             'client_reviews',
             'hero_headline', 'hero_subheadline', 'hero_badge', 'hero_cta_text',
             'hero_media_type', 'hero_media_url',
-            'scene2_video_url', 'scene2_badge', 'scene2_hint',
+            'scene2_video_url', 'scene2_sprite_url', 'scene2_badge', 'scene2_hint',
             'reel_video_url',
             'studio_headline', 'studio_subheadline',
             'contact_email', 'contact_phone', 'contact_address'
@@ -686,9 +699,69 @@ class SiteSettingsAPIView(APIView):
         return Response({'success': True, 'message': 'Site branding and landing page settings updated successfully.'})
 
 
+def generate_video_sprite_sheet(video_bytes, num_frames=100, cols=10, frame_w=480, frame_h=270):
+    """
+    Extracts num_frames from video_bytes into a cols x rows grid sprite sheet.
+    Returns JPEG bytes or None if extraction fails or cv2 is not available.
+    """
+    try:
+        import cv2
+        import numpy as np
+        import tempfile
+
+        with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as tmp:
+            tmp.write(video_bytes)
+            tmp_path = tmp.name
+
+        try:
+            cap = cv2.VideoCapture(tmp_path)
+            total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            if total <= 0:
+                cap.release()
+                return None
+
+            indices = set(int(i * (total - 1) / (num_frames - 1)) for i in range(num_frames))
+            rows = int(np.ceil(num_frames / cols))
+            grid = np.zeros((rows * frame_h, cols * frame_w, 3), dtype=np.uint8)
+
+            cur = 0
+            slot = 0
+            while True:
+                ret, frame = cap.read()
+                if not ret:
+                    break
+                if cur in indices:
+                    resized = cv2.resize(frame, (frame_w, frame_h), interpolation=cv2.INTER_AREA)
+                    r = slot // cols
+                    c = slot % cols
+                    if r < rows and c < cols:
+                        grid[r*frame_h:(r+1)*frame_h, c*frame_w:(c+1)*frame_w] = resized
+                    slot += 1
+                cur += 1
+            cap.release()
+
+            if slot == 0:
+                return None
+
+            success, buf = cv2.imencode('.jpg', grid, [cv2.IMWRITE_JPEG_QUALITY, 80])
+            if success:
+                return buf.tobytes()
+            return None
+        finally:
+            if os.path.exists(tmp_path):
+                try:
+                    os.remove(tmp_path)
+                except Exception:
+                    pass
+    except Exception as e:
+        logger.warning(f"Sprite sheet generation warning: {e}")
+        return None
+
+
 class MediaUploadAPIView(APIView):
     """
     POST /api/upload/ -> Secure media upload endpoint restricted to administrators.
+    Automatically generates 100-frame 60 FPS sprite sheets for video uploads.
     """
     permission_classes = [IsAdminUser]
 
@@ -736,8 +809,36 @@ class MediaUploadAPIView(APIView):
         except Exception:
             pass
 
-        # 3. Validate media URL (never use huge base64 data URIs for videos)
+        # 3. Automatic 60 FPS Sprite Sheet Extraction for Videos
+        sprite_url = ""
         is_video = content_type.startswith('video/')
+        if is_video:
+            sprite_bytes = generate_video_sprite_sheet(file_bytes)
+            if sprite_bytes:
+                sprite_filename = f"sprites/{os.path.splitext(safe_name)[0]}_sprite.jpg"
+                try:
+                    client = SupabaseService.get_client()
+                    client.storage.from_('media').upload(
+                        sprite_filename,
+                        sprite_bytes,
+                        file_options={'upsert': 'true', 'content-type': 'image/jpeg'}
+                    )
+                    sprite_url = client.storage.from_('media').get_public_url(sprite_filename)
+                except Exception as e:
+                    logger.warning(f"Failed to upload sprite to Supabase: {e}")
+
+                try:
+                    sprite_local_dir = os.path.join(settings.BASE_DIR, 'static', 'sprites')
+                    os.makedirs(sprite_local_dir, exist_ok=True)
+                    sprite_local_path = os.path.join(sprite_local_dir, f"{os.path.splitext(safe_name)[0]}_sprite.jpg")
+                    with open(sprite_local_path, 'wb') as f_sp:
+                        f_sp.write(sprite_bytes)
+                    if not sprite_url:
+                        sprite_url = f"/static/sprites/{os.path.splitext(safe_name)[0]}_sprite.jpg"
+                except Exception:
+                    pass
+
+        # 4. Validate media URL (never use huge base64 data URIs for videos)
         if not media_url:
             if not is_video and len(file_bytes) < 1024 * 1024:
                 media_url = data_uri
@@ -748,6 +849,7 @@ class MediaUploadAPIView(APIView):
             'success': True,
             'data_uri': data_uri or media_url,
             'media_url': media_url,
+            'sprite_url': sprite_url,
             'filename': file.name,
             'size': file.size,
             'content_type': content_type,

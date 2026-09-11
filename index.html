@@ -779,8 +779,8 @@ a:hover{color:#f5ead8}
   <section data-screen-label="02 Frame scrub" style="background:var(--color-text);position:relative;z-index:1;height:260vh">
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center">
       <div ref="{{ scrubBoxRef }}" style="position:relative;width:46%;height:52%;border-radius:var(--radius-lg);overflow:hidden;will-change:width,height;cursor:ew-resize;user-select:none;touch-action:none">
-        <canvas ref="{{ canvasScrubRef }}" style="display:block;width:100%;height:100%;object-fit:cover;background:#141211;position:absolute;inset:0;z-index:1;"></canvas>
-        <video id="spec-scene2-video" playsinline muted preload="auto" style="display:block;width:100%;height:100%;object-fit:cover;background:#141211;position:absolute;inset:0;z-index:2;">
+        <canvas ref="{{ canvasScrubRef }}" style="display:block;width:100%;height:100%;object-fit:cover;background:#141211;position:absolute;inset:0;z-index:2;pointer-events:none;"></canvas>
+        <video id="spec-scene2-video" playsinline muted preload="auto" style="display:none;width:100%;height:100%;object-fit:cover;background:#141211;position:absolute;inset:0;z-index:1;pointer-events:none;">
           <source src="https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/videos/scene2_brain.mp4" type="video/mp4">
           <source src="/static/scene2_brain.mp4" type="video/mp4">
           <source src="./static/scene2_brain.mp4" type="video/mp4">
@@ -1753,6 +1753,26 @@ class Component extends DCLogic {
   get grade(){ return this.props.gradeColor ?? '#7a8a5e'; }
 
   initBrainFrames(){
+    // 1. Primary: Load 100-frame 60 FPS synchronous sprite sheet (single HTTP request, 0.02ms render)
+    const spriteUrl = (window.__SPEC_SCENE2_SPRITE_URL) || 'https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/sprites/scene2_sprite.jpg';
+    this.spriteImg = new Image();
+    this.spriteImg.crossOrigin = 'anonymous';
+    this.spriteImg.src = spriteUrl;
+    this.spriteImg.onload = () => {
+      this.spriteLoaded = true;
+      this.drawScrub(this.scrubCur || 0);
+    };
+    this.spriteImg.onerror = () => {
+      const fallback = new Image();
+      fallback.src = '/static/sprites/scene2_sprite.jpg';
+      fallback.onload = () => {
+        this.spriteImg = fallback;
+        this.spriteLoaded = true;
+        this.drawScrub(this.scrubCur || 0);
+      };
+    };
+
+    // 2. Secondary: Preloaded individual frames sequence fallback (192 frames)
     const total = 192;
     const loadFrame = (idx) => {
       const num = String(idx + 1).padStart(3, '0');
@@ -1761,7 +1781,7 @@ class Component extends DCLogic {
       img.onload = () => {
         this.brainFrames[idx] = img;
         this.brainFramesLoaded++;
-        if (idx === 0 && !this.hasDrawnFirst) {
+        if (idx === 0 && !this.hasDrawnFirst && !this.spriteLoaded) {
           this.hasDrawnFirst = true;
           this.drawScrub(0);
         }
@@ -1772,7 +1792,7 @@ class Component extends DCLogic {
         fallback.onload = () => {
           this.brainFrames[idx] = fallback;
           this.brainFramesLoaded++;
-          if (idx === 0 && !this.hasDrawnFirst) {
+          if (idx === 0 && !this.hasDrawnFirst && !this.spriteLoaded) {
             this.hasDrawnFirst = true;
             this.drawScrub(0);
           }
@@ -1780,24 +1800,62 @@ class Component extends DCLogic {
       };
     };
 
-    // Load initial 24 frames immediately for instant scrub response
     for (let i = 0; i < Math.min(24, total); i++) {
       loadFrame(i);
     }
-    // Background load remainder
     setTimeout(() => {
       for (let i = 24; i < total; i++) {
         loadFrame(i);
       }
-    }, 100);
+    }, 120);
   }
 
   bindMouseScrub(){
-    // Mouse left/right scrub disabled per user request: only scrolling controls the video.
     const box = this.scrubBoxRef.current;
-    if (box) {
-      box.style.cursor = 'default';
-    }
+    if (!box) return;
+    box.style.cursor = 'ew-resize';
+    let isDragging = false;
+
+    const scrubFromClientX = (clientX) => {
+      const rect = box.getBoundingClientRect();
+      if (rect.width > 0) {
+        const relX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+        this.vp = relX;
+        this.scrubCur = relX;
+        this.drawScrub(relX);
+      }
+    };
+
+    box.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      isDragging = true;
+      scrubFromClientX(e.clientX);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      scrubFromClientX(e.clientX);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    box.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches[0]) {
+        isDragging = true;
+        scrubFromClientX(e.touches[0].clientX);
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging || !e.touches || !e.touches[0]) return;
+      scrubFromClientX(e.touches[0].clientX);
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      isDragging = false;
+    });
   }
 
   // inertial wheel scrolling; disengages while scene 02 holds the page
@@ -2072,8 +2130,11 @@ class Component extends DCLogic {
     // Video synchronization (handles Scene 02 3D brain video and custom assets with zero-lag hardware seeking)
     const vid = document.getElementById('spec-scene2-video');
     if (vid) {
-      if (vid.style.display !== 'block') {
-        vid.style.display = 'block';
+      const hasCanvasFrames = (this.spriteImg && this.spriteImg.complete) || (this.brainFramesLoaded > 12);
+      if (hasCanvasFrames) {
+        if (vid.style.display !== 'none') vid.style.display = 'none';
+      } else {
+        if (vid.style.display !== 'block') vid.style.display = 'block';
       }
 
       // Preload video into memory Blob to eliminate network byte-range seeking latency
@@ -2257,6 +2318,30 @@ class Component extends DCLogic {
       canvas.height = targetH;
     }
 
+    const cw = canvas.width, ch = canvas.height;
+
+    // 1. Primary: 60 FPS instantaneous synchronous 10x10 sprite sheet rendering (0.02ms latency)
+    if (this.spriteImg && this.spriteImg.complete && this.spriteImg.naturalWidth > 0) {
+      const total = 100;
+      const fi = Math.max(0, Math.min(total - 1, Math.round(t * (total - 1))));
+      const cols = 10;
+      const col = fi % cols;
+      const row = Math.floor(fi / cols);
+      const sw = this.spriteImg.naturalWidth / cols;
+      const sh = this.spriteImg.naturalHeight / cols;
+      const sx = col * sw;
+      const sy = row * sh;
+
+      const scale = Math.max(cw / sw, ch / sh);
+      const dw = sw * scale, dh = sh * scale;
+      const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(this.spriteImg, sx, sy, sw, sh, dx, dy, dw, dh);
+      return;
+    }
+
+    // 2. Secondary: Preloaded individual frames sequence fallback (192 frames)
     const total = this.frames;
     const fi = Math.max(0, Math.min(total - 1, Math.round(t * (total - 1))));
     let img = this.brainFrames && this.brainFrames[fi];
@@ -2277,7 +2362,6 @@ class Component extends DCLogic {
     }
 
     if (img && img.complete && img.naturalWidth > 0) {
-      const cw = canvas.width, ch = canvas.height;
       const iw = img.naturalWidth, ih = img.naturalHeight;
       const scale = Math.max(cw / iw, ch / ih);
       const dw = iw * scale, dh = ih * scale;

@@ -123,6 +123,7 @@ class SiteSettings(models.Model):
 
     # Scene 02 Brain Scrub & The Reel Media Controls
     scene2_video_url = models.CharField(max_length=500, blank=True, default="/static/scene2_brain.mp4", help_text="Scene 02 brain scrub video loop or canvas fallback")
+    scene2_sprite_url = models.CharField(max_length=500, blank=True, default="https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/sprites/scene2_sprite.jpg", help_text="Scene 02 100-frame 60fps synchronous sprite sheet URL")
     scene2_badge = models.CharField(max_length=100, blank=True, default="02 / SCENE 02")
     scene2_hint = models.CharField(max_length=255, blank=True, default="keep scrolling or drag mouse to play · frame pauses instantly")
     reel_video_url = models.CharField(max_length=500, blank=True, default="/static/reference_video.mp4", help_text="The Reel background showcase video")

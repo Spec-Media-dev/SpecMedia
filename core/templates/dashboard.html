@@ -893,6 +893,15 @@
                 <input type="text" class="form-input" id="scene2-video-url" value="{{ site_settings.scene2_video_url|default:'/static/scene2_brain.mp4' }}" placeholder="/static/scene2_brain.mp4 or https://..." oninput="updateVideoPreview('scene2-video-url', 'scene2-video-preview')">
               </div>
 
+              <!-- 60 FPS Synchronous Frame Sprite Sheet CDN URL -->
+              <div class="form-group">
+                <label>60 FPS Frame Sprite Sheet URL (Zero-Lag Synchronous Scrub)</label>
+                <input type="text" class="form-input" id="scene2-sprite-url" value="{{ site_settings.scene2_sprite_url|default:'https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/sprites/scene2_sprite.jpg' }}" placeholder="https://.../sprites/..._sprite.jpg">
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                  ⚡ Automatically generated and uploaded on video upload for instant 60fps frame-by-frame scrubbing without mouse release.
+                </div>
+              </div>
+
               <!-- Video Preview Box -->
               <div style="background:#11100f; border:1px solid rgba(255,255,255,0.08); border-radius:8px; overflow:hidden; height:180px; position:relative; display:flex; align-items:center; justify-content:center;">
                 <video id="scene2-video-preview" src="{{ site_settings.scene2_video_url|default:'/static/scene2_brain.mp4' }}" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
@@ -1801,7 +1810,17 @@
             preview.src = finalUrl;
             preview.style.display = 'block';
           }
-          showToast('Media uploaded and linked successfully!', 'success');
+          if (targetInputId === 'scene2-video-url') {
+            if (data.sprite_url) {
+              const spriteInput = document.getElementById('scene2-sprite-url');
+              if (spriteInput) spriteInput.value = data.sprite_url;
+              showToast('Video & 60 FPS sprite sheet uploaded to Supabase!', 'success');
+            } else {
+              showToast('Video uploaded to Supabase CDN!', 'success');
+            }
+          } else {
+            showToast('Media uploaded and linked successfully!', 'success');
+          }
         } else {
           showToast('Upload failed: ' + (data.error || 'Server error'), 'error');
         }
@@ -1853,6 +1872,7 @@
     async function saveScene2Section() {
       const payload = {
         scene2_video_url: document.getElementById('scene2-video-url').value.trim(),
+        scene2_sprite_url: document.getElementById('scene2-sprite-url') ? document.getElementById('scene2-sprite-url').value.trim() : '',
         scene2_badge: document.getElementById('scene2-badge').value.trim(),
         scene2_hint: document.getElementById('scene2-hint').value.trim(),
       };
