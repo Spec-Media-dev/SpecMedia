@@ -803,6 +803,38 @@ def generate_video_sprite_sheet(video_bytes, num_frames=100, cols=10, frame_w=72
         return None
 
 
+def strip_video_audio(video_bytes):
+    """
+    Strips all audio tracks from video_bytes losslessly with zero quality re-encoding.
+    Returns audio-free MP4 bytes, or original video_bytes if ffmpeg is unavailable.
+    """
+    try:
+        import subprocess, tempfile, imageio_ffmpeg
+        exe = imageio_ffmpeg.get_ffmpeg_exe()
+        with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as in_tmp, \
+             tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as out_tmp:
+            in_tmp.write(video_bytes)
+            in_path = in_tmp.name
+            out_path = out_tmp.name
+
+        try:
+            res = subprocess.run([exe, '-y', '-i', in_path, '-c:v', 'copy', '-an', out_path],
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            if res.returncode == 0 and os.path.exists(out_path) and os.path.getsize(out_path) > 1000:
+                with open(out_path, 'rb') as f:
+                    return f.read()
+        finally:
+            for p in [in_path, out_path]:
+                if os.path.exists(p):
+                    try:
+                        os.remove(p)
+                    except Exception:
+                        pass
+    except Exception as e:
+        logger.warning(f"Audio strip warning: {e}")
+    return video_bytes
+
+
 class MediaUploadAPIView(APIView):
     """
     POST /api/upload/ -> Secure media upload endpoint restricted to administrators.
@@ -824,8 +856,13 @@ class MediaUploadAPIView(APIView):
 
         content_type = file.content_type or 'image/png'
         file_bytes = file.read()
+        is_video = content_type.startswith('video/')
+        if is_video:
+            # Strip all sound/audio tracks so portfolio videos are completely silent
+            file_bytes = strip_video_audio(file_bytes)
+
         safe_name = re.sub(r'[^a-zA-Z0-9_\-\.]', '_', file.name)
-        b64_str = base64.b64encode(file_bytes[:1024*500]).decode('utf-8') if not content_type.startswith('video/') else ""
+        b64_str = base64.b64encode(file_bytes[:1024*500]).decode('utf-8') if not is_video else ""
         data_uri = f"data:{content_type};base64,{b64_str}" if b64_str else ""
 
         media_url = ""

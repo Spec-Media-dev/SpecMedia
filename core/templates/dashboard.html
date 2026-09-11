@@ -1865,6 +1865,9 @@
       const video = document.getElementById(videoPreviewId);
       if (video && val) {
         video.src = val;
+        video.muted = true;
+        video.volume = 0;
+        video.defaultMuted = true;
         video.play().catch(() => {});
       }
     }

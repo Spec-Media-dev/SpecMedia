@@ -2040,7 +2040,7 @@ class Component extends DCLogic {
     };
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     const cs2 = this.canvasScrubRef.current;
-    if (cs2) { cs2.width = Math.round(window.innerWidth * dpr); cs2.height = Math.round(window.innerHeight * dpr); }
+    if (cs2) { cs2.width = 1920; cs2.height = 1080; }
     const cg = this.canvasGreenRef.current;
     if (cg) { const r = cg.getBoundingClientRect(); cg.width = Math.round(r.width * dpr); cg.height = Math.round(r.height * dpr); }
   }
@@ -2147,6 +2147,8 @@ class Component extends DCLogic {
     // Video synchronization (handles Scene 02 3D brain video and custom assets with zero-lag hardware seeking)
     const vid = document.getElementById('spec-scene2-video');
     if (vid) {
+      vid.muted = true;
+      vid.volume = 0;
       const hasCanvasFrames = (this.spriteImg && this.spriteImg.complete) || (this.brainFramesLoaded > 12);
       if (hasCanvasFrames) {
         if (vid.style.display !== 'none') vid.style.display = 'none';
@@ -2178,6 +2180,8 @@ class Component extends DCLogic {
         if (this.scene2AutoPlaying) {
           // During auto-play, utilize native hardware video playback for flawless 60 FPS
           if (vid.paused) {
+            vid.muted = true;
+            vid.volume = 0;
             try { vid.playbackRate = 1.0; vid.play().catch(() => {}); } catch (_) {}
           }
         } else {
