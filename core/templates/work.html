@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">{% load i18n %}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +15,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/cursor.css">
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
@@ -23,7 +23,7 @@
     :root {
       --color-bg: #f5ead8;
       --color-surface: #ebddc5;
-      --color-dark: #121110;
+      --color-dark: #000000;
       --color-dark-surface: #1a1816;
       --color-dark-card: #1f1d1b;
       --color-accent: #9e1b24;
@@ -50,7 +50,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background-color: var(--color-dark);
+      background: #000000;
       color: var(--color-bg);
       font-family: var(--font-body);
       min-height: 100vh;
@@ -590,7 +590,75 @@
       .editorial-item > :nth-child(4),
       .editorial-item > :nth-child(5) { display: none; }
     }
-  </style>
+  
+    .nav-lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 234, 216, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 11px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.12em;
+      text-transform: none;
+      line-height: 1;
+      margin-left: 4px;
+    }
+    .nav-lang-switcher a {
+      color: #f5ead8;
+      text-decoration: none;
+      opacity: 0.45;
+      transition: opacity 0.2s ease, color 0.2s ease;
+      font-weight: 500;
+    }
+    .nav-lang-switcher a:hover {
+      opacity: 0.85;
+    }
+    .nav-lang-switcher a.active {
+      opacity: 1;
+      font-weight: 700;
+      color: #f5ead8;
+    }
+    .nav-lang-switcher .sep {
+      opacity: 0.25;
+      color: #f5ead8;
+      user-select: none;
+    }
+    @media (max-width: 640px) {
+      .nav { padding: 12px 16px; }
+      .nav-logo-text { font-size: 16px; }
+      .nav-links { gap: 10px; font-size: 10px; }
+      .nav-cta { display: none; }
+    }
+  
+    /* Universal RTL overrides */
+    html[dir="rtl"] { direction: rtl; }
+    html[dir="rtl"] body {
+      text-align: right;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif !important;
+    }
+    html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] .hero-title, html[dir="rtl"] .hero-eyebrow {
+      font-family: 'Cairo', sans-serif !important;
+    }
+    html[dir="rtl"] .nav { direction: rtl; }
+    html[dir="rtl"] .nav-links { flex-direction: row-reverse; }
+    html[dir="rtl"] .nav-lang-switcher { margin-left: 0; margin-right: 4px; }
+    html[dir="rtl"] .disc-col-3 { border-left: none; border-right: 1px solid rgba(255, 255, 255, 0.08); padding-left: 0; padding-right: clamp(16px, 2.5vw, 32px); }
+    html[dir="rtl"] .editorial-item { direction: rtl; }
+
+  
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(158, 27, 36, 0.08) 0%, rgba(0, 0, 0, 0.85) 65%, #000000 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+</style>
 </head>
 <body>
 
@@ -607,7 +675,7 @@
 
   <!-- Top Navigation -->
   <header class="nav">
-    <a href="/" class="nav-logo" aria-label="Spec Media Home">
+    <a href="{% url 'core:landing' %}" class="nav-logo" aria-label="Spec Media Home">
       <span class="nav-logo-mark">
         <svg width="16" height="16" viewBox="0 0 40 40" fill="none">
           <path d="M12 28L28 12M28 28L12 12" stroke="#f5ead8" stroke-width="4.5" stroke-linecap="round"/>
@@ -616,10 +684,15 @@
       <span class="nav-logo-text">SPEC MEDIA</span>
     </a>
     <nav class="nav-links mono">
-      <a href="/work/" class="nav-link active">[ work ]</a>
-      <a href="/studio/" class="nav-link">[ studio ]</a>
-      <a href="/capabilities/" class="nav-link">[ capabilities ]</a>
-      <a href="/#contact" class="nav-link nav-cta" id="nav-contact-link">[ initiate inquiry &rarr; ]</a>
+      <a href="{% url 'core:work' %}" class="nav-link active">{% trans "[ work ]" %}</a>
+      <a href="{% url 'core:studio' %}" class="nav-link">{% trans "[ studio ]" %}</a>
+      <a href="{% url 'core:capabilities' %}" class="nav-link">{% trans "[ capabilities ]" %}</a>
+      <a href="{% url 'core:landing' %}#contact" class="nav-link nav-cta" id="nav-contact-link">{% trans "[ initiate inquiry &rarr; ]" %}</a>
+      <div class="nav-lang-switcher" aria-label="Language switcher">
+        <a href="{{ en_url }}" class="{% if LANGUAGE_CODE == 'en' %}active{% endif %}" title="English">EN</a>
+        <span class="sep">|</span>
+        <a href="{{ ar_url }}" class="{% if LANGUAGE_CODE == 'ar' %}active{% endif %}" dir="rtl" title="العربية">العربية</a>
+      </div>
     </nav>
   </header>
 
@@ -628,11 +701,11 @@
     <section class="work-hero">
       <div class="hero-eyebrow mono">
         <span class="hero-eyebrow-dot"></span>
-        <span>Selected Work & Case Studies // 2024 — 2026</span>
+        <span>{% trans "Selected Work & Case Studies // 2024 — 2026" %}</span>
       </div>
-      <h1 class="hero-title">Work that cuts through the noise.</h1>
+      <h1 class="hero-title">{% trans "Work that cuts through the noise." %}</h1>
       <p class="hero-sub">
-        Every campaign, brand architecture, and kinetic system we deploy is engineered to capture cultural authority, accelerate enterprise pipeline, and deliver measurable commercial equity.
+        {% trans "Every campaign, brand architecture, and kinetic system we deploy is engineered to capture cultural authority, accelerate enterprise pipeline, and deliver measurable commercial equity." %}
       </p>
     </section>
 
@@ -640,20 +713,20 @@
     <div class="controls-bar mono">
       <div class="filter-pills" id="filter-bar">
         <button type="button" class="filter-pill active" data-category="all">
-          <span>All Works</span>
+          <span>{% trans "All Works" %}</span>
           <span class="filter-count">({{ projects.count|default:'05' }})</span>
         </button>
         <button type="button" class="filter-pill" data-category="Brand strategy">
-          <span>Brand Systems</span>
+          <span>{% trans "Brand Systems" %}</span>
         </button>
         <button type="button" class="filter-pill" data-category="Campaign production">
-          <span>Campaign Production</span>
+          <span>{% trans "Campaign Production" %}</span>
         </button>
         <button type="button" class="filter-pill" data-category="Performance media">
-          <span>Performance Media</span>
+          <span>{% trans "Performance Media" %}</span>
         </button>
         <button type="button" class="filter-pill" data-category="Content systems">
-          <span>Content Systems</span>
+          <span>{% trans "Content Systems" %}</span>
         </button>
       </div>
 
@@ -665,7 +738,7 @@
             <rect x="14" y="14" width="7" height="7"></rect>
             <rect x="3" y="14" width="7" height="7"></rect>
           </svg>
-          <span>Grid</span>
+          <span>{% trans "Grid" %}</span>
         </button>
         <button type="button" class="view-btn" id="view-list-btn" title="Editorial Index View">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -685,7 +758,7 @@
     <div class="projects-grid" id="projects-grid">
       {% for project in projects %}
       <article class="work-card" data-card="1" data-discipline="{{ project.discipline }}" style="grid-column: span {% cycle '7' '5' '5' '7' '12' %}; {% cycle '' 'margin-top:clamp(20px,5vw,90px);' '' 'margin-top:clamp(16px,4vw,60px);' '' %}">
-        <a href="/work/{{ project.slug }}/" style="display:flex; flex-direction:column; height:100%; color:inherit;">
+        <a href="{% url 'core:work-detail' project.slug %}" style="display:flex; flex-direction:column; height:100%; color:inherit;">
           <!-- Media Box -->
           <div class="card-media-box">
             <div class="spec-card-spotlight"></div>
@@ -729,7 +802,7 @@
       {% empty %}
       <div style="grid-column:span 12; text-align:center; padding:80px 20px; color:var(--color-text-dim);">
         <p class="mono" style="margin-bottom:12px;">No case studies published yet.</p>
-        <a href="/dashboard/" style="color:var(--color-accent-light); text-decoration:underline;">Add new projects via Dashboard &rarr;</a>
+        <a href="{% url 'core:dashboard' %}" style="color:var(--color-accent-light); text-decoration:underline;">Add new projects via Dashboard &rarr;</a>
       </div>
       {% endfor %}
     </div>
@@ -737,7 +810,7 @@
     <!-- 2. Editorial List View (Toggleable) -->
     <div class="editorial-list" id="editorial-list">
       {% for project in projects %}
-      <a href="/work/{{ project.slug }}/" class="editorial-item mono" data-discipline="{{ project.discipline }}" data-preview-img="{{ project.hero_image }}">
+      <a href="{% url 'core:work-detail' project.slug %}" class="editorial-item mono" data-discipline="{{ project.discipline }}" data-preview-img="{{ project.hero_image }}">
         <div class="editorial-num">0{{ forloop.counter }}</div>
         <div class="editorial-title">{{ project.title }}</div>
         <div class="editorial-desc" style="color:var(--color-bg);">{{ project.client }}</div>
@@ -755,7 +828,7 @@
       <p class="cta-sub">
         Explore how our multidisciplinary squad can transform your brand authority and commercial trajectory.
       </p>
-      <a href="/#contact" class="cta-btn" id="work-contact-cta">
+      <a href="{% url 'core:landing' %}#contact" class="cta-btn" id="work-contact-cta">
         <span>Transmit Project Inquiry</span>
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -768,13 +841,13 @@
   <!-- Footer -->
   <footer>
     <div class="mono">
-      <span>&copy; 2026 SPEC MEDIA. ALL RIGHTS RESERVED.</span>
+      <span>{% trans "&copy; 2026 SPEC MEDIA. ALL RIGHTS RESERVED." %}</span>
     </div>
     <div class="mono" style="display:flex; gap:20px;">
-      <a href="/work/" class="nav-link">Work</a>
-      <a href="/studio/" class="nav-link">Studio</a>
-      <a href="/capabilities/" class="nav-link">Capabilities</a>
-      <a href="#top" class="nav-link" id="back-to-top">&uarr; Back to Top</a>
+      <a href="{% url 'core:work' %}" class="nav-link">{% trans "Work" %}</a>
+      <a href="{% url 'core:studio' %}" class="nav-link">{% trans "Studio" %}</a>
+      <a href="{% url 'core:capabilities' %}" class="nav-link">{% trans "Capabilities" %}</a>
+      <a href="#top" class="nav-link" id="back-to-top">{% trans "&uarr; Back to Top" %}</a>
     </div>
   </footer>
 
@@ -914,5 +987,6 @@
       });
     }
   </script>
+
 </body>
 </html>

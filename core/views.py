@@ -24,6 +24,53 @@ logger = logging.getLogger(__name__)
 # Page Views
 # -------------------------------------------------------------
 
+def set_language_view(request):
+    """
+    Language switcher: sets active language and redirects to the localized target URL.
+    Preserves user current route and query parameters.
+    """
+    from django.utils.translation import activate, check_for_language
+    from django.shortcuts import redirect
+    from django.http import HttpResponse
+    import urllib.parse
+
+    lang = request.GET.get('lang') or request.POST.get('language') or 'en'
+    valid_langs = [code for code, name in settings.LANGUAGES]
+    if not check_for_language(lang) or lang not in valid_langs:
+        lang = 'en'
+
+    activate(lang)
+
+    next_url = request.GET.get('next') or request.POST.get('next') or '/'
+    parsed = urllib.parse.urlparse(next_url)
+    path = parsed.path or '/'
+
+    segments = [s for s in path.strip('/').split('/') if s]
+    if segments and segments[0] in valid_langs:
+        segments[0] = lang
+    else:
+        segments.insert(0, lang)
+
+    new_path = '/' + '/'.join(segments)
+    if not new_path.endswith('/') and '.' not in segments[-1]:
+        new_path += '/'
+
+    if parsed.query:
+        target_url = f"{new_path}?{parsed.query}"
+    else:
+        target_url = new_path
+
+    response = redirect(target_url)
+    response.set_cookie(
+        settings.LANGUAGE_COOKIE_NAME,
+        lang,
+        max_age=365 * 24 * 60 * 60,
+        path='/',
+        samesite='Lax'
+    )
+    return response
+
+
 def landing_page(request):
     """
     Renders the Spec Media main landing page with 100% original frontend
@@ -33,8 +80,305 @@ def landing_page(request):
     template_path = os.path.join(settings.BASE_DIR, 'core', 'templates', 'landing.html')
     if not os.path.exists(template_path):
         template_path = os.path.join(settings.BASE_DIR, 'index.html')
+    # Load landing page translations dynamically from disk
+    import json
+    current_lang = getattr(request, 'LANGUAGE_CODE', 'en') or 'en'
+    if request.path.startswith('/ar/') or request.path == '/ar':
+        current_lang = 'ar'
+    elif request.path.startswith('/en/') or request.path == '/en':
+        current_lang = 'en'
+    lang_map = {}
+    json_path = os.path.join(settings.BASE_DIR, 'core', 'landing_translations.json')
+    if os.path.exists(json_path):
+        try:
+            with open(json_path, 'r', encoding='utf-8') as jf:
+                all_trans = json.load(jf)
+                lang_map = all_trans.get(current_lang, {})
+        except Exception as e:
+            logger.error(f"Error loading landing_translations.json: {e}")
+    if not lang_map:
+        from .landing_translations import LANDING_TRANSLATIONS
+        lang_map = LANDING_TRANSLATIONS.get(current_lang, {})
+
     with open(template_path, 'r', encoding='utf-8', errors='ignore') as f:
         html = f.read()
+
+    # Apply i18n text replacements to the HTML safely without touching <script> or <style> blocks
+    def safe_translate_html(content, mapping):
+        if not mapping:
+            return content
+        pattern = re.compile(r'(<script\b[^>]*>.*?</script>|<style\b[^>]*>.*?</style>)', re.DOTALL | re.IGNORECASE)
+        parts = pattern.split(content)
+        sorted_items = sorted(mapping.items(), key=lambda item: len(item[0]), reverse=True)
+        SHORT_WORDS = {'is', 'the', 'by', 'that', 'only', 'and'}
+        for i in range(0, len(parts), 2):
+            segment = parts[i]
+            for en_text, translated_text in sorted_items:
+                if not translated_text:
+                    continue
+                if en_text in SHORT_WORDS:
+                    segment = segment.replace(f'>{en_text}<', f'>{translated_text}<')
+                    segment = segment.replace(f'> {en_text} <', f'> {translated_text} <')
+                elif en_text in segment:
+                    segment = segment.replace(en_text, translated_text)
+            parts[i] = segment
+        res = ''.join(parts)
+
+        # Also translate uiContainer.innerHTML template inside script
+        ui_tag = "uiContainer.innerHTML = `"
+        idx_ui = res.find(ui_tag)
+        if idx_ui != -1:
+            idx_ui_end = res.find("`;", idx_ui)
+            if idx_ui_end != -1:
+                ui_html = res[idx_ui + len(ui_tag) : idx_ui_end]
+                for en_text, translated_text in sorted_items:
+                    if not translated_text or en_text in SHORT_WORDS:
+                        continue
+                    if en_text in ui_html:
+                        ui_html = ui_html.replace(en_text, translated_text)
+                res = res[:idx_ui + len(ui_tag)] + ui_html + res[idx_ui_end:]
+
+        return res
+
+    html = safe_translate_html(html, lang_map)
+
+    # Set HTML lang and dir attributes
+    if current_lang == 'ar':
+        html = re.sub(r'<html([^>]*)>', r'<html\g<1> lang="ar" dir="rtl" class="spec-rtl">', html, count=1)
+        # Update switcher styling in the navbar and drawer for active Arabic
+        html = html.replace(
+            'id="spec-landing-lang-en" style="color:#f5ead8;text-decoration:none;opacity:1;font-weight:700;"',
+            'id="spec-landing-lang-en" style="color:#f5ead8;text-decoration:none;opacity:0.45;font-weight:500;"'
+        )
+        html = html.replace(
+            'id="spec-landing-lang-ar" dir="rtl" style="color:#f5ead8;text-decoration:none;opacity:0.45;font-weight:500;"',
+            'id="spec-landing-lang-ar" dir="rtl" style="color:#f5ead8;text-decoration:none;opacity:1;font-weight:700;"'
+        )
+        html = html.replace(
+            'id="sm-drawer-lang-en" style="color:#f5ead8;text-decoration:none;opacity:1;font-weight:700;"',
+            'id="sm-drawer-lang-en" style="color:#f5ead8;text-decoration:none;opacity:0.45;font-weight:500;"'
+        )
+        html = html.replace(
+            'id="sm-drawer-lang-ar" dir="rtl" style="color:#f5ead8;text-decoration:none;opacity:0.45;font-weight:500;"',
+            'id="sm-drawer-lang-ar" dir="rtl" style="color:#f5ead8;text-decoration:none;opacity:1;font-weight:700;"'
+        )
+
+        rtl_style = """
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style id="spec-landing-rtl">
+  /* Arabic Typography */
+  html[lang="ar"], html[lang="ar"] body {
+    font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif !important;
+  }
+  html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] h3, html[lang="ar"] .hero-title {
+    font-family: 'Cairo', sans-serif !important;
+  }
+
+  /* Kinetic Brand Logo: maintain geometric Latin anchors so coordinate physics calculate the exact center */
+  .spec-landing-logo {
+    direction: ltr !important;
+    unicode-bidi: isolate !important;
+  }
+  .spec-kinetic-logo, .spec-chars-wrap {
+    direction: ltr !important;
+    display: flex !important;
+    flex-direction: row !important;
+    unicode-bidi: isolate !important;
+  }
+
+  /* Top Navigation Bar: pristine right-docked bar with LTR items flow */
+  .spec-landing-chrome {
+    direction: ltr !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+  }
+  .spec-landing-chrome .spec-nav-scene {
+    direction: ltr !important;
+    unicode-bidi: isolate !important;
+  }
+
+  /* Content sections RTL alignment */
+  html.spec-rtl [data-screen-label="01 Hero"] {
+    direction: rtl !important;
+    text-align: right !important;
+  }
+  html.spec-rtl [data-screen-label="01 Hero"] h1 {
+    text-align: right !important;
+    font-family: 'Cairo', sans-serif !important;
+  }
+  html.spec-rtl [data-screen-label="01 Hero"] p {
+    text-align: right !important;
+    font-family: 'Cairo', sans-serif !important;
+    letter-spacing: 0.02em !important;
+  }
+  html.spec-rtl [data-screen-label="01 Hero"] > div:last-child {
+    direction: rtl !important;
+    font-family: 'Cairo', sans-serif !important;
+    letter-spacing: normal !important;
+  }
+  html.spec-rtl [data-screen-label="03 Work grid"] {
+    direction: rtl !important;
+    text-align: right !important;
+  }
+  html.spec-rtl [data-screen-label="03 Work grid"] [data-blurable] {
+    direction: rtl !important;
+  }
+  html.spec-rtl [data-screen-label="03 Work grid"] h2 {
+    font-family: 'Cairo', sans-serif !important;
+    text-align: right !important;
+  }
+  html.spec-rtl [data-screen-label*="Statement"],
+  html.spec-rtl [data-screen-label*="Beliefs"] {
+    direction: rtl !important;
+    text-align: right !important;
+  }
+  html.spec-rtl [data-screen-label*="Capabilities"] {
+    direction: rtl !important;
+    text-align: right !important;
+  }
+  html.spec-rtl [data-screen-label*="Capabilities"],
+  html.spec-rtl [data-screen-label*="Capabilities"] *,
+  html.spec-rtl [data-svc],
+  html.spec-rtl [data-svc] * {
+    direction: rtl !important;
+    text-align: right !important;
+    cursor: none !important;
+  }
+  html.spec-rtl [data-screen-label*="Capabilities"] [data-svc] {
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Cairo', sans-serif !important;
+    transition: color .3s ease, padding-right .3s ease, padding-left .3s ease !important;
+    cursor: none !important;
+  }
+  html.spec-rtl [data-screen-label*="Capabilities"] [data-svc] span:first-child {
+    font-family: 'Cairo', sans-serif !important;
+    text-align: right !important;
+    cursor: none !important;
+  }
+  html.spec-rtl [data-screen-label*="Capabilities"] [data-svc] span:last-child {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+    direction: ltr !important;
+    cursor: none !important;
+  }
+  html.spec-rtl [data-screen-label*="Capabilities"] [data-svc]:hover,
+  html.spec-rtl [data-screen-label*="Capabilities"] [data-svc].spec-svc-focused {
+    padding-right: 14px !important;
+    padding-left: 0 !important;
+    cursor: none !important;
+  }
+  /* Section 07 - Executive Instagram Reviews */
+  html.spec-rtl [data-screen-label="07 Reviews"] {
+    direction: rtl !important;
+    text-align: right !important;
+  }
+  html.spec-rtl [data-screen-label="07 Reviews"] [data-blurable="1"] {
+    align-items: flex-end !important;
+  }
+  html.spec-rtl [data-screen-label="07 Reviews"] .spec-reviews-eyebrow,
+  html.spec-rtl [data-screen-label="07 Reviews"] div[style*="letter-spacing:.18em"] {
+    font-family: 'Cairo', sans-serif !important;
+    letter-spacing: 0.04em !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    direction: rtl !important;
+    unicode-bidi: isolate !important;
+    text-align: right !important;
+    color: var(--color-neutral-400) !important;
+  }
+  html.spec-rtl [data-screen-label="07 Reviews"] h2 {
+    font-family: 'Cairo', sans-serif !important;
+    line-height: 1.15 !important;
+    text-align: right !important;
+  }
+  html.spec-rtl .ig-feed-badge,
+  html.spec-rtl [data-screen-label="07 Reviews"] .ig-feed-badge,
+  html.spec-rtl [data-screen-label="07 Reviews"] span[style*="letter-spacing:.14em"] {
+    font-family: 'Cairo', sans-serif !important;
+    letter-spacing: 0 !important;
+    word-spacing: normal !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    direction: rtl !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  html.spec-rtl [data-screen-label="07 Reviews"] [data-rvrow="1"] {
+    direction: ltr !important;
+  }
+  html.spec-rtl [data-screen-label="07 Reviews"] .ig-card {
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Cairo', sans-serif !important;
+  }
+  html.spec-rtl [data-screen-label="07 Reviews"] .ig-card * {
+    font-family: 'Cairo', sans-serif !important;
+    letter-spacing: 0 !important;
+  }
+  html.spec-rtl [data-screen-label="07 Reviews"] .ig-card .ig-handle,
+  html.spec-rtl [data-screen-label="07 Reviews"] .ig-card span[dir="ltr"] {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    direction: ltr !important;
+    unicode-bidi: isolate !important;
+  }
+  html.spec-rtl [data-screen-label="07 Reviews"] .ig-card .ig-stars {
+    direction: ltr !important;
+    unicode-bidi: isolate !important;
+    letter-spacing: 2px !important;
+  }
+  html.spec-rtl [data-screen-label*="Footer"],
+  html.spec-rtl [data-screen-label*="Contact"] {
+    direction: rtl !important;
+    text-align: right !important;
+  }
+
+  /* Mobile Slide-Out Drawer */
+  html.spec-rtl #sm-menu-drawer {
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Cairo', sans-serif !important;
+  }
+  html.spec-rtl .sm-nav-link-item {
+    flex-direction: row-reverse !important;
+    justify-content: space-between !important;
+  }
+
+  /* Contact Modal */
+  html.spec-rtl #sm-contact-modal, html.spec-rtl .sm-modal-container {
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: 'Cairo', sans-serif !important;
+  }
+  html.spec-rtl .sm-modal-header {
+    text-align: right !important;
+  }
+  html.spec-rtl .sm-form-group input, html.spec-rtl .sm-form-group textarea, html.spec-rtl .sm-form-group select {
+    text-align: right !important;
+    direction: rtl !important;
+    font-family: 'Cairo', sans-serif !important;
+  }
+</style>
+"""
+        if '</head>' in html:
+            html = html.replace('</head>', f'{rtl_style}\n</head>')
+        elif '</helmet>' in html:
+            html = html.replace('</helmet>', f'{rtl_style}\n</helmet>')
+    else:
+        html = re.sub(r'<html([^>]*)>', rf'<html\g<1> lang="{current_lang}" dir="ltr">', html, count=1)
+
+    # If non-default language, route internal links with language prefix
+    if current_lang != 'en':
+        html = html.replace('href="/"', f'href="/{current_lang}/"')
+        html = html.replace("href='/'", f"href='/{current_lang}/'")
+        for page in ['work', 'studio', 'capabilities', 'portal', 'dashboard', 'login']:
+            html = html.replace(f'href="/{page}/"', f'href="/{current_lang}/{page}/"')
+            html = html.replace(f"href='/{page}/'", f"href='/{current_lang}/{page}/'")
+
 
     try:
         site_settings = SiteSettings.get_settings()
@@ -75,57 +419,140 @@ def landing_page(request):
         # Loop into 8 cards pool for seamless infinite carousel
         reviews_pool = client_reviews * 2 if len(client_reviews) <= 4 else client_reviews
         ig_cards = []
+
+        # Arabic localized dictionaries for official executive reviews
+        AR_REVIEWS_DICT = {
+            '@faisal.almarri': {
+                'role': 'المؤسس الرئيسي · حي دبي للتصميم',
+                'location': 'حي دبي للتصميم · دبي',
+                'quote': 'حوّلت سبيك ميديا علامتنا الرقمية إلى معيار عالمي استثنائي. تضاعف التفاعل بنسبة 340% خلال 60 يوماً.',
+                'tags': '#سبيك_ميديا #فخامة_دبي #تصميم_مكاني',
+                'time': 'منذ يومين · موثّق'
+            },
+            '@tariq.mansoori': {
+                'role': 'المدير العام · هيبيريون القابضة',
+                'location': 'مركز دبي المالي العالمي · دبي',
+                'quote': 'الطباعة الحركية والإيقاع البصري السينمائي أبهرا شركاءنا في صناديق الثروة السيادية. تنفيذ استثنائي لا تشوبه شائبة.',
+                'tags': '#تصميم_مؤسسي #ويب_حركي #الإمارات',
+                'time': 'منذ 4 أيام · موثّق'
+            },
+            '@elena.rostova': {
+                'role': 'رئيسة التسويق · نولانا سبيشال',
+                'location': 'زيورخ ودبي',
+                'quote': 'التحول بين النمط التحريري والوضع الداكن الفاخر شعر بصري خالص. تضاعف معدل التحويل لدينا لثلاث مرات.',
+                'tags': '#إخراج_إبداعي #هندسة_العلامة',
+                'time': 'منذ أسبوع · موثّق'
+            },
+            '@khalid.alzahra': {
+                'role': 'نائب الرئيس للاستراتيجية · جاذر تيلكو للذكاء الاصطناعي',
+                'location': 'سوق أبوظبي العالمي',
+                'quote': 'لا توجد وكالة أخرى في منطقة الشرق الأوسط تجمع بين الدقة التقنية لتحسين محركات البحث وهذا المستوى الرفيع من الجماليات الفاخرة.',
+                'tags': '#وسائط_الأداء #استراتيجية_الذكاء #دبي',
+                'time': 'منذ أسبوعين · موثّق'
+            }
+        }
+
         for rev in reviews_pool:
             if not isinstance(rev, dict):
                 continue
-            handle = escape(rev.get('handle', 'partner.voice'))
-            role = escape(rev.get('role', 'Executive Partner · Dubai, UAE'))
-            location = escape(rev.get('location', 'Dubai HQ'))
-            quote = escape(rev.get('quote', 'Outstanding design and digital execution.'))
+            raw_handle = rev.get('handle', 'partner.voice')
+            handle = escape(raw_handle)
             avatar = escape(rev.get('avatar', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop'), quote=True)
             img = escape(rev.get('image', 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop'), quote=True)
             likes = int(rev.get('likes', 2842))
-            tags = escape(rev.get('tags', '#SpecMedia #PartnerOutcome'))
-            time_ago = escape(rev.get('time', 'RECENT · VERIFIED'))
 
-            ig_cards.append(
-                f'<article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">'
-                f'<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">'
-                f'<div style="display:flex;align-items:center;gap:10px">'
-                f'<div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">'
-                f'<div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">'
-                f'<img src="{avatar}" alt="{handle}" style="width:100%;height:100%;object-fit:cover;display:block"></div></div>'
-                f'<div style="line-height:1.25"><div style="display:flex;align-items:center;gap:4px">'
-                f'<span style="font-family:system-ui,-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg)">{handle}</span>'
-                f'<svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>'
-                f'</div><div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">{role}</div></div></div>'
-                f'<div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px"><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span></div></div>'
-                f'<div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">'
-                f'<img data-media="1" src="{img}" alt="{handle} Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">'
-                f'<div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">'
-                f'<svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>'
-                f'<div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">{location}</div></div>'
-                f'<div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">'
-                f'<div style="display:flex;align-items:center;gap:14px">'
-                f'<button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">'
-                f'<svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>'
-                f'<button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">'
-                f'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></button>'
-                f'<button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">'
-                f'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button></div>'
-                f'<button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">'
-                f'<svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button></div>'
-                f'<div style="padding:0 14px 4px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;color:var(--color-bg);font-weight:600">'
-                f'Liked by <span style="font-weight:700">specmedia</span> and <span class="like-number" data-count="{likes}">{likes:,}</span> others</div>'
-                f'<div style="padding:2px 14px 8px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;line-height:1.55;color:var(--color-bg)">'
-                f'<span style="font-weight:700;margin-right:6px">{handle}</span><span style="color:var(--color-neutral-300);font-weight:400">{quote}</span></div>'
-                f'<div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between"><div style="color:#f59e0b;font-size:12px;letter-spacing:2px">★★★★★</div>'
-                f'<div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-accent)">{tags}</div></div>'
-                f'<div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px">'
-                f'<span style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer">View comments</span>'
-                f'<span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">{time_ago}</span></div>'
-                f'</article>'
-            )
+            if current_lang == 'ar':
+                ar_data = AR_REVIEWS_DICT.get(raw_handle.strip().lower(), {})
+                role = escape(ar_data.get('role', rev.get('role_ar') or rev.get('role', 'شريك تنفيذي · دبي')))
+                location = escape(ar_data.get('location', rev.get('location_ar') or rev.get('location', 'دبي، الإمارات')))
+                quote = escape(ar_data.get('quote', rev.get('quote_ar') or rev.get('quote', 'تصميم وتنفيذ رقمي فائق التميز.')))
+                tags = escape(ar_data.get('tags', rev.get('tags_ar') or rev.get('tags', '#سبيك_ميديا #نتائج_الشركاء')))
+                time_ago = escape(ar_data.get('time', rev.get('time_ar') or 'مؤخراً · موثّق'))
+
+                ig_cards.append(
+                    f'<article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;direction:rtl;text-align:right;font-family:\'Cairo\',sans-serif;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">'
+                    f'<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">'
+                    f'<div style="display:flex;align-items:center;gap:10px">'
+                    f'<div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">'
+                    f'<div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">'
+                    f'<img src="{avatar}" alt="{handle}" style="width:100%;height:100%;object-fit:cover;display:block"></div></div>'
+                    f'<div style="line-height:1.25;text-align:right"><div style="display:flex;align-items:center;gap:4px">'
+                    f'<span class="ig-handle" style="font-family:system-ui,-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg);direction:ltr;unicode-bidi:isolate">{handle}</span>'
+                    f'<svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>'
+                    f'</div><div style="font-family:\'Cairo\',sans-serif;font-size:10px;color:var(--color-neutral-400);letter-spacing:0;font-weight:500;margin-top:2px">{role}</div></div></div>'
+                    f'<div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px"><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span></div></div>'
+                    f'<div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">'
+                    f'<img data-media="1" src="{img}" alt="{handle} Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">'
+                    f'<div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">'
+                    f'<svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>'
+                    f'<div style="position:absolute;right:10px;bottom:10px;padding:3px 10px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:\'Cairo\',sans-serif;font-size:10px;font-weight:600;letter-spacing:0">{location}</div></div>'
+                    f'<div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">'
+                    f'<div style="display:flex;align-items:center;gap:14px">'
+                    f'<button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">'
+                    f'<svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>'
+                    f'<button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">'
+                    f'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></button>'
+                    f'<button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">'
+                    f'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button></div>'
+                    f'<button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">'
+                    f'<svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button></div>'
+                    f'<div style="padding:0 14px 4px;font-family:\'Cairo\',sans-serif;font-size:12px;color:var(--color-bg);font-weight:600;letter-spacing:0;text-align:right">'
+                    f'أُعجب به <span style="font-weight:700;direction:ltr;display:inline-block">specmedia</span> و <span class="like-number" data-count="{likes}">{likes:,}</span> آخرين</div>'
+                    f'<div style="padding:2px 14px 8px;font-family:\'Cairo\',sans-serif;font-size:13px;line-height:1.65;color:var(--color-bg);text-align:right">'
+                    f'<span class="ig-handle" style="font-weight:700;margin-left:8px;direction:ltr;display:inline-block;unicode-bidi:isolate;font-family:system-ui,-apple-system,sans-serif">{handle}</span>'
+                    f'<span style="color:var(--color-neutral-300);font-weight:400">{quote}</span></div>'
+                    f'<div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between"><div class="ig-stars" style="color:#f59e0b;font-size:12px;letter-spacing:2px;direction:ltr;unicode-bidi:isolate">★★★★★</div>'
+                    f'<div style="font-family:\'Cairo\',sans-serif;font-size:11px;color:var(--color-accent);font-weight:600;letter-spacing:0">{tags}</div></div>'
+                    f'<div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px;text-align:right">'
+                    f'<span style="font-family:\'Cairo\',sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer;font-weight:500">عرض جميع التعليقات</span>'
+                    f'<span style="font-family:\'Cairo\',sans-serif;font-size:10px;letter-spacing:0;color:var(--color-neutral-600);font-weight:600">{time_ago}</span></div>'
+                    f'</article>'
+                )
+            else:
+                role = escape(rev.get('role', 'Executive Partner · Dubai, UAE'))
+                location = escape(rev.get('location', 'Dubai HQ'))
+                quote = escape(rev.get('quote', 'Outstanding design and digital execution.'))
+                tags = escape(rev.get('tags', '#SpecMedia #PartnerOutcome'))
+                time_ago = escape(rev.get('time', 'RECENT · VERIFIED'))
+
+                ig_cards.append(
+                    f'<article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">'
+                    f'<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">'
+                    f'<div style="display:flex;align-items:center;gap:10px">'
+                    f'<div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">'
+                    f'<div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">'
+                    f'<img src="{avatar}" alt="{handle}" style="width:100%;height:100%;object-fit:cover;display:block"></div></div>'
+                    f'<div style="line-height:1.25"><div style="display:flex;align-items:center;gap:4px">'
+                    f'<span style="font-family:system-ui,-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg)">{handle}</span>'
+                    f'<svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>'
+                    f'</div><div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">{role}</div></div></div>'
+                    f'<div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px"><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span><span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span></div></div>'
+                    f'<div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">'
+                    f'<img data-media="1" src="{img}" alt="{handle} Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">'
+                    f'<div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">'
+                    f'<svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>'
+                    f'<div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">{location}</div></div>'
+                    f'<div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">'
+                    f'<div style="display:flex;align-items:center;gap:14px">'
+                    f'<button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">'
+                    f'<svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>'
+                    f'<button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">'
+                    f'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></button>'
+                    f'<button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">'
+                    f'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button></div>'
+                    f'<button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">'
+                    f'<svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button></div>'
+                    f'<div style="padding:0 14px 4px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;color:var(--color-bg);font-weight:600">'
+                    f'Liked by <span style="font-weight:700">specmedia</span> and <span class="like-number" data-count="{likes}">{likes:,}</span> others</div>'
+                    f'<div style="padding:2px 14px 8px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;line-height:1.55;color:var(--color-bg)">'
+                    f'<span style="font-weight:700;margin-right:6px">{handle}</span><span style="color:var(--color-neutral-300);font-weight:400">{quote}</span></div>'
+                    f'<div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between"><div style="color:#f59e0b;font-size:12px;letter-spacing:2px">★★★★★</div>'
+                    f'<div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-accent)">{tags}</div></div>'
+                    f'<div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px">'
+                    f'<span style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer">View comments</span>'
+                    f'<span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">{time_ago}</span></div>'
+                    f'</article>'
+                )
         if ig_cards:
             reviews_markup = ''.join(ig_cards)
             html = re.sub(
@@ -139,34 +566,45 @@ def landing_page(request):
         default_fallbacks = {
             'Brand strategy': [
                 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1200&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop'
             ],
             'Campaign production': [
                 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1200&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop'
             ],
             'Performance media': [
                 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=1200&auto=format&fit=crop'
             ],
             'Content systems': [
                 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1200&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=crop'
             ],
         }
         all_disciplines = ['Brand strategy', 'Campaign production', 'Performance media', 'Content systems']
         panels_html = []
         for cap in all_disciplines:
-            photos = capability_photos.get(cap) or default_fallbacks.get(cap, [])
+            photos = capability_photos.get(cap) or []
             valid = [p for p in photos if isinstance(p, str) and p.strip()]
-            if len(valid) < 2 and cap in default_fallbacks:
+            if len(valid) < 4 and cap in default_fallbacks:
                 for fb in default_fallbacks[cap]:
                     if fb not in valid:
                         valid.append(fb)
+                    if len(valid) >= 4:
+                        break
             if not valid:
-                valid = default_fallbacks.get(cap, [])
+                valid = default_fallbacks.get(cap, [])[:4]
+            valid = valid[:4]
+            total_slides = 4
 
-            total_slides = len(valid)
             slides_html = []
             for i, p in enumerate(valid):
                 is_first = (i == 0)
@@ -174,8 +612,8 @@ def landing_page(request):
                 transform = 'scale(1)' if is_first else 'scale(1.04)'
                 z_index = '2' if is_first else '1'
                 slides_html.append(
-                    f'<div data-pv-slide="{i}" class="spec-pv-slide" style="position:absolute;inset:0;opacity:{opacity};transform:{transform};transition:opacity .35s cubic-bezier(.16,1,.3,1),transform .4s ease;pointer-events:none;z-index:{z_index};overflow:hidden">'
-                    f'<img src="{escape(p, quote=True)}" alt="{escape(cap, quote=True)} {i+1}" style="width:100%;height:100%;object-fit:cover;display:block">'
+                    f'<div data-pv-slide="{i}" class="spec-pv-slide" style="position:absolute;inset:0;opacity:{opacity};transform:{transform};transition:opacity .28s ease,transform .32s ease;pointer-events:none;z-index:{z_index};overflow:hidden;filter:none !important;-webkit-filter:none !important;">'
+                    f'<img src="{escape(p, quote=True)}" alt="{escape(cap, quote=True)} {i+1}" style="width:100%;height:100%;object-fit:cover;display:block;filter:none !important;-webkit-filter:none !important;">'
                     f'</div>'
                 )
             slides_markup = '\n            '.join(slides_html)
@@ -191,14 +629,14 @@ def landing_page(request):
 
             panels_html.append(
                 f'<!-- Gallery: {escape(cap)} -->\n'
-                f'          <div data-pv="{escape(cap)}" class="spec-pv-panel" style="position:absolute;inset:0;background:#141312;opacity:0;transform:scale(0.96);filter:blur(4px);transition:opacity .24s cubic-bezier(.16,1,.3,1),transform .26s cubic-bezier(.16,1,.3,1),filter .24s ease;overflow:hidden">\n'
+                f'          <div data-pv="{escape(cap)}" class="spec-pv-panel" style="position:absolute;inset:0;background:#141312;opacity:0;transform:scale(0.96);transition:opacity .22s cubic-bezier(.16,1,.3,1),transform .24s cubic-bezier(.16,1,.3,1);overflow:hidden;filter:none !important;-webkit-filter:none !important;">\n'
                 f'            {slides_markup}\n'
                 f'            <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%);pointer-events:none;z-index:3"></div>\n'
                 f'            <div class="spec-pv-dashes" style="position:absolute;bottom:10px;left:12px;display:flex;align-items:center;gap:4px;z-index:5">\n'
                 f'              {dashes_markup}\n'
                 f'            </div>\n'
-                f'            <div class="spec-pv-counter" style="position:absolute;bottom:8px;right:10px;display:flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.1);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;color:rgba(255,255,255,0.85);letter-spacing:.08em;z-index:5">\n'
-                f'              <span class="spec-pv-num">01</span><span style="opacity:0.4">/</span><span>{total_slides:02d}</span>\n'
+                f'            <div class="spec-pv-counter" style="position:absolute;bottom:8px;right:10px;display:flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;background:rgba(0,0,0,0.85);border:1px solid rgba(255,255,255,0.15);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;color:rgba(255,255,255,0.9);letter-spacing:.08em;z-index:5;filter:none !important;">\n'
+                f'              <span class="spec-pv-num">01</span><span style="opacity:0.4">/</span><span>04</span>\n'
                 f'            </div>\n'
                 f'          </div>'
             )
@@ -409,6 +847,8 @@ def landing_page(request):
                 html
             )
 
+    # Final i18n translation pass to ensure all dynamic CMS injections are translated
+    html = safe_translate_html(html, lang_map)
     return HttpResponse(html, content_type='text/html; charset=utf-8')
 
 
@@ -421,7 +861,8 @@ def admin_required(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect(f'/login/?next={request.path}')
+            current_lang = getattr(request, 'LANGUAGE_CODE', 'en')
+            return redirect(f'/{current_lang}/login/?next={request.path}')
         if not (request.user.is_staff or request.user.is_superuser):
             return render(request, 'login.html', {
                 'error_message': 'Access denied. The portal is restricted to administrators only.',
@@ -436,7 +877,9 @@ def login_view(request):
     Renders custom operator authorization screen and handles user authentication.
     Only allows administrators / staff to log in to access the portal.
     """
-    next_url = request.GET.get('next') or request.POST.get('next') or '/dashboard/'
+    current_lang = getattr(request, 'LANGUAGE_CODE', 'en')
+    default_next = f'/{current_lang}/dashboard/'
+    next_url = request.GET.get('next') or request.POST.get('next') or default_next
     error_message = None
 
     if request.user.is_authenticated:
@@ -470,8 +913,9 @@ def logout_view(request):
     """
     Logs out the authenticated operator and returns to the login screen.
     """
+    current_lang = getattr(request, 'LANGUAGE_CODE', 'en')
     logout(request)
-    return redirect('/login/')
+    return redirect(f'/{current_lang}/login/')
 
 
 def work_page(request):

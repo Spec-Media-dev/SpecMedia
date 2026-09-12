@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">{% load i18n %}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
     :root {
       --font-heading: 'Playfair Display', Georgia, serif;
       --font-body: 'Lora', Georgia, serif;
-      --bg: #0b0a09;
+      --bg: #000000;
       --surface: #141312;
       --surface-elevated: #1c1a18;
       --border: rgba(245, 234, 216, 0.1);
@@ -30,7 +30,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: var(--bg);
+      background: #000000;
       color: var(--text);
       font-family: var(--font-sans);
       min-height: 100vh;
@@ -243,29 +243,91 @@
     .back-link:hover {
       color: var(--text);
     }
-  </style>
+  
+    .nav-lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 234, 216, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 11px;
+      font-family: var(--font-mono, ui-monospace, monospace);
+      letter-spacing: 0.12em;
+      text-transform: none;
+      line-height: 1;
+    }
+    .nav-lang-switcher a {
+      color: #f5ead8;
+      text-decoration: none;
+      opacity: 0.45;
+      transition: opacity 0.2s ease, color 0.2s ease;
+      font-weight: 500;
+    }
+    .nav-lang-switcher a:hover {
+      opacity: 0.85;
+    }
+    .nav-lang-switcher a.active {
+      opacity: 1;
+      font-weight: 700;
+      color: #f5ead8;
+    }
+    .nav-lang-switcher .sep {
+      opacity: 0.25;
+      color: #f5ead8;
+      user-select: none;
+    }
+
+    /* Universal RTL overrides */
+    html[dir="rtl"] { direction: rtl; }
+    html[dir="rtl"] body {
+      text-align: right;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif !important;
+    }
+    html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] .card-title {
+      font-family: 'Cairo', sans-serif !important;
+    }
+    html[dir="rtl"] .brand-header { flex-direction: row-reverse; }
+
+  
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(158, 27, 36, 0.08) 0%, rgba(0, 0, 0, 0.85) 65%, #000000 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <div class="login-container">
     <div class="brand-header">
-      <a href="/" class="brand-logo-wrap">
+      <a href="{% url 'core:landing' %}" class="brand-logo-wrap">
         {% if site_settings.logo_image %}
           <img src="{{ site_settings.logo_image }}" alt="{{ site_settings.site_name }}" class="brand-logo-img">
         {% else %}
           <div class="brand-title">{{ site_settings.site_name|default:"SPEC" }} <span>MEDIA</span></div>
         {% endif %}
       </a>
-      <div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="nav-lang-switcher" aria-label="Language switcher">
+          <a href="{{ en_url }}" class="{% if LANGUAGE_CODE == 'en' %}active{% endif %}" title="English">EN</a>
+          <span class="sep">|</span>
+          <a href="{{ ar_url }}" class="{% if LANGUAGE_CODE == 'ar' %}active{% endif %}" dir="rtl" title="العربية">العربية</a>
+        </div>
         <span class="brand-badge">RESTRICTED CONTROL ACCESS</span>
       </div>
     </div>
 
     <div class="login-card">
-      <h1 class="card-title">Operator Authorization</h1>
+      <h1 class="card-title">{% trans "Operator Authorization" %}</h1>
       <p class="card-subtitle">Enter verified operator credentials to access the SEO, works, and media content control systems.</p>
 
       {% if error_message %}
@@ -280,14 +342,14 @@
         <input type="hidden" name="next" value="{{ next_url|default:'/dashboard/' }}">
 
         <div class="form-group">
-          <label class="form-label" for="username">Username / Identifier</label>
+          <label class="form-label" for="username">{% trans "Username" %} / Identifier</label>
           <div class="input-wrapper">
             <input type="text" id="username" name="username" class="form-input" required autofocus placeholder="admin" autocomplete="username">
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="password">Security Password</label>
+          <label class="form-label" for="password">Security {% trans "Password" %}</label>
           <div class="input-wrapper">
             <input type="password" id="password" name="password" class="form-input" required placeholder="••••••••••••" autocomplete="current-password">
           </div>
@@ -300,7 +362,7 @@
       </form>
 
       <div class="card-footer">
-        <a href="/" class="back-link">&larr; Return to Spec Media Homepage</a>
+        <a href="{% url 'core:landing' %}" class="back-link">&larr; Return to Spec Media Homepage</a>
       </div>
     </div>
   </div>

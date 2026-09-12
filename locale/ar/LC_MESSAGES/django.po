@@ -1,0 +1,707 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+
+msgid "[ work ]"
+msgstr "[ الأعمال ]"
+
+msgid "[ studio ]"
+msgstr "[ الاستوديو ]"
+
+msgid "[ capabilities ]"
+msgstr "[ القدرات ]"
+
+msgid "[ initiate inquiry &rarr; ]"
+msgstr "[ ابدأ التواصل &larr; ]"
+
+msgid "[ initiate inquiry → ]"
+msgstr "[ ابدأ التواصل ← ]"
+
+msgid "[ contact ]"
+msgstr "[ تواصل ]"
+
+msgid "[ menu ]"
+msgstr "[ قائمة ]"
+
+msgid "01 / index"
+msgstr "01 / البداية"
+
+msgid "[ scroll down ]"
+msgstr "[ اسحب لأسفل ]"
+
+msgid "Work"
+msgstr "الأعمال"
+
+msgid "Studio"
+msgstr "الاستوديو"
+
+msgid "Capabilities"
+msgstr "القدرات"
+
+msgid "&uarr; Back to Top"
+msgstr "&uarr; إلى الأعلى"
+
+msgid "[ Back to Top &uarr; ]"
+msgstr "[ إلى الأعلى &uarr; ]"
+
+msgid "&copy; 2026 SPEC MEDIA. ALL RIGHTS RESERVED."
+msgstr "&copy; 2026 SPEC MEDIA. جميع الحقوق محفوظة."
+
+msgid "&copy; 2026 Spec Media Inc. Built for brands with cultural gravity."
+msgstr "&copy; 2026 Spec Media Inc. صُمم للعلامات ذات الثقل الثقافي."
+
+msgid "You feel the brand before it speaks®"
+msgstr "تحسّ بالعلامة قبل أن تتكلّم®"
+
+msgid "Placeholder copy. Spec Media builds campaigns for companies that care how things feel and how they are perceived over time."
+msgstr "تبني Spec Media حملات نوعية للشركات التي تهتم بكيفية شعور منتجاتها ورسوخ مكانتها مع مرور الوقت."
+
+msgid "brand strategy"
+msgstr "استراتيجية العلامة"
+
+msgid "campaign production"
+msgstr "إنتاج الحملات"
+
+msgid "performance media"
+msgstr "وسائط الأداء"
+
+msgid "content systems"
+msgstr "أنظمة المحتوى"
+
+msgid "Selected work"
+msgstr "أعمال مختارة"
+
+msgid "2024 — 2026 · placeholder projects"
+msgstr "2024 — 2026 · مشاريع مختارة"
+
+msgid "[ what we believe ]"
+msgstr "[ ما نؤمن به ]"
+
+msgid "Attention is the only currency that compounds."
+msgstr "الانتباه هو العملة الوحيدة التي تتضاعف قيمتها مع الزمن."
+
+msgid "TRUSTED PARTNERS"
+msgstr "شركاء موثوقون"
+
+msgid "04 / THE REEL"
+msgstr "04 / الإعلان السينمائي"
+
+msgid "Trusted by teams that value exceptional digital experiences."
+msgstr "موثوق من قِبل فرق تُقدّر التجارب الرقمية الاستثنائية."
+
+msgid "capabilities — hover to inspect work"
+msgstr "القدرات — حرّك الفأرة لمعاينة الأعمال"
+
+msgid "SELECT A DISCIPLINE"
+msgstr "اختر تخصصاً"
+
+msgid "Hover a capability to inspect production assets"
+msgstr "حرّك المؤشر فوق قدرة لمعاينة أصول الإنتاج"
+
+msgid "PORTFOLIO GALLERY"
+msgstr "معرض الأعمال"
+
+msgid "End-to-End Capabilities — Spec Media"
+msgstr "القدرات المتكاملة — Spec Media"
+
+msgid "Full-Spectrum Architecture // End-to-End Suite"
+msgstr "هيكلية متكاملة الأركان // حزمة شاملة من البداية للنهاية"
+
+msgid "Four disciplines. One singular focus."
+msgstr "أربعة تخصصات. تركيز واحد لا ينقسم."
+
+msgid "We dismantle the friction between upstream brand strategy, cinematic production, paid distribution, and iterative content systems."
+msgstr "نزيل أي عائق بين استراتيجية العلامة الرائدة، الإنتاج السينمائي، التوزيع الإعلاني المدفوع، وأنظمة المحتوى المتجددة."
+
+msgid "01 STRATEGY"
+msgstr "01 الاستراتيجية"
+
+msgid "02 PRODUCTION"
+msgstr "02 الإنتاج السينمائي"
+
+msgid "03 PERFORMANCE MEDIA"
+msgstr "03 وسائط الأداء والنمو"
+
+msgid "04 CONTENT SYSTEMS"
+msgstr "04 أنظمة المحتوى"
+
+msgid "[ The Core Disciplines ]"
+msgstr "[ التخصصات الجوهرية ]"
+
+msgid "Engineered to compound enterprise equity."
+msgstr "مُهندسة لمضاعفة القيمة السوقية للعلامة التجارية."
+
+msgid "01 // DISCIPLINE"
+msgstr "01 // التخصص الأول"
+
+msgid "Brand Strategy & Architecture"
+msgstr "استراتيجية وهندسة العلامة التجارية"
+
+msgid "Upstream Moat"
+msgstr "حصانة استراتيجية رائدة"
+
+msgid "We synthesize the core positioning, voice, and visual architecture that define category leaders. From founder narrative synthesis to comprehensive brand guidelines, we design systems that remain iconic and culturally dominant over decades."
+msgstr "نصوغ جوهر التموضع والهوية البصرية والصوتية التي تقود الفئات في السوق. من سردية المؤسسين إلى إرشادات العلامة المتكاملة، نبتكر أنظمة تفرض سيادتها الثقافية لعقود."
+
+msgid "Core Deliverables:"
+msgstr "المخرجات الرئيسية:"
+
+msgid "Market Positioning Matrix"
+msgstr "مصفوفة التموضع في السوق"
+
+msgid "Visual Identity Systems"
+msgstr "أنظمة الهوية البصرية"
+
+msgid "Typography & Token Libraries"
+msgstr "مكتبات الخطوط والعناصر التصميمية"
+
+msgid "Brand Architecture Blueprint"
+msgstr "مخطط هيكلية العلامة"
+
+msgid "Verbal Voice & Tone Guidelines"
+msgstr "دليل النبرة والنص التسويقي"
+
+msgid "EXPECTED OUTCOME"
+msgstr "النتيجة المتوقعة"
+
+msgid "Target Valuation & Brand Equity"
+msgstr "تقييم السوق وقيمة العلامة التجارية"
+
+msgid "Inquire Service &rarr;"
+msgstr "طلب الخدمة &larr;"
+
+msgid "02 // DISCIPLINE"
+msgstr "02 // التخصص الثاني"
+
+msgid "Campaign Production & Film"
+msgstr "إنتاج الحملات والأفلام السينمائية"
+
+msgid "Cinema Craft"
+msgstr "حرفية سينمائية فائقة"
+
+msgid "Cinematic live-action film, high-end 3D motion graphics, and editorial craft produced with an obsession for emotional resonance. We orchestrate treatment, casting, bespoke sound design, master color grading, and final asset packaging."
+msgstr "أفلام حية سينمائية، رسوم متحركة ثلاثية الأبعاد فائقة الجودة، وتحرير فني بهدف إحداث أثر عاطفي راسخ. نتولى إعداد النص، الكاستينغ، تصميم الصوت، تصحيح الألوان المتقدم، وإخراج النسخ النهائية."
+
+msgid "Hero Launch Films"
+msgstr "أفلام الإطلاق الرئيسية"
+
+msgid "3D CGI & Spatial VFX"
+msgstr "غرافيك ثلاثي الأبعاد ومؤثرات بصرية مكانية"
+
+msgid "Sonic Scoring & Sound Design"
+msgstr "تأليف موسيقي وتصميم صوتي سينمائي"
+
+msgid "High-Speed Visual Cuts"
+msgstr "مونتاج رقمي سريع الإيقاع"
+
+msgid "Master Color Grading (ACES)"
+msgstr "تصحيح ألوان سينمائي متقدم (ACES)"
+
+msgid "High-Intent Organic Views"
+msgstr "مشاهدات طبيعية ذات نية عالية للشراء"
+
+msgid "03 // DISCIPLINE"
+msgstr "03 // التخصص الثالث"
+
+msgid "Performance Media & Growth"
+msgstr "وسائط الأداء والنمو المتسارع"
+
+msgid "Algorithmic Moat"
+msgstr "قوة تنافسية خوارزمية"
+
+msgid "Creative that directly scales customer acquisition efficiency and lifetime value. We engineer multi-variant ad systems tested against real-time conversion models across Meta, TikTok, YouTube, and programmatic inventory."
+msgstr "إبداع يرفع كفاءة اكتساب العملاء والقيمة الدائمة لهم. نبتكر أنظمة إعلانية متعددة النماذج نختبرها ضد نماذج التحويل الفورية عبر منصات ميتا، تيك توك، يوتيوب، والمساحات الإعلانية المبرمجة."
+
+msgid "Multi-Variant Creative Testing"
+msgstr "اختبار إعلاني متعدد النماذج"
+
+msgid "Algorithmic Acquisition Funnels"
+msgstr "مسارات اكتساب خوارزمية ذكية"
+
+msgid "Retention & LTV Architecture"
+msgstr "هندسة ولاء العملاء وزيادة القيمة الدائمة"
+
+msgid "Server-Side Attribution (CAPI)"
+msgstr "تتبع التحويلات عبر الخادم (CAPI)"
+
+msgid "Real-Time Performance Dashboards"
+msgstr "لوحات تحكم فورية لمتابعة الأداء"
+
+msgid "Blended ROAS at Scale"
+msgstr "عائد إنفاق إعلاني إجمالي قياسي"
+
+msgid "04 // DISCIPLINE"
+msgstr "04 // التخصص الرابع"
+
+msgid "Content Systems & Kinetics"
+msgstr "أنظمة المحتوى والوسائط التفاعلية"
+
+msgid "Always-On Scale"
+msgstr "إنتاج مستمر على مدار الساعة"
+
+msgid "Turnkey always-on content operations for hyper-growth enterprises. Continuous asset pipeline from our studio to social feeds, podcasts, interactive WebGL drops, and high-velocity digital editorial."
+msgstr "عمليات محتوى جاهزة ومستمرة للمؤسسات فائقة النمو. تدفق أصول إبداعية متواصل من استوديوهاتنا نحو المنصات الاجتماعية، البودكاست، تجارب WebGL ثلاثية الأبعاد، والمنشورات التحريرية السريعة."
+
+msgid "Modular Creative Asset Engines"
+msgstr "محركات تصميم أصول معيارية"
+
+msgid "Social-First Vertical Formats (9:16)"
+msgstr "صيغ عمودية مصممة للهواتف (9:16)"
+
+msgid "Interactive WebGL Experiences"
+msgstr "تجارب رقمية تفاعلية بتقنية WebGL"
+
+msgid "Podcast & Audio Studio Drops"
+msgstr "إنتاج بودكاست وأعمال صوتية احترافية"
+
+msgid "Digital Editorial Publishing"
+msgstr "نشر تحريري ومقالات رقمية استراتيجية"
+
+msgid "High-Res Assets / Month"
+msgstr "أصل عالي الدقة شهرياً"
+
+msgid "[ The Sprint Engine ]"
+msgstr "[ محرك التنفيذ المتسارع ]"
+
+msgid "How we deploy category dominance in weeks."
+msgstr "كيف نفرض هيمنة علامتك على السوق في أسابيع معدودة."
+
+msgid "A phased, deterministic deployment framework refined over dozens of global enterprise transformations."
+msgstr "إطار عمل تدريجي حاسم جرى صقله عبر عشرات التحولات الكبرى لعلامات عالمية مرموقة."
+
+msgid "PHASE 01"
+msgstr "المرحلة 01"
+
+msgid "WEEKS 1–2"
+msgstr "الأسابيع 1–2"
+
+msgid "Discovery & Synthesis"
+msgstr "الاستكشاف والتحليل الشامل"
+
+msgid "Deep-dive interviews, competitive positioning audit, quantitative market sizing, and brand archetype extraction."
+msgstr "مقابلات معمقة، تدقيق تموضع المنافسين، دراسة كمية لحجم السوق، واستخلاص النموذج الأصيل للعلامة."
+
+msgid "PHASE 02"
+msgstr "المرحلة 02"
+
+msgid "WEEKS 2–3"
+msgstr "الأسابيع 2–3"
+
+msgid "Creative Direction"
+msgstr "الإدارة الإبداعية والرؤية الفنية"
+
+msgid "Treatment scripts, 3D moodboards, typographic system definition, and sonic identity architecture."
+msgstr "سيناريوهات المعالجة، لوحات إلهام ثلاثية الأبعاد، تحديد منظومة الخطوط، وهندسة الهوية الصوتية."
+
+msgid "PHASE 03"
+msgstr "المرحلة 03"
+
+msgid "WEEKS 3–5"
+msgstr "الأسابيع 3–5"
+
+msgid "High-Fidelity Production"
+msgstr "الإنتاج الفائق الدقة"
+
+msgid "Cinema production, studio shoot, 3D CGI rendering, WebGL engineering, and master color grading."
+msgstr "تصوير سينمائي احترافي، جلسات تصوير في الاستوديو، معالجة CGI ثلاثية الأبعاد، برمجة WebGL، وتصحيح ألوان ماستر."
+
+msgid "PHASE 04"
+msgstr "المرحلة 04"
+
+msgid "WEEK 5+"
+msgstr "الأسبوع 5 فما بعد"
+
+msgid "Algorithmic Launch"
+msgstr "الإطلاق الخوارزمي في السوق"
+
+msgid "Global rollout, multi-variant paid distribution, conversion tracking calibration, and PR seeding."
+msgstr "إطلاق عالمي متزامن، توزيع إعلاني متعدد النماذج، معايرة تتبع التحويلات، وحملات العلاقات العامة."
+
+msgid "PHASE 05"
+msgstr "المرحلة 05"
+
+msgid "ONGOING"
+msgstr "مستمر وتراكمي"
+
+msgid "Iterative Systems"
+msgstr "أنظمة التحسين والتطوير المتتابع"
+
+msgid "Continuous asset delivery, ROAS optimization, community content, and quarterly creative refreshes."
+msgstr "تسليم متواصل للأصول، مضاعفة العائد الإعلاني، محتوى مجتمعي تفاعلي، وتحديثات إبداعية ربع سنوية."
+
+msgid "[ Production Infrastructure ]"
+msgstr "[ البنية التحتية للإنتاج ]"
+
+msgid "Industry-standard cinema & digital tooling."
+msgstr "معدات وأدوات سينمائية ورقمية بمعايير الصناعة العالمية."
+
+msgid "01 // CAMERAS & GLASS"
+msgstr "01 // الكاميرات والعدسات"
+
+msgid "Cinema Systems"
+msgstr "أنظمة الكاميرات السينمائية"
+
+msgid "02 // 3D & REALTIME GPU"
+msgstr "02 // معالجة ثلاثية الأبعاد ورسوم فورية"
+
+msgid "Spatial Engines"
+msgstr "محركات الفضاء والمؤثرات"
+
+msgid "03 // POST & ACOUSTICS"
+msgstr "03 // المونتاج وهندسة الصوت"
+
+msgid "Finishing Suites"
+msgstr "استوديوهات الماسترينغ والتشطيب"
+
+msgid "04 // ATTRIBUTION & DATA"
+msgstr "04 // تحليل البيانات ومصادر التحويل"
+
+msgid "Growth Infrastructure"
+msgstr "بنية تحتية لمضاعفة النمو"
+
+msgid "[ INITIATE ENGAGEMENT ]"
+msgstr "[ ابدأ التعاقد الآن ]"
+
+msgid "Ready to construct your cultural landmark?"
+msgstr "هل أنت مستعد لتشييد صرح ثقافي لعلامتك؟"
+
+msgid "Discuss your brand parameters and commercial objectives with our senior strategy partners."
+msgstr "ناقش أبعاد علامتك وأهدافك التجارية مع كبار شركائنا الاستراتيجيين."
+
+msgid "Transmit Project Inquiry"
+msgstr "إرسال تفاصيل المشروع"
+
+msgid "The Studio & Ethos — Spec Media"
+msgstr "الاستوديو والمبادئ — Spec Media"
+
+msgid "The Studio // Cultural Gravity"
+msgstr "الاستوديو // الجاذبية الثقافية"
+
+msgid "Built for brands that demand cultural resonance."
+msgstr "صُمم للعلامات التجارية التي تشترط حضوراً ثقافياً طاغياً."
+
+msgid "Spec Media is an independent creative studio operating at the intersection of cinematic craft, digital infrastructure, and high-velocity performance marketing."
+msgstr "Spec Media استوديو إبداعي مستقل يعمل عند نقطة التقاء الحرفية السينمائية، البنية التحتية الرقمية، والتسويق عالي السرعة المبني على الأداء."
+
+msgid "PIPELINE:"
+msgstr "المشاريع الجارية:"
+
+msgid "LIVE & INTAKE ACTIVE"
+msgstr "نشطة واستقبال الطلبات متاح"
+
+msgid "CAPITAL CATALYZED:"
+msgstr "القيمة المحققة للعملاء:"
+
+msgid "ACTIVE HUBS:"
+msgstr "المراكز التشغيلية:"
+
+msgid "04 (GLOBAL)"
+msgstr "04 (عالمياً)"
+
+msgid "[ Core Philosophy & Moats ]"
+msgstr "[ الفلسفة الجوهرية والحصون التنافسية ]"
+
+msgid "The principles that govern our work."
+msgstr "المبادئ الصارمة التي تحكم أعمالنا."
+
+msgid "01 // MOAT"
+msgstr "01 // الميزة التنافسية الأولى"
+
+msgid "Taste as an Unfair Advantage"
+msgstr "الذوق الرفيع كميزة تنافسية استثنائية"
+
+msgid "In an era of algorithmic homogenisation, aesthetic taste is not cosmetic; it is an economic barrier to entry."
+msgstr "في زمن التماثل والتشابه الخوارزمي، الذوق الرفيع ليس مجرد مظهر، بل حاجز اقتصادي يصعب على المنافسين تجاوزه."
+
+msgid "02 // MOAT"
+msgstr "02 // الميزة التنافسية الثانية"
+
+msgid "Zero Agency Friction"
+msgstr "انعدام البيروقراطية والتشتت التقليدي"
+
+msgid "No fragmented handoffs between strategy, cinema sets, and media buying. One integrated war room."
+msgstr "لا وسائط ولا انقطاع بين واضعي الاستراتيجية ومخرجي الأفلام ومشتري الإعلانات. غرفة عمليات واحدة متكاملة."
+
+msgid "03 // MOAT"
+msgstr "03 // الميزة التنافسية الثالثة"
+
+msgid "High-Velocity Execution"
+msgstr "سرعة تنفيذ فائقة وعالية الإنتاجية"
+
+msgid "We trade bureaucratic approval cycles for rapid deployment sprints."
+msgstr "نستبدل دوائر الاعتماد البيروقراطية البطيئة بسباقات تنفيذ وانطلاق فورية في السوق."
+
+msgid "04 // MOAT"
+msgstr "04 // الميزة التنافسية الرابعة"
+
+msgid "Enterprise Compounding"
+msgstr "نمو تراكمي مستمر لقيمة المؤسسة"
+
+msgid "Every asset is engineered to build long-term cultural and enterprise equity."
+msgstr "كل أصل إبداعي ننتجه مُهندس لبناء رصيد ثقافي وقيمة استثمارية تتراكم عبر السنين."
+
+msgid "[ Operating Footprint ]"
+msgstr "[ الحضور والانتشار الجغرافي ]"
+
+msgid "Four Strategic Anchors."
+msgstr "أربعة مراكز استراتيجية عالمية."
+
+msgid "Global capability anchored in key creative and capital hubs."
+msgstr "قدرات عالمية متمركزة في أهم عواصم الإبداع ورؤوس الأموال."
+
+msgid "DUBAI // HQ"
+msgstr "دبي // المقر الرئيسي"
+
+msgid "LONDON"
+msgstr "لندن"
+
+msgid "NEW YORK"
+msgstr "نيويورك"
+
+msgid "RIYADH"
+msgstr "الرياض"
+
+msgid "[ Leadership & Collective ]"
+msgstr "[ القيادة والفريق الجماعي ]"
+
+msgid "Operators, strategists, and cinematic directors."
+msgstr "قادة تنفيذيون، استراتيجيون، ومخرجون سينمائيون."
+
+msgid "Senior partners who lead every engagement from the front lines."
+msgstr "شركاء تنفيذيون يقودون كل شراكة ومهمة من الخطوط الأمامية مباشرة."
+
+msgid "Founding Partner & Executive Creative Director"
+msgstr "شريك مؤسس والمدير الإبداعي التنفيذي"
+
+msgid "Partner & Head of Brand Architecture"
+msgstr "شريك ورئيس هندسة العلامات التجارية"
+
+msgid "Partner & Head of Performance Media"
+msgstr "شريك ورئيس وسائط الأداء والنمو"
+
+msgid "Ready to build something iconic?"
+msgstr "هل أنت مستعد لابتكار علامة أسطورية؟"
+
+msgid "Initiate Collaboration &rarr;"
+msgstr "ابدأ التعاون الاستراتيجي &larr;"
+
+msgid "Selected Work & Case Studies — Spec Media"
+msgstr "أعمال مختارة ودراسات حالة — Spec Media"
+
+msgid "Selected Work & Case Studies // 2024 — 2026"
+msgstr "أعمال مختارة ودراسات حالة // 2024 — 2026"
+
+msgid "Work that cuts through the noise."
+msgstr "أعمال تخترق الضجيج وتفرض نفسها."
+
+msgid "Every campaign, brand architecture, and kinetic system we deploy is engineered to capture cultural authority, accelerate enterprise pipeline, and deliver measurable commercial equity."
+msgstr "كل حملة إعلانية، وكل بنية علامة تجارية، وكل نظام تفاعلي نطلقه مُهندس للاستحواذ على السيادة الثقافية، وتسريع المبيعات، وتحقيق عوائد استثمارية ملموسة."
+
+msgid "All Works"
+msgstr "كافة الأعمال"
+
+msgid "Brand Systems"
+msgstr "أنظمة العلامة"
+
+msgid "Campaign Production"
+msgstr "إنتاج الحملات"
+
+msgid "Performance Media"
+msgstr "وسائط الأداء"
+
+msgid "Content Systems"
+msgstr "أنظمة المحتوى"
+
+msgid "Grid"
+msgstr "شبكي"
+
+msgid "List"
+msgstr "قائمة"
+
+msgid "View Case Study &rarr;"
+msgstr "معاينة دراسة الحالة &larr;"
+
+msgid "Explore Scope"
+msgstr "استكشاف النطاق"
+
+msgid "[ ← Back to Works Archive ]"
+msgstr "[ &rarr; العودة لمعرض الأعمال ]"
+
+msgid "[ Challenge & Context ]"
+msgstr "[ التحدي والسياق التجاري ]"
+
+msgid "[ Strategic Execution ]"
+msgstr "[ التنفيذ الاستراتيجي ]"
+
+msgid "[ Deliverables & Scope ]"
+msgstr "[ المخرجات ونطاق العمل ]"
+
+msgid "[ Verified Commercial KPIs ]"
+msgstr "[ مؤشرات الأداء والنتائج المعتمدة ]"
+
+msgid "Deliverables"
+msgstr "المخرجات"
+
+msgid "Next Case Study &rarr;"
+msgstr "دراسة الحالة التالية &larr;"
+
+msgid "Pipeline & CRM Portal — Spec Media"
+msgstr "بوابة إدارة المبيعات والعملاء — Spec Media"
+
+msgid "back to site"
+msgstr "العودة للموقع"
+
+msgid "Refresh"
+msgstr "تحديث البيانات"
+
+msgid "Database Pipeline Overview"
+msgstr "نظرة عامة على قاعدة بيانات المبيعات"
+
+msgid "Client Inquiries & CRM Analytics"
+msgstr "استفسارات العملاء وتحليلات CRM"
+
+msgid "Total Inquiries"
+msgstr "إجمالي الاستفسارات"
+
+msgid "All records in Supabase"
+msgstr "كافة السجلات في Supabase"
+
+msgid "New Inquiries"
+msgstr "استفسارات جديدة"
+
+msgid "Awaiting triage"
+msgstr "بانتظار الفرز والتقييم"
+
+msgid "In active outreach"
+msgstr "قيد التواصل الفعلي"
+
+msgid "Budget & fit verified"
+msgstr "تم التحقق من الميزانية والملاءمة"
+
+msgid "Won / Closed"
+msgstr "صفقات ناجحة / مغلقة"
+
+msgid "Active studio clients"
+msgstr "عملاء حاليون للاستوديو"
+
+msgid "Conversion Rate"
+msgstr "معدل التحويل"
+
+msgid "Pipeline efficiency"
+msgstr "كفاءة مسار المبيعات"
+
+msgid "Market Distribution"
+msgstr "التوزيع حسب الأسواق"
+
+msgid "Source: PostgreSQL View"
+msgstr "المصدر: عرض PostgreSQL"
+
+msgid "Loading market metrics..."
+msgstr "جاري تحميل بيانات الأسواق..."
+
+msgid "System Health"
+msgstr "حالة النظام"
+
+msgid "Django Backend:"
+msgstr "خادم دجانغو الخلفي:"
+
+msgid "Supabase Database:"
+msgstr "قاعدة بيانات Supabase:"
+
+msgid "REST Endpoint:"
+msgstr "واجهة REST البرمجية:"
+
+msgid "Database Table:"
+msgstr "جدول قاعدة البيانات:"
+
+msgid "Lost"
+msgstr "غير مكتملة"
+
+msgid "Search by name, company, email..."
+msgstr "البحث بالاسم، الشركة، البريد..."
+
+msgid "Insert Test Record"
+msgstr "إدراج سجل اختباري"
+
+msgid "Name (e.g. Marc Jacobs)"
+msgstr "الاسم (مثال: مارك جاكوبس)"
+
+msgid "Email (e.g. marc@fashion.com)"
+msgstr "البريد (مثال: marc@fashion.com)"
+
+msgid "Company (e.g. LVMH Luxury)"
+msgstr "الشركة (مثال: مجموعة LVMH)"
+
+msgid "Market (e.g. us, europe, mena)"
+msgstr "السوق (مثال: الشرق الأوسط، أمريكا)"
+
+msgid "Message / Brief notes..."
+msgstr "الرسالة / ملاحظات موجزة..."
+
+msgid "Connected (PostgreSQL)"
+msgstr "متصل (قاعدة PostgreSQL)"
+
+msgid "Degraded"
+msgstr "أداء منخفض"
+
+msgid "Offline"
+msgstr "غير متصل"
+
+msgid "Failed to load leads from Supabase."
+msgstr "تعذر تحميل الاستفسارات من Supabase."
+
+msgid "No leads found in this view."
+msgstr "لا توجد استفسارات في هذا العرض."
+
+msgid "Failed to update status in Supabase:"
+msgstr "فشل تحديث الحالة في قاعدة البيانات:"
+
+msgid "Upload Logo (PNG, SVG, WebP)"
+msgstr "رفع الشعار (PNG, SVG, WebP)"
+
+msgid "Add to THE REEL"
+msgstr "إضافة إلى شريط الإعلانات"
+
+msgid "Strategic Solution"
+msgstr "الحل الاستراتيجي"
+
+msgid "Operator Authorization"
+msgstr "تصريح دخول المشغّل"
+
+msgid "Spec Media Internal Portal"
+msgstr "بوابة Spec Media الداخلية"
+
+msgid "Restricted Access"
+msgstr "منطقة وصول مقيدة"
+
+msgid "Username"
+msgstr "اسم المستخدم"
+
+msgid "Password"
+msgstr "كلمة المرور"
+
+msgid "Authorize Operator &rarr;"
+msgstr "المصادقة والمتابعة &larr;"
+
+msgid "[ Return to Public Site ]"
+msgstr "[ العودة للموقع العام ]"
+
+msgid "Invalid operator username or password. Please verify your credentials."
+msgstr "اسم المستخدم أو كلمة المرور غير صحيحة. يرجى التحقق من البيانات."
+
+msgid "Access denied. The portal is restricted to administrators only."
+msgstr "تم رفض الوصول. هذه البوابة مخصصة لمديري النظام فقط."
+
+msgid "404 // Coordinate Out of Bounds"
+msgstr "404 // إحداثيات خارج النطاق"
+
+msgid "Signal Lost in Digital Space"
+msgstr "انقطاع الإشارة في الفضاء الرقمي"
+
+msgid "The coordinate you requested does not exist or has been shifted across dimensions."
+msgstr "المسار الذي طلبته غير موجود أو تم نقله إلى موقع آخر."
+
+msgid "Return to Orbit / Home &rarr;"
+msgstr "العودة إلى المدار / الرئيسية &larr;"

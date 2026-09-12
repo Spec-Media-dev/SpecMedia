@@ -604,22 +604,188 @@ a:hover{color:#f5ead8}
   0% { opacity: 0; transform: scale(0.5) rotate(-20deg); filter: blur(6px); }
   100% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0); }
 }
-.spec-chars-wrap {
+
+/* Container holding character glyphs with 3D perspective */
+.spec-img-chars-wrap {
   display: inline-flex;
   align-items: center;
-  gap: clamp(2px, 0.3vw, 5px);
+  gap: clamp(1px, 0.25vw, 4px);
+  perspective: 800px;
+  transform-style: preserve-3d;
 }
+
+/* Base character container & kinetic entrance animation */
 .spec-char {
   display: inline-block;
   opacity: 0;
   transform: translateY(42px) scale(0.7) rotateX(55deg);
   filter: blur(10px);
-  animation: specCharReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: specCharReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   animation-delay: calc(var(--char-i, 0) * 0.085s + 0.25s);
   will-change: transform, opacity, filter;
-  font-size: clamp(18px, 2.4vw, 34px);
-  letter-spacing: 0.08em;
 }
+
+/* Image character alignment & 3D pivot */
+.spec-char-img {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: 50% 100%;
+}
+
+/* Staggered 3D Flip & Crimson Reveal Keyframes */
+@keyframes specCharReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(42px) scale(0.7) rotateX(55deg);
+    filter: blur(10px) drop-shadow(0 0 12px rgba(158, 27, 36, 0.85));
+    color: var(--color-accent-bright);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0px) drop-shadow(0 0 8px rgba(158, 27, 36, 0.65));
+    color: var(--color-accent-bright);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0deg);
+    filter: blur(0px) drop-shadow(0 0 0px transparent);
+    color: inherit;
+  }
+}
+
+/* Vector logo & theme transition */
+.spec-kinetic-logo {
+  color: #141211;
+  transition: color 0.4s ease, filter 0.4s ease;
+}
+
+/* Logo turns white when scrolling into dark sections */
+html.spec-scrolled .spec-kinetic-logo,
+html.spec-dark-mode .spec-kinetic-logo,
+html.spec-scrolled [ref="lettersRef"],
+html.spec-dark-mode [ref="lettersRef"],
+html.spec-scrolled .spec-landing-logo,
+html.spec-dark-mode .spec-landing-logo {
+  color: #ffffff !important;
+}
+
+/* SVG character glyph dimensions & crisp rendering */
+.spec-logo-char-img {
+  height: clamp(20px, 2.8vh, 36px);
+  width: auto;
+  display: block;
+  object-fit: contain;
+  shape-rendering: geometricPrecision;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transition: filter 0.4s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+}
+
+/* Solid black in Hero light mode */
+html:not(.spec-dark-mode):not(.spec-scrolled) img.spec-logo-char-img,
+html.spec-light-mode:not(.spec-scrolled) img.spec-logo-char-img {
+  filter: brightness(0) !important;
+}
+
+/* Pure white on scroll / dark mode */
+html.spec-scrolled img.spec-logo-char-img,
+html.spec-dark-mode img.spec-logo-char-img,
+html.spec-scrolled [ref="logoRef"] img,
+html.spec-dark-mode [ref="logoRef"] img {
+  filter: brightness(0) invert(1) !important;
+}
+
+
+/* Top Chrome Navigation */
+.spec-landing-chrome {
+  direction: ltr !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  pointer-events: none;
+}
+.spec-landing-chrome > * {
+  pointer-events: auto;
+}
+
+/* Hide language switcher on scroll */
+html.spec-scrolled .spec-nav-lang-switcher,
+html.spec-dark-mode .spec-nav-lang-switcher {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(-8px) !important;
+}
+
+/* Mobile layout: avoid collision between logo and navbar items */
+@media (max-width: 768px) {
+  .spec-nav-scene,
+  .spec-nav-divider,
+  [ref="navSceneRef"] {
+    display: none !important;
+  }
+  .spec-landing-chrome {
+    gap: 12px !important;
+    padding: var(--space-4) 14px !important;
+  }
+  .spec-nav-lang-switcher {
+    font-size: 9px !important;
+  }
+}
+
+/* Mobile responsive video framing (desktop 100% untouched) */
+@media (max-width: 768px) {
+  .spec-scrub-box,
+  [ref="scrubBoxRef"] {
+    width: 92% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
+    max-height: 80vh !important;
+  }
+}
+
+/* Space gap between 'SPEC' and 'MEDIA' */
+.spec-char-gap {
+  display: inline-block;
+  width: clamp(10px, 1.4vw, 22px);
+}
+
+/* Hover lift & ambient crimson glow */
+.spec-kinetic-logo:hover {
+  filter: drop-shadow(0 0 16px rgba(158, 27, 36, 0.65));
+}
+.spec-kinetic-logo:hover .spec-logo-char-img {
+  transform: translateY(-2px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+  .spec-logo-char-img {
+    height: clamp(16px, 3.5vw, 26px);
+  }
+  .spec-img-chars-wrap {
+    gap: 1px;
+  }
+}
+
+@media (max-width: 480px) {
+  .spec-logo-char-img {
+    height: clamp(14px, 4vw, 22px);
+  }
+  .spec-char-gap, .spec-img-chars-wrap .spec-char-gap {
+    width: 8px !important;
+  }
+}
+
+@media (min-width: 1600px) {
+  .spec-logo-char-img {
+    height: 44px;
+  }
+}
+
+
 @keyframes specCharReveal {
   0% {
     opacity: 0;
@@ -639,10 +805,7 @@ a:hover{color:#f5ead8}
     color: inherit;
   }
 }
-.spec-char-gap {
-  display: inline-block;
-  width: clamp(10px, 1.4vw, 22px);
-}
+
 
 /* --- THE REEL FLOATING PARTNER CARDS & CONSTELLATION --- */
 #spec-orbit-logos-container {
@@ -732,37 +895,37 @@ a:hover{color:#f5ead8}
 
   <div ref="{{ progressRef }}" style="position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--color-accent);z-index:90"></div>
 
-  <div ref="{{ chromeRef }}" style="position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:flex-end;gap:clamp(12px,2vw,28px);padding:var(--space-4) var(--space-6);z-index:70;mix-blend-mode:difference;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:#f5ead8">
-    <span ref="{{ navSceneRef }}" style="font-size:10px;opacity:.6">01 / index</span>
-    <span style="width:clamp(24px,6vw,90px);height:1px;background:#f5ead8;opacity:.4"></span>
-    <a href="#contact" style="color:inherit;padding:8px 0;border-bottom:1px solid transparent" style-hover="border-bottom-color:#f5ead8">[ contact ]</a>
-    <a href="#menu" style="color:inherit;padding:8px 0;border-bottom:1px solid transparent" style-hover="border-bottom-color:#f5ead8">[ menu ]</a>
+  <div ref="{{ chromeRef }}" class="spec-landing-chrome" style="position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:flex-end;gap:clamp(12px,2vw,28px);padding:var(--space-4) var(--space-6);z-index:70;mix-blend-mode:difference;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:#f5ead8;direction:ltr !important">
+    <span ref="{{ navSceneRef }}" class="spec-nav-scene" style="font-size:10px;opacity:.6">01 / index</span>
+    <span class="spec-nav-divider" style="width:clamp(24px,6vw,90px);height:1px;background:#f5ead8;opacity:.4"></span>
+    <div id="spec-lang-switcher" class="spec-nav-lang-switcher" style="display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.08em;transition:opacity .35s ease, transform .35s ease;pointer-events:auto">
+      <a href="/en/" id="spec-landing-lang-en" style="color:#f5ead8;text-decoration:none;opacity:1;font-weight:700;">EN</a>
+      <span style="opacity:0.35">/</span>
+      <a href="/ar/" id="spec-landing-lang-ar" dir="rtl" style="color:#f5ead8;text-decoration:none;opacity:0.45;font-weight:500;">العربية</a>
+    </div>
+    <a href="#contact" style="color:inherit;padding:8px 0;border-bottom:1px solid transparent;pointer-events:auto" style-hover="border-bottom-color:#f5ead8">[ contact ]</a>
+    <a href="#menu" style="color:inherit;padding:8px 0;border-bottom:1px solid transparent;pointer-events:auto" style-hover="border-bottom-color:#f5ead8">[ menu ]</a>
   </div>
 
-  <div ref="{{ logoRef }}" style="position:fixed;top:var(--space-4);left:var(--space-6);z-index:80;will-change:transform;pointer-events:none">
-    <div ref="{{ lettersRef }}" style="transform-origin:0 50%;display:flex;align-items:center">
+  <div ref="{{ logoRef }}" class="spec-landing-logo" style="position:fixed;top:var(--space-4);left:var(--space-6);z-index:80;will-change:transform;pointer-events:none;">
+    <div ref="{{ lettersRef }}" style="transform-origin:0 50%;display:flex;align-items:center;">
       <div class="spec-kinetic-logo" aria-label="SPEC MEDIA">
-        <span class="spec-mark">
-          <svg width="32" height="32" viewBox="0 0 40 40" fill="none" style="filter: drop-shadow(0 0 12px rgba(158, 27, 36, 0.65));">
-            <rect width="40" height="40" rx="9" fill="#9e1b24" />
-            <path d="M12 28L28 12M28 28L12 12" stroke="#f5ead8" stroke-width="3.5" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <span class="spec-chars-wrap">
-          <span class="spec-char" style="--char-i:0">S</span>
-          <span class="spec-char" style="--char-i:1">P</span>
-          <span class="spec-char" style="--char-i:2">E</span>
-          <span class="spec-char" style="--char-i:3">C</span>
+<span class="spec-chars-wrap spec-img-chars-wrap">
+          <span class="spec-char spec-char-img" style="--char-i:0"><svg viewBox="0 0 411 502" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 73 16 L 46 35 L 24 60 L 9 88 L 2 112 L 2 176 L 11 205 L 29 235 L 47 254 L 66 268 L 88 279 L 112 286 L 277 288 L 298 293 L 318 305 L 336 327 L 344 351 L 344 371 L 340 387 L 326 410 L 311 423 L 288 433 L 43 434 L 0 500 L 286 500 L 307 496 L 339 483 L 363 466 L 384 443 L 398 419 L 407 392 L 410 373 L 408 335 L 399 306 L 382 277 L 360 254 L 343 242 L 300 225 L 278 222 L 128 222 L 106 215 L 84 198 L 72 180 L 66 160 L 66 128 L 70 113 L 86 88 L 101 76 L 123 67 L 354 66 L 394 0 L 127 0 L 100 5 Z" fill="currentColor"/></svg></span>
+          <span class="spec-char spec-char-img" style="--char-i:1"><svg viewBox="0 0 402 496" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 322 22 L 285 6 L 253 0 L 0 0 L 31 66 L 251 66 L 266 69 L 287 78 L 313 100 L 328 125 L 334 147 L 332 184 L 320 211 L 297 236 L 265 252 L 247 255 L 1 255 L 2 495 L 67 495 L 68 321 L 247 321 L 276 317 L 308 306 L 345 282 L 372 252 L 388 223 L 398 190 L 400 145 L 397 126 L 386 93 L 370 66 L 343 37 Z" fill="currentColor"/></svg></span>
+          <span class="spec-char spec-char-img" style="--char-i:2"><svg viewBox="0 0 355 493" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 492 L 311 492 L 353 426 L 0 426 Z M 0 277 L 327 277 L 353 212 L 0 212 Z M 0 66 L 312 66 L 353 1 L 0 1 Z" fill="currentColor"/></svg></span>
+          <span class="spec-char spec-char-img" style="--char-i:3"><svg viewBox="0 0 404 498" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 231 0 L 184 8 L 145 22 L 104 46 L 61 85 L 38 116 L 16 160 L 2 215 L 0 259 L 5 299 L 22 351 L 47 394 L 81 432 L 118 460 L 166 483 L 209 494 L 259 497 L 304 491 L 337 481 L 371 465 L 399 445 L 349 401 L 312 420 L 260 431 L 209 427 L 167 412 L 141 396 L 122 380 L 93 344 L 74 303 L 66 260 L 66 236 L 71 204 L 89 159 L 112 127 L 152 93 L 179 79 L 207 70 L 232 66 L 266 66 L 313 77 L 335 87 L 359 103 L 402 54 L 370 31 L 317 9 L 277 1 Z" fill="currentColor"/></svg></span>
           <span class="spec-char-gap"></span>
-          <span class="spec-char" style="--char-i:4">M</span>
-          <span class="spec-char" style="--char-i:5">E</span>
-          <span class="spec-char" style="--char-i:6">D</span>
-          <span class="spec-char" style="--char-i:7">I</span>
-          <span class="spec-char" style="--char-i:8">A</span>
+          <span class="spec-char spec-char-img" style="--char-i:4"><svg viewBox="0 0 498 470" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 0 L 0 469 L 66 469 L 67 150 L 253 443 L 430 151 L 431 469 L 497 469 L 497 0 L 444 1 L 439 4 L 252 315 L 57 2 Z" fill="currentColor"/></svg></span>
+          <span class="spec-char spec-char-img" style="--char-i:5"><svg viewBox="0 0 382 492" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 491 L 380 491 L 381 425 L 52 425 Z M 22 213 L 22 278 L 381 278 L 380 212 Z M 12 0 L 41 66 L 381 66 L 381 0 Z" fill="currentColor"/></svg></span>
+          <span class="spec-char spec-char-img" style="--char-i:6"><svg viewBox="0 0 387 493" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 1 L 27 66 L 167 68 L 210 80 L 244 99 L 277 129 L 295 154 L 312 191 L 320 232 L 319 270 L 306 317 L 288 349 L 257 383 L 215 410 L 174 423 L 149 426 L 38 426 L 12 492 L 172 490 L 210 482 L 260 461 L 300 433 L 336 395 L 366 344 L 379 306 L 386 261 L 384 212 L 374 169 L 355 126 L 332 92 L 301 60 L 263 33 L 227 16 L 194 6 L 161 1 Z" fill="currentColor"/></svg></span>
+          <span class="spec-char spec-char-img" style="--char-i:7"><svg viewBox="0 0 61 494" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 1 L 0 492 L 60 492 L 60 1 Z" fill="currentColor"/></svg></span>
+          <span class="spec-char spec-char-img" style="--char-i:8"><svg viewBox="0 0 516 482" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 230 0 L 0 480 L 74 479 L 257 96 L 441 480 L 514 480 L 285 0 Z" fill="currentColor"/></svg></span>
         </span>
       </div>
     </div>
   </div>
+
 
   <section data-screen-label="01 Hero" style="background:var(--color-text);position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--space-6) var(--space-6) var(--space-8);box-sizing:border-box">
     <div ref="{{ heroCueRef }}" style="display:flex;justify-content:center;margin:auto 0 clamp(28px,6vh,80px);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:var(--color-neutral-400);transition:opacity .4s ease">[ scroll down ]</div>
@@ -778,7 +941,7 @@ a:hover{color:#f5ead8}
 
   <section data-screen-label="02 Frame scrub" style="background:var(--color-text);position:relative;z-index:1;height:260vh">
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center">
-      <div ref="{{ scrubBoxRef }}" style="position:relative;width:46%;height:52%;border-radius:var(--radius-lg);overflow:hidden;will-change:width,height;cursor:ew-resize;user-select:none;touch-action:none">
+      <div ref="{{ scrubBoxRef }}" class="spec-scrub-box" style="position:relative;width:46%;height:52%;border-radius:var(--radius-lg);overflow:hidden;will-change:width,height;cursor:ew-resize;user-select:none;touch-action:none">
         <canvas ref="{{ canvasScrubRef }}" style="display:block;width:100%;height:100%;object-fit:cover;background:#141211;position:absolute;inset:0;z-index:2;pointer-events:none;"></canvas>
         <video id="spec-scene2-video" playsinline muted preload="auto" style="display:none;width:100%;height:100%;object-fit:cover;background:#141211;position:absolute;inset:0;z-index:1;pointer-events:none;">
           <source src="https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/videos/scene2_brain.mp4" type="video/mp4">
@@ -2107,21 +2270,42 @@ class Component extends DCLogic {
 
       const box = this.scrubBoxRef.current;
       if (box) {
-        if (this.vp <= 0.70) {
-          const g = Math.min(1, this.vp / 0.45);
-          const ge = 1 - Math.pow(1 - g, 3);
-          box.style.width = (46 + 54 * ge).toFixed(1) + '%';
-          box.style.height = (52 + 48 * ge).toFixed(1) + '%';
-          box.style.borderRadius = ((1 - ge) * 20).toFixed(1) + 'px';
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+          box.style.aspectRatio = '16 / 9';
+          if (this.vp <= 0.70) {
+            const g = Math.min(1, this.vp / 0.45);
+            const ge = 1 - Math.pow(1 - g, 3);
+            box.style.width = (92 + 8 * ge).toFixed(1) + '%';
+            box.style.height = 'auto';
+            box.style.borderRadius = ((1 - ge) * 16).toFixed(1) + 'px';
+          } else {
+            const exitP = Math.min(1, (this.vp - 0.70) / 0.30);
+            const exitEase = 1 - Math.pow(1 - exitP, 2);
+            const w = 100 - (8 * exitEase);
+            box.style.width = w.toFixed(1) + '%';
+            box.style.height = 'auto';
+            box.style.borderRadius = (exitEase * 16).toFixed(1) + 'px';
+          }
         } else {
-          // At the end of the video: smoothly contract to compact frame
-          const exitP = Math.min(1, (this.vp - 0.70) / 0.30);
-          const exitEase = 1 - Math.pow(1 - exitP, 2);
-          const w = 100 - (58 * exitEase); // collapses from 100% down to 42%
-          const h = 100 - (52 * exitEase); // collapses from 100% down to 48%
-          box.style.width = w.toFixed(1) + '%';
-          box.style.height = h.toFixed(1) + '%';
-          box.style.borderRadius = (exitEase * 18).toFixed(1) + 'px';
+          // Desktop: 100% UNCHANGED and preserved
+          box.style.aspectRatio = '';
+          if (this.vp <= 0.70) {
+            const g = Math.min(1, this.vp / 0.45);
+            const ge = 1 - Math.pow(1 - g, 3);
+            box.style.width = (46 + 54 * ge).toFixed(1) + '%';
+            box.style.height = (52 + 48 * ge).toFixed(1) + '%';
+            box.style.borderRadius = ((1 - ge) * 20).toFixed(1) + 'px';
+          } else {
+            // At the end of the video: smoothly contract to compact frame
+            const exitP = Math.min(1, (this.vp - 0.70) / 0.30);
+            const exitEase = 1 - Math.pow(1 - exitP, 2);
+            const w = 100 - (58 * exitEase); // collapses from 100% down to 42%
+            const h = 100 - (52 * exitEase); // collapses from 100% down to 48%
+            box.style.width = w.toFixed(1) + '%';
+            box.style.height = h.toFixed(1) + '%';
+            box.style.borderRadius = (exitEase * 18).toFixed(1) + 'px';
+          }
         }
       }
     }
@@ -2293,6 +2477,9 @@ class Component extends DCLogic {
   // then smoothly transitions on scroll into deep obsidian dark mode.
   updateTheme(t){
     const root = this.pageRef.current; if (!root) return;
+    const isScrolled = (window.scrollY || 0) > 40 || t > 0.08;
+    document.documentElement.classList.toggle('spec-scrolled', isScrolled);
+    document.documentElement.classList.toggle('spec-dark-mode', isScrolled);
     if (Math.abs(t - (this.lastThemeP ?? -1)) < 0.003) return;
     this.lastThemeP = t;
 

@@ -71,10 +71,60 @@ class WorkProject(models.Model):
     solution = models.TextField(blank=True, help_text="The strategic execution by Spec Media")
     deliverables = models.TextField(blank=True, help_text="Comma-separated deliverables (e.g. Design System, Custom Shaders, Headless CMS)")
     kpis = models.TextField(blank=True, help_text="Semicolon-separated KPI results (e.g. +312% Organic Growth; 4.8x ROAS; #1 Dubai Ranking)")
+    # Arabic Localization Fields
+    title_ar = models.CharField(max_length=200, blank=True, help_text="Arabic project title")
+    client_ar = models.CharField(max_length=150, blank=True, help_text="Arabic client name")
+    summary_ar = models.TextField(blank=True, help_text="Arabic summary displayed on cards")
+    challenge_ar = models.TextField(blank=True, help_text="Arabic commercial challenge")
+    solution_ar = models.TextField(blank=True, help_text="Arabic strategic solution")
+    deliverables_ar = models.TextField(blank=True, help_text="Comma-separated Arabic deliverables")
+    kpis_ar = models.TextField(blank=True, help_text="Semicolon-separated Arabic KPIs")
+
     is_featured = models.BooleanField(default=False, help_text="Feature prominently on homepage and work grid")
     sort_order = models.PositiveIntegerField(default=0, help_text="Display priority (lower numbers appear first)")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    DISCIPLINE_AR = {
+        'Web & Experience Systems': 'أنظمة الويب والتجارب الرقمية',
+        'SEO & Organic Growth': 'تحسين محركات البحث والنمو الطبيعي',
+        'AI Marketing & Automation': 'التسويق بالذكاء الاصطناعي والأتمتة',
+        'Brand Architecture & Design': 'هندسة العلامات التجارية والتصميم',
+        'Paid Performance Media': 'وسائط الأداء الإعلاني المدفوع',
+        'Content & Motion Production': 'إنتاج المحتوى والوسائط الحركية',
+    }
+
+    MARKET_AR = {
+        'Dubai': 'دبي',
+        'UAE': 'الإمارات',
+        'MENA': 'الشرق الأوسط',
+        'Global': 'عالمي',
+    }
+
+    TAG_AR = {
+        'Creative direction': 'إخراج إبداعي',
+        'Creative Direction': 'إخراج إبداعي',
+        'Visual identity': 'هوية بصرية',
+        'Visual Identity': 'هوية بصرية',
+        'Motion': 'حركة سينمائية',
+        'Web design': 'تصميم المواقع',
+        'Website': 'موقع إلكتروني',
+        'Campaign': 'إنتاج الحملات',
+        'Brand strategy': 'استراتيجية العلامة',
+        'Brand Strategy': 'استراتيجية العلامة',
+        'Identity': 'هوية العلامة',
+        'Content': 'أنظمة المحتوى',
+        'Design System': 'نظام التصميم',
+        'Custom Shaders': 'مظللات برمجية مخصصة',
+        'Headless CMS': 'إدارة محتوى متطورة',
+        'Technical SEO': 'سيو تقني متقدم',
+        'Organic Growth': 'نمو طبيعي متسارع',
+        'Performance Media': 'وسائط الأداء',
+        'AI Strategy': 'استراتيجية الذكاء الاصطناعي',
+        'Conversion Rate': 'معدل التحويل',
+        'Brand Systems': 'أنظمة العلامات',
+        'Brand Architecture': 'هندسة العلامة',
+    }
 
     class Meta:
         verbose_name = "Work Project"
@@ -93,6 +143,54 @@ class WorkProject(models.Model):
         if not self.deliverables:
             return []
         return [d.strip() for d in self.deliverables.split(',') if d.strip()]
+
+    def get_title(self, lang='en'):
+        if lang == 'ar' and self.title_ar:
+            return self.title_ar
+        return self.title
+
+    def get_client(self, lang='en'):
+        if lang == 'ar' and self.client_ar:
+            return self.client_ar
+        return self.client
+
+    def get_summary(self, lang='en'):
+        if lang == 'ar' and self.summary_ar:
+            return self.summary_ar
+        return self.summary
+
+    def get_challenge(self, lang='en'):
+        if lang == 'ar' and self.challenge_ar:
+            return self.challenge_ar
+        return self.challenge
+
+    def get_solution(self, lang='en'):
+        if lang == 'ar' and self.solution_ar:
+            return self.solution_ar
+        return self.solution
+
+    def get_discipline(self, lang='en'):
+        if lang == 'ar':
+            return self.DISCIPLINE_AR.get(self.discipline, self.discipline)
+        return self.discipline
+
+    def get_market(self, lang='en'):
+        if lang == 'ar':
+            return self.MARKET_AR.get(self.market, self.market)
+        return self.market
+
+    def get_deliverables(self, lang='en'):
+        if lang == 'ar' and self.deliverables_ar:
+            return [d.strip() for d in self.deliverables_ar.split(',') if d.strip()]
+        deliverables = self.deliverable_list()
+        if lang == 'ar':
+            return [self.TAG_AR.get(d, self.TAG_AR.get(d.strip(), d)) for d in deliverables]
+        return deliverables
+
+    def get_kpis(self, lang='en'):
+        if lang == 'ar' and self.kpis_ar:
+            return [k.strip() for k in self.kpis_ar.split(';') if k.strip()]
+        return self.kpi_list()
 
 
 class SiteSettings(models.Model):

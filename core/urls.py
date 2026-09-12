@@ -21,6 +21,9 @@ urlpatterns = [
     path('sitemap.xml', views.sitemap_view, name='sitemap'),
     path('robots.txt', views.robots_txt_view, name='robots'),
 
+    # Language switcher
+    path('set-language/', views.set_language_view, name='set-language'),
+
     # REST APIs for Settings & Media
     path('api/settings/', views.SiteSettingsAPIView.as_view(), name='api-settings'),
     path('api/upload/', views.MediaUploadAPIView.as_view(), name='api-upload'),

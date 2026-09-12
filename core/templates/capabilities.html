@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">{% load i18n %}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/cursor.css">
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
@@ -19,7 +19,7 @@
     :root {
       --color-bg: #f5ead8;
       --color-surface: #ebddc5;
-      --color-dark: #121110;
+      --color-dark: #000000;
       --color-dark-surface: #1a1816;
       --color-dark-card: #201e1c;
       --color-accent: #9e1b24;
@@ -46,7 +46,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background-color: var(--color-dark);
+      background: #000000;
       color: var(--color-bg);
       font-family: var(--font-body);
       min-height: 100vh;
@@ -630,7 +630,75 @@
         padding-top: 24px;
       }
     }
-  </style>
+  
+    .nav-lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 234, 216, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 11px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.12em;
+      text-transform: none;
+      line-height: 1;
+      margin-left: 4px;
+    }
+    .nav-lang-switcher a {
+      color: #f5ead8;
+      text-decoration: none;
+      opacity: 0.45;
+      transition: opacity 0.2s ease, color 0.2s ease;
+      font-weight: 500;
+    }
+    .nav-lang-switcher a:hover {
+      opacity: 0.85;
+    }
+    .nav-lang-switcher a.active {
+      opacity: 1;
+      font-weight: 700;
+      color: #f5ead8;
+    }
+    .nav-lang-switcher .sep {
+      opacity: 0.25;
+      color: #f5ead8;
+      user-select: none;
+    }
+    @media (max-width: 640px) {
+      .nav { padding: 12px 16px; }
+      .nav-logo-text { font-size: 16px; }
+      .nav-links { gap: 10px; font-size: 10px; }
+      .nav-cta { display: none; }
+    }
+  
+    /* Universal RTL overrides */
+    html[dir="rtl"] { direction: rtl; }
+    html[dir="rtl"] body {
+      text-align: right;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif !important;
+    }
+    html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] .hero-title, html[dir="rtl"] .hero-eyebrow {
+      font-family: 'Cairo', sans-serif !important;
+    }
+    html[dir="rtl"] .nav { direction: rtl; }
+    html[dir="rtl"] .nav-links { flex-direction: row-reverse; }
+    html[dir="rtl"] .nav-lang-switcher { margin-left: 0; margin-right: 4px; }
+    html[dir="rtl"] .disc-col-3 { border-left: none; border-right: 1px solid rgba(255, 255, 255, 0.08); padding-left: 0; padding-right: clamp(16px, 2.5vw, 32px); }
+    html[dir="rtl"] .editorial-item { direction: rtl; }
+
+  
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(158, 27, 36, 0.08) 0%, rgba(0, 0, 0, 0.85) 65%, #000000 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+</style>
 </head>
 <body>
 
@@ -642,7 +710,7 @@
 
   <!-- Top Navigation -->
   <header class="nav">
-    <a href="/" class="nav-logo" aria-label="Spec Media Home">
+    <a href="{% url 'core:landing' %}" class="nav-logo" aria-label="Spec Media Home">
       <span class="nav-logo-mark">
         <svg width="16" height="16" viewBox="0 0 40 40" fill="none">
           <path d="M12 28L28 12M28 28L12 12" stroke="#f5ead8" stroke-width="4.5" stroke-linecap="round"/>
@@ -651,10 +719,15 @@
       <span class="nav-logo-text">SPEC MEDIA</span>
     </a>
     <nav class="nav-links mono">
-      <a href="/work/" class="nav-link">[ work ]</a>
-      <a href="/studio/" class="nav-link">[ studio ]</a>
-      <a href="/capabilities/" class="nav-link active">[ capabilities ]</a>
-      <a href="/#contact" class="nav-link nav-cta" id="nav-contact-link">[ initiate inquiry &rarr; ]</a>
+      <a href="{% url 'core:work' %}" class="nav-link">{% trans "[ work ]" %}</a>
+      <a href="{% url 'core:studio' %}" class="nav-link">{% trans "[ studio ]" %}</a>
+      <a href="{% url 'core:capabilities' %}" class="nav-link active">{% trans "[ capabilities ]" %}</a>
+      <a href="{% url 'core:landing' %}#contact" class="nav-link nav-cta" id="nav-contact-link">{% trans "[ initiate inquiry &rarr; ]" %}</a>
+      <div class="nav-lang-switcher" aria-label="Language switcher">
+        <a href="{{ en_url }}" class="{% if LANGUAGE_CODE == 'en' %}active{% endif %}" title="English">EN</a>
+        <span class="sep">|</span>
+        <a href="{{ ar_url }}" class="{% if LANGUAGE_CODE == 'ar' %}active{% endif %}" dir="rtl" title="العربية">العربية</a>
+      </div>
     </nav>
   </header>
 
@@ -663,30 +736,30 @@
     <section class="cap-hero">
       <div class="hero-eyebrow mono">
         <span class="hero-eyebrow-dot"></span>
-        <span>Full-Spectrum Architecture // End-to-End Suite</span>
+        <span>{% trans "Full-Spectrum Architecture // End-to-End Suite" %}</span>
       </div>
-      <h1 class="hero-title">Four disciplines. One singular focus.</h1>
+      <h1 class="hero-title">{% trans "Four disciplines. One singular focus." %}</h1>
       <p class="hero-sub">
-        We dismantle the friction between upstream brand strategy, cinematic production, paid distribution, and iterative content systems.
+        {% trans "We dismantle the friction between upstream brand strategy, cinematic production, paid distribution, and iterative content systems." %}
       </p>
 
       <!-- Live Capabilities Ticker -->
       <div class="cap-ticker mono">
-        <div class="ticker-item"><span class="num">01</span> STRATEGY</div>
+        <div class="ticker-item"><span class="num">01</span> {% trans "01 STRATEGY" %}</div>
         <div style="width:1px; height:12px; background:rgba(255,255,255,0.12)"></div>
-        <div class="ticker-item"><span class="num">02</span> PRODUCTION</div>
+        <div class="ticker-item"><span class="num">02</span> {% trans "02 PRODUCTION" %}</div>
         <div style="width:1px; height:12px; background:rgba(255,255,255,0.12)"></div>
-        <div class="ticker-item"><span class="num">03</span> PERFORMANCE MEDIA</div>
+        <div class="ticker-item"><span class="num">03</span> {% trans "03 PERFORMANCE MEDIA" %}</div>
         <div style="width:1px; height:12px; background:rgba(255,255,255,0.12)"></div>
-        <div class="ticker-item"><span class="num">04</span> CONTENT SYSTEMS</div>
+        <div class="ticker-item"><span class="num">04</span> {% trans "04 CONTENT SYSTEMS" %}</div>
       </div>
     </section>
 
     <!-- 4 Disciplines Architecture Cards -->
     <section>
       <div class="section-header">
-        <div class="section-eyebrow mono">[ The Core Disciplines ]</div>
-        <h2 class="section-title">Engineered to compound enterprise equity.</h2>
+        <div class="section-eyebrow mono">{% trans "[ The Core Disciplines ]" %}</div>
+        <h2 class="section-title">{% trans "Engineered to compound enterprise equity." %}</h2>
       </div>
 
       <div class="disciplines-wrap" id="disciplines-container">
@@ -694,32 +767,32 @@
         <article class="discipline-card" data-tilt-card>
           <div class="discipline-card-spotlight"></div>
           <div class="disc-col-1">
-            <div class="disc-idx mono">01 // DISCIPLINE</div>
-            <h3 class="disc-title">Brand Strategy & Architecture</h3>
-            <span class="disc-badge">Upstream Moat</span>
+            <div class="disc-idx mono">{% trans "01 // DISCIPLINE" %}</div>
+            <h3 class="disc-title">{% trans "Brand Strategy & Architecture" %}</h3>
+            <span class="disc-badge">{% trans "Upstream Moat" %}</span>
           </div>
 
           <div class="disc-col-2">
             <p class="disc-desc">
-              We synthesize the core positioning, voice, and visual architecture that define category leaders. From founder narrative synthesis to comprehensive brand guidelines, we design systems that remain iconic and culturally dominant over decades.
+              {% trans "We synthesize the core positioning, voice, and visual architecture that define category leaders. From founder narrative synthesis to comprehensive brand guidelines, we design systems that remain iconic and culturally dominant over decades." %}
             </p>
-            <div class="deliverables-title mono">Core Deliverables:</div>
+            <div class="deliverables-title mono">{% trans "Core Deliverables:" %}</div>
             <div class="deliverables-grid mono">
-              <span class="deliverable-chip">Market Positioning Matrix</span>
-              <span class="deliverable-chip">Visual Identity Systems</span>
-              <span class="deliverable-chip">Typography & Token Libraries</span>
-              <span class="deliverable-chip">Brand Architecture Blueprint</span>
-              <span class="deliverable-chip">Verbal Voice & Tone Guidelines</span>
+              <span class="deliverable-chip">{% trans "Market Positioning Matrix" %}</span>
+              <span class="deliverable-chip">{% trans "Visual Identity Systems" %}</span>
+              <span class="deliverable-chip">{% trans "Typography & Token Libraries" %}</span>
+              <span class="deliverable-chip">{% trans "Brand Architecture Blueprint" %}</span>
+              <span class="deliverable-chip">{% trans "Verbal Voice & Tone Guidelines" %}</span>
             </div>
           </div>
 
           <div class="disc-col-3">
             <div class="outcome-box">
-              <div class="outcome-label mono">EXPECTED OUTCOME</div>
+              <div class="outcome-label mono">{% trans "EXPECTED OUTCOME" %}</div>
               <div class="outcome-val">+240<span class="accent">%</span></div>
-              <div class="outcome-sub">Target Valuation & Brand Equity</div>
+              <div class="outcome-sub">{% trans "Target Valuation & Brand Equity" %}</div>
             </div>
-            <a href="/#contact" class="disc-action-btn">Inquire Service &rarr;</a>
+            <a href="{% url 'core:landing' %}#contact" class="disc-action-btn">{% trans "Inquire Service &rarr;" %}</a>
           </div>
         </article>
 
@@ -727,32 +800,32 @@
         <article class="discipline-card" data-tilt-card>
           <div class="discipline-card-spotlight"></div>
           <div class="disc-col-1">
-            <div class="disc-idx mono">02 // DISCIPLINE</div>
-            <h3 class="disc-title">Campaign Production & Film</h3>
-            <span class="disc-badge">Cinema Craft</span>
+            <div class="disc-idx mono">{% trans "02 // DISCIPLINE" %}</div>
+            <h3 class="disc-title">{% trans "Campaign Production & Film" %}</h3>
+            <span class="disc-badge">{% trans "Cinema Craft" %}</span>
           </div>
 
           <div class="disc-col-2">
             <p class="disc-desc">
-              Cinematic live-action film, high-end 3D motion graphics, and editorial craft produced with an obsession for emotional resonance. We orchestrate treatment, casting, bespoke sound design, master color grading, and final asset packaging.
+              {% trans "Cinematic live-action film, high-end 3D motion graphics, and editorial craft produced with an obsession for emotional resonance. We orchestrate treatment, casting, bespoke sound design, master color grading, and final asset packaging." %}
             </p>
-            <div class="deliverables-title mono">Core Deliverables:</div>
+            <div class="deliverables-title mono">{% trans "Core Deliverables:" %}</div>
             <div class="deliverables-grid mono">
-              <span class="deliverable-chip">Hero Launch Films</span>
-              <span class="deliverable-chip">3D CGI & Spatial VFX</span>
-              <span class="deliverable-chip">Sonic Scoring & Sound Design</span>
-              <span class="deliverable-chip">High-Speed Visual Cuts</span>
-              <span class="deliverable-chip">Master Color Grading (ACES)</span>
+              <span class="deliverable-chip">{% trans "Hero Launch Films" %}</span>
+              <span class="deliverable-chip">{% trans "3D CGI & Spatial VFX" %}</span>
+              <span class="deliverable-chip">{% trans "Sonic Scoring & Sound Design" %}</span>
+              <span class="deliverable-chip">{% trans "High-Speed Visual Cuts" %}</span>
+              <span class="deliverable-chip">{% trans "Master Color Grading (ACES)" %}</span>
             </div>
           </div>
 
           <div class="disc-col-3">
             <div class="outcome-box">
-              <div class="outcome-label mono">EXPECTED OUTCOME</div>
+              <div class="outcome-label mono">{% trans "EXPECTED OUTCOME" %}</div>
               <div class="outcome-val">12<span class="accent">M+</span></div>
-              <div class="outcome-sub">High-Intent Organic Views</div>
+              <div class="outcome-sub">{% trans "High-Intent Organic Views" %}</div>
             </div>
-            <a href="/#contact" class="disc-action-btn">Inquire Service &rarr;</a>
+            <a href="{% url 'core:landing' %}#contact" class="disc-action-btn">{% trans "Inquire Service &rarr;" %}</a>
           </div>
         </article>
 
@@ -760,32 +833,32 @@
         <article class="discipline-card" data-tilt-card>
           <div class="discipline-card-spotlight"></div>
           <div class="disc-col-1">
-            <div class="disc-idx mono">03 // DISCIPLINE</div>
-            <h3 class="disc-title">Performance Media & Growth</h3>
-            <span class="disc-badge">Algorithmic Moat</span>
+            <div class="disc-idx mono">{% trans "03 // DISCIPLINE" %}</div>
+            <h3 class="disc-title">{% trans "Performance Media & Growth" %}</h3>
+            <span class="disc-badge">{% trans "Algorithmic Moat" %}</span>
           </div>
 
           <div class="disc-col-2">
             <p class="disc-desc">
-              Creative that directly scales customer acquisition efficiency and lifetime value. We engineer multi-variant ad systems tested against real-time conversion models across Meta, TikTok, YouTube, and programmatic inventory.
+              {% trans "Creative that directly scales customer acquisition efficiency and lifetime value. We engineer multi-variant ad systems tested against real-time conversion models across Meta, TikTok, YouTube, and programmatic inventory." %}
             </p>
-            <div class="deliverables-title mono">Core Deliverables:</div>
+            <div class="deliverables-title mono">{% trans "Core Deliverables:" %}</div>
             <div class="deliverables-grid mono">
-              <span class="deliverable-chip">Multi-Variant Creative Testing</span>
-              <span class="deliverable-chip">Algorithmic Acquisition Funnels</span>
-              <span class="deliverable-chip">Retention & LTV Architecture</span>
-              <span class="deliverable-chip">Server-Side Attribution (CAPI)</span>
-              <span class="deliverable-chip">Real-Time Performance Dashboards</span>
+              <span class="deliverable-chip">{% trans "Multi-Variant Creative Testing" %}</span>
+              <span class="deliverable-chip">{% trans "Algorithmic Acquisition Funnels" %}</span>
+              <span class="deliverable-chip">{% trans "Retention & LTV Architecture" %}</span>
+              <span class="deliverable-chip">{% trans "Server-Side Attribution (CAPI)" %}</span>
+              <span class="deliverable-chip">{% trans "Real-Time Performance Dashboards" %}</span>
             </div>
           </div>
 
           <div class="disc-col-3">
             <div class="outcome-box">
-              <div class="outcome-label mono">EXPECTED OUTCOME</div>
+              <div class="outcome-label mono">{% trans "EXPECTED OUTCOME" %}</div>
               <div class="outcome-val">3.8<span class="accent">x</span></div>
-              <div class="outcome-sub">Blended ROAS at Scale</div>
+              <div class="outcome-sub">{% trans "Blended ROAS at Scale" %}</div>
             </div>
-            <a href="/#contact" class="disc-action-btn">Inquire Service &rarr;</a>
+            <a href="{% url 'core:landing' %}#contact" class="disc-action-btn">{% trans "Inquire Service &rarr;" %}</a>
           </div>
         </article>
 
@@ -793,32 +866,32 @@
         <article class="discipline-card" data-tilt-card>
           <div class="discipline-card-spotlight"></div>
           <div class="disc-col-1">
-            <div class="disc-idx mono">04 // DISCIPLINE</div>
-            <h3 class="disc-title">Content Systems & Kinetics</h3>
-            <span class="disc-badge">Always-On Scale</span>
+            <div class="disc-idx mono">{% trans "04 // DISCIPLINE" %}</div>
+            <h3 class="disc-title">{% trans "Content Systems & Kinetics" %}</h3>
+            <span class="disc-badge">{% trans "Always-On Scale" %}</span>
           </div>
 
           <div class="disc-col-2">
             <p class="disc-desc">
-              Turnkey always-on content operations for hyper-growth enterprises. Continuous asset pipeline from our studio to social feeds, podcasts, interactive WebGL drops, and high-velocity digital editorial.
+              {% trans "Turnkey always-on content operations for hyper-growth enterprises. Continuous asset pipeline from our studio to social feeds, podcasts, interactive WebGL drops, and high-velocity digital editorial." %}
             </p>
-            <div class="deliverables-title mono">Core Deliverables:</div>
+            <div class="deliverables-title mono">{% trans "Core Deliverables:" %}</div>
             <div class="deliverables-grid mono">
-              <span class="deliverable-chip">Modular Creative Asset Engines</span>
-              <span class="deliverable-chip">Social-First Vertical Formats (9:16)</span>
-              <span class="deliverable-chip">Interactive WebGL Experiences</span>
-              <span class="deliverable-chip">Podcast & Audio Studio Drops</span>
-              <span class="deliverable-chip">Digital Editorial Publishing</span>
+              <span class="deliverable-chip">{% trans "Modular Creative Asset Engines" %}</span>
+              <span class="deliverable-chip">{% trans "Social-First Vertical Formats (9:16)" %}</span>
+              <span class="deliverable-chip">{% trans "Interactive WebGL Experiences" %}</span>
+              <span class="deliverable-chip">{% trans "Podcast & Audio Studio Drops" %}</span>
+              <span class="deliverable-chip">{% trans "Digital Editorial Publishing" %}</span>
             </div>
           </div>
 
           <div class="disc-col-3">
             <div class="outcome-box">
-              <div class="outcome-label mono">EXPECTED OUTCOME</div>
+              <div class="outcome-label mono">{% trans "EXPECTED OUTCOME" %}</div>
               <div class="outcome-val">100<span class="accent">+</span></div>
-              <div class="outcome-sub">High-Res Assets / Month</div>
+              <div class="outcome-sub">{% trans "High-Res Assets / Month" %}</div>
             </div>
-            <a href="/#contact" class="disc-action-btn">Inquire Service &rarr;</a>
+            <a href="{% url 'core:landing' %}#contact" class="disc-action-btn">{% trans "Inquire Service &rarr;" %}</a>
           </div>
         </article>
       </div>
@@ -826,56 +899,56 @@
 
     <!-- 5-Stage Sprint Engine (The Production Pipeline) -->
     <section class="pipeline-section">
-      <div class="section-eyebrow mono" style="color:var(--color-accent-light)">[ The Sprint Engine ]</div>
-      <h2 class="section-title">How we deploy category dominance in weeks.</h2>
+      <div class="section-eyebrow mono" style="color:var(--color-accent-light)">{% trans "[ The Sprint Engine ]" %}</div>
+      <h2 class="section-title">{% trans "How we deploy category dominance in weeks." %}</h2>
       <p style="color:var(--color-text-dim); max-width:54ch; margin-top:12px; font-size:15px;">
-        A phased, deterministic deployment framework refined over dozens of global enterprise transformations.
+        {% trans "A phased, deterministic deployment framework refined over dozens of global enterprise transformations." %}
       </p>
 
       <div class="pipeline-grid">
         <div class="pipeline-step">
           <div class="step-header mono">
-            <span class="step-idx">PHASE 01</span>
-            <span class="step-duration">WEEKS 1–2</span>
+            <span class="step-idx">{% trans "PHASE 01" %}</span>
+            <span class="step-duration">{% trans "WEEKS 1–2" %}</span>
           </div>
-          <h3 class="step-title">Discovery & Synthesis</h3>
-          <p class="step-desc">Deep-dive interviews, competitive positioning audit, quantitative market sizing, and brand archetype extraction.</p>
+          <h3 class="step-title">{% trans "Discovery & Synthesis" %}</h3>
+          <p class="step-desc">{% trans "Deep-dive interviews, competitive positioning audit, quantitative market sizing, and brand archetype extraction." %}</p>
         </div>
 
         <div class="pipeline-step">
           <div class="step-header mono">
-            <span class="step-idx">PHASE 02</span>
-            <span class="step-duration">WEEKS 2–3</span>
+            <span class="step-idx">{% trans "PHASE 02" %}</span>
+            <span class="step-duration">{% trans "WEEKS 2–3" %}</span>
           </div>
-          <h3 class="step-title">Creative Direction</h3>
-          <p class="step-desc">Treatment scripts, 3D moodboards, typographic system definition, and sonic identity architecture.</p>
+          <h3 class="step-title">{% trans "Creative Direction" %}</h3>
+          <p class="step-desc">{% trans "Treatment scripts, 3D moodboards, typographic system definition, and sonic identity architecture." %}</p>
         </div>
 
         <div class="pipeline-step">
           <div class="step-header mono">
-            <span class="step-idx">PHASE 03</span>
-            <span class="step-duration">WEEKS 3–5</span>
+            <span class="step-idx">{% trans "PHASE 03" %}</span>
+            <span class="step-duration">{% trans "WEEKS 3–5" %}</span>
           </div>
-          <h3 class="step-title">High-Fidelity Production</h3>
-          <p class="step-desc">Cinema production, studio shoot, 3D CGI rendering, WebGL engineering, and master color grading.</p>
+          <h3 class="step-title">{% trans "High-Fidelity Production" %}</h3>
+          <p class="step-desc">{% trans "Cinema production, studio shoot, 3D CGI rendering, WebGL engineering, and master color grading." %}</p>
         </div>
 
         <div class="pipeline-step">
           <div class="step-header mono">
-            <span class="step-idx">PHASE 04</span>
-            <span class="step-duration">WEEK 5+</span>
+            <span class="step-idx">{% trans "PHASE 04" %}</span>
+            <span class="step-duration">{% trans "WEEK 5+" %}</span>
           </div>
-          <h3 class="step-title">Algorithmic Launch</h3>
-          <p class="step-desc">Global rollout, multi-variant paid distribution, conversion tracking calibration, and PR seeding.</p>
+          <h3 class="step-title">{% trans "Algorithmic Launch" %}</h3>
+          <p class="step-desc">{% trans "Global rollout, multi-variant paid distribution, conversion tracking calibration, and PR seeding." %}</p>
         </div>
 
         <div class="pipeline-step">
           <div class="step-header mono">
-            <span class="step-idx">PHASE 05</span>
-            <span class="step-duration">ONGOING</span>
+            <span class="step-idx">{% trans "PHASE 05" %}</span>
+            <span class="step-duration">{% trans "ONGOING" %}</span>
           </div>
-          <h3 class="step-title">Iterative Systems</h3>
-          <p class="step-desc">Continuous asset delivery, ROAS optimization, community content, and quarterly creative refreshes.</p>
+          <h3 class="step-title">{% trans "Iterative Systems" %}</h3>
+          <p class="step-desc">{% trans "Continuous asset delivery, ROAS optimization, community content, and quarterly creative refreshes." %}</p>
         </div>
       </div>
     </section>
@@ -883,14 +956,14 @@
     <!-- Technical & Production Tech Stack Matrix -->
     <section class="stack-section">
       <div class="section-header">
-        <div class="section-eyebrow mono">[ Production Infrastructure ]</div>
-        <h2 class="section-title">Industry-standard cinema & digital tooling.</h2>
+        <div class="section-eyebrow mono">{% trans "[ Production Infrastructure ]" %}</div>
+        <h2 class="section-title">{% trans "Industry-standard cinema & digital tooling." %}</h2>
       </div>
 
       <div class="stack-grid">
         <div class="stack-card">
-          <div class="stack-cat mono">01 // CAMERAS & GLASS</div>
-          <h3 class="stack-title">Cinema Systems</h3>
+          <div class="stack-cat mono">{% trans "01 // CAMERAS & GLASS" %}</div>
+          <h3 class="stack-title">{% trans "Cinema Systems" %}</h3>
           <ul class="stack-list">
             <li class="stack-item">RED V-Raptor XL 8K VV</li>
             <li class="stack-item">ARRI Alexa Mini LF Large Format</li>
@@ -900,8 +973,8 @@
         </div>
 
         <div class="stack-card">
-          <div class="stack-cat mono">02 // 3D & REALTIME GPU</div>
-          <h3 class="stack-title">Spatial Engines</h3>
+          <div class="stack-cat mono">{% trans "02 // 3D & REALTIME GPU" %}</div>
+          <h3 class="stack-title">{% trans "Spatial Engines" %}</h3>
           <ul class="stack-list">
             <li class="stack-item">Unreal Engine 5.4 Virtual Production</li>
             <li class="stack-item">SideFX Houdini Procedural Systems</li>
@@ -911,8 +984,8 @@
         </div>
 
         <div class="stack-card">
-          <div class="stack-cat mono">03 // POST & ACOUSTICS</div>
-          <h3 class="stack-title">Finishing Suites</h3>
+          <div class="stack-cat mono">{% trans "03 // POST & ACOUSTICS" %}</div>
+          <h3 class="stack-title">{% trans "Finishing Suites" %}</h3>
           <ul class="stack-list">
             <li class="stack-item">DaVinci Resolve Studio 19 (ACEScc)</li>
             <li class="stack-item">Dolby Atmos Spatial Audio Mastering</li>
@@ -922,8 +995,8 @@
         </div>
 
         <div class="stack-card">
-          <div class="stack-cat mono">04 // ATTRIBUTION & DATA</div>
-          <h3 class="stack-title">Growth Infrastructure</h3>
+          <div class="stack-cat mono">{% trans "04 // ATTRIBUTION & DATA" %}</div>
+          <h3 class="stack-title">{% trans "Growth Infrastructure" %}</h3>
           <ul class="stack-list">
             <li class="stack-item">Meta Conversions API (CAPI Gateway)</li>
             <li class="stack-item">TikTok Events API & Pixel Systems</li>
@@ -936,13 +1009,13 @@
 
     <!-- Direct Transmission CTA Banner -->
     <section class="cta-banner">
-      <div class="mono" style="color:var(--color-accent-light); margin-bottom:14px;">[ INITIATE ENGAGEMENT ]</div>
-      <h2 class="cta-title">Ready to construct your cultural landmark?</h2>
+      <div class="mono" style="color:var(--color-accent-light); margin-bottom:14px;">{% trans "[ INITIATE ENGAGEMENT ]" %}</div>
+      <h2 class="cta-title">{% trans "Ready to construct your cultural landmark?" %}</h2>
       <p class="cta-sub">
-        Discuss your brand parameters and commercial objectives with our senior strategy partners.
+        {% trans "Discuss your brand parameters and commercial objectives with our senior strategy partners." %}
       </p>
-      <a href="/#contact" class="cta-btn" id="cap-contact-cta">
-        <span>Transmit Project Inquiry</span>
+      <a href="{% url 'core:landing' %}#contact" class="cta-btn" id="cap-contact-cta">
+        <span>{% trans "Transmit Project Inquiry" %}</span>
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="5" y1="12" x2="19" y2="12"></line>
           <polyline points="12 5 19 12 12 19"></polyline>
@@ -954,13 +1027,13 @@
   <!-- Footer -->
   <footer>
     <div class="mono">
-      <span>&copy; 2026 SPEC MEDIA. ALL RIGHTS RESERVED.</span>
+      <span>{% trans "&copy; 2026 SPEC MEDIA. ALL RIGHTS RESERVED." %}</span>
     </div>
     <div class="mono" style="display:flex; gap:20px;">
-      <a href="/work/" class="nav-link">Work</a>
-      <a href="/studio/" class="nav-link">Studio</a>
-      <a href="/capabilities/" class="nav-link">Capabilities</a>
-      <a href="#top" class="nav-link" id="back-to-top">&uarr; Back to Top</a>
+      <a href="{% url 'core:work' %}" class="nav-link">{% trans "Work" %}</a>
+      <a href="{% url 'core:studio' %}" class="nav-link">{% trans "Studio" %}</a>
+      <a href="{% url 'core:capabilities' %}" class="nav-link">{% trans "Capabilities" %}</a>
+      <a href="#top" class="nav-link" id="back-to-top">{% trans "&uarr; Back to Top" %}</a>
     </div>
   </footer>
 
@@ -1020,5 +1093,6 @@
       });
     }
   </script>
+
 </body>
 </html>

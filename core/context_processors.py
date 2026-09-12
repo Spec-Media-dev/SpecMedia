@@ -2,6 +2,7 @@ import json
 from django.conf import settings
 from .models import SEOPage, SiteSettings
 
+
 def supabase_context(request):
     """
     Exposes safe, public Supabase config to all Django templates.
@@ -23,6 +24,61 @@ def site_settings_context(request):
     return {
         'site_settings': settings_obj,
     }
+
+
+def language_context(request):
+    """
+    Exposes current language, RTL direction flag, and helper list of language switcher items.
+    """
+    current_lang = getattr(request, 'LANGUAGE_CODE', 'en')
+    is_rtl = (current_lang == 'ar')
+    path = request.path
+    valid_langs = [code for code, name in settings.LANGUAGES]
+
+    # Calculate translated URLs for switcher
+    query_str = request.GET.urlencode()
+    suffix = f"?{query_str}" if query_str else ""
+
+    lang_items = []
+    for code, name in settings.LANGUAGES:
+        segments = [s for s in path.strip('/').split('/') if s]
+        if segments and segments[0] in valid_langs:
+            segments[0] = code
+        else:
+            segments.insert(0, code)
+        target_path = '/' + '/'.join(segments)
+        if not target_path.endswith('/') and not '.' in segments[-1]:
+            target_path += '/'
+        target_url = f"{target_path}{suffix}"
+
+        lang_items.append({
+            'code': code,
+            'name': name,
+            'is_active': (code == current_lang),
+            'url': target_url,
+        })
+
+    en_item = next((item for item in lang_items if item['code'] == 'en'), None)
+    ar_item = next((item for item in lang_items if item['code'] == 'ar'), None)
+    en_url = en_item['url'] if en_item else '/en/'
+    ar_url = ar_item['url'] if ar_item else '/ar/'
+    other_url = ar_url if current_lang == 'en' else en_url
+    other_code = 'ar' if current_lang == 'en' else 'en'
+    other_name = 'العربية' if current_lang == 'en' else 'English'
+
+    return {
+        'LANGUAGE_CODE': current_lang,
+        'current_language': current_lang,
+        'is_rtl': is_rtl,
+        'languages': settings.LANGUAGES,
+        'language_items': lang_items,
+        'en_url': en_url,
+        'ar_url': ar_url,
+        'other_lang_url': other_url,
+        'other_lang_code': other_code,
+        'other_lang_name': other_name,
+    }
+
 
 
 def seo_context(request):

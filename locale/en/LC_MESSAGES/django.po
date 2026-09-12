@@ -1,0 +1,707 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "[ work ]"
+msgstr "[ work ]"
+
+msgid "[ studio ]"
+msgstr "[ studio ]"
+
+msgid "[ capabilities ]"
+msgstr "[ capabilities ]"
+
+msgid "[ initiate inquiry &rarr; ]"
+msgstr "[ initiate inquiry &rarr; ]"
+
+msgid "[ initiate inquiry → ]"
+msgstr "[ initiate inquiry → ]"
+
+msgid "[ contact ]"
+msgstr "[ contact ]"
+
+msgid "[ menu ]"
+msgstr "[ menu ]"
+
+msgid "01 / index"
+msgstr "01 / index"
+
+msgid "[ scroll down ]"
+msgstr "[ scroll down ]"
+
+msgid "Work"
+msgstr "Work"
+
+msgid "Studio"
+msgstr "Studio"
+
+msgid "Capabilities"
+msgstr "Capabilities"
+
+msgid "&uarr; Back to Top"
+msgstr "&uarr; Back to Top"
+
+msgid "[ Back to Top &uarr; ]"
+msgstr "[ Back to Top &uarr; ]"
+
+msgid "&copy; 2026 SPEC MEDIA. ALL RIGHTS RESERVED."
+msgstr "&copy; 2026 SPEC MEDIA. ALL RIGHTS RESERVED."
+
+msgid "&copy; 2026 Spec Media Inc. Built for brands with cultural gravity."
+msgstr "&copy; 2026 Spec Media Inc. Built for brands with cultural gravity."
+
+msgid "You feel the brand before it speaks®"
+msgstr "You feel the brand before it speaks®"
+
+msgid "Placeholder copy. Spec Media builds campaigns for companies that care how things feel and how they are perceived over time."
+msgstr "Placeholder copy. Spec Media builds campaigns for companies that care how things feel and how they are perceived over time."
+
+msgid "brand strategy"
+msgstr "brand strategy"
+
+msgid "campaign production"
+msgstr "campaign production"
+
+msgid "performance media"
+msgstr "performance media"
+
+msgid "content systems"
+msgstr "content systems"
+
+msgid "Selected work"
+msgstr "Selected work"
+
+msgid "2024 — 2026 · placeholder projects"
+msgstr "2024 — 2026 · placeholder projects"
+
+msgid "[ what we believe ]"
+msgstr "[ what we believe ]"
+
+msgid "Attention is the only currency that compounds."
+msgstr "Attention is the only currency that compounds."
+
+msgid "TRUSTED PARTNERS"
+msgstr "TRUSTED PARTNERS"
+
+msgid "04 / THE REEL"
+msgstr "04 / THE REEL"
+
+msgid "Trusted by teams that value exceptional digital experiences."
+msgstr "Trusted by teams that value exceptional digital experiences."
+
+msgid "capabilities — hover to inspect work"
+msgstr "capabilities — hover to inspect work"
+
+msgid "SELECT A DISCIPLINE"
+msgstr "SELECT A DISCIPLINE"
+
+msgid "Hover a capability to inspect production assets"
+msgstr "Hover a capability to inspect production assets"
+
+msgid "PORTFOLIO GALLERY"
+msgstr "PORTFOLIO GALLERY"
+
+msgid "End-to-End Capabilities — Spec Media"
+msgstr "End-to-End Capabilities — Spec Media"
+
+msgid "Full-Spectrum Architecture // End-to-End Suite"
+msgstr "Full-Spectrum Architecture // End-to-End Suite"
+
+msgid "Four disciplines. One singular focus."
+msgstr "Four disciplines. One singular focus."
+
+msgid "We dismantle the friction between upstream brand strategy, cinematic production, paid distribution, and iterative content systems."
+msgstr "We dismantle the friction between upstream brand strategy, cinematic production, paid distribution, and iterative content systems."
+
+msgid "01 STRATEGY"
+msgstr "01 STRATEGY"
+
+msgid "02 PRODUCTION"
+msgstr "02 PRODUCTION"
+
+msgid "03 PERFORMANCE MEDIA"
+msgstr "03 PERFORMANCE MEDIA"
+
+msgid "04 CONTENT SYSTEMS"
+msgstr "04 CONTENT SYSTEMS"
+
+msgid "[ The Core Disciplines ]"
+msgstr "[ The Core Disciplines ]"
+
+msgid "Engineered to compound enterprise equity."
+msgstr "Engineered to compound enterprise equity."
+
+msgid "01 // DISCIPLINE"
+msgstr "01 // DISCIPLINE"
+
+msgid "Brand Strategy & Architecture"
+msgstr "Brand Strategy & Architecture"
+
+msgid "Upstream Moat"
+msgstr "Upstream Moat"
+
+msgid "We synthesize the core positioning, voice, and visual architecture that define category leaders. From founder narrative synthesis to comprehensive brand guidelines, we design systems that remain iconic and culturally dominant over decades."
+msgstr "We synthesize the core positioning, voice, and visual architecture that define category leaders. From founder narrative synthesis to comprehensive brand guidelines, we design systems that remain iconic and culturally dominant over decades."
+
+msgid "Core Deliverables:"
+msgstr "Core Deliverables:"
+
+msgid "Market Positioning Matrix"
+msgstr "Market Positioning Matrix"
+
+msgid "Visual Identity Systems"
+msgstr "Visual Identity Systems"
+
+msgid "Typography & Token Libraries"
+msgstr "Typography & Token Libraries"
+
+msgid "Brand Architecture Blueprint"
+msgstr "Brand Architecture Blueprint"
+
+msgid "Verbal Voice & Tone Guidelines"
+msgstr "Verbal Voice & Tone Guidelines"
+
+msgid "EXPECTED OUTCOME"
+msgstr "EXPECTED OUTCOME"
+
+msgid "Target Valuation & Brand Equity"
+msgstr "Target Valuation & Brand Equity"
+
+msgid "Inquire Service &rarr;"
+msgstr "Inquire Service &rarr;"
+
+msgid "02 // DISCIPLINE"
+msgstr "02 // DISCIPLINE"
+
+msgid "Campaign Production & Film"
+msgstr "Campaign Production & Film"
+
+msgid "Cinema Craft"
+msgstr "Cinema Craft"
+
+msgid "Cinematic live-action film, high-end 3D motion graphics, and editorial craft produced with an obsession for emotional resonance. We orchestrate treatment, casting, bespoke sound design, master color grading, and final asset packaging."
+msgstr "Cinematic live-action film, high-end 3D motion graphics, and editorial craft produced with an obsession for emotional resonance. We orchestrate treatment, casting, bespoke sound design, master color grading, and final asset packaging."
+
+msgid "Hero Launch Films"
+msgstr "Hero Launch Films"
+
+msgid "3D CGI & Spatial VFX"
+msgstr "3D CGI & Spatial VFX"
+
+msgid "Sonic Scoring & Sound Design"
+msgstr "Sonic Scoring & Sound Design"
+
+msgid "High-Speed Visual Cuts"
+msgstr "High-Speed Visual Cuts"
+
+msgid "Master Color Grading (ACES)"
+msgstr "Master Color Grading (ACES)"
+
+msgid "High-Intent Organic Views"
+msgstr "High-Intent Organic Views"
+
+msgid "03 // DISCIPLINE"
+msgstr "03 // DISCIPLINE"
+
+msgid "Performance Media & Growth"
+msgstr "Performance Media & Growth"
+
+msgid "Algorithmic Moat"
+msgstr "Algorithmic Moat"
+
+msgid "Creative that directly scales customer acquisition efficiency and lifetime value. We engineer multi-variant ad systems tested against real-time conversion models across Meta, TikTok, YouTube, and programmatic inventory."
+msgstr "Creative that directly scales customer acquisition efficiency and lifetime value. We engineer multi-variant ad systems tested against real-time conversion models across Meta, TikTok, YouTube, and programmatic inventory."
+
+msgid "Multi-Variant Creative Testing"
+msgstr "Multi-Variant Creative Testing"
+
+msgid "Algorithmic Acquisition Funnels"
+msgstr "Algorithmic Acquisition Funnels"
+
+msgid "Retention & LTV Architecture"
+msgstr "Retention & LTV Architecture"
+
+msgid "Server-Side Attribution (CAPI)"
+msgstr "Server-Side Attribution (CAPI)"
+
+msgid "Real-Time Performance Dashboards"
+msgstr "Real-Time Performance Dashboards"
+
+msgid "Blended ROAS at Scale"
+msgstr "Blended ROAS at Scale"
+
+msgid "04 // DISCIPLINE"
+msgstr "04 // DISCIPLINE"
+
+msgid "Content Systems & Kinetics"
+msgstr "Content Systems & Kinetics"
+
+msgid "Always-On Scale"
+msgstr "Always-On Scale"
+
+msgid "Turnkey always-on content operations for hyper-growth enterprises. Continuous asset pipeline from our studio to social feeds, podcasts, interactive WebGL drops, and high-velocity digital editorial."
+msgstr "Turnkey always-on content operations for hyper-growth enterprises. Continuous asset pipeline from our studio to social feeds, podcasts, interactive WebGL drops, and high-velocity digital editorial."
+
+msgid "Modular Creative Asset Engines"
+msgstr "Modular Creative Asset Engines"
+
+msgid "Social-First Vertical Formats (9:16)"
+msgstr "Social-First Vertical Formats (9:16)"
+
+msgid "Interactive WebGL Experiences"
+msgstr "Interactive WebGL Experiences"
+
+msgid "Podcast & Audio Studio Drops"
+msgstr "Podcast & Audio Studio Drops"
+
+msgid "Digital Editorial Publishing"
+msgstr "Digital Editorial Publishing"
+
+msgid "High-Res Assets / Month"
+msgstr "High-Res Assets / Month"
+
+msgid "[ The Sprint Engine ]"
+msgstr "[ The Sprint Engine ]"
+
+msgid "How we deploy category dominance in weeks."
+msgstr "How we deploy category dominance in weeks."
+
+msgid "A phased, deterministic deployment framework refined over dozens of global enterprise transformations."
+msgstr "A phased, deterministic deployment framework refined over dozens of global enterprise transformations."
+
+msgid "PHASE 01"
+msgstr "PHASE 01"
+
+msgid "WEEKS 1–2"
+msgstr "WEEKS 1–2"
+
+msgid "Discovery & Synthesis"
+msgstr "Discovery & Synthesis"
+
+msgid "Deep-dive interviews, competitive positioning audit, quantitative market sizing, and brand archetype extraction."
+msgstr "Deep-dive interviews, competitive positioning audit, quantitative market sizing, and brand archetype extraction."
+
+msgid "PHASE 02"
+msgstr "PHASE 02"
+
+msgid "WEEKS 2–3"
+msgstr "WEEKS 2–3"
+
+msgid "Creative Direction"
+msgstr "Creative Direction"
+
+msgid "Treatment scripts, 3D moodboards, typographic system definition, and sonic identity architecture."
+msgstr "Treatment scripts, 3D moodboards, typographic system definition, and sonic identity architecture."
+
+msgid "PHASE 03"
+msgstr "PHASE 03"
+
+msgid "WEEKS 3–5"
+msgstr "WEEKS 3–5"
+
+msgid "High-Fidelity Production"
+msgstr "High-Fidelity Production"
+
+msgid "Cinema production, studio shoot, 3D CGI rendering, WebGL engineering, and master color grading."
+msgstr "Cinema production, studio shoot, 3D CGI rendering, WebGL engineering, and master color grading."
+
+msgid "PHASE 04"
+msgstr "PHASE 04"
+
+msgid "WEEK 5+"
+msgstr "WEEK 5+"
+
+msgid "Algorithmic Launch"
+msgstr "Algorithmic Launch"
+
+msgid "Global rollout, multi-variant paid distribution, conversion tracking calibration, and PR seeding."
+msgstr "Global rollout, multi-variant paid distribution, conversion tracking calibration, and PR seeding."
+
+msgid "PHASE 05"
+msgstr "PHASE 05"
+
+msgid "ONGOING"
+msgstr "ONGOING"
+
+msgid "Iterative Systems"
+msgstr "Iterative Systems"
+
+msgid "Continuous asset delivery, ROAS optimization, community content, and quarterly creative refreshes."
+msgstr "Continuous asset delivery, ROAS optimization, community content, and quarterly creative refreshes."
+
+msgid "[ Production Infrastructure ]"
+msgstr "[ Production Infrastructure ]"
+
+msgid "Industry-standard cinema & digital tooling."
+msgstr "Industry-standard cinema & digital tooling."
+
+msgid "01 // CAMERAS & GLASS"
+msgstr "01 // CAMERAS & GLASS"
+
+msgid "Cinema Systems"
+msgstr "Cinema Systems"
+
+msgid "02 // 3D & REALTIME GPU"
+msgstr "02 // 3D & REALTIME GPU"
+
+msgid "Spatial Engines"
+msgstr "Spatial Engines"
+
+msgid "03 // POST & ACOUSTICS"
+msgstr "03 // POST & ACOUSTICS"
+
+msgid "Finishing Suites"
+msgstr "Finishing Suites"
+
+msgid "04 // ATTRIBUTION & DATA"
+msgstr "04 // ATTRIBUTION & DATA"
+
+msgid "Growth Infrastructure"
+msgstr "Growth Infrastructure"
+
+msgid "[ INITIATE ENGAGEMENT ]"
+msgstr "[ INITIATE ENGAGEMENT ]"
+
+msgid "Ready to construct your cultural landmark?"
+msgstr "Ready to construct your cultural landmark?"
+
+msgid "Discuss your brand parameters and commercial objectives with our senior strategy partners."
+msgstr "Discuss your brand parameters and commercial objectives with our senior strategy partners."
+
+msgid "Transmit Project Inquiry"
+msgstr "Transmit Project Inquiry"
+
+msgid "The Studio & Ethos — Spec Media"
+msgstr "The Studio & Ethos — Spec Media"
+
+msgid "The Studio // Cultural Gravity"
+msgstr "The Studio // Cultural Gravity"
+
+msgid "Built for brands that demand cultural resonance."
+msgstr "Built for brands that demand cultural resonance."
+
+msgid "Spec Media is an independent creative studio operating at the intersection of cinematic craft, digital infrastructure, and high-velocity performance marketing."
+msgstr "Spec Media is an independent creative studio operating at the intersection of cinematic craft, digital infrastructure, and high-velocity performance marketing."
+
+msgid "PIPELINE:"
+msgstr "PIPELINE:"
+
+msgid "LIVE & INTAKE ACTIVE"
+msgstr "LIVE & INTAKE ACTIVE"
+
+msgid "CAPITAL CATALYZED:"
+msgstr "CAPITAL CATALYZED:"
+
+msgid "ACTIVE HUBS:"
+msgstr "ACTIVE HUBS:"
+
+msgid "04 (GLOBAL)"
+msgstr "04 (GLOBAL)"
+
+msgid "[ Core Philosophy & Moats ]"
+msgstr "[ Core Philosophy & Moats ]"
+
+msgid "The principles that govern our work."
+msgstr "The principles that govern our work."
+
+msgid "01 // MOAT"
+msgstr "01 // MOAT"
+
+msgid "Taste as an Unfair Advantage"
+msgstr "Taste as an Unfair Advantage"
+
+msgid "In an era of algorithmic homogenisation, aesthetic taste is not cosmetic; it is an economic barrier to entry."
+msgstr "In an era of algorithmic homogenisation, aesthetic taste is not cosmetic; it is an economic barrier to entry."
+
+msgid "02 // MOAT"
+msgstr "02 // MOAT"
+
+msgid "Zero Agency Friction"
+msgstr "Zero Agency Friction"
+
+msgid "No fragmented handoffs between strategy, cinema sets, and media buying. One integrated war room."
+msgstr "No fragmented handoffs between strategy, cinema sets, and media buying. One integrated war room."
+
+msgid "03 // MOAT"
+msgstr "03 // MOAT"
+
+msgid "High-Velocity Execution"
+msgstr "High-Velocity Execution"
+
+msgid "We trade bureaucratic approval cycles for rapid deployment sprints."
+msgstr "We trade bureaucratic approval cycles for rapid deployment sprints."
+
+msgid "04 // MOAT"
+msgstr "04 // MOAT"
+
+msgid "Enterprise Compounding"
+msgstr "Enterprise Compounding"
+
+msgid "Every asset is engineered to build long-term cultural and enterprise equity."
+msgstr "Every asset is engineered to build long-term cultural and enterprise equity."
+
+msgid "[ Operating Footprint ]"
+msgstr "[ Operating Footprint ]"
+
+msgid "Four Strategic Anchors."
+msgstr "Four Strategic Anchors."
+
+msgid "Global capability anchored in key creative and capital hubs."
+msgstr "Global capability anchored in key creative and capital hubs."
+
+msgid "DUBAI // HQ"
+msgstr "DUBAI // HQ"
+
+msgid "LONDON"
+msgstr "LONDON"
+
+msgid "NEW YORK"
+msgstr "NEW YORK"
+
+msgid "RIYADH"
+msgstr "RIYADH"
+
+msgid "[ Leadership & Collective ]"
+msgstr "[ Leadership & Collective ]"
+
+msgid "Operators, strategists, and cinematic directors."
+msgstr "Operators, strategists, and cinematic directors."
+
+msgid "Senior partners who lead every engagement from the front lines."
+msgstr "Senior partners who lead every engagement from the front lines."
+
+msgid "Founding Partner & Executive Creative Director"
+msgstr "Founding Partner & Executive Creative Director"
+
+msgid "Partner & Head of Brand Architecture"
+msgstr "Partner & Head of Brand Architecture"
+
+msgid "Partner & Head of Performance Media"
+msgstr "Partner & Head of Performance Media"
+
+msgid "Ready to build something iconic?"
+msgstr "Ready to build something iconic?"
+
+msgid "Initiate Collaboration &rarr;"
+msgstr "Initiate Collaboration &rarr;"
+
+msgid "Selected Work & Case Studies — Spec Media"
+msgstr "Selected Work & Case Studies — Spec Media"
+
+msgid "Selected Work & Case Studies // 2024 — 2026"
+msgstr "Selected Work & Case Studies // 2024 — 2026"
+
+msgid "Work that cuts through the noise."
+msgstr "Work that cuts through the noise."
+
+msgid "Every campaign, brand architecture, and kinetic system we deploy is engineered to capture cultural authority, accelerate enterprise pipeline, and deliver measurable commercial equity."
+msgstr "Every campaign, brand architecture, and kinetic system we deploy is engineered to capture cultural authority, accelerate enterprise pipeline, and deliver measurable commercial equity."
+
+msgid "All Works"
+msgstr "All Works"
+
+msgid "Brand Systems"
+msgstr "Brand Systems"
+
+msgid "Campaign Production"
+msgstr "Campaign Production"
+
+msgid "Performance Media"
+msgstr "Performance Media"
+
+msgid "Content Systems"
+msgstr "Content Systems"
+
+msgid "Grid"
+msgstr "Grid"
+
+msgid "List"
+msgstr "List"
+
+msgid "View Case Study &rarr;"
+msgstr "View Case Study &rarr;"
+
+msgid "Explore Scope"
+msgstr "Explore Scope"
+
+msgid "[ ← Back to Works Archive ]"
+msgstr "[ ← Back to Works Archive ]"
+
+msgid "[ Challenge & Context ]"
+msgstr "[ Challenge & Context ]"
+
+msgid "[ Strategic Execution ]"
+msgstr "[ Strategic Execution ]"
+
+msgid "[ Deliverables & Scope ]"
+msgstr "[ Deliverables & Scope ]"
+
+msgid "[ Verified Commercial KPIs ]"
+msgstr "[ Verified Commercial KPIs ]"
+
+msgid "Deliverables"
+msgstr "Deliverables"
+
+msgid "Next Case Study &rarr;"
+msgstr "Next Case Study &rarr;"
+
+msgid "Pipeline & CRM Portal — Spec Media"
+msgstr "Pipeline & CRM Portal — Spec Media"
+
+msgid "back to site"
+msgstr "back to site"
+
+msgid "Refresh"
+msgstr "Refresh"
+
+msgid "Database Pipeline Overview"
+msgstr "Database Pipeline Overview"
+
+msgid "Client Inquiries & CRM Analytics"
+msgstr "Client Inquiries & CRM Analytics"
+
+msgid "Total Inquiries"
+msgstr "Total Inquiries"
+
+msgid "All records in Supabase"
+msgstr "All records in Supabase"
+
+msgid "New Inquiries"
+msgstr "New Inquiries"
+
+msgid "Awaiting triage"
+msgstr "Awaiting triage"
+
+msgid "In active outreach"
+msgstr "In active outreach"
+
+msgid "Budget & fit verified"
+msgstr "Budget & fit verified"
+
+msgid "Won / Closed"
+msgstr "Won / Closed"
+
+msgid "Active studio clients"
+msgstr "Active studio clients"
+
+msgid "Conversion Rate"
+msgstr "Conversion Rate"
+
+msgid "Pipeline efficiency"
+msgstr "Pipeline efficiency"
+
+msgid "Market Distribution"
+msgstr "Market Distribution"
+
+msgid "Source: PostgreSQL View"
+msgstr "Source: PostgreSQL View"
+
+msgid "Loading market metrics..."
+msgstr "Loading market metrics..."
+
+msgid "System Health"
+msgstr "System Health"
+
+msgid "Django Backend:"
+msgstr "Django Backend:"
+
+msgid "Supabase Database:"
+msgstr "Supabase Database:"
+
+msgid "REST Endpoint:"
+msgstr "REST Endpoint:"
+
+msgid "Database Table:"
+msgstr "Database Table:"
+
+msgid "Lost"
+msgstr "Lost"
+
+msgid "Search by name, company, email..."
+msgstr "Search by name, company, email..."
+
+msgid "Insert Test Record"
+msgstr "Insert Test Record"
+
+msgid "Name (e.g. Marc Jacobs)"
+msgstr "Name (e.g. Marc Jacobs)"
+
+msgid "Email (e.g. marc@fashion.com)"
+msgstr "Email (e.g. marc@fashion.com)"
+
+msgid "Company (e.g. LVMH Luxury)"
+msgstr "Company (e.g. LVMH Luxury)"
+
+msgid "Market (e.g. us, europe, mena)"
+msgstr "Market (e.g. us, europe, mena)"
+
+msgid "Message / Brief notes..."
+msgstr "Message / Brief notes..."
+
+msgid "Connected (PostgreSQL)"
+msgstr "Connected (PostgreSQL)"
+
+msgid "Degraded"
+msgstr "Degraded"
+
+msgid "Offline"
+msgstr "Offline"
+
+msgid "Failed to load leads from Supabase."
+msgstr "Failed to load leads from Supabase."
+
+msgid "No leads found in this view."
+msgstr "No leads found in this view."
+
+msgid "Failed to update status in Supabase:"
+msgstr "Failed to update status in Supabase:"
+
+msgid "Upload Logo (PNG, SVG, WebP)"
+msgstr "Upload Logo (PNG, SVG, WebP)"
+
+msgid "Add to THE REEL"
+msgstr "Add to THE REEL"
+
+msgid "Strategic Solution"
+msgstr "Strategic Solution"
+
+msgid "Operator Authorization"
+msgstr "Operator Authorization"
+
+msgid "Spec Media Internal Portal"
+msgstr "Spec Media Internal Portal"
+
+msgid "Restricted Access"
+msgstr "Restricted Access"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Authorize Operator &rarr;"
+msgstr "Authorize Operator &rarr;"
+
+msgid "[ Return to Public Site ]"
+msgstr "[ Return to Public Site ]"
+
+msgid "Invalid operator username or password. Please verify your credentials."
+msgstr "Invalid operator username or password. Please verify your credentials."
+
+msgid "Access denied. The portal is restricted to administrators only."
+msgstr "Access denied. The portal is restricted to administrators only."
+
+msgid "404 // Coordinate Out of Bounds"
+msgstr "404 // Coordinate Out of Bounds"
+
+msgid "Signal Lost in Digital Space"
+msgstr "Signal Lost in Digital Space"
+
+msgid "The coordinate you requested does not exist or has been shifted across dimensions."
+msgstr "The coordinate you requested does not exist or has been shifted across dimensions."
+
+msgid "Return to Orbit / Home &rarr;"
+msgstr "Return to Orbit / Home &rarr;"

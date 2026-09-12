@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">{% load i18n %}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
     :root {
       --font-heading: 'Playfair Display', Georgia, serif;
       --font-body: 'Lora', Georgia, serif;
-      --bg: #141312;
+      --bg: #000000;
       --card-bg: #1c1a19;
       --border: rgba(245, 234, 216, 0.12);
       --text: #f5ead8;
@@ -29,7 +29,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: var(--bg);
+      background: #000000;
       color: var(--text);
       font-family: var(--font-sans);
       min-height: 100vh;
@@ -267,27 +267,83 @@
     }
 
     @media (max-width: 768px) {
-      header { padding: 20px 24px; }
-      .header-nav { display: none; }
+      header { padding: 16px 20px; }
+      .header-nav > a { display: none; }
+      .header-nav { display: flex; gap: 8px; }
       footer { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; }
     }
+  
+    .nav-lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 234, 216, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 11px;
+      font-family: var(--font-mono, ui-monospace, monospace);
+      letter-spacing: 0.12em;
+      text-transform: none;
+      line-height: 1;
+      margin-left: 4px;
+    }
+    .nav-lang-switcher a {
+      color: #f5ead8;
+      text-decoration: none;
+      opacity: 0.45;
+      transition: opacity 0.2s ease, color 0.2s ease;
+      font-weight: 500;
+    }
+    .nav-lang-switcher a:hover {
+      opacity: 0.85;
+    }
+    .nav-lang-switcher a.active {
+      opacity: 1;
+      font-weight: 700;
+      color: #f5ead8;
+    }
+    .nav-lang-switcher .sep {
+      opacity: 0.25;
+      color: #f5ead8;
+      user-select: none;
+    }
+
+    /* Universal RTL overrides */
+    html[dir="rtl"] { direction: rtl; }
+    html[dir="rtl"] body {
+      text-align: right;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif !important;
+    }
+    html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3 {
+      font-family: 'Cairo', sans-serif !important;
+    }
+    html[dir="rtl"] header { direction: rtl; }
+    html[dir="rtl"] .header-nav { flex-direction: row-reverse; }
+    html[dir="rtl"] .nav-lang-switcher { margin-left: 0; margin-right: 4px; }
+    html[dir="rtl"] .disc-col-3 { border-left: none; border-right: 1px solid rgba(255, 255, 255, 0.08); padding-left: 0; padding-right: clamp(16px, 2.5vw, 32px); }
+    html[dir="rtl"] .editorial-item { direction: rtl; }
+
   </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <a href="/" class="brand-logo">
+    <a href="{% url 'core:landing' %}" class="brand-logo">
       SPEC <span>MEDIA</span>
     </a>
     <nav class="header-nav">
-      <a href="/">Home</a>
-      <a href="/work/">Selected Work</a>
-      <a href="/studio/">Studio</a>
-      <a href="/capabilities/">Capabilities</a>
-      <a href="/dashboard/">Dashboard</a>
-      <a href="/contact/">Contact</a>
+      <a href="{% url 'core:work' %}">{% trans "[ work ]" %}</a>
+      <a href="{% url 'core:studio' %}">{% trans "[ studio ]" %}</a>
+      <a href="{% url 'core:capabilities' %}">{% trans "[ capabilities ]" %}</a>
+      <a href="{% url 'core:landing' %}#contact" style="color: var(--accent);">{% trans "[ initiate inquiry &rarr; ]" %}</a>
+      <div class="nav-lang-switcher" aria-label="Language switcher">
+        <a href="{{ en_url }}" class="{% if LANGUAGE_CODE == 'en' %}active{% endif %}" title="English">EN</a>
+        <span class="sep">|</span>
+        <a href="{{ ar_url }}" class="{% if LANGUAGE_CODE == 'ar' %}active{% endif %}" dir="rtl" title="العربية">العربية</a>
+      </div>
     </nav>
   </header>
 
@@ -300,30 +356,30 @@
       </p>
 
       <div class="actions-grid">
-        <a href="/" class="btn-primary">
+        <a href="{% url 'core:landing' %}" class="btn-primary">
           <span>Return Home</span> &rarr;
         </a>
-        <a href="/work/" class="btn-secondary">Selected Work</a>
-        <a href="/dashboard/" class="btn-secondary">Control Dashboard</a>
-        <a href="/contact/" class="btn-secondary">Book Consultation</a>
+        <a href="{% url 'core:work' %}" class="btn-secondary">Selected Work</a>
+        <a href="{% url 'core:dashboard' %}" class="btn-secondary">Control Dashboard</a>
+        <a href="{% url 'core:landing' %}#contact" class="btn-secondary">Book Consultation</a>
       </div>
 
       <div class="quick-routes-panel">
         <div class="panel-label">Canonical Discovery Pathways</div>
         <div class="routes-list">
-          <a href="/work/" class="route-card">
+          <a href="{% url 'core:work' %}" class="route-card">
             <div class="name">Selected Work</div>
             <div class="path">/work/ &rarr; Case studies & verified KPIs</div>
           </a>
-          <a href="/capabilities/" class="route-card">
+          <a href="{% url 'core:capabilities' %}" class="route-card">
             <div class="name">Capabilities</div>
             <div class="path">/capabilities/ &rarr; Core disciplines</div>
           </a>
-          <a href="/studio/" class="route-card">
+          <a href="{% url 'core:studio' %}" class="route-card">
             <div class="name">The Studio</div>
             <div class="path">/studio/ &rarr; Philosophy & Dubai team</div>
           </a>
-          <a href="/contact/" class="route-card">
+          <a href="{% url 'core:landing' %}#contact" class="route-card">
             <div class="name">Transmit Brief</div>
             <div class="path">/contact/ &rarr; Project intake & audit</div>
           </a>
@@ -336,5 +392,6 @@
     <div>&copy; 2026 Spec Media — Digital Architecture & Growth Systems. Dubai, UAE.</div>
     <div>System Status: Operational // All Engines Healthy</div>
   </footer>
+
 </body>
 </html>
