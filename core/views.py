@@ -920,22 +920,114 @@ def logout_view(request):
 
 def work_page(request):
     """
-    Dedicated Work & Portfolio archive page with dynamic database case studies.
+    Dedicated Work & Portfolio archive page with dynamic database case studies,
+    instant search indexing, and category filtering.
     """
-    projects = WorkProject.objects.all()
+    from django.db.models import Q
+
+    q = request.GET.get('q', '').strip()
+    category = request.GET.get('category', '').strip()
+
+    projects = WorkProject.objects.all().order_by('id')
+
+    # Calculate exact counts across the entire catalog for filter badges
+    total_count = projects.count()
+    disciplines_data = [
+        {
+            'slug': 'all',
+            'name': 'All Works',
+            'name_ar': 'جميع الأعمال',
+            'count': total_count,
+        },
+        {
+            'slug': 'Brand Architecture & Design',
+            'name': 'Brand Architecture & Design',
+            'name_ar': 'هندسة وتصميم العلامات',
+            'count': projects.filter(discipline='Brand Architecture & Design').count(),
+        },
+        {
+            'slug': 'Content & Motion Production',
+            'name': 'Content & Motion Production',
+            'name_ar': 'إنتاج المحتوى والحركة',
+            'count': projects.filter(discipline='Content & Motion Production').count(),
+        },
+        {
+            'slug': 'AI Marketing & Automation',
+            'name': 'AI Marketing & Automation',
+            'name_ar': 'تسويق وأتمتة الذكاء الاصطناعي',
+            'count': projects.filter(discipline='AI Marketing & Automation').count(),
+        },
+        {
+            'slug': 'Web & Experience Systems',
+            'name': 'Web & Experience Systems',
+            'name_ar': 'الأنظمة والتجارب الرقمية',
+            'count': projects.filter(discipline='Web & Experience Systems').count(),
+        }
+    ]
+
+    # Optional server-side filtering for direct URL query requests
+    filtered_projects = projects
+    if category and category != 'all':
+        filtered_projects = filtered_projects.filter(discipline__iexact=category)
+    if q:
+        filtered_projects = filtered_projects.filter(
+            Q(title__icontains=q) |
+            Q(title_ar__icontains=q) |
+            Q(client__icontains=q) |
+            Q(client_ar__icontains=q) |
+            Q(discipline__icontains=q) |
+            Q(discipline_ar__icontains=q) |
+            Q(summary__icontains=q) |
+            Q(summary_ar__icontains=q) |
+            Q(market__icontains=q)
+        )
+
     return render(request, 'work.html', {
         'page_title': 'Selected Work & Case Studies — Spec Media',
-        'projects': projects,
+        'projects': projects,  # Full list rendered into HTML with data-attributes for 0ms client-side search
+        'filtered_projects': filtered_projects,
+        'disciplines_data': disciplines_data,
+        'total_count': total_count,
+        'initial_query': q,
+        'initial_category': category or 'all',
     })
 
 
 def work_detail_page(request, slug):
     """
-    Individual Case Study detail view with verified KPIs, challenge, and scope.
+    Individual Case Study detail view with verified KPIs, challenge, visual assets, and scope.
     """
+    import json
     project = get_object_or_404(WorkProject, slug=slug)
+
+    # Load visual assets from work_assets.json
+    assets = []
+    assets_path = os.path.join(settings.BASE_DIR, 'core', 'work_assets.json')
+    if os.path.exists(assets_path):
+        try:
+            with open(assets_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                proj_data = data.get(slug, {})
+                assets = proj_data.get('assets', [])
+        except Exception as e:
+            logger.error(f"Error loading work_assets.json: {e}")
+
+    # Adjacent portfolio projects for navigation
+    all_projects = list(WorkProject.objects.all().order_by('sort_order'))
+    current_idx = -1
+    for i, p in enumerate(all_projects):
+        if p.id == project.id:
+            current_idx = i
+            break
+
+    prev_project = all_projects[current_idx - 1] if current_idx > 0 else (all_projects[-1] if len(all_projects) > 1 else None)
+    next_project = all_projects[current_idx + 1] if current_idx < len(all_projects) - 1 else (all_projects[0] if len(all_projects) > 1 else None)
+
     return render(request, 'work_detail.html', {
         'project': project,
+        'assets': assets,
+        'prev_project': prev_project,
+        'next_project': next_project,
     })
 
 

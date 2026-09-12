@@ -579,6 +579,40 @@
     z-index: 0;
   }
 
+
+    /* Unified Spec Media SVG Logo */
+    .spec-unified-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: #f5ead8;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      flex-shrink: 0;
+    }
+    .spec-unified-logo:hover {
+      opacity: 0.88;
+      transform: scale(1.02);
+    }
+    .spec-chars-wrap {
+      display: flex;
+      align-items: center;
+      gap: clamp(2px, 0.35vw, 4px);
+      direction: ltr !important;
+      unicode-bidi: isolate;
+    }
+    .spec-char-gap {
+      display: inline-block;
+      width: clamp(10px, 1.4vw, 18px);
+    }
+    .spec-logo-char-img {
+      height: clamp(15px, 2vh, 22px);
+      width: auto;
+      display: block;
+      object-fit: contain;
+      shape-rendering: geometricPrecision;
+      fill: currentColor;
+    }
+
 </style>
 </head>
 <body>
@@ -591,13 +625,19 @@
 
   <!-- Top Navigation -->
   <header class="nav">
-    <a href="{% url 'core:landing' %}" class="nav-logo" aria-label="Spec Media Home">
-      <span class="nav-logo-mark">
-        <svg width="16" height="16" viewBox="0 0 40 40" fill="none">
-          <path d="M12 28L28 12M28 28L12 12" stroke="#f5ead8" stroke-width="4.5" stroke-linecap="round"/>
-        </svg>
+    <a href="{% url 'core:landing' %}" class="spec-unified-logo" aria-label="Spec Media Home">
+      <span class="spec-chars-wrap spec-img-chars-wrap">
+        <span class="spec-char spec-char-img" style="--char-i:0"><svg viewBox="0 0 411 502" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 73 16 L 46 35 L 24 60 L 9 88 L 2 112 L 2 176 L 11 205 L 29 235 L 47 254 L 66 268 L 88 279 L 112 286 L 277 288 L 298 293 L 318 305 L 336 327 L 344 351 L 344 371 L 340 387 L 326 410 L 311 423 L 288 433 L 43 434 L 0 500 L 286 500 L 307 496 L 339 483 L 363 466 L 384 443 L 398 419 L 407 392 L 410 373 L 408 335 L 399 306 L 382 277 L 360 254 L 343 242 L 300 225 L 278 222 L 128 222 L 106 215 L 84 198 L 72 180 L 66 160 L 66 128 L 70 113 L 86 88 L 101 76 L 123 67 L 354 66 L 394 0 L 127 0 L 100 5 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:1"><svg viewBox="0 0 402 496" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 322 22 L 285 6 L 253 0 L 0 0 L 31 66 L 251 66 L 266 69 L 287 78 L 313 100 L 328 125 L 334 147 L 332 184 L 320 211 L 297 236 L 265 252 L 247 255 L 1 255 L 2 495 L 67 495 L 68 321 L 247 321 L 276 317 L 308 306 L 345 282 L 372 252 L 388 223 L 398 190 L 400 145 L 397 126 L 386 93 L 370 66 L 343 37 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:2"><svg viewBox="0 0 355 493" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 492 L 311 492 L 353 426 L 0 426 Z M 0 277 L 327 277 L 353 212 L 0 212 Z M 0 66 L 312 66 L 353 1 L 0 1 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:3"><svg viewBox="0 0 404 498" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 231 0 L 184 8 L 145 22 L 104 46 L 61 85 L 38 116 L 16 160 L 2 215 L 0 259 L 5 299 L 22 351 L 47 394 L 81 432 L 118 460 L 166 483 L 209 494 L 259 497 L 304 491 L 337 481 L 371 465 L 399 445 L 349 401 L 312 420 L 260 431 L 209 427 L 167 412 L 141 396 L 122 380 L 93 344 L 74 303 L 66 260 L 66 236 L 71 204 L 89 159 L 112 127 L 152 93 L 179 79 L 207 70 L 232 66 L 266 66 L 313 77 L 335 87 L 359 103 L 402 54 L 370 31 L 317 9 L 277 1 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char-gap"></span>
+        <span class="spec-char spec-char-img" style="--char-i:4"><svg viewBox="0 0 498 470" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 0 L 0 469 L 66 469 L 67 150 L 253 443 L 430 151 L 431 469 L 497 469 L 497 0 L 444 1 L 439 4 L 252 315 L 57 2 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:5"><svg viewBox="0 0 382 492" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 491 L 380 491 L 381 425 L 52 425 Z M 22 213 L 22 278 L 381 278 L 380 212 Z M 12 0 L 41 66 L 381 66 L 381 0 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:6"><svg viewBox="0 0 387 493" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 1 L 27 66 L 167 68 L 210 80 L 244 99 L 277 129 L 295 154 L 312 191 L 320 232 L 319 270 L 306 317 L 288 349 L 257 383 L 215 410 L 174 423 L 149 426 L 38 426 L 12 492 L 172 490 L 210 482 L 260 461 L 300 433 L 336 395 L 366 344 L 379 306 L 386 261 L 384 212 L 374 169 L 355 126 L 332 92 L 301 60 L 263 33 L 227 16 L 194 6 L 161 1 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:7"><svg viewBox="0 0 61 494" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 1 L 0 492 L 60 492 L 60 1 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:8"><svg viewBox="0 0 516 482" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 230 0 L 0 480 L 74 479 L 257 96 L 441 480 L 514 480 L 285 0 Z" fill="currentColor"/></svg></span>
       </span>
-      <span class="nav-logo-text">SPEC MEDIA</span>
     </a>
     <nav class="nav-links mono">
       <a href="{% url 'core:work' %}" class="nav-link">{% trans "[ work ]" %}</a>

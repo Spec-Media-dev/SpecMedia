@@ -1,0 +1,1745 @@
+{
+  "gutsu-luxury-perfume": {
+    "id": 8,
+    "slug": "gutsu-luxury-perfume",
+    "title": "Gutsu Luxury Perfume",
+    "hero_image": "https://lh3.googleusercontent.com/d/12RQtSLOAw-3bX7ih7PDbvHXSZiFttyjb",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "pdf",
+        "title": "Gutsu",
+        "url": "https://drive.google.com/file/d/1lqM1n4hE_48DmrzvC0-1nbL-4CYSF-_j/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1lqM1n4hE_48DmrzvC0-1nbL-4CYSF-_j/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1lqM1n4hE_48DmrzvC0-1nbL-4CYSF-_j&sz=w800",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": true,
+        "is_link": false
+      }
+    ]
+  },
+  "saloon-cinematic-showcase": {
+    "id": 9,
+    "slug": "saloon-cinematic-showcase",
+    "title": "Saloon Cinematic Showcase",
+    "hero_image": "https://lh3.googleusercontent.com/d/1dk0XSvL2HnIMLN5ZYVm4TxlQby9avxhi",
+    "assets_count": 5,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "1",
+        "url": "https://drive.google.com/file/d/1Je55yWuUCzSTF82rUI2299c-2ZmeidF8/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1Je55yWuUCzSTF82rUI2299c-2ZmeidF8/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1Je55yWuUCzSTF82rUI2299c-2ZmeidF8&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "video",
+        "title": "2",
+        "url": "https://drive.google.com/file/d/1ECUQC9ExQYH95wZ2C4lUVu0VXRx0I8lJ/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1ECUQC9ExQYH95wZ2C4lUVu0VXRx0I8lJ/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1ECUQC9ExQYH95wZ2C4lUVu0VXRx0I8lJ&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "video",
+        "title": "3",
+        "url": "https://drive.google.com/file/d/1Tfqg-zqUy6CjFJPsx1GY0UoNbQgXPjyw/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1Tfqg-zqUy6CjFJPsx1GY0UoNbQgXPjyw/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1Tfqg-zqUy6CjFJPsx1GY0UoNbQgXPjyw&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 4,
+        "type": "video",
+        "title": "4",
+        "url": "https://drive.google.com/file/d/1wh58uJAzS8iVayrOvOxhsZ980Eaw93ug/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1wh58uJAzS8iVayrOvOxhsZ980Eaw93ug/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1wh58uJAzS8iVayrOvOxhsZ980Eaw93ug&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 5,
+        "type": "video",
+        "title": "5",
+        "url": "https://drive.google.com/file/d/1SgsB2KGUiBjxI-4EDXkBxJcishDE0yBs/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1SgsB2KGUiBjxI-4EDXkBxJcishDE0yBs/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1SgsB2KGUiBjxI-4EDXkBxJcishDE0yBs&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "automotive-cinema-business-bay": {
+    "id": 10,
+    "slug": "automotive-cinema-business-bay",
+    "title": "Automotive Cinema & Business Bay",
+    "hero_image": "https://lh3.googleusercontent.com/d/1exjG6S_nuRFzG86LxTUZ69mrMXFpDChJ",
+    "assets_count": 10,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "1",
+        "url": "https://drive.google.com/file/d/1djM5ZWtPqueCwEhuNqXI3xT25tpUQWZa/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1djM5ZWtPqueCwEhuNqXI3xT25tpUQWZa/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1djM5ZWtPqueCwEhuNqXI3xT25tpUQWZa&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "video",
+        "title": "Businees BAy event",
+        "url": "https://drive.google.com/file/d/1X2J2GAuOsz7Qbp_X3CuTjSkE2gbpj-zm/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1X2J2GAuOsz7Qbp_X3CuTjSkE2gbpj-zm/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1X2J2GAuOsz7Qbp_X3CuTjSkE2gbpj-zm&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "video",
+        "title": "Business bay event 2",
+        "url": "https://drive.google.com/file/d/1M9le_NJTj3bkeatmoX3p9VQmK-Pw292I/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1M9le_NJTj3bkeatmoX3p9VQmK-Pw292I/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1M9le_NJTj3bkeatmoX3p9VQmK-Pw292I&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 4,
+        "type": "video",
+        "title": "mustang",
+        "url": "https://drive.google.com/file/d/1Bs_TzMVns4Qwfa-Zth2DfpBO7p5r-Px1/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1Bs_TzMVns4Qwfa-Zth2DfpBO7p5r-Px1/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1Bs_TzMVns4Qwfa-Zth2DfpBO7p5r-Px1&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 5,
+        "type": "video",
+        "title": "mustangs",
+        "url": "https://drive.google.com/file/d/1MC7DkRet8bjL4cjlZI4IcLYCl766CICC/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1MC7DkRet8bjL4cjlZI4IcLYCl766CICC/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1MC7DkRet8bjL4cjlZI4IcLYCl766CICC&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 6,
+        "type": "video",
+        "title": "icons of porsche",
+        "url": "https://drive.google.com/file/d/107KaiJfpXi9OYU9H56d4A5R5riekjY3y/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/107KaiJfpXi9OYU9H56d4A5R5riekjY3y/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=107KaiJfpXi9OYU9H56d4A5R5riekjY3y&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 7,
+        "type": "video",
+        "title": "7",
+        "url": "https://drive.google.com/file/d/1HhJtedBASLsZKOJALWFb90GJTWeZ92ta/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1HhJtedBASLsZKOJALWFb90GJTWeZ92ta/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1HhJtedBASLsZKOJALWFb90GJTWeZ92ta&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 8,
+        "type": "video",
+        "title": "mustangs 3",
+        "url": "https://drive.google.com/file/d/11-EMUz455MvdD5_oJI_uFHD3kdUilq7p/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/11-EMUz455MvdD5_oJI_uFHD3kdUilq7p/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=11-EMUz455MvdD5_oJI_uFHD3kdUilq7p&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 9,
+        "type": "video",
+        "title": "lambo",
+        "url": "https://drive.google.com/file/d/1UuwdG9lSPOQz2JdRGIWHXmRfs7jPDw1n/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1UuwdG9lSPOQz2JdRGIWHXmRfs7jPDw1n/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1UuwdG9lSPOQz2JdRGIWHXmRfs7jPDw1n&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 10,
+        "type": "video",
+        "title": "porsche",
+        "url": "https://drive.google.com/file/d/1G92ZR0uWtT7ZFJDtnpGE__MOLoSuZHHb/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1G92ZR0uWtT7ZFJDtnpGE__MOLoSuZHHb/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1G92ZR0uWtT7ZFJDtnpGE__MOLoSuZHHb&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "cars-events-amg-experience": {
+    "id": 11,
+    "slug": "cars-events-amg-experience",
+    "title": "Cars Events & AMG Experience",
+    "hero_image": "https://lh3.googleusercontent.com/d/1FToHVoD3mwpr97ag9-9AZmjk33FkosiL",
+    "assets_count": 5,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "auto nation",
+        "url": "https://drive.google.com/file/d/1L2NSTQ_zf6fGL3LC6lW8L8zbhzjEYVh_/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1L2NSTQ_zf6fGL3LC6lW8L8zbhzjEYVh_/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1L2NSTQ_zf6fGL3LC6lW8L8zbhzjEYVh_&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "video",
+        "title": "6.8 cafe",
+        "url": "https://drive.google.com/file/d/1iGTrZ-uaIRlZ_ruFLL0F94VLFf5lYPt5/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1iGTrZ-uaIRlZ_ruFLL0F94VLFf5lYPt5/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1iGTrZ-uaIRlZ_ruFLL0F94VLFf5lYPt5&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "video",
+        "title": "amg event",
+        "url": "https://drive.google.com/file/d/11V_mmNwpmGrrmED2IDcvBtcJW2BE8wCY/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/11V_mmNwpmGrrmED2IDcvBtcJW2BE8wCY/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=11V_mmNwpmGrrmED2IDcvBtcJW2BE8wCY&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 4,
+        "type": "video",
+        "title": "6.8 cafe",
+        "url": "https://drive.google.com/file/d/1aFBMi8zRreGb9Yd_SfFsFZJ0eNurXNYM/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1aFBMi8zRreGb9Yd_SfFsFZJ0eNurXNYM/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1aFBMi8zRreGb9Yd_SfFsFZJ0eNurXNYM&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 5,
+        "type": "video",
+        "title": "6.8 cafe",
+        "url": "https://drive.google.com/file/d/1FToHVoD3mwpr97ag9-9AZmjk33FkosiL/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1FToHVoD3mwpr97ag9-9AZmjk33FkosiL/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1FToHVoD3mwpr97ag9-9AZmjk33FkosiL&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "main-production-mockups": {
+    "id": 12,
+    "slug": "main-production-mockups",
+    "title": "Main Production Mockups",
+    "hero_image": "https://lh3.googleusercontent.com/d/18N0cGwNHgk_GiDgrdOtgu-GeE_nAbIhr",
+    "assets_count": 9,
+    "assets": [
+      {
+        "index": 1,
+        "type": "image",
+        "title": "Asset 1",
+        "url": "https://drive.google.com/file/d/18N0cGwNHgk_GiDgrdOtgu-GeE_nAbIhr/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/18N0cGwNHgk_GiDgrdOtgu-GeE_nAbIhr",
+        "thumb_url": "https://lh3.googleusercontent.com/d/18N0cGwNHgk_GiDgrdOtgu-GeE_nAbIhr",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "image",
+        "title": "Asset 2",
+        "url": "https://drive.google.com/file/d/1VOYERMdkho6drayG6-Hzt0bxv8nWyGO1/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1VOYERMdkho6drayG6-Hzt0bxv8nWyGO1",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1VOYERMdkho6drayG6-Hzt0bxv8nWyGO1",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "image",
+        "title": "Asset 3",
+        "url": "https://drive.google.com/file/d/11bEdTRf0UjALLJ2ibLp0GcWewqZfBKCT/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/11bEdTRf0UjALLJ2ibLp0GcWewqZfBKCT",
+        "thumb_url": "https://lh3.googleusercontent.com/d/11bEdTRf0UjALLJ2ibLp0GcWewqZfBKCT",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 4,
+        "type": "image",
+        "title": "branding",
+        "url": "https://drive.google.com/file/d/1COVPQLhQI0-gEUkhCm2j7zyE3075mf3y/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1COVPQLhQI0-gEUkhCm2j7zyE3075mf3y",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1COVPQLhQI0-gEUkhCm2j7zyE3075mf3y",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 5,
+        "type": "image",
+        "title": "Asset 5",
+        "url": "https://drive.google.com/file/d/1qMg1du02fbaKOSanqADnDKrko1mQz3g1/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1qMg1du02fbaKOSanqADnDKrko1mQz3g1",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1qMg1du02fbaKOSanqADnDKrko1mQz3g1",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 6,
+        "type": "image",
+        "title": "Asset 6",
+        "url": "https://drive.google.com/file/d/1shiGt2ACrOWPZ-biy_wdxxfONuw6E37P/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1shiGt2ACrOWPZ-biy_wdxxfONuw6E37P",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1shiGt2ACrOWPZ-biy_wdxxfONuw6E37P",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 7,
+        "type": "image",
+        "title": "Asset 7",
+        "url": "https://drive.google.com/file/d/1hrzFR2ByuOIGPCkh5i3wLrxLt_PRQFfr/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1hrzFR2ByuOIGPCkh5i3wLrxLt_PRQFfr",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1hrzFR2ByuOIGPCkh5i3wLrxLt_PRQFfr",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 8,
+        "type": "image",
+        "title": "Asset 8",
+        "url": "https://drive.google.com/file/d/1yAWySMXhDHh2-EktsyR2jwjy3cIEid52/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1yAWySMXhDHh2-EktsyR2jwjy3cIEid52",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1yAWySMXhDHh2-EktsyR2jwjy3cIEid52",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 9,
+        "type": "image",
+        "title": "Asset 9",
+        "url": "https://drive.google.com/file/d/1EQu7N3_7MCYa1LxQ2mT0nGpbMsNZVnFX/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1EQu7N3_7MCYa1LxQ2mT0nGpbMsNZVnFX",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1EQu7N3_7MCYa1LxQ2mT0nGpbMsNZVnFX",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "68-speciality-cafe-marketing": {
+    "id": 13,
+    "slug": "68-speciality-cafe-marketing",
+    "title": "6.8 Speciality Cafe Marketing",
+    "hero_image": "https://lh3.googleusercontent.com/d/1U9SFxCoKyS7AmUpASuXvBTZbsRW0mcxM",
+    "assets_count": 3,
+    "assets": [
+      {
+        "index": 1,
+        "type": "image",
+        "title": "NATIONAL DAY",
+        "url": "https://drive.google.com/file/d/1U9SFxCoKyS7AmUpASuXvBTZbsRW0mcxM/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1U9SFxCoKyS7AmUpASuXvBTZbsRW0mcxM",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1U9SFxCoKyS7AmUpASuXvBTZbsRW0mcxM",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "image",
+        "title": "MILE MIGILIA",
+        "url": "https://drive.google.com/file/d/1IwQBi4FnWqPqOSq9gebX2DxqEMaY8-x-/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1IwQBi4FnWqPqOSq9gebX2DxqEMaY8-x-",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1IwQBi4FnWqPqOSq9gebX2DxqEMaY8-x-",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "image",
+        "title": "MILLE MIGILIA",
+        "url": "https://drive.google.com/file/d/1kfQSWt8kTCjXGg27-Px6xmBCcV2erAsF/view?usp=sharing",
+        "preview_url": "https://lh3.googleusercontent.com/d/1kfQSWt8kTCjXGg27-Px6xmBCcV2erAsF",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1kfQSWt8kTCjXGg27-Px6xmBCcV2erAsF",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "spec-media-holiday-branding": {
+    "id": 14,
+    "slug": "spec-media-holiday-branding",
+    "title": "Spec Media Holiday Branding",
+    "hero_image": "https://lh3.googleusercontent.com/d/1C135Gkgt9QTmmobv33ep-f4vZJJUI6np",
+    "assets_count": 2,
+    "assets": [
+      {
+        "index": 1,
+        "type": "image",
+        "title": "NATIONAL DAY",
+        "url": "https://drive.google.com/file/d/1C135Gkgt9QTmmobv33ep-f4vZJJUI6np/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1C135Gkgt9QTmmobv33ep-f4vZJJUI6np",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1C135Gkgt9QTmmobv33ep-f4vZJJUI6np",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "image",
+        "title": "FLAG DAY",
+        "url": "https://drive.google.com/file/d/1rUl8Qe5pegVDVBpDHT3aAwSuHz6lrkCm/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1rUl8Qe5pegVDVBpDHT3aAwSuHz6lrkCm",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1rUl8Qe5pegVDVBpDHT3aAwSuHz6lrkCm",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "hills-coffee-visual-identity": {
+    "id": 15,
+    "slug": "hills-coffee-visual-identity",
+    "title": "Hills Coffee Visual Identity",
+    "hero_image": "https://lh3.googleusercontent.com/d/1UmspzLuz_LflvTWL9w67ccJodz7vd20R",
+    "assets_count": 5,
+    "assets": [
+      {
+        "index": 1,
+        "type": "image",
+        "title": "HILLS",
+        "url": "https://drive.google.com/file/d/1UmspzLuz_LflvTWL9w67ccJodz7vd20R/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1UmspzLuz_LflvTWL9w67ccJodz7vd20R",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1UmspzLuz_LflvTWL9w67ccJodz7vd20R",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "image",
+        "title": "HILLS",
+        "url": "https://drive.google.com/file/d/1LY95CFE39iouJewNBItFK0EUZfQoYlM3/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1LY95CFE39iouJewNBItFK0EUZfQoYlM3",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1LY95CFE39iouJewNBItFK0EUZfQoYlM3",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "image",
+        "title": "BEANS",
+        "url": "https://drive.google.com/file/d/1bNDNz52dai1Dq-PHlrvtYtbQwvyQHBd2/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1bNDNz52dai1Dq-PHlrvtYtbQwvyQHBd2",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1bNDNz52dai1Dq-PHlrvtYtbQwvyQHBd2",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 4,
+        "type": "image",
+        "title": "HILLS",
+        "url": "https://drive.google.com/file/d/1ZXLy_FXjMqH70ajsggWCFOzEmPJs4aMo/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1ZXLy_FXjMqH70ajsggWCFOzEmPJs4aMo",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1ZXLy_FXjMqH70ajsggWCFOzEmPJs4aMo",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 5,
+        "type": "image",
+        "title": "HILLS",
+        "url": "https://drive.google.com/file/d/16hPbJMcybPmaVOgohw9ZXpC3ikU2h4gV/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/16hPbJMcybPmaVOgohw9ZXpC3ikU2h4gV",
+        "thumb_url": "https://lh3.googleusercontent.com/d/16hPbJMcybPmaVOgohw9ZXpC3ikU2h4gV",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "1718-coffee-festive-campaigns": {
+    "id": 16,
+    "slug": "1718-coffee-festive-campaigns",
+    "title": "1718 Coffee Festive Campaigns",
+    "hero_image": "https://lh3.googleusercontent.com/d/1ox3Akh188j6XVAas_StA9y6rTZCz16ke",
+    "assets_count": 8,
+    "assets": [
+      {
+        "index": 1,
+        "type": "image",
+        "title": "christmas",
+        "url": "https://drive.google.com/file/d/1bDiyYAE8McNt49thmbCdRpM0PwNXfjcL/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1bDiyYAE8McNt49thmbCdRpM0PwNXfjcL",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1bDiyYAE8McNt49thmbCdRpM0PwNXfjcL",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "image",
+        "title": "coffee",
+        "url": "https://drive.google.com/file/d/1ox3Akh188j6XVAas_StA9y6rTZCz16ke/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1ox3Akh188j6XVAas_StA9y6rTZCz16ke",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1ox3Akh188j6XVAas_StA9y6rTZCz16ke",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "image",
+        "title": "national day",
+        "url": "https://drive.google.com/file/d/10oQWLRL1buD2VGksowsoQ-aLOnaIyOkr/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/10oQWLRL1buD2VGksowsoQ-aLOnaIyOkr",
+        "thumb_url": "https://lh3.googleusercontent.com/d/10oQWLRL1buD2VGksowsoQ-aLOnaIyOkr",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 4,
+        "type": "image",
+        "title": "bird",
+        "url": "https://drive.google.com/file/d/19ybtZJ5GS-6lM3USt5dRkMrAHJVd2U5z/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/19ybtZJ5GS-6lM3USt5dRkMrAHJVd2U5z",
+        "thumb_url": "https://lh3.googleusercontent.com/d/19ybtZJ5GS-6lM3USt5dRkMrAHJVd2U5z",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 5,
+        "type": "image",
+        "title": "cup",
+        "url": "https://drive.google.com/file/d/1eeyVxzfPEsWp4ENl9WIT8152aYF-gZcz/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1eeyVxzfPEsWp4ENl9WIT8152aYF-gZcz",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1eeyVxzfPEsWp4ENl9WIT8152aYF-gZcz",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 6,
+        "type": "image",
+        "title": "parrot and cup",
+        "url": "https://drive.google.com/file/d/1Ohyx99UmRgO8p2L_pDVLOWIbPmPcTI2D/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1Ohyx99UmRgO8p2L_pDVLOWIbPmPcTI2D",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1Ohyx99UmRgO8p2L_pDVLOWIbPmPcTI2D",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 7,
+        "type": "image",
+        "title": "barista",
+        "url": "https://drive.google.com/file/d/1rqvkv9eyGgUYtOc6-koRlBGAJTwzhoYK/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1rqvkv9eyGgUYtOc6-koRlBGAJTwzhoYK",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1rqvkv9eyGgUYtOc6-koRlBGAJTwzhoYK",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 8,
+        "type": "image",
+        "title": "flag day",
+        "url": "https://drive.google.com/file/d/1ninz1_Mo00B2WiWlbh9fY9xDWshfpYtb/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1ninz1_Mo00B2WiWlbh9fY9xDWshfpYtb",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1ninz1_Mo00B2WiWlbh9fY9xDWshfpYtb",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "spec-home-properties-branding": {
+    "id": 17,
+    "slug": "spec-home-properties-branding",
+    "title": "Spec Home Properties Branding",
+    "hero_image": "https://lh3.googleusercontent.com/d/1UzT1OSnW4L3ObzZ0WpudW76ITOgjbREy",
+    "assets_count": 2,
+    "assets": [
+      {
+        "index": 1,
+        "type": "image",
+        "title": "NATIONAL DAY",
+        "url": "https://drive.google.com/file/d/1UzT1OSnW4L3ObzZ0WpudW76ITOgjbREy/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1UzT1OSnW4L3ObzZ0WpudW76ITOgjbREy",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1UzT1OSnW4L3ObzZ0WpudW76ITOgjbREy",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "image",
+        "title": "christmas",
+        "url": "https://drive.google.com/file/d/1vD-3MPBfATyFn3HvSNwvl56nZ5ULYocW/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1vD-3MPBfATyFn3HvSNwvl56nZ5ULYocW",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1vD-3MPBfATyFn3HvSNwvl56nZ5ULYocW",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "hills-coffee-ai-commercial": {
+    "id": 18,
+    "slug": "hills-coffee-ai-commercial",
+    "title": "Hills Coffee AI Commercial",
+    "hero_image": "https://lh3.googleusercontent.com/d/1ps9HBMl1nDZ65zgWicoj-x6_JoHNdqNL",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "coffee",
+        "url": "https://drive.google.com/file/d/1yJGoXTmvNmqZNtEkFKMrNjHSFi0sLnbz/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1yJGoXTmvNmqZNtEkFKMrNjHSFi0sLnbz/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1yJGoXTmvNmqZNtEkFKMrNjHSFi0sLnbz&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "1718-coffee-ai-motion-graphics": {
+    "id": 19,
+    "slug": "1718-coffee-ai-motion-graphics",
+    "title": "1718 Coffee AI Motion Graphics",
+    "hero_image": "https://lh3.googleusercontent.com/d/1kqHP7v7COwOymLvSOBGL7lG5rx68RFlt",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "coffee",
+        "url": "https://drive.google.com/file/d/1V4imBf6p7LT8PQ6qyoi2iALqYWAnTpju/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1V4imBf6p7LT8PQ6qyoi2iALqYWAnTpju/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1V4imBf6p7LT8PQ6qyoi2iALqYWAnTpju&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "emirati-womens-day-ai-synthesis": {
+    "id": 20,
+    "slug": "emirati-womens-day-ai-synthesis",
+    "title": "Emirati Women's Day AI Synthesis",
+    "hero_image": "https://lh3.googleusercontent.com/d/1sNvRfrUmZdTpX52Vhf_JoI6ccn5pdWV7",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "image",
+        "title": "emirati womens day",
+        "url": "https://drive.google.com/file/d/18375RJPPOoNKIB0Xd-mdZbI3lWurbzjC/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/18375RJPPOoNKIB0Xd-mdZbI3lWurbzjC",
+        "thumb_url": "https://lh3.googleusercontent.com/d/18375RJPPOoNKIB0Xd-mdZbI3lWurbzjC",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "bostani-chocolatier-ai-cinema": {
+    "id": 21,
+    "slug": "bostani-chocolatier-ai-cinema",
+    "title": "Bostani Chocolatier AI Cinema",
+    "hero_image": "https://lh3.googleusercontent.com/d/15nCKvnK4apHgidd0b-d-BfC5F924gYnS",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "Asset 1",
+        "url": "https://drive.google.com/file/d/1rmxzzxQIcs5ZQFipQebReuRMfA41V9j5/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1rmxzzxQIcs5ZQFipQebReuRMfA41V9j5/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1rmxzzxQIcs5ZQFipQebReuRMfA41V9j5&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "spec-real-estate-ai-visualization": {
+    "id": 22,
+    "slug": "spec-real-estate-ai-visualization",
+    "title": "Spec Real Estate AI Visualization",
+    "hero_image": "https://lh3.googleusercontent.com/d/1ObX8PmwgYupeIRFoBCrrs5vgetziv8b3",
+    "assets_count": 2,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "Emirati womens day",
+        "url": "https://drive.google.com/file/d/10ic-wHhIy9yqm4Kb982NwoZ9ow4MmUYm/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/10ic-wHhIy9yqm4Kb982NwoZ9ow4MmUYm/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=10ic-wHhIy9yqm4Kb982NwoZ9ow4MmUYm&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "video",
+        "title": "motion",
+        "url": "https://drive.google.com/file/d/1qeUzD6IdtPlaWs5EKQVWNLeitlj-UH_Q/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1qeUzD6IdtPlaWs5EKQVWNLeitlj-UH_Q/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1qeUzD6IdtPlaWs5EKQVWNLeitlj-UH_Q&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "68-snack-line-ai-motion": {
+    "id": 23,
+    "slug": "68-snack-line-ai-motion",
+    "title": "6.8 Snack Line AI Motion",
+    "hero_image": "https://lh3.googleusercontent.com/d/1ZfWgNU3hFKxCyAy5fRark65lbD9ljF11",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "6.8",
+        "url": "https://drive.google.com/file/d/1JSCvxEKzU-TSrbUSovk9Ku8pI7psJQxy/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1JSCvxEKzU-TSrbUSovk9Ku8pI7psJQxy/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1JSCvxEKzU-TSrbUSovk9Ku8pI7psJQxy&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "la-marzocco-68-artisan-photography": {
+    "id": 24,
+    "slug": "la-marzocco-68-artisan-photography",
+    "title": "La Marzocco & 6.8 Artisan Photography",
+    "hero_image": "https://lh3.googleusercontent.com/d/1dJh6EmE76bWJxjTYAEiUDQ8In_hDeQmJ",
+    "assets_count": 4,
+    "assets": [
+      {
+        "index": 1,
+        "type": "image",
+        "title": "6.8",
+        "url": "https://drive.google.com/file/d/1dJh6EmE76bWJxjTYAEiUDQ8In_hDeQmJ/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1dJh6EmE76bWJxjTYAEiUDQ8In_hDeQmJ",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1dJh6EmE76bWJxjTYAEiUDQ8In_hDeQmJ",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "image",
+        "title": "6.8",
+        "url": "https://drive.google.com/file/d/1PgZPsUDqjGL4CeIUQ-MJ8YTXkSBgsn4n/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1PgZPsUDqjGL4CeIUQ-MJ8YTXkSBgsn4n",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1PgZPsUDqjGL4CeIUQ-MJ8YTXkSBgsn4n",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "image",
+        "title": "LA MARZOCCO",
+        "url": "https://drive.google.com/file/d/1lnmdyO3W8JS8rPNDdywYgdm9rQW1PMmM/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/1lnmdyO3W8JS8rPNDdywYgdm9rQW1PMmM",
+        "thumb_url": "https://lh3.googleusercontent.com/d/1lnmdyO3W8JS8rPNDdywYgdm9rQW1PMmM",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 4,
+        "type": "image",
+        "title": "LA MARZOCCO",
+        "url": "https://drive.google.com/file/d/18FhP0Hnn68Eisb2zbhJICo7YOuEYhUB1/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/18FhP0Hnn68Eisb2zbhJICo7YOuEYhUB1",
+        "thumb_url": "https://lh3.googleusercontent.com/d/18FhP0Hnn68Eisb2zbhJICo7YOuEYhUB1",
+        "is_video": false,
+        "is_image": true,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "1718-speciality-coffee-brand-identity": {
+    "id": 25,
+    "slug": "1718-speciality-coffee-brand-identity",
+    "title": "1718 Speciality Coffee Brand Identity",
+    "hero_image": "https://lh3.googleusercontent.com/d/1ZNz7SXbMzsRAZtkCUWGa4W4GQmKCOzB3",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "pdf",
+        "title": "BRANDING",
+        "url": "https://drive.google.com/file/d/1gWfdleEm0qWPa6WhFpnnqHMAuhi0gkXf/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1gWfdleEm0qWPa6WhFpnnqHMAuhi0gkXf/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1ZNz7SXbMzsRAZtkCUWGa4W4GQmKCOzB3&sz=w800",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": true,
+        "is_link": false
+      }
+    ]
+  },
+  "spec-media-institutional-identity": {
+    "id": 26,
+    "slug": "spec-media-institutional-identity",
+    "title": "Spec Media Institutional Identity",
+    "hero_image": "https://lh3.googleusercontent.com/d/1i4toknbDpVHSDyxVthg0Wqw8FDJNR7dZ",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "pdf",
+        "title": "BRANDING",
+        "url": "https://drive.google.com/file/d/1-rs9hLRm-puEpXqLGhoageWEEkDDzNAM/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1-rs9hLRm-puEpXqLGhoageWEEkDDzNAM/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1i4toknbDpVHSDyxVthg0Wqw8FDJNR7dZ&sz=w800",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": true,
+        "is_link": false
+      }
+    ]
+  },
+  "botella-market-brand-evolution": {
+    "id": 27,
+    "slug": "botella-market-brand-evolution",
+    "title": "Botella Market Brand Evolution",
+    "hero_image": "https://lh3.googleusercontent.com/d/1QcXcIhDkh1NE0XLm9O7QHxywWbdIGW7N",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "pdf",
+        "title": "BRANDING",
+        "url": "https://drive.google.com/file/d/16kqEQ1GR7z3Q57g3JKx-ef0KvgAiJu-1/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/16kqEQ1GR7z3Q57g3JKx-ef0KvgAiJu-1/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1QcXcIhDkh1NE0XLm9O7QHxywWbdIGW7N&sz=w800",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": true,
+        "is_link": false
+      }
+    ]
+  },
+  "big-rooster-fb-group-branding": {
+    "id": 28,
+    "slug": "big-rooster-fb-group-branding",
+    "title": "Big Rooster F&B Group Branding",
+    "hero_image": "https://lh3.googleusercontent.com/d/1c6N-ARj5IPZAL9o1-ejB5LZN95dAitzJ",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "pdf",
+        "title": "BRANDING",
+        "url": "https://drive.google.com/file/d/1l0BmtN5F54sZUVa00lwcs6YFzGTScmdY/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1l0BmtN5F54sZUVa00lwcs6YFzGTScmdY/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1c6N-ARj5IPZAL9o1-ejB5LZN95dAitzJ&sz=w800",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": true,
+        "is_link": false
+      }
+    ]
+  },
+  "spec-media-digital-experience-platform": {
+    "id": 29,
+    "slug": "spec-media-digital-experience-platform",
+    "title": "Spec Media Digital Experience Platform",
+    "hero_image": "https://lh3.googleusercontent.com/d/1IDJp3mnExgXDveExCm1RWjb6-3KGZwfO",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "link",
+        "title": "SPEC MEDIA",
+        "url": "https://www.specmedia.ae/",
+        "preview_url": "https://www.specmedia.ae/",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1IDJp3mnExgXDveExCm1RWjb6-3KGZwfO&sz=w800",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": true
+      }
+    ]
+  },
+  "bliss-events-luxury-experience-portal": {
+    "id": 30,
+    "slug": "bliss-events-luxury-experience-portal",
+    "title": "Bliss Events Luxury Experience Portal",
+    "hero_image": "https://lh3.googleusercontent.com/d/1_PiQSIn4RMxygdVlSOK35DpZdHOn1tRY",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "link",
+        "title": "BLISS EVENTS",
+        "url": "https://blisseventset.com/",
+        "preview_url": "https://blisseventset.com/",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1_PiQSIn4RMxygdVlSOK35DpZdHOn1tRY&sz=w800",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": true
+      }
+    ]
+  },
+  "68-specialty-cafe-digital-hub": {
+    "id": 31,
+    "slug": "68-specialty-cafe-digital-hub",
+    "title": "6.8 Specialty Cafe Digital Hub",
+    "hero_image": "https://lh3.googleusercontent.com/d/1OyyakLKLWnuT09HerQKlUg_KKXhgfFYC",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "link",
+        "title": "6.8",
+        "url": "https://www.6-8cafe.com/",
+        "preview_url": "https://www.6-8cafe.com/",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1OyyakLKLWnuT09HerQKlUg_KKXhgfFYC&sz=w800",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": true
+      }
+    ]
+  },
+  "1718-coffee-digital-web-ecosystem": {
+    "id": 32,
+    "slug": "1718-coffee-digital-web-ecosystem",
+    "title": "1718 Coffee Digital Web Ecosystem",
+    "hero_image": "https://lh3.googleusercontent.com/d/15Im9-0MJgKMo_nTuDSRA7RJiX-BOYVlJ",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "link",
+        "title": "1718",
+        "url": "https://drive.google.com/file/d/15Im9-0MJgKMo_nTuDSRA7RJiX-BOYVlJ/view?usp=drive_link",
+        "preview_url": "https://lh3.googleusercontent.com/d/15Im9-0MJgKMo_nTuDSRA7RJiX-BOYVlJ",
+        "thumb_url": "https://drive.google.com/thumbnail?id=15Im9-0MJgKMo_nTuDSRA7RJiX-BOYVlJ&sz=w800",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": true
+      }
+    ]
+  },
+  "hills-coffees-corporate-portal": {
+    "id": 33,
+    "slug": "hills-coffees-corporate-portal",
+    "title": "Hills Coffees Corporate Portal",
+    "hero_image": "https://spec-media.com/assets/images/hillsCoffe-Dsb76GS7.png",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "link",
+        "title": "Hills Coffees",
+        "url": "https://www.hillscoffees.com/",
+        "preview_url": "https://www.hillscoffees.com/",
+        "thumb_url": "https://www.specmedia.ae/assets/images/hillsCoffe-Dsb76GS7.png",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": true
+      }
+    ]
+  },
+  "spec-home-properties-luxury-platform": {
+    "id": 34,
+    "slug": "spec-home-properties-luxury-platform",
+    "title": "Spec Home Properties Luxury Platform",
+    "hero_image": "https://spec-media.com/assets/images/spec-web-CrcmqEmO.jpg",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "link",
+        "title": "Spec",
+        "url": "https://www.spechomeproperties.com/",
+        "preview_url": "https://www.spechomeproperties.com/",
+        "thumb_url": "https://www.specmedia.ae/assets/images/spec-web-CrcmqEmO.jpg",
+        "is_video": false,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": true
+      }
+    ]
+  },
+  "3d-cgi-commercial-visualizations": {
+    "id": 35,
+    "slug": "3d-cgi-commercial-visualizations",
+    "title": "3D CGI Commercial Visualizations",
+    "hero_image": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=800",
+    "assets_count": 8,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "Lambent 3D",
+        "url": "https://drive.google.com/file/d/1IzISIZRRCt7OjZXBEkEpS_umjXinG1Du/view?usp=sharing",
+        "preview_url": "https://drive.google.com/file/d/1IzISIZRRCt7OjZXBEkEpS_umjXinG1Du/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "video",
+        "title": "3D Coffee Bag",
+        "url": "https://drive.google.com/file/d/1uZTreytqQnNHz5sgeqPtIl3YxElZnYVr/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1uZTreytqQnNHz5sgeqPtIl3YxElZnYVr/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "video",
+        "title": "3D Billboard",
+        "url": "https://drive.google.com/file/d/1c8J6iRh8cSyw7sTILTNNMOoysgYL1n0d/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1c8J6iRh8cSyw7sTILTNNMOoysgYL1n0d/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 4,
+        "type": "video",
+        "title": "Air Sp",
+        "url": "https://drive.google.com/file/d/1c8J6iRh8cSyw7sTILTNNMOoysgYL1n0d/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1c8J6iRh8cSyw7sTILTNNMOoysgYL1n0d/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 5,
+        "type": "video",
+        "title": "Air sp 2",
+        "url": "https://drive.google.com/file/d/1A6wyKQkwGtVrtgY6lFrTztDnAa3-XOzi/view?usp=sharing",
+        "preview_url": "https://drive.google.com/file/d/1A6wyKQkwGtVrtgY6lFrTztDnAa3-XOzi/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1512314889357-e157c22f938d?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 6,
+        "type": "video",
+        "title": "Air sp3",
+        "url": "https://drive.google.com/file/d/1H0tWIwQUwJJthx0Whjlt5Et-fp3vnDjd/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1H0tWIwQUwJJthx0Whjlt5Et-fp3vnDjd/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1512314889357-e157c22f938d?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 7,
+        "type": "video",
+        "title": "Leline",
+        "url": "https://drive.google.com/file/d/1Tl8L4gpjv2Mk8xIx39R3OmlrGqHs2s4T/view?usp=sharing",
+        "preview_url": "https://drive.google.com/file/d/1Tl8L4gpjv2Mk8xIx39R3OmlrGqHs2s4T/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 8,
+        "type": "video",
+        "title": "One Around",
+        "url": "https://drive.google.com/file/d/1eGLU1RZdzdTan4mrmNZh1PPKPQ2rizhx/view?usp=sharing",
+        "preview_url": "https://drive.google.com/file/d/1eGLU1RZdzdTan4mrmNZh1PPKPQ2rizhx/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "food-beverage-cinematic-production": {
+    "id": 36,
+    "slug": "food-beverage-cinematic-production",
+    "title": "Food & Beverage Cinematic Production",
+    "hero_image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800",
+    "assets_count": 3,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "1718 Coffee",
+        "url": "https://drive.google.com/file/d/1X6rFeEeS5eRgtN5FNKdIH_QwpnNorb0h/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1X6rFeEeS5eRgtN5FNKdIH_QwpnNorb0h/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "video",
+        "title": "The Lost Burger",
+        "url": "https://drive.google.com/file/d/1GppAnU4uMqnf9wbhyIjdPTH4L8601HYW/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1GppAnU4uMqnf9wbhyIjdPTH4L8601HYW/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "video",
+        "title": "Osha",
+        "url": "https://drive.google.com/file/d/1xnEKdUtRMrvbBZPwoWyOOQZubKXlBLzh/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1xnEKdUtRMrvbBZPwoWyOOQZubKXlBLzh/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "luxury-real-estate-walkthroughs": {
+    "id": 37,
+    "slug": "luxury-real-estate-walkthroughs",
+    "title": "Luxury Real Estate Walkthroughs",
+    "hero_image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800",
+    "assets_count": 3,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "Spec Home walkthrough",
+        "url": "https://drive.google.com/file/d/1AUTtRmVI_AoGNW_1a36X5yYcQpvgpNhK/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1AUTtRmVI_AoGNW_1a36X5yYcQpvgpNhK/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "video",
+        "title": "Spec Home External",
+        "url": "https://drive.google.com/file/d/15YF0hiF1PZDQswkphCoTO_EeOR7ALSE_/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/15YF0hiF1PZDQswkphCoTO_EeOR7ALSE_/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "video",
+        "title": "Nbc Property",
+        "url": "https://drive.google.com/file/d/1ID7wViV8i0ZS1T4W_fXm33WuRgNw2MoW/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1ID7wViV8i0ZS1T4W_fXm33WuRgNw2MoW/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "new-best-credit-financial-podcast": {
+    "id": 38,
+    "slug": "new-best-credit-financial-podcast",
+    "title": "New Best Credit Financial Podcast",
+    "hero_image": "https://lh3.googleusercontent.com/d/17iYHWVVoUMwP5dIrU2ASovBxRufxWgCm",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "Podcast Episode 01",
+        "url": "https://drive.google.com/file/d/1qgFJ1-PU5UrQvrMyDfCYwZWINn2_Hjfi/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1qgFJ1-PU5UrQvrMyDfCYwZWINn2_Hjfi/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "haute-couture-fashion-cinematography": {
+    "id": 39,
+    "slug": "haute-couture-fashion-cinematography",
+    "title": "Haute Couture Fashion Cinematography",
+    "hero_image": "https://lh3.googleusercontent.com/d/1nH0foeV13QfO7JvuMPY8XzRnL41b9S7K",
+    "assets_count": 4,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "Fashion Reel 2024",
+        "url": "https://drive.google.com/file/d/1AThWjarJJ34lW1WfGuCaDj6hl9bT3VED/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1AThWjarJJ34lW1WfGuCaDj6hl9bT3VED/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1490481658045-342223c27da4?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "video",
+        "title": "Harar qatar",
+        "url": "https://drive.google.com/file/d/1b7UqCHG9tlabZccg6Y0nYojteRnseYuk/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1b7UqCHG9tlabZccg6Y0nYojteRnseYuk/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1b7UqCHG9tlabZccg6Y0nYojteRnseYuk&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "video",
+        "title": "Hazar event",
+        "url": "https://drive.google.com/file/d/1_TDtj8GdZuwY7OHZqTbCwjI0XdrX1AmV/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1_TDtj8GdZuwY7OHZqTbCwjI0XdrX1AmV/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1_TDtj8GdZuwY7OHZqTbCwjI0XdrX1AmV&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 4,
+        "type": "video",
+        "title": "Hazar Fashion",
+        "url": "https://drive.google.com/file/d/1GhEgokY04pFzAcZqBNBCChSNiF-ZX-hw/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1GhEgokY04pFzAcZqBNBCChSNiF-ZX-hw/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1GhEgokY04pFzAcZqBNBCChSNiF-ZX-hw&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "arwa-ali-healthcare-medical-profiles": {
+    "id": 40,
+    "slug": "arwa-ali-healthcare-medical-profiles",
+    "title": "Arwa & Ali Healthcare & Medical Profiles",
+    "hero_image": "https://lh3.googleusercontent.com/d/1c0ByG60ETOfl-FsrKVEK6sv0xWJmAww5",
+    "assets_count": 27,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "Medical Facility Tour",
+        "url": "https://drive.google.com/file/d/1PzUR7NjhdRlkRIk6Ga5X8JdhybU_EGCA/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1PzUR7NjhdRlkRIk6Ga5X8JdhybU_EGCA/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 2,
+        "type": "video",
+        "title": "Arabic",
+        "url": "https://drive.google.com/file/d/1jS3LdYY_fRd17gLzb-b6KDHmZQ3rcydO/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1jS3LdYY_fRd17gLzb-b6KDHmZQ3rcydO/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1jS3LdYY_fRd17gLzb-b6KDHmZQ3rcydO&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 3,
+        "type": "video",
+        "title": "Carbon Laser",
+        "url": "https://drive.google.com/file/d/1vWjpzekYgixm0YVY2xilY-HXz-7eL1nS/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1vWjpzekYgixm0YVY2xilY-HXz-7eL1nS/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1vWjpzekYgixm0YVY2xilY-HXz-7eL1nS&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 4,
+        "type": "video",
+        "title": "Insistence",
+        "url": "https://drive.google.com/file/d/1rw_rF6SYJm6SGAFPtdYigcmoSFa7RULm/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1rw_rF6SYJm6SGAFPtdYigcmoSFa7RULm/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1rw_rF6SYJm6SGAFPtdYigcmoSFa7RULm&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 5,
+        "type": "video",
+        "title": "Mongaro Face",
+        "url": "https://drive.google.com/file/d/1jur_8_X8rZwu_GwBqYelT6g5KJtjSkHG/view?usp=sharing",
+        "preview_url": "https://drive.google.com/file/d/1jur_8_X8rZwu_GwBqYelT6g5KJtjSkHG/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1jur_8_X8rZwu_GwBqYelT6g5KJtjSkHG&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 6,
+        "type": "video",
+        "title": "Insistence 2",
+        "url": "https://drive.google.com/file/d/1yeuqUWZJmGXJ-YMq7hc_2ccN_3hVMveY/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1yeuqUWZJmGXJ-YMq7hc_2ccN_3hVMveY/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1yeuqUWZJmGXJ-YMq7hc_2ccN_3hVMveY&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 7,
+        "type": "video",
+        "title": "Facetem",
+        "url": "https://drive.google.com/file/d/1AawKlMqjZEsq2qj3jNzhatowUvkHnRa2/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1AawKlMqjZEsq2qj3jNzhatowUvkHnRa2/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1AawKlMqjZEsq2qj3jNzhatowUvkHnRa2&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 8,
+        "type": "video",
+        "title": "Presitge Event",
+        "url": "https://drive.google.com/file/d/1dU8eWQErmz_9cBu-hjTvNQplCUY5c9UA/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1dU8eWQErmz_9cBu-hjTvNQplCUY5c9UA/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1dU8eWQErmz_9cBu-hjTvNQplCUY5c9UA&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 9,
+        "type": "video",
+        "title": "Prestige event 2",
+        "url": "https://drive.google.com/file/d/1FpS9F3eoM2bl044-OJM2lACi--8wRFUJ/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1FpS9F3eoM2bl044-OJM2lACi--8wRFUJ/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1FpS9F3eoM2bl044-OJM2lACi--8wRFUJ&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 10,
+        "type": "video",
+        "title": "Prestige 3",
+        "url": "https://drive.google.com/file/d/18Hzp373JhPq4FpVLMSAiymcG6LzC1aNe/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/18Hzp373JhPq4FpVLMSAiymcG6LzC1aNe/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=18Hzp373JhPq4FpVLMSAiymcG6LzC1aNe&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 11,
+        "type": "video",
+        "title": "Bio Clinic",
+        "url": "https://drive.google.com/file/d/13OiGLLjW6nDj_21hKR3TdMRgdI0WAl9U/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/13OiGLLjW6nDj_21hKR3TdMRgdI0WAl9U/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=13OiGLLjW6nDj_21hKR3TdMRgdI0WAl9U&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 12,
+        "type": "video",
+        "title": "Delma Trend",
+        "url": "https://drive.google.com/file/d/1wTOSxtNJr-ryVJ3azs6LZ3kNSHYvEqRE/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1wTOSxtNJr-ryVJ3azs6LZ3kNSHYvEqRE/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1wTOSxtNJr-ryVJ3azs6LZ3kNSHYvEqRE&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 13,
+        "type": "video",
+        "title": "Dubai Glow",
+        "url": "https://drive.google.com/file/d/1Y131Qc05VQzEsCXssxcYkpVfcV6Kc748/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1Y131Qc05VQzEsCXssxcYkpVfcV6Kc748/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1Y131Qc05VQzEsCXssxcYkpVfcV6Kc748&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 14,
+        "type": "video",
+        "title": "Elegance",
+        "url": "https://drive.google.com/file/d/1w_e_CWPr1N59cTz2h1vyaaXt22wdrneb/view?usp=sharing",
+        "preview_url": "https://drive.google.com/file/d/1w_e_CWPr1N59cTz2h1vyaaXt22wdrneb/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1w_e_CWPr1N59cTz2h1vyaaXt22wdrneb&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 15,
+        "type": "video",
+        "title": "Glow Up",
+        "url": "https://drive.google.com/file/d/1lkNhl1m6Nm8mOEMt9sv7vMB9K8aJG54y/view?usp=sharing",
+        "preview_url": "https://drive.google.com/file/d/1lkNhl1m6Nm8mOEMt9sv7vMB9K8aJG54y/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1lkNhl1m6Nm8mOEMt9sv7vMB9K8aJG54y&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 16,
+        "type": "video",
+        "title": "Elegace Facial",
+        "url": "https://drive.google.com/file/d/1QVdJ7vS5mhfp7X3tDcTpydw9GK91Gii2/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1QVdJ7vS5mhfp7X3tDcTpydw9GK91Gii2/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1QVdJ7vS5mhfp7X3tDcTpydw9GK91Gii2&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 17,
+        "type": "video",
+        "title": "Cherie B",
+        "url": "https://drive.google.com/file/d/1YFhAHrDqbniVXGPNLTTzLn8itmzy1GIo/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1YFhAHrDqbniVXGPNLTTzLn8itmzy1GIo/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1YFhAHrDqbniVXGPNLTTzLn8itmzy1GIo&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 18,
+        "type": "video",
+        "title": "B&A",
+        "url": "https://drive.google.com/file/d/1cps_YvUZ11q0UdNmKh8jLCEUiy6PdFmQ/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1cps_YvUZ11q0UdNmKh8jLCEUiy6PdFmQ/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1cps_YvUZ11q0UdNmKh8jLCEUiy6PdFmQ&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 19,
+        "type": "video",
+        "title": "Cherie Facial",
+        "url": "https://drive.google.com/file/d/18lTbo10QIXG29KbJysBK1Hk7IyLYo1nA/view?usp=sharing",
+        "preview_url": "https://drive.google.com/file/d/18lTbo10QIXG29KbJysBK1Hk7IyLYo1nA/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=18lTbo10QIXG29KbJysBK1Hk7IyLYo1nA&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 20,
+        "type": "video",
+        "title": "Transition",
+        "url": "https://drive.google.com/file/d/1hk3vp-QryQANoHtGdwuZ0mxNxfsvh9sq/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1hk3vp-QryQANoHtGdwuZ0mxNxfsvh9sq/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1hk3vp-QryQANoHtGdwuZ0mxNxfsvh9sq&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 21,
+        "type": "video",
+        "title": "Evaya",
+        "url": "https://drive.google.com/file/d/1ffD1_Y6JIGC1sDVYvvNK7TNAOsMH3oOw/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1ffD1_Y6JIGC1sDVYvvNK7TNAOsMH3oOw/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1ffD1_Y6JIGC1sDVYvvNK7TNAOsMH3oOw&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 22,
+        "type": "video",
+        "title": "Al Pain",
+        "url": "https://drive.google.com/file/d/15w39KkM4k27ciWcABPDy6K31LKjjuDkV/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/15w39KkM4k27ciWcABPDy6K31LKjjuDkV/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=15w39KkM4k27ciWcABPDy6K31LKjjuDkV&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 23,
+        "type": "video",
+        "title": "Bliss",
+        "url": "https://drive.google.com/file/d/1baJtV5KbCKWNjo0hHXfjEUAq1cGkxASJ/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1baJtV5KbCKWNjo0hHXfjEUAq1cGkxASJ/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1baJtV5KbCKWNjo0hHXfjEUAq1cGkxASJ&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 24,
+        "type": "video",
+        "title": "Elegance Final",
+        "url": "https://drive.google.com/file/d/1B9wfFRQ22EeZaUlWIaEAbWZbT3bD052Y/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1B9wfFRQ22EeZaUlWIaEAbWZbT3bD052Y/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1B9wfFRQ22EeZaUlWIaEAbWZbT3bD052Y&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 25,
+        "type": "video",
+        "title": "Etiole Hassan",
+        "url": "https://drive.google.com/file/d/1z_qHoogjqhudyhOQl8a5qqCbds8eS8sW/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1z_qHoogjqhudyhOQl8a5qqCbds8eS8sW/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1z_qHoogjqhudyhOQl8a5qqCbds8eS8sW&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 26,
+        "type": "video",
+        "title": "Etoile Treatment",
+        "url": "https://drive.google.com/file/d/1uTml6mB3xqJNK5KQPHS26Qghq2TlfznH/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1uTml6mB3xqJNK5KQPHS26Qghq2TlfznH/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=1uTml6mB3xqJNK5KQPHS26Qghq2TlfznH&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      },
+      {
+        "index": 27,
+        "type": "video",
+        "title": "Aussie Clinic",
+        "url": "https://drive.google.com/file/d/16Hz_B5fFlqd43Bzs-DNzkO7evs8RHbbW/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/16Hz_B5fFlqd43Bzs-DNzkO7evs8RHbbW/preview",
+        "thumb_url": "https://drive.google.com/thumbnail?id=16Hz_B5fFlqd43Bzs-DNzkO7evs8RHbbW&sz=w800",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "red-gym-high-performance-cinema": {
+    "id": 41,
+    "slug": "red-gym-high-performance-cinema",
+    "title": "Red Gym High-Performance Cinema",
+    "hero_image": "https://lh3.googleusercontent.com/d/1xftXJ8HY4LBbJh5qICDI0tVlhduucmsy",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "Red Gym Promo",
+        "url": "https://drive.google.com/file/d/1HXCLIGwiQ-FWNtVXoa6zeLocF-qLwSCx/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1HXCLIGwiQ-FWNtVXoa6zeLocF-qLwSCx/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  },
+  "botella-luxury-product-cinema": {
+    "id": 42,
+    "slug": "botella-luxury-product-cinema",
+    "title": "Botella Luxury Product Cinema",
+    "hero_image": "https://lh3.googleusercontent.com/d/1S0nWwS56baxjQaNzOdOVsSTYGNWNYZl_",
+    "assets_count": 1,
+    "assets": [
+      {
+        "index": 1,
+        "type": "video",
+        "title": "Botella Cinematic",
+        "url": "https://drive.google.com/file/d/1QIScqGPD6kxz5J-AHcql0TB2gGvcCmY7/view?usp=drive_link",
+        "preview_url": "https://drive.google.com/file/d/1QIScqGPD6kxz5J-AHcql0TB2gGvcCmY7/preview",
+        "thumb_url": "https://images.unsplash.com/photo-1602143303493-014fbc733855?q=80&w=400",
+        "is_video": true,
+        "is_image": false,
+        "is_pdf": false,
+        "is_link": false
+      }
+    ]
+  }
+}

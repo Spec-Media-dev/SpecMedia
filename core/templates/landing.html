@@ -3205,12 +3205,29 @@ function initConstellationController() {
     const w = Math.round(300 * vpScale);
     const h = Math.round(160 * vpScale);
 
+    const logoCount = logoItems.length;
+    const stagger = logoCount > 1 ? 0.88 / (logoCount - 1) : 0.09;
+    const totalProgRange = 1 + (logoCount - 1) * stagger;
+
     logoItems.forEach(function(item, idx) {
-      const xProg = Math.max(0, Math.min(1, 1.75 * f - 0.09 * idx));
-      const px = catmullRom(splineX, xProg) * vpScale + (smoothMouseX * 22);
-      const py = catmullRom(splineY, xProg) * vpScale + (smoothMouseY * 22);
+      const itemProg = totalProgRange * f - stagger * idx;
+      const xProg = Math.max(0, Math.min(1, itemProg));
+
+      // 4 distinct lane strata for vertical and horizontal separation
+      const laneY = ((idx % 4) - 1.5) * 105 * vpScale;
+      const laneX = (((idx * 5) % 5) - 2) * 55 * vpScale;
+
+      const px = catmullRom(splineX, xProg) * vpScale + (smoothMouseX * 22) + laneX;
+      const py = catmullRom(splineY, xProg) * vpScale + (smoothMouseY * 22) + laneY;
       const scale = Math.max(0.1, catmullRom(splineScale, xProg));
-      const opacity = Math.max(0, Math.min(1, catmullRom(splineOpacity, xProg)));
+
+      let opacity = 0;
+      if (itemProg > 0.08 && itemProg < 0.92) {
+        // High-precision power-sine envelope so each partner shines with individual focus
+        const env = Math.pow(Math.sin((itemProg - 0.08) / 0.84 * Math.PI), 2.2);
+        opacity = Math.max(0, Math.min(1, catmullRom(splineOpacity, xProg) * env * 1.25));
+      }
+
       const zIndex = (xProg > 0.32 && xProg < 0.59) ? 5 : 15;
 
       item.style.width = w + 'px';
@@ -3220,7 +3237,7 @@ function initConstellationController() {
       item.style.transform = 'translate3d(' + px.toFixed(2) + 'px, ' + py.toFixed(2) + 'px, 0) scale(' + scale.toFixed(3) + ')';
       item.style.opacity = opacity.toFixed(3);
       item.style.zIndex = zIndex;
-      item.style.visibility = opacity < 0.01 ? 'hidden' : 'visible';
+      item.style.visibility = opacity < 0.02 ? 'hidden' : 'visible';
     });
 
     // 2. Word-by-word Progressive Blur-to-Sharp Reveal

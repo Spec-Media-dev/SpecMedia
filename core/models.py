@@ -144,42 +144,66 @@ class WorkProject(models.Model):
             return []
         return [d.strip() for d in self.deliverables.split(',') if d.strip()]
 
-    def get_title(self, lang='en'):
+    def get_title(self, lang=None):
+        if lang is None:
+            from django.utils.translation import get_language
+            lang = get_language()
         if lang == 'ar' and self.title_ar:
             return self.title_ar
         return self.title
 
-    def get_client(self, lang='en'):
+    def get_client(self, lang=None):
+        if lang is None:
+            from django.utils.translation import get_language
+            lang = get_language()
         if lang == 'ar' and self.client_ar:
             return self.client_ar
         return self.client
 
-    def get_summary(self, lang='en'):
+    def get_summary(self, lang=None):
+        if lang is None:
+            from django.utils.translation import get_language
+            lang = get_language()
         if lang == 'ar' and self.summary_ar:
             return self.summary_ar
         return self.summary
 
-    def get_challenge(self, lang='en'):
+    def get_challenge(self, lang=None):
+        if lang is None:
+            from django.utils.translation import get_language
+            lang = get_language()
         if lang == 'ar' and self.challenge_ar:
             return self.challenge_ar
         return self.challenge
 
-    def get_solution(self, lang='en'):
+    def get_solution(self, lang=None):
+        if lang is None:
+            from django.utils.translation import get_language
+            lang = get_language()
         if lang == 'ar' and self.solution_ar:
             return self.solution_ar
         return self.solution
 
-    def get_discipline(self, lang='en'):
+    def get_discipline(self, lang=None):
+        if lang is None:
+            from django.utils.translation import get_language
+            lang = get_language()
         if lang == 'ar':
             return self.DISCIPLINE_AR.get(self.discipline, self.discipline)
         return self.discipline
 
-    def get_market(self, lang='en'):
+    def get_market(self, lang=None):
+        if lang is None:
+            from django.utils.translation import get_language
+            lang = get_language()
         if lang == 'ar':
             return self.MARKET_AR.get(self.market, self.market)
         return self.market
 
-    def get_deliverables(self, lang='en'):
+    def get_deliverables(self, lang=None):
+        if lang is None:
+            from django.utils.translation import get_language
+            lang = get_language()
         if lang == 'ar' and self.deliverables_ar:
             return [d.strip() for d in self.deliverables_ar.split(',') if d.strip()]
         deliverables = self.deliverable_list()
@@ -187,7 +211,10 @@ class WorkProject(models.Model):
             return [self.TAG_AR.get(d, self.TAG_AR.get(d.strip(), d)) for d in deliverables]
         return deliverables
 
-    def get_kpis(self, lang='en'):
+    def get_kpis(self, lang=None):
+        if lang is None:
+            from django.utils.translation import get_language
+            lang = get_language()
         if lang == 'ar' and self.kpis_ar:
             return [k.strip() for k in self.kpis_ar.split(';') if k.strip()]
         return self.kpi_list()

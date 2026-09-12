@@ -344,16 +344,17 @@ class Command(BaseCommand):
         # Ensure Global SiteSettings exist with complete partners and reviews
         from core.models import SiteSettings
         site_settings = SiteSettings.get_settings()
-        if not site_settings.partner_logos:
+        partners_file = os.path.join(settings.BASE_DIR, 'static', 'logos', 'clients', 'prepared_partners.json')
+        if os.path.exists(partners_file):
+            import json
+            with open(partners_file, 'r', encoding='utf-8') as pf:
+                site_settings.partner_logos = json.load(pf)
+                site_settings.save()
+        elif not site_settings.partner_logos:
             site_settings.partner_logos = [
-                {'name': 'Apex Global', 'badge': 'ENTERPRISE CLOUD', 'image': '/static/logos/partners/1.svg'},
-                {'name': 'Vistara Hospitality', 'badge': 'LUXURY HOSPITALITY', 'image': '/static/logos/partners/2.svg'},
-                {'name': 'Meridian Ventures', 'badge': 'VENTURE CAPITAL', 'image': '/static/logos/partners/3.svg'},
-                {'name': 'Zenith Technology', 'badge': 'AI INFRASTRUCTURE', 'image': '/static/logos/partners/4.svg'},
-                {'name': 'Nova Digital', 'badge': 'FINTECH ECOSYSTEM', 'image': '/static/logos/partners/5.svg'},
-                {'name': 'Haven Brands', 'badge': 'GLOBAL RETAIL', 'image': '/static/logos/partners/6.svg'},
-                {'name': 'Prism Creative', 'badge': 'SPATIAL MEDIA', 'image': '/static/logos/partners/7.svg'},
-                {'name': 'Google', 'badge': 'TECHNOLOGY', 'image': '/media/uploads/google-icon-logo-svgrepo-com.svg'}
+                {'name': 'NEW BEST CREDIT', 'badge': 'FINANCIAL BROKERAGE', 'image': '/static/logos/clients/01_NEW_BEST_CREDIT.png'},
+                {'name': 'BOSTANI', 'badge': 'HAUTE CHOCOLATIER', 'image': '/static/logos/clients/02_BOSTANI.png'},
+                {'name': 'HILLS COFFEES', 'badge': 'SPECIALTY COFFEE', 'image': '/static/logos/clients/03_HILLS_COFFEES.png'},
             ]
             site_settings.save()
         self.stdout.write("Initialized global SiteSettings.")

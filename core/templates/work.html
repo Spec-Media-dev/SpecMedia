@@ -210,15 +210,132 @@
       margin-bottom: 40px;
     }
 
+    /* Search & Controls Section */
+    .work-controls-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: clamp(40px, 5vw, 64px);
+    }
+    .work-search-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .work-search-box {
+      position: relative;
+      flex: 1;
+      min-width: min(100%, 320px);
+      max-width: 660px;
+      display: flex;
+      align-items: center;
+    }
+    .work-search-icon {
+      position: absolute;
+      left: 18px;
+      color: var(--color-accent-light);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      transition: transform 0.25s ease, color 0.25s ease;
+      z-index: 2;
+    }
+    .work-search-input {
+      width: 100%;
+      background: rgba(26, 24, 22, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 13px 44px 13px 48px;
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    .work-search-input::placeholder {
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+    .work-search-input:focus {
+      outline: none;
+      background: rgba(32, 29, 27, 0.96);
+      border-color: var(--color-accent-light);
+      box-shadow: 0 0 28px rgba(158, 27, 36, 0.35), 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+    .work-search-input:focus ~ .work-search-icon {
+      transform: scale(1.1);
+      color: #ffffff;
+    }
+    .work-search-clear {
+      position: absolute;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-dim);
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 1;
+      transition: all 0.2s ease;
+      z-index: 2;
+    }
+    .work-search-clear:hover {
+      background: var(--color-accent);
+      color: #ffffff;
+      border-color: var(--color-accent-light);
+    }
+    .work-search-clear.visible {
+      display: flex;
+    }
+    .work-counter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-dim);
+      white-space: nowrap;
+    }
+    .work-counter-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+    .work-counter-num {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
     /* Controls Bar: Filter Pills + View Switcher */
     .controls-bar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      margin-bottom: clamp(40px, 5vw, 64px);
-      padding-bottom: 24px;
+      gap: 16px;
+      padding-bottom: 20px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
     .filter-pills {
@@ -284,6 +401,75 @@
       color: #ffffff;
     }
 
+    /* Empty state */
+    .work-empty-state {
+      grid-column: span 12;
+      text-align: center;
+      padding: clamp(60px, 8vw, 100px) 24px;
+      background: linear-gradient(145deg, rgba(28, 26, 25, 0.6) 0%, rgba(18, 17, 16, 0.8) 100%);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      margin: 20px 0;
+    }
+    .empty-icon-wrap {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(158, 27, 36, 0.12);
+      border: 1px solid rgba(226, 107, 114, 0.25);
+      display: inline-grid;
+      place-items: center;
+      color: var(--color-accent-light);
+      margin-bottom: 20px;
+    }
+    .empty-title {
+      font-family: var(--font-heading);
+      font-size: clamp(24px, 2.5vw, 36px);
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .empty-desc {
+      color: var(--color-text-dim);
+      font-size: 14px;
+      max-width: 50ch;
+      margin: 0 auto 24px;
+      line-height: 1.65;
+    }
+    .btn-clear-search {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      padding: 10px 22px;
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .btn-clear-search:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent-light);
+      box-shadow: 0 0 20px rgba(158, 27, 36, 0.4);
+    }
+
+    /* RTL Overrides for Search */
+    html[dir="rtl"] .work-search-icon {
+      left: auto;
+      right: 18px;
+    }
+    html[dir="rtl"] .work-search-input {
+      padding: 13px 48px 13px 44px;
+      text-align: right;
+    }
+    html[dir="rtl"] .work-search-clear {
+      right: auto;
+      left: 14px;
+    }
     /* Cinema Grid Layout */
     .projects-grid {
       display: grid;
@@ -658,6 +844,40 @@
     z-index: 0;
   }
 
+
+    /* Unified Spec Media SVG Logo */
+    .spec-unified-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: #f5ead8;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      flex-shrink: 0;
+    }
+    .spec-unified-logo:hover {
+      opacity: 0.88;
+      transform: scale(1.02);
+    }
+    .spec-chars-wrap {
+      display: flex;
+      align-items: center;
+      gap: clamp(2px, 0.35vw, 4px);
+      direction: ltr !important;
+      unicode-bidi: isolate;
+    }
+    .spec-char-gap {
+      display: inline-block;
+      width: clamp(10px, 1.4vw, 18px);
+    }
+    .spec-logo-char-img {
+      height: clamp(15px, 2vh, 22px);
+      width: auto;
+      display: block;
+      object-fit: contain;
+      shape-rendering: geometricPrecision;
+      fill: currentColor;
+    }
+
 </style>
 </head>
 <body>
@@ -675,13 +895,19 @@
 
   <!-- Top Navigation -->
   <header class="nav">
-    <a href="{% url 'core:landing' %}" class="nav-logo" aria-label="Spec Media Home">
-      <span class="nav-logo-mark">
-        <svg width="16" height="16" viewBox="0 0 40 40" fill="none">
-          <path d="M12 28L28 12M28 28L12 12" stroke="#f5ead8" stroke-width="4.5" stroke-linecap="round"/>
-        </svg>
+    <a href="{% url 'core:landing' %}" class="spec-unified-logo" aria-label="Spec Media Home">
+      <span class="spec-chars-wrap spec-img-chars-wrap">
+        <span class="spec-char spec-char-img" style="--char-i:0"><svg viewBox="0 0 411 502" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 73 16 L 46 35 L 24 60 L 9 88 L 2 112 L 2 176 L 11 205 L 29 235 L 47 254 L 66 268 L 88 279 L 112 286 L 277 288 L 298 293 L 318 305 L 336 327 L 344 351 L 344 371 L 340 387 L 326 410 L 311 423 L 288 433 L 43 434 L 0 500 L 286 500 L 307 496 L 339 483 L 363 466 L 384 443 L 398 419 L 407 392 L 410 373 L 408 335 L 399 306 L 382 277 L 360 254 L 343 242 L 300 225 L 278 222 L 128 222 L 106 215 L 84 198 L 72 180 L 66 160 L 66 128 L 70 113 L 86 88 L 101 76 L 123 67 L 354 66 L 394 0 L 127 0 L 100 5 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:1"><svg viewBox="0 0 402 496" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 322 22 L 285 6 L 253 0 L 0 0 L 31 66 L 251 66 L 266 69 L 287 78 L 313 100 L 328 125 L 334 147 L 332 184 L 320 211 L 297 236 L 265 252 L 247 255 L 1 255 L 2 495 L 67 495 L 68 321 L 247 321 L 276 317 L 308 306 L 345 282 L 372 252 L 388 223 L 398 190 L 400 145 L 397 126 L 386 93 L 370 66 L 343 37 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:2"><svg viewBox="0 0 355 493" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 492 L 311 492 L 353 426 L 0 426 Z M 0 277 L 327 277 L 353 212 L 0 212 Z M 0 66 L 312 66 L 353 1 L 0 1 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:3"><svg viewBox="0 0 404 498" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 231 0 L 184 8 L 145 22 L 104 46 L 61 85 L 38 116 L 16 160 L 2 215 L 0 259 L 5 299 L 22 351 L 47 394 L 81 432 L 118 460 L 166 483 L 209 494 L 259 497 L 304 491 L 337 481 L 371 465 L 399 445 L 349 401 L 312 420 L 260 431 L 209 427 L 167 412 L 141 396 L 122 380 L 93 344 L 74 303 L 66 260 L 66 236 L 71 204 L 89 159 L 112 127 L 152 93 L 179 79 L 207 70 L 232 66 L 266 66 L 313 77 L 335 87 L 359 103 L 402 54 L 370 31 L 317 9 L 277 1 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char-gap"></span>
+        <span class="spec-char spec-char-img" style="--char-i:4"><svg viewBox="0 0 498 470" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 0 L 0 469 L 66 469 L 67 150 L 253 443 L 430 151 L 431 469 L 497 469 L 497 0 L 444 1 L 439 4 L 252 315 L 57 2 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:5"><svg viewBox="0 0 382 492" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 491 L 380 491 L 381 425 L 52 425 Z M 22 213 L 22 278 L 381 278 L 380 212 Z M 12 0 L 41 66 L 381 66 L 381 0 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:6"><svg viewBox="0 0 387 493" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 1 L 27 66 L 167 68 L 210 80 L 244 99 L 277 129 L 295 154 L 312 191 L 320 232 L 319 270 L 306 317 L 288 349 L 257 383 L 215 410 L 174 423 L 149 426 L 38 426 L 12 492 L 172 490 L 210 482 L 260 461 L 300 433 L 336 395 L 366 344 L 379 306 L 386 261 L 384 212 L 374 169 L 355 126 L 332 92 L 301 60 L 263 33 L 227 16 L 194 6 L 161 1 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:7"><svg viewBox="0 0 61 494" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 0 1 L 0 492 L 60 492 L 60 1 Z" fill="currentColor"/></svg></span>
+        <span class="spec-char spec-char-img" style="--char-i:8"><svg viewBox="0 0 516 482" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 230 0 L 0 480 L 74 479 L 257 96 L 441 480 L 514 480 L 285 0 Z" fill="currentColor"/></svg></span>
       </span>
-      <span class="nav-logo-text">SPEC MEDIA</span>
     </a>
     <nav class="nav-links mono">
       <a href="{% url 'core:work' %}" class="nav-link active">{% trans "[ work ]" %}</a>
@@ -709,55 +935,95 @@
       </p>
     </section>
 
-    <!-- Controls Bar: Category Filter Pills + Layout Switcher -->
-    <div class="controls-bar mono">
-      <div class="filter-pills" id="filter-bar">
-        <button type="button" class="filter-pill active" data-category="all">
-          <span>{% trans "All Works" %}</span>
-          <span class="filter-count">({{ projects.count|default:'05' }})</span>
-        </button>
-        <button type="button" class="filter-pill" data-category="Brand strategy">
-          <span>{% trans "Brand Systems" %}</span>
-        </button>
-        <button type="button" class="filter-pill" data-category="Campaign production">
-          <span>{% trans "Campaign Production" %}</span>
-        </button>
-        <button type="button" class="filter-pill" data-category="Performance media">
-          <span>{% trans "Performance Media" %}</span>
-        </button>
-        <button type="button" class="filter-pill" data-category="Content systems">
-          <span>{% trans "Content Systems" %}</span>
-        </button>
+    <!-- Controls Section: Instant Search + Discipline Pills + Layout Switcher -->
+    <div class="work-controls-wrap">
+      <!-- Search Row with Live Counter -->
+      <div class="work-search-row">
+        <div class="work-search-box">
+          <div class="work-search-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <input type="text" id="work-search-input" class="work-search-input" value="{{ initial_query }}" placeholder="{% if LANGUAGE_CODE == 'ar' %}ابحث حسب المشروع، العميل، التخصص، أو الكلمة المفتاحية...{% else %}Search by project, client, discipline, or keyword...{% endif %}" autocomplete="off" spellcheck="false" aria-label="Search projects">
+          <button type="button" id="work-search-clear" class="work-search-clear" title="Clear search" aria-label="Clear search">&times;</button>
+        </div>
+
+        <div class="work-counter-badge" id="work-counter-badge">
+          <span class="work-counter-dot"></span>
+          <span>{% trans "Showing" %}</span>
+          <span class="work-counter-num" id="work-counter-num">{{ total_count|default:"35" }}</span>
+          <span>/</span>
+          <span>{{ total_count|default:"35" }}</span>
+          <span>{% trans "Projects" %}</span>
+        </div>
       </div>
 
-      <div class="view-switcher">
-        <button type="button" class="view-btn active" id="view-grid-btn" title="Cinema Grid View">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
-          </svg>
-          <span>{% trans "Grid" %}</span>
-        </button>
-        <button type="button" class="view-btn" id="view-list-btn" title="Editorial Index View">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="8" y1="6" x2="21" y2="6"></line>
-            <line x1="8" y1="12" x2="21" y2="12"></line>
-            <line x1="8" y1="18" x2="21" y2="18"></line>
-            <line x1="3" y1="6" x2="3.01" y2="6"></line>
-            <line x1="3" y1="12" x2="3.01" y2="12"></line>
-            <line x1="3" y1="18" x2="3.01" y2="18"></line>
-          </svg>
-          <span>Index</span>
-        </button>
+      <!-- Category Filter Pills + View Switcher -->
+      <div class="controls-bar mono">
+        <div class="filter-pills" id="filter-bar">
+          {% for disc in disciplines_data %}
+          <button type="button" class="filter-pill {% if disc.slug == initial_category %}active{% endif %}" data-category="{{ disc.slug }}">
+            <span>{% if LANGUAGE_CODE == 'ar' %}{{ disc.name_ar }}{% else %}{{ disc.name }}{% endif %}</span>
+            <span class="filter-count">({{ disc.count|stringformat:"02d" }})</span>
+          </button>
+          {% empty %}
+          <button type="button" class="filter-pill active" data-category="all">
+            <span>{% trans "All Works" %}</span>
+            <span class="filter-count">(35)</span>
+          </button>
+          {% endfor %}
+        </div>
+
+        <div class="view-switcher">
+          <button type="button" class="view-btn active" id="view-grid-btn" title="Cinema Grid View">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>{% trans "Grid" %}</span>
+          </button>
+          <button type="button" class="view-btn" id="view-list-btn" title="Editorial Index View">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span>{% trans "Index" %}</span>
+          </button>
+        </div>
       </div>
     </div>
-
     <!-- 1. Cinema Grid View (Default) -->
     <div class="projects-grid" id="projects-grid">
+      <!-- Luxury Empty Search State -->
+      <div id="no-search-results" class="work-empty-state" style="display:none;">
+        <div class="empty-icon-wrap">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+        <h3 class="empty-title">{% if LANGUAGE_CODE == 'ar' %}لم يتم العثور على مشاريع مطابقة{% else %}No Case Studies Found{% endif %}</h3>
+        <p class="empty-desc">{% if LANGUAGE_CODE == 'ar' %}لم نتمكن من العثور على نتائج تطابق &ldquo;<span id="empty-query-text"></span>&rdquo;. جرب البحث عن عميل أو تخصص أو مصطلح آخر.{% else %}No projects matched your query &ldquo;<span id="empty-query-text"></span>&rdquo;. Try searching for another client, category, or industry term.{% endif %}</p>
+        <button type="button" class="btn-clear-search" onclick="clearSearchAndFilters()">
+          <span>{% if LANGUAGE_CODE == 'ar' %}إعادة ضبط البحث والفلاتر{% else %}Reset Search &amp; Filters{% endif %}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+        </button>
+      </div>
+
       {% for project in projects %}
-      <article class="work-card" data-card="1" data-discipline="{{ project.discipline }}" style="grid-column: span {% cycle '7' '5' '5' '7' '12' %}; {% cycle '' 'margin-top:clamp(20px,5vw,90px);' '' 'margin-top:clamp(16px,4vw,60px);' '' %}">
+      <article class="work-card" data-card="1" data-discipline="{{ project.discipline }}" data-search="{{ project.get_title }} {{ project.title }} {{ project.title_ar }} {{ project.get_client }} {{ project.client }} {{ project.client_ar }} {{ project.get_discipline }} {{ project.discipline }} {{ project.get_market }} {{ project.market }} {{ project.get_summary }} {{ project.summary }} {{ project.year }} {% for kpi in project.kpi_list %}{{ kpi }} {% endfor %} {% for d in project.deliverable_list %}{{ d }} {% endfor %}" style="grid-column: span {% cycle '7' '5' '5' '7' '12' %}; {% cycle '' 'margin-top:clamp(20px,5vw,90px);' '' 'margin-top:clamp(16px,4vw,60px);' '' %}">
         <a href="{% url 'core:work-detail' project.slug %}" style="display:flex; flex-direction:column; height:100%; color:inherit;">
           <!-- Media Box -->
           <div class="card-media-box">
@@ -769,7 +1035,7 @@
             {% endif %}
             
             <div class="media-tags mono">
-              {% if project.discipline %}<span class="media-tag">{{ project.discipline }}</span>{% endif %}
+              {% if project.get_discipline %}<span class="media-tag">{{ project.get_discipline }}</span>{% endif %}
               {% if project.market %}<span class="media-tag">{{ project.market }}</span>{% endif %}
             </div>
           </div>
@@ -778,12 +1044,12 @@
           <div class="card-body">
             <div>
               <div class="card-meta mono">
-                <span>{{ project.client }}</span>
+                <span>{{ project.get_client }}</span>
                 <span>//</span>
                 <span>{{ project.year }}</span>
               </div>
-              <h2 class="card-title">{{ project.title }}</h2>
-              <p class="card-summary">{{ project.summary }}</p>
+              <h2 class="card-title">{{ project.get_title }}</h2>
+              <p class="card-summary">{{ project.get_summary }}</p>
             </div>
 
             {% if project.kpi_list %}
@@ -810,11 +1076,11 @@
     <!-- 2. Editorial List View (Toggleable) -->
     <div class="editorial-list" id="editorial-list">
       {% for project in projects %}
-      <a href="{% url 'core:work-detail' project.slug %}" class="editorial-item mono" data-discipline="{{ project.discipline }}" data-preview-img="{{ project.hero_image }}">
+      <a href="{% url 'core:work-detail' project.slug %}" class="editorial-item mono" data-discipline="{{ project.discipline }}" data-search="{{ project.get_title }} {{ project.title }} {{ project.title_ar }} {{ project.get_client }} {{ project.client }} {{ project.client_ar }} {{ project.get_discipline }} {{ project.discipline }} {{ project.get_market }} {{ project.market }} {{ project.get_summary }} {{ project.summary }} {{ project.year }}" data-preview-img="{{ project.hero_image }}">
         <div class="editorial-num">0{{ forloop.counter }}</div>
-        <div class="editorial-title">{{ project.title }}</div>
-        <div class="editorial-desc" style="color:var(--color-bg);">{{ project.client }}</div>
-        <div class="editorial-desc">{{ project.discipline }}</div>
+        <div class="editorial-title">{{ project.get_title }}</div>
+        <div class="editorial-desc" style="color:var(--color-bg);">{{ project.get_client }}</div>
+        <div class="editorial-desc">{{ project.get_discipline }}</div>
         <div class="editorial-desc" style="color:var(--color-accent-light);">{{ project.year }}</div>
         <div class="editorial-arrow">&rarr;</div>
       </a>
@@ -894,41 +1160,173 @@
       });
     });
 
-    // 3. Fluid Category Filter Engine
+    // 3. Real-Time Search & Category Filter Engine
+    const searchInput = document.getElementById('work-search-input');
+    const searchClearBtn = document.getElementById('work-search-clear');
     const filterPills = document.querySelectorAll('.filter-pill');
     const workCards = document.querySelectorAll('.work-card');
     const editorialItems = document.querySelectorAll('.editorial-item');
+    const resultsCounterNum = document.getElementById('work-counter-num');
+    const noResultsBox = document.getElementById('no-search-results');
+    const emptyQueryText = document.getElementById('empty-query-text');
 
+    let currentCategory = '{{ initial_category|default:"all" }}';
+    let currentQuery = '{{ initial_query|default:"" }}';
+
+    function normalizeText(text) {
+      if (!text) return '';
+      return text.toString().toLowerCase()
+        .replace(/[أإآ]/g, 'ا')
+        .replace(/ة/g, 'ه')
+        .replace(/ى/g, 'ي')
+        .replace(/[^\w\s؀-ۿ]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function applyFilterAndSearch() {
+      const qNorm = normalizeText(currentQuery);
+      const qWords = qNorm ? qNorm.split(' ').filter(Boolean) : [];
+      let matchCount = 0;
+
+      // Toggle clear button
+      if (searchClearBtn) {
+        if (currentQuery.length > 0) {
+          searchClearBtn.classList.add('visible');
+        } else {
+          searchClearBtn.classList.remove('visible');
+        }
+      }
+
+      // 1. Filter Grid Cards
+      workCards.forEach(card => {
+        const cardDisc = card.getAttribute('data-discipline') || '';
+        const searchPool = card.getAttribute('data-search') || '';
+        const poolNorm = normalizeText(searchPool);
+
+        const matchesCat = (currentCategory === 'all' || cardDisc.toLowerCase() === currentCategory.toLowerCase());
+        const matchesQuery = (qWords.length === 0 || qWords.every(word => poolNorm.includes(word)));
+
+        if (matchesCat && matchesQuery) {
+          card.classList.remove('is-hidden');
+          card.style.display = '';
+          matchCount++;
+        } else {
+          card.classList.add('is-hidden');
+          card.style.display = 'none';
+        }
+      });
+
+      // 2. Filter Editorial List Rows
+      let visibleItemIdx = 1;
+      editorialItems.forEach(item => {
+        const itemDisc = item.getAttribute('data-discipline') || '';
+        const searchPool = item.getAttribute('data-search') || '';
+        const poolNorm = normalizeText(searchPool);
+
+        const matchesCat = (currentCategory === 'all' || itemDisc.toLowerCase() === currentCategory.toLowerCase());
+        const matchesQuery = (qWords.length === 0 || qWords.every(word => poolNorm.includes(word)));
+
+        if (matchesCat && matchesQuery) {
+          item.classList.remove('is-hidden');
+          item.style.display = 'grid';
+          const numEl = item.querySelector('.editorial-num');
+          if (numEl) {
+            numEl.textContent = visibleItemIdx.toString().padStart(2, '0');
+          }
+          visibleItemIdx++;
+        } else {
+          item.classList.add('is-hidden');
+          item.style.display = 'none';
+        }
+      });
+
+      // 3. Update Result Counter
+      if (resultsCounterNum) {
+        resultsCounterNum.textContent = matchCount.toString().padStart(2, '0');
+      }
+
+      // 4. Toggle Empty Search State
+      if (noResultsBox) {
+        if (matchCount === 0) {
+          noResultsBox.style.display = 'block';
+          if (emptyQueryText) {
+            emptyQueryText.textContent = currentQuery || currentCategory;
+          }
+        } else {
+          noResultsBox.style.display = 'none';
+        }
+      }
+    }
+
+    // Category Pill Event Listener
     filterPills.forEach(pill => {
       pill.addEventListener('click', () => {
         filterPills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
-        const cat = pill.getAttribute('data-category');
-
-        // Filter Grid Cards
-        workCards.forEach(card => {
-          const cardDisc = card.getAttribute('data-discipline') || '';
-          if (cat === 'all' || cardDisc.toLowerCase().includes(cat.toLowerCase()) || cat.toLowerCase().includes(cardDisc.toLowerCase())) {
-            card.classList.remove('is-hidden');
-            card.style.opacity = '1';
-            card.style.transform = 'scale(1)';
-          } else {
-            card.classList.add('is-hidden');
-          }
-        });
-
-        // Filter List Items
-        editorialItems.forEach(item => {
-          const itemDisc = item.getAttribute('data-discipline') || '';
-          if (cat === 'all' || itemDisc.toLowerCase().includes(cat.toLowerCase()) || cat.toLowerCase().includes(itemDisc.toLowerCase())) {
-            item.style.display = 'grid';
-          } else {
-            item.style.display = 'none';
-          }
-        });
+        currentCategory = pill.getAttribute('data-category') || 'all';
+        applyFilterAndSearch();
       });
     });
 
+    // Real-Time Search Listener (Instant 0ms response)
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        currentQuery = e.target.value;
+        applyFilterAndSearch();
+      });
+
+      // Escape to clear search
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          searchInput.value = '';
+          currentQuery = '';
+          applyFilterAndSearch();
+          searchInput.blur();
+        }
+      });
+    }
+
+    // Clear Search Button
+    if (searchClearBtn) {
+      searchClearBtn.addEventListener('click', () => {
+        if (searchInput) {
+          searchInput.value = '';
+          searchInput.focus();
+        }
+        currentQuery = '';
+        applyFilterAndSearch();
+      });
+    }
+
+    // Reset All Filters & Search
+    window.clearSearchAndFilters = function() {
+      if (searchInput) searchInput.value = '';
+      currentQuery = '';
+      currentCategory = 'all';
+      filterPills.forEach(p => {
+        if (p.getAttribute('data-category') === 'all') {
+          p.classList.add('active');
+        } else {
+          p.classList.remove('active');
+        }
+      });
+      applyFilterAndSearch();
+    };
+
+    // Keyboard shortcut: '/' focuses the search input
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        e.preventDefault();
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      }
+    });
+
+    // Run on initial load
+    applyFilterAndSearch();
     // 4. View Switcher: Cinema Grid vs Editorial List Mode
     const viewGridBtn = document.getElementById('view-grid-btn');
     const viewListBtn = document.getElementById('view-list-btn');

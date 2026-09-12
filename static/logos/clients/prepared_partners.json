@@ -1,0 +1,127 @@
+[
+  {
+    "name": "NEW BEST CREDIT",
+    "badge": "FINANCIAL BROKERAGE",
+    "image": "/static/logos/clients/01_NEW_BEST_CREDIT.png"
+  },
+  {
+    "name": "BOSTANI",
+    "badge": "HAUTE CHOCOLATIER",
+    "image": "/static/logos/clients/02_BOSTANI.png"
+  },
+  {
+    "name": "HILLS COFFEES",
+    "badge": "SPECIALTY COFFEE",
+    "image": "/static/logos/clients/03_HILLS_COFFEES.png"
+  },
+  {
+    "name": "HILLS AGRO",
+    "badge": "GLOBAL TRADE & AGRO",
+    "image": "/static/logos/clients/04_HILLS_AGRO.png"
+  },
+  {
+    "name": "ALFITIANI MOTOS",
+    "badge": "LUXURY AUTOMOTIVE",
+    "image": "/static/logos/clients/05_ALFITIANI_MOTOS.png"
+  },
+  {
+    "name": "SPEC HOME PROPERTIES",
+    "badge": "REAL ESTATE & DEVELOPMENT",
+    "image": "/static/logos/clients/06_SPEC_HOME_PROPERTIES.png"
+  },
+  {
+    "name": "HAZAR",
+    "badge": "HAUTE COUTURE",
+    "image": "/static/logos/clients/07_HAZAR.png"
+  },
+  {
+    "name": "ARWA & ALI",
+    "badge": "HEALTHCARE & MEDICAL",
+    "image": "/static/logos/clients/08_ARWA_AND_ALI.png"
+  },
+  {
+    "name": "THE LOST",
+    "badge": "HOSPITALITY & CAFE",
+    "image": "/static/logos/clients/09_THE_LOST.png"
+  },
+  {
+    "name": "CANDO",
+    "badge": "REAL ESTATE & DEVELOPMENT",
+    "image": "/static/logos/clients/10_CANDO.png"
+  },
+  {
+    "name": "6.8",
+    "badge": "HOSPITALITY & CAFE",
+    "image": "/static/logos/clients/11_6.8.png"
+  },
+  {
+    "name": "BOTELLA",
+    "badge": "PREMIUM RETAIL",
+    "image": "/static/logos/clients/12_BOTELLA.png"
+  },
+  {
+    "name": "DREAMS ON WHEELS",
+    "badge": "LUXURY AUTOMOTIVE",
+    "image": "/static/logos/clients/13_DREAMS_ON_WHEELS.png"
+  },
+  {
+    "name": "RENIE",
+    "badge": "PREMIUM RETAIL",
+    "image": "/static/logos/clients/14_RENIE.png"
+  },
+  {
+    "name": "CHARLIE & FRIENDS",
+    "badge": "HOSPITALITY & CAFE",
+    "image": "/static/logos/clients/15_CHARLIE_AND_FRIENDS.png"
+  },
+  {
+    "name": "DOG VENTURE",
+    "badge": "PET CARE & LIFESTYLE",
+    "image": "/static/logos/clients/16_DOG_VENTURE.png"
+  },
+  {
+    "name": "Paris",
+    "badge": "HEALTHCARE & MEDICAL",
+    "image": "/static/logos/clients/17_Paris.png"
+  },
+  {
+    "name": "LMD",
+    "badge": "LUXURY PROPERTY DEVELOPER",
+    "image": "/static/logos/clients/18_LMD.png"
+  },
+  {
+    "name": "IGI DEVELOPMENTS",
+    "badge": "REAL ESTATE & DEVELOPMENT",
+    "image": "/static/logos/clients/19_IGI_DEVELOPMENTS.png"
+  },
+  {
+    "name": "GAGA",
+    "badge": "HEALTHCARE & MEDICAL",
+    "image": "/static/logos/clients/20_GAGA.png"
+  },
+  {
+    "name": "AG CARE",
+    "badge": "HEALTHCARE & MEDICAL",
+    "image": "/static/logos/clients/21_AG_CARE.png"
+  },
+  {
+    "name": "OSHA",
+    "badge": "HEALTH & WELLNESS",
+    "image": "/static/logos/clients/22_OSHA.png"
+  },
+  {
+    "name": "LAMARZOCCO",
+    "badge": "SPECIALTY COFFEE",
+    "image": "/static/logos/clients/23_LAMARZOCCO.png"
+  },
+  {
+    "name": "TEA HILLS",
+    "badge": "ARTISAN TEA & BOTANICALS",
+    "image": "/static/logos/clients/24_TEA_HILLS.png"
+  },
+  {
+    "name": "1718 SPECIALITY COFFEE",
+    "badge": "SPECIALTY COFFEE",
+    "image": "/static/logos/clients/25_1718_SPECIALITY_COFFEE.png"
+  }
+]
