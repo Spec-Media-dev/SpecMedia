@@ -836,8 +836,8 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   pointer-events: auto;
   user-select: none;
   cursor: pointer;
-  will-change: transform, opacity, filter;
-  transition: filter 0.25s ease;
+  will-change: transform, opacity;
+  contain: layout style;
   overflow: visible;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -853,15 +853,15 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   display: block;
   margin: auto;
   pointer-events: none;
-  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.6));
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
 }
 .spec-orbit-logo-item[data-pad="2"] img {
   transform: scale(1.1);
 }
 .spec-orbit-logo-item:hover img,
 .spec-orbit-logo-item:hover svg {
-  filter: drop-shadow(0 0 28px rgba(255, 255, 255, 0.45)) brightness(1.2);
+  filter: drop-shadow(0 0 24px rgba(255, 255, 255, 0.5)) brightness(1.25);
   transform: scale(1.08);
 }
 .orbit-word {
@@ -3242,21 +3242,39 @@ function initConstellationController() {
   ];
 
   let vpScale = 1;
+  let sectionTop = 0;
+  let totalDist = 1;
+
+  function measureSection() {
+    const rect = section.getBoundingClientRect();
+    sectionTop = (window.scrollY || window.pageYOffset || 0) + rect.top;
+    totalDist = Math.max(1, section.offsetHeight - (window.innerHeight || document.documentElement.clientHeight));
+  }
+
   function updateVpScale() {
     const w = window.innerWidth;
     if (w < 640) vpScale = 0.50;
     else if (w < 768) vpScale = 0.62;
     else if (w < 1024) vpScale = 0.78;
     else vpScale = Math.min(1, Math.max(0.85, w / 1440));
+
+    // Position & dimension logos ONCE on resize/init (eliminates 100 forced layout reflows per frame!)
+    const logoW = Math.round(300 * vpScale);
+    const logoH = Math.round(160 * vpScale);
+    logoItems.forEach(function(item) {
+      item.style.width = logoW + 'px';
+      item.style.height = logoH + 'px';
+      item.style.left = 'calc(50% - ' + (logoW / 2) + 'px)';
+      item.style.top = 'calc(50% - ' + (logoH / 2) + 'px)';
+    });
+
+    measureSection();
   }
   updateVpScale();
   window.addEventListener('resize', updateVpScale, { passive: true });
 
-  // Critically-damped spring physics variables (maximum fluidity, zero jitter)
-  let currentSpring = 0.03;
-  let springVel = 0;
-  const springStiffness = 55;
-  const springDamping = 16;
+  // Ultra-responsive, buttery-smooth lerp progress (zero latency, zero frame lag)
+  let currentProg = 0.03;
   let lastTime = performance.now();
 
   let mouseX = 0, mouseY = 0;
@@ -3267,44 +3285,60 @@ function initConstellationController() {
     mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
   }, { passive: true });
 
+  const logoCount = logoItems.length;
+  const stagger = logoCount > 1 ? 0.88 / (logoCount - 1) : 0.09;
+  const totalProgRange = 1 + (logoCount - 1) * stagger;
+
   function animationLoop(now) {
     now = typeof now === 'number' ? now : performance.now();
-    const dt = Math.min(Math.max((now - lastTime) * 0.001, 0.001), 0.04);
     lastTime = now;
 
-    const rect = section.getBoundingClientRect();
+    const scrollY = window.scrollY || window.pageYOffset || 0;
     const vh = window.innerHeight || document.documentElement.clientHeight;
-    const totalDist = rect.height - vh;
-    
+    const scrollDist = scrollY - sectionTop;
+
+    // Viewport culling: when section is off-screen, sleep loop immediately to preserve 60/120 FPS
+    if (scrollDist < -vh * 1.2 || scrollDist > totalDist + vh * 1.2) {
+      requestAnimationFrame(animationLoop);
+      return;
+    }
+
     // Progress through pinned stage: 0 when sticky starts, 1 when section completes
-    const rawScroll = Math.max(0, Math.min(1, -rect.top / Math.max(1, totalDist)));
-    
-    // Transform target matching Framer Motion: 0.03 + 0.85 * rawScroll
+    const rawScroll = Math.max(0, Math.min(1, scrollDist / totalDist));
     const targetProg = 0.03 + 0.85 * rawScroll;
 
-    // Sub-stepped critically-damped spring simulation (eliminates mousewheel notchiness and frame jitter)
-    const subDt = dt * 0.5;
-    for (let step = 0; step < 2; step++) {
-      const force = -springStiffness * (currentSpring - targetProg) - springDamping * springVel;
-      springVel += force * subDt;
-      currentSpring += springVel * subDt;
+    // Instant-response critically-smooth lerp (immediate tracking to scrollwheel with zero drag)
+    const diff = targetProg - currentProg;
+    if (Math.abs(diff) > 0.0002) {
+      currentProg += diff * 0.16;
+    } else {
+      currentProg = targetProg;
     }
-    const f = Math.max(0, Math.min(1, currentSpring));
+    const f = Math.max(0, Math.min(1, currentProg));
 
     // Smooth organic mouse parallax lerp
     smoothMouseX += (mouseX - smoothMouseX) * 0.05;
     smoothMouseY += (mouseY - smoothMouseY) * 0.05;
 
-    // 1. Catmull-Rom Spline Flight Orbit for Each Partner Logo
-    const w = Math.round(300 * vpScale);
-    const h = Math.round(160 * vpScale);
-
-    const logoCount = logoItems.length;
-    const stagger = logoCount > 1 ? 0.88 / (logoCount - 1) : 0.09;
-    const totalProgRange = 1 + (logoCount - 1) * stagger;
+    // 1. Catmull-Rom Spline Flight Orbit for Active Visible Partner Logos
+    const clearRx = 480 * vpScale;
+    const clearRy = 195 * vpScale;
+    const clearDistLimit = 1.30;
 
     logoItems.forEach(function(item, idx) {
       const itemProg = totalProgRange * f - stagger * idx;
+
+      // CULL OFF-SCREEN LOGOS: If item is outside visible range, hide and skip!
+      if (itemProg <= 0.06 || itemProg >= 0.94) {
+        if (item._visible !== false) {
+          item._visible = false;
+          item.style.visibility = 'hidden';
+          item.style.opacity = '0';
+        }
+        return;
+      }
+
+      item._visible = true;
       const xProg = Math.max(0, Math.min(1, itemProg));
 
       // Outward radial lane distribution (disperses away from center reading zone)
@@ -3320,22 +3354,17 @@ function initConstellationController() {
       let py = rawY + dirY * outwardSpread;
       const scale = Math.max(0.1, catmullRom(splineScale, xProg));
 
-      let opacity = 0;
-      if (itemProg > 0.08 && itemProg < 0.92) {
-        // High-precision power-sine envelope so each partner shines with individual focus
-        const env = Math.pow(Math.sin((itemProg - 0.08) / 0.84 * Math.PI), 2.2);
-        opacity = Math.max(0, Math.min(1, catmullRom(splineOpacity, xProg) * env * 1.25));
-      }
+      // High-precision power-sine envelope so each partner shines with individual focus
+      const env = Math.pow(Math.sin((itemProg - 0.06) / 0.88 * Math.PI), 2.2);
+      let opacity = Math.max(0, Math.min(1, catmullRom(splineOpacity, xProg) * env * 1.25));
 
       // Continuous C1-smooth avoidance field (zero jump discontinuity, silky deflection)
-      const clearRx = 480 * vpScale;
-      const clearRy = 195 * vpScale;
       const normX = px / clearRx;
       const normY = py / clearRy;
       const dist = Math.sqrt(normX * normX + normY * normY);
 
-      if (dist < 1.30) {
-        const t = Math.max(0, (1.30 - dist) / 1.30);
+      if (dist < clearDistLimit) {
+        const t = (clearDistLimit - dist) / clearDistLimit;
         const smoothT = t * t * (3 - 2 * t); // Smoothstep S-curve
         const pushDist = smoothT * 75 * vpScale;
         const angle = Math.atan2(normY, normX);
@@ -3345,48 +3374,60 @@ function initConstellationController() {
       }
 
       const zIndex = (xProg > 0.30 && xProg < 0.60) ? 6 : 9;
+      if (item._lastZ !== zIndex) {
+        item._lastZ = zIndex;
+        item.style.zIndex = zIndex;
+      }
 
-      item.style.width = w + 'px';
-      item.style.height = h + 'px';
-      item.style.left = 'calc(50% - ' + (w / 2) + 'px)';
-      item.style.top = 'calc(50% - ' + (h / 2) + 'px)';
-      item.style.transform = 'translate3d(' + px.toFixed(2) + 'px, ' + py.toFixed(2) + 'px, 0) scale(' + scale.toFixed(3) + ')';
-      item.style.opacity = opacity.toFixed(3);
-      item.style.zIndex = zIndex;
+      item.style.transform = 'translate3d(' + px.toFixed(1) + 'px, ' + py.toFixed(1) + 'px, 0) scale(' + scale.toFixed(3) + ')';
+      item.style.opacity = opacity.toFixed(2);
       item.style.visibility = opacity < 0.02 ? 'hidden' : 'visible';
     });
 
-    // 2. Word-by-word Progressive Blur-to-Sharp Reveal
-    words.forEach(function(wordEl, idx) {
-      const def = wordDefs[idx] || { revealAt: 0, initOpacity: 0.1, serif: false };
-      const n = def.revealAt;
-      const o = Math.min(1, n + 0.09);
-      const s = def.initOpacity;
+    // 2. Word-by-word Progressive Reveal
+    if (f >= 0.55) {
+      if (!stage._wordsRevealed) {
+        stage._wordsRevealed = true;
+        words.forEach(function(wordEl) {
+          wordEl.style.opacity = '1';
+          wordEl.style.filter = 'none';
+          wordEl.style.transform = 'translate3d(0, 0, 0)';
+        });
+      }
+    } else {
+      stage._wordsRevealed = false;
+      words.forEach(function(wordEl, idx) {
+        const def = wordDefs[idx] || { revealAt: 0, initOpacity: 0.1, serif: false };
+        const n = def.revealAt;
+        const o = Math.min(1, n + 0.09);
+        const s = def.initOpacity;
 
-      const prog = Math.max(0, Math.min(1, (f - n) / (o - n)));
-      const wordOpacity = s + prog * (1 - s);
-      const blurAmount = (def.serif ? 10 : 18) * (1 - prog);
-      const transY = 10 * (1 - prog);
+        const prog = Math.max(0, Math.min(1, (f - n) / (o - n)));
+        const wordOpacity = s + prog * (1 - s);
+        const blurAmount = (def.serif ? 8 : 14) * (1 - prog);
+        const transY = 8 * (1 - prog);
 
-      wordEl.style.opacity = wordOpacity.toFixed(2);
-      wordEl.style.filter = blurAmount > 0.1 ? 'blur(' + blurAmount.toFixed(1) + 'px)' : 'none';
-      wordEl.style.transform = 'translate3d(0, ' + transY.toFixed(1) + 'px, 0)';
-    });
+        wordEl.style.opacity = wordOpacity.toFixed(2);
+        wordEl.style.filter = blurAmount > 0.3 ? 'blur(' + blurAmount.toFixed(1) + 'px)' : 'none';
+        wordEl.style.transform = 'translate3d(0, ' + transY.toFixed(1) + 'px, 0)';
+      });
+    }
 
-    // 3. Central Manifesto Exit Fade & Blur (progress 0.62 to 0.88)
+    // 3. Central Manifesto Exit Fade & Slide (progress 0.62 to 0.88)
     if (manifestoWrap) {
       if (f < 0.62) {
-        manifestoWrap.style.opacity = '1';
-        manifestoWrap.style.filter = 'none';
-        manifestoWrap.style.transform = 'translate3d(0, 0, 0)';
+        if (manifestoWrap._isExited) {
+          manifestoWrap._isExited = false;
+          manifestoWrap.style.opacity = '1';
+          manifestoWrap.style.transform = 'translate3d(0, 0, 0)';
+        }
       } else {
+        manifestoWrap._isExited = true;
         const exitProg = Math.max(0, Math.min(1, (f - 0.62) / (0.88 - 0.62)));
         const exitOpacity = 1 - exitProg;
-        const exitBlur = exitProg * 14;
         const exitY = -exitProg * 50;
 
         manifestoWrap.style.opacity = exitOpacity.toFixed(2);
-        manifestoWrap.style.filter = exitBlur > 0.1 ? 'blur(' + exitBlur.toFixed(1) + 'px)' : 'none';
         manifestoWrap.style.transform = 'translate3d(0, ' + exitY.toFixed(1) + 'px, 0)';
       }
     }
