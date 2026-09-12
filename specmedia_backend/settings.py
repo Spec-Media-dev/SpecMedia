@@ -144,6 +144,8 @@ STATIC_ROOT = Path('/tmp/staticfiles') if os.getenv('VERCEL') else BASE_DIR / 's
 
 # WhiteNoise storage
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+WHITENOISE_MANIFEST_STRICT = False
+WHITENOISE_MAX_AGE = 31536000
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

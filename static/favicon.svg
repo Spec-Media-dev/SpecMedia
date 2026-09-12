@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Trusted Partners Pure Pitch Black + Ambient Crimson Radial Lighting -->
+    <radialGradient id="tpRadialBg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#9E1B24" stop-opacity="0.32"/>
+      <stop offset="45%" stop-color="#3A050A" stop-opacity="0.22"/>
+      <stop offset="75%" stop-color="#050102" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="specGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EA0B1D"/>
+      <stop offset="50%" stop-color="#C4021D"/>
+      <stop offset="100%" stop-color="#9E0115"/>
+    </linearGradient>
+    <filter id="specGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="14" flood-color="#9E0115" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <!-- Pure Pitch Black Base (Matching Trusted Partners) -->
+  <rect width="512" height="512" rx="112" fill="#000000"/>
+  <!-- Ambient Crimson Radial Glow from Trusted Partners Section -->
+  <rect width="512" height="512" rx="112" fill="url(#tpRadialBg)"/>
+  <rect width="504" height="504" x="4" y="4" rx="108" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="2"/>
+  <!-- Signature Geometric 'S' from Spec Media Logo -->
+  <g transform="translate(106, 76) scale(0.73)" filter="url(#specGlow)">
+    <path d="M 73 16 L 46 35 L 24 60 L 9 88 L 2 112 L 2 176 L 11 205 L 29 235 L 47 254 L 66 268 L 88 279 L 112 286 L 277 288 L 298 293 L 318 305 L 336 327 L 344 351 L 344 371 L 340 387 L 326 410 L 311 423 L 288 433 L 43 434 L 0 500 L 286 500 L 307 496 L 339 483 L 363 466 L 384 443 L 398 419 L 407 392 L 410 373 L 408 335 L 399 306 L 382 277 L 360 254 L 343 242 L 300 225 L 278 222 L 128 222 L 106 215 L 84 198 L 72 180 L 66 160 L 66 128 L 70 113 L 86 88 L 101 76 L 123 67 L 354 66 L 394 0 L 127 0 L 100 5 Z" fill="url(#specGrad)"/>
+  </g>
+</svg>

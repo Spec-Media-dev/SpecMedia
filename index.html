@@ -49,6 +49,11 @@
 <body>
 <x-dc>
 <helmet>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+<link rel="shortcut icon" href="/static/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
@@ -128,47 +133,48 @@
 
 
 :root {
-  --color-bg: #f5ead8;
+  --color-bg: #141211;
   --color-surface: #ebddc5;
-  --color-text: #201e1d;
+  --color-text: #f5ead8;
+  --color-dark-bg: #000000;
   --color-accent: #9e1b24;
   --color-accent-bright: #c51f2e;
   --color-accent-dark: #6b0f14;
   --color-accent-glow: rgba(158, 27, 36, 0.45);
   --color-accent-2: #7a8a5e;
-  --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+  --color-divider: color-mix(in srgb, #141211 16%, transparent);
 
   /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
      same step of any role matches the others in visual value. */
   --color-neutral-100: #f9f4ed;
-  --color-neutral-200: #eee7db;
-  --color-neutral-300: #dcd3c4;
-  --color-neutral-400: #c0b6a5;
-  --color-neutral-500: #a19786;
-  --color-neutral-600: #82796a;
-  --color-neutral-700: #645c50;
-  --color-neutral-800: #474238;
-  --color-neutral-900: #2e2b25;
+  --color-neutral-200: #1f1b17;
+  --color-neutral-300: #2b2620;
+  --color-neutral-400: #3b352d;
+  --color-neutral-500: #4f473d;
+  --color-neutral-600: #63594d;
+  --color-neutral-700: #7a7062;
+  --color-neutral-800: #decab2;
+  --color-neutral-900: #ebdcc7;
 
   --color-accent-100: #fdf2f2;
   --color-accent-200: #fde8e8;
-  --color-accent-300: #f8b4b4;
+  --color-accent-300: #9e1b24;
   --color-accent-400: #f05252;
   --color-accent-500: #e02424;
   --color-accent-600: #c51f2e;
   --color-accent-700: #9e1b24;
   --color-accent-800: #800e13;
-  --color-accent-900: #55070a;
+  --color-accent-900: #f3d9d6;
 
   --color-accent-2-100: #f0fae1;
   --color-accent-2-200: #e1eecc;
-  --color-accent-2-300: #ccdbb2;
+  --color-accent-2-300: #800e13;
   --color-accent-2-400: #aebf92;
   --color-accent-2-500: #8fa073;
   --color-accent-2-600: #728157;
   --color-accent-2-700: #56633f;
   --color-accent-2-800: #3d472b;
-  --color-accent-2-900: #272e1b;
+  --color-accent-2-900: #ebd0cb;
 
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-heading-weight: 600;
@@ -193,8 +199,8 @@
 }
 
 body {
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--color-text);
+  color: var(--color-bg);
   font-family: var(--font-body);
 }
 h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: var(--font-heading-weight); }
@@ -815,7 +821,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   height: 100%;
   overflow: hidden;
   pointer-events: none;
-  z-index: 12;
+  z-index: 6;
 }
 .spec-orbit-logo-item {
   position: absolute;
@@ -833,6 +839,9 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   will-change: transform, opacity, filter;
   transition: filter 0.25s ease;
   overflow: visible;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 .spec-orbit-logo-item img,
 .spec-orbit-logo-item svg {
@@ -889,6 +898,20 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   transform: scale(0.3);
   transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+/* Universal Dark Mode Background for dark sections matching Trusted Partners (04 The Reel) */
+[data-screen-label="02 Frame scrub"],
+[data-screen-label="03 Work grid"],
+[data-screen-label="03b Statement"],
+[data-screen-label="04 The Reel"],
+[data-screen-label="05 Capabilities"],
+[data-screen-label="06 Green pass"],
+[data-screen-label="07 Reviews"],
+[data-screen-label="08 Footer"],
+footer#contact {
+  background-color: #000000 !important;
+  background-image: radial-gradient(circle at 50% 50%, rgba(158, 27, 36, 0.08) 0%, rgba(0, 0, 0, 0.85) 65%, #000000 100%) !important;
+}
 </style>
 </helmet>
 <div ref="{{ pageRef }}" style="position:relative;color:var(--color-bg);font-family:var(--font-body)">
@@ -927,14 +950,17 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   </div>
 
 
-  <section data-screen-label="01 Hero" style="background:var(--color-text);position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--space-6) var(--space-6) var(--space-8);box-sizing:border-box">
-    <div ref="{{ heroCueRef }}" style="display:flex;justify-content:center;margin:auto 0 clamp(28px,6vh,80px);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:var(--color-neutral-400);transition:opacity .4s ease">[ scroll down ]</div>
+  <section data-screen-label="01 Hero" style="background:var(--color-text);position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--space-6) var(--space-6) var(--space-8);box-sizing:border-box;overflow:hidden">
+    <!-- Ambient Radial Glow overlay: fades in on scroll as light mode transitions to dark mode -->
+    <div id="spec-hero-ambient-glow" style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(158,27,36,0.08) 0%, rgba(0,0,0,0.85) 65%, #000000 100%);pointer-events:none;z-index:0;opacity:0;will-change:opacity;"></div>
+
+    <div ref="{{ heroCueRef }}" style="position:relative;z-index:1;display:flex;justify-content:center;margin:auto 0 clamp(28px,6vh,80px);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:var(--color-neutral-400);transition:opacity .4s ease">[ scroll down ]</div>
     
-    <div ref="{{ heroCopyRef }}" style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-end;justify-content:space-between">
+    <div ref="{{ heroCopyRef }}" style="position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-end;justify-content:space-between">
       <h1 style="margin:0;max-width:16ch;font-family:var(--font-heading);font-size:clamp(26px,4.2vw,66px);line-height:1.04;color:var(--color-bg)">You feel the brand before it speaks®</h1>
       <p style="max-width:38ch;margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;text-transform:none;letter-spacing:.04em;font-size:12px;line-height:2;color:var(--color-neutral-400)">Placeholder copy. Spec Media builds campaigns for companies that care how things feel and how they are perceived over time.</p>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between;margin-top:var(--space-6);padding-top:var(--space-4);border-top:1px solid var(--color-neutral-800);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:10px;color:var(--color-neutral-600)">
+    <div style="position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between;margin-top:var(--space-6);padding-top:var(--space-4);border-top:1px solid var(--color-neutral-800);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:10px;color:var(--color-neutral-600)">
       <span>brand strategy</span><span>campaign production</span><span>performance media</span><span>content systems</span><span>est. placeholder</span>
     </div>
   </section>
@@ -1058,33 +1084,90 @@ html.spec-dark-mode .spec-nav-lang-switcher {
       <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(158,27,36,0.08) 0%, rgba(0,0,0,0.85) 65%, #000000 100%);pointer-events:none;z-index:1;"></div>
 
       <!-- Orbit Logos Stage (Catmull-Rom Spline Flight Path) -->
-      <div id="spec-orbit-logos-container" style="position:absolute;inset:0;pointer-events:none;z-index:12;">
-        <div class="spec-orbit-logo-item" data-index="0" data-pad="1" title="Apex Global">
-          <img src="./static/logos/partners/1.svg" alt="Apex Global" draggable="false" />
+      <div id="spec-orbit-logos-container" style="position:absolute;inset:0;pointer-events:none;z-index:6;">
+        <div class="spec-orbit-logo-item" data-index="0" data-pad="1" title="NEW BEST CREDIT">
+          <img src="/static/logos/clients/01_NEW_BEST_CREDIT.png" alt="NEW BEST CREDIT" draggable="false" loading="eager" decoding="async" />
         </div>
-        <div class="spec-orbit-logo-item" data-index="1" data-pad="1" title="Vistara Hospitality">
-          <img src="./static/logos/partners/2.svg" alt="Vistara Hospitality" draggable="false" />
+        <div class="spec-orbit-logo-item" data-index="1" data-pad="1" title="BOSTANI">
+          <img src="/static/logos/clients/02_BOSTANI.png" alt="BOSTANI" draggable="false" loading="eager" decoding="async" />
         </div>
-        <div class="spec-orbit-logo-item" data-index="2" data-pad="1" title="Meridian Ventures">
-          <img src="./static/logos/partners/3.svg" alt="Meridian Ventures" draggable="false" />
+        <div class="spec-orbit-logo-item" data-index="2" data-pad="1" title="HILLS COFFEES">
+          <img src="/static/logos/clients/03_HILLS_COFFEES.png" alt="HILLS COFFEES" draggable="false" loading="eager" decoding="async" />
         </div>
-        <div class="spec-orbit-logo-item" data-index="3" data-pad="1" title="Zenith Technology">
-          <img src="./static/logos/partners/4.svg" alt="Zenith Technology" draggable="false" />
+        <div class="spec-orbit-logo-item" data-index="3" data-pad="1" title="HILLS AGRO">
+          <img src="/static/logos/clients/04_HILLS_AGRO.png" alt="HILLS AGRO" draggable="false" loading="eager" decoding="async" />
         </div>
-        <div class="spec-orbit-logo-item" data-index="4" data-pad="1" title="Nova Digital">
-          <img src="./static/logos/partners/5.svg" alt="Nova Digital" draggable="false" />
+        <div class="spec-orbit-logo-item" data-index="4" data-pad="1" title="ALFITIANI MOTOS">
+          <img src="/static/logos/clients/05_ALFITIANI_MOTOS.png" alt="ALFITIANI MOTOS" draggable="false" loading="eager" decoding="async" />
         </div>
-        <div class="spec-orbit-logo-item" data-index="5" data-pad="1" title="Haven Brands">
-          <img src="./static/logos/partners/6.svg" alt="Haven Brands" draggable="false" />
+        <div class="spec-orbit-logo-item" data-index="5" data-pad="1" title="SPEC HOME PROPERTIES">
+          <img src="/static/logos/clients/06_SPEC_HOME_PROPERTIES.png" alt="SPEC HOME PROPERTIES" draggable="false" loading="eager" decoding="async" />
         </div>
-        <div class="spec-orbit-logo-item" data-index="6" data-pad="1" title="Prism Creative">
-          <img src="./static/logos/partners/7.svg" alt="Prism Creative" draggable="false" />
+        <div class="spec-orbit-logo-item" data-index="6" data-pad="1" title="HAZAR">
+          <img src="/static/logos/clients/07_HAZAR.png" alt="HAZAR" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="7" data-pad="1" title="ARWA & ALI">
+          <img src="/static/logos/clients/08_ARWA_AND_ALI.png" alt="ARWA & ALI" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="8" data-pad="1" title="THE LOST">
+          <img src="/static/logos/clients/09_THE_LOST.png" alt="THE LOST" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="9" data-pad="1" title="CANDO">
+          <img src="/static/logos/clients/10_CANDO.png" alt="CANDO" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="10" data-pad="1" title="6.8">
+          <img src="/static/logos/clients/11_6.8.png" alt="6.8" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="11" data-pad="1" title="BOTELLA">
+          <img src="/static/logos/clients/12_BOTELLA.png" alt="BOTELLA" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="12" data-pad="1" title="DREAMS ON WHEELS">
+          <img src="/static/logos/clients/13_DREAMS_ON_WHEELS.png" alt="DREAMS ON WHEELS" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="13" data-pad="1" title="RENIE">
+          <img src="/static/logos/clients/14_RENIE.png" alt="RENIE" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="14" data-pad="1" title="CHARLIE & FRIENDS">
+          <img src="/static/logos/clients/15_CHARLIE_AND_FRIENDS.png" alt="CHARLIE & FRIENDS" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="15" data-pad="1" title="DOG VENTURE">
+          <img src="/static/logos/clients/16_DOG_VENTURE.png" alt="DOG VENTURE" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="16" data-pad="1" title="Paris">
+          <img src="/static/logos/clients/17_Paris.png" alt="Paris" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="17" data-pad="1" title="LMD">
+          <img src="/static/logos/clients/18_LMD.png" alt="LMD" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="18" data-pad="1" title="IGI DEVELOPMENTS">
+          <img src="/static/logos/clients/19_IGI_DEVELOPMENTS.png" alt="IGI DEVELOPMENTS" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="19" data-pad="1" title="GAGA">
+          <img src="/static/logos/clients/20_GAGA.png" alt="GAGA" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="20" data-pad="1" title="AG CARE">
+          <img src="/static/logos/clients/21_AG_CARE.png" alt="AG CARE" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="21" data-pad="1" title="OSHA">
+          <img src="/static/logos/clients/22_OSHA.png" alt="OSHA" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="22" data-pad="1" title="LAMARZOCCO">
+          <img src="/static/logos/clients/23_LAMARZOCCO.png" alt="LAMARZOCCO" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="23" data-pad="1" title="TEA HILLS">
+          <img src="/static/logos/clients/24_TEA_HILLS.png" alt="TEA HILLS" draggable="false" loading="eager" decoding="async" />
+        </div>
+        <div class="spec-orbit-logo-item" data-index="24" data-pad="1" title="1718 SPECIALITY COFFEE">
+          <img src="/static/logos/clients/25_1718_SPECIALITY_COFFEE.png" alt="1718 SPECIALITY COFFEE" draggable="false" loading="eager" decoding="async" />
         </div>
       </div>
 
       <!-- Center Typography Manifesto with Progressive Blur Reveal -->
-      <div id="spec-manifesto-wrap" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;padding:0 20px;pointer-events:none;user-select:none;will-change:opacity,filter,transform;">
+      <div id="spec-manifesto-wrap" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:30;padding:0 20px;pointer-events:none;user-select:none;will-change:opacity,filter,transform;">
         
+        <!-- Ambient Dark Radial Vignette & Soft Glow matching Trusted Partners -->
+        <div style="position:absolute;width:clamp(360px, 85vw, 960px);height:clamp(280px, 50vh, 500px);border-radius:50%;background:radial-gradient(ellipse 65% 60% at 50% 50%, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.60) 45%, rgba(0,0,0,0) 80%);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none;z-index:-1;"></div>
+
         <!-- Header Badge -->
         <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;">
           <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.22em;font-weight:700;text-transform:uppercase;color:#000000;background:#ffffff;padding:4px 12px;border-radius:3px">TRUSTED PARTNERS</span>
@@ -2474,22 +2557,30 @@ class Component extends DCLogic {
   }
 
   // scroll-driven light-to-dark transition: Scene 01 begins in warm luxury light mode,
-  // then smoothly transitions on scroll into deep obsidian dark mode.
+  // scroll-driven light-to-dark transition: Scene 01 begins in warm luxury light mode,
+  // then smoothly transitions on scroll into deep obsidian dark mode with Trusted Partners ambient glow.
   updateTheme(t){
     const root = this.pageRef.current; if (!root) return;
     const isScrolled = (window.scrollY || 0) > 40 || t > 0.08;
     document.documentElement.classList.toggle('spec-scrolled', isScrolled);
     document.documentElement.classList.toggle('spec-dark-mode', isScrolled);
+
+    // Fade in ambient crimson glow overlay in Hero as light mode transitions to dark mode
+    const heroGlow = document.getElementById('spec-hero-ambient-glow');
+    if (heroGlow) {
+      heroGlow.style.opacity = String(Math.max(0, Math.min(1, t * 1.15)));
+    }
+
     if (Math.abs(t - (this.lastThemeP ?? -1)) < 0.003) return;
     this.lastThemeP = t;
 
-    // t=0 (Light Mode: #f5ead8 canvas, #141211 text) -> t=1 (Dark Mode: #11100f canvas, #f5ead8 text)
+    // t=0 (Light Mode: #f5ead8 canvas, #141211 text) -> t=1 (Dark Mode: #000000 canvas, #f5ead8 text)
     const mix = (cLight, cDark) => 'color-mix(in oklab, ' + cDark + ' ' + (t * 100).toFixed(1) + '%, ' + cLight + ')';
 
     const groundTokens = [
-      ['--color-text', '#f5ead8', '#11100f'],
-      ['--color-neutral-900', '#ebdcc7', '#181716'],
-      ['--color-neutral-800', '#decab2', '#242220'],
+      ['--color-text', '#f5ead8', '#000000'],
+      ['--color-neutral-900', '#ebdcc7', '#000000'],
+      ['--color-neutral-800', '#decab2', '#1c1a18'],
       ['--color-accent-900', '#f3d9d6', '#2b1013'],
       ['--color-accent-2-900', '#ebd0cb', '#241215']
     ];
@@ -2507,7 +2598,7 @@ class Component extends DCLogic {
 
     groundTokens.forEach(([v, l, d]) => { root.style.setProperty(v, mix(l, d)); });
     inkTokens.forEach(([v, l, d]) => { root.style.setProperty(v, mix(l, d)); });
-    document.body.style.background = mix('#f5ead8', '#11100f');
+    document.body.style.background = mix('#f5ead8', '#000000');
     document.body.style.color = mix('#141211', '#f5ead8');
   }
 
@@ -3119,9 +3210,9 @@ function initConstellationController() {
 
   window.__specConstellationActive = true;
 
-  // Exact Catmull-Rom Spline Waypoints recovered from lialive.ai reference video
-  const splineX = [960, 400, -250, -500, -380, 5, 390, 560, 270, -580, -580, -960];
-  const splineY = [540, 500, 270, 30, -190, -270, -190, 10, 255, 520, 580, 780];
+  // Cinematic orbital path: sweeps wide around the central manifesto reading area
+  const splineX = [1050, 480, -340, -620, -480, 0, 480, 620, 340, -600, -680, -1050];
+  const splineY = [560, 480, 340, 20, -280, -350, -280, 20, 340, 540, 620, 820];
   const splineScale = [0.4, 0.85, 1.0, 1.05, 1.0, 0.92, 1.0, 1.05, 1.0, 0.8, 0.55, 0.4];
   const splineOpacity = [0, 0.8, 0.86, 0.9, 0.8, 0.72, 0.8, 0.9, 0.88, 0.58, 0.22, 0];
 
@@ -3161,11 +3252,11 @@ function initConstellationController() {
   updateVpScale();
   window.addEventListener('resize', updateVpScale, { passive: true });
 
-  // Spring physics variables (matching Framer Motion useSpring stiffness: 90, damping: 22)
+  // Critically-damped spring physics variables (maximum fluidity, zero jitter)
   let currentSpring = 0.03;
   let springVel = 0;
-  const stiffness = 90;
-  const damping = 22;
+  const springStiffness = 55;
+  const springDamping = 16;
   let lastTime = performance.now();
 
   let mouseX = 0, mouseY = 0;
@@ -3178,7 +3269,7 @@ function initConstellationController() {
 
   function animationLoop(now) {
     now = typeof now === 'number' ? now : performance.now();
-    const dt = Math.min(Math.max((now - lastTime) * 0.001, 0.001), 0.05);
+    const dt = Math.min(Math.max((now - lastTime) * 0.001, 0.001), 0.04);
     lastTime = now;
 
     const rect = section.getBoundingClientRect();
@@ -3188,18 +3279,21 @@ function initConstellationController() {
     // Progress through pinned stage: 0 when sticky starts, 1 when section completes
     const rawScroll = Math.max(0, Math.min(1, -rect.top / Math.max(1, totalDist)));
     
-    // Transform target as in Framer Motion: 0.03 + 0.85 * rawScroll
+    // Transform target matching Framer Motion: 0.03 + 0.85 * rawScroll
     const targetProg = 0.03 + 0.85 * rawScroll;
 
-    // Spring physics simulation: F = -k*(x - target) - c*v
-    const force = -stiffness * (currentSpring - targetProg) - damping * springVel;
-    springVel += force * dt;
-    currentSpring += springVel * dt;
+    // Sub-stepped critically-damped spring simulation (eliminates mousewheel notchiness and frame jitter)
+    const subDt = dt * 0.5;
+    for (let step = 0; step < 2; step++) {
+      const force = -springStiffness * (currentSpring - targetProg) - springDamping * springVel;
+      springVel += force * subDt;
+      currentSpring += springVel * subDt;
+    }
     const f = Math.max(0, Math.min(1, currentSpring));
 
-    // Smooth mouse parallax lerp
-    smoothMouseX += (mouseX - smoothMouseX) * 0.08;
-    smoothMouseY += (mouseY - smoothMouseY) * 0.08;
+    // Smooth organic mouse parallax lerp
+    smoothMouseX += (mouseX - smoothMouseX) * 0.05;
+    smoothMouseY += (mouseY - smoothMouseY) * 0.05;
 
     // 1. Catmull-Rom Spline Flight Orbit for Each Partner Logo
     const w = Math.round(300 * vpScale);
@@ -3213,12 +3307,17 @@ function initConstellationController() {
       const itemProg = totalProgRange * f - stagger * idx;
       const xProg = Math.max(0, Math.min(1, itemProg));
 
-      // 4 distinct lane strata for vertical and horizontal separation
-      const laneY = ((idx % 4) - 1.5) * 105 * vpScale;
-      const laneX = (((idx * 5) % 5) - 2) * 55 * vpScale;
+      // Outward radial lane distribution (disperses away from center reading zone)
+      const laneIdx = idx % 3; // 0, 1, 2
+      const outwardSpread = (laneIdx * 42 + 18) * vpScale;
 
-      const px = catmullRom(splineX, xProg) * vpScale + (smoothMouseX * 22) + laneX;
-      const py = catmullRom(splineY, xProg) * vpScale + (smoothMouseY * 22) + laneY;
+      const rawX = catmullRom(splineX, xProg) * vpScale + (smoothMouseX * 16);
+      const rawY = catmullRom(splineY, xProg) * vpScale + (smoothMouseY * 16);
+
+      const dirX = rawX >= 0 ? 1 : -1;
+      const dirY = rawY >= 0 ? 1 : -1;
+      let px = rawX + dirX * ((idx % 2) * 35 * vpScale);
+      let py = rawY + dirY * outwardSpread;
       const scale = Math.max(0.1, catmullRom(splineScale, xProg));
 
       let opacity = 0;
@@ -3228,7 +3327,24 @@ function initConstellationController() {
         opacity = Math.max(0, Math.min(1, catmullRom(splineOpacity, xProg) * env * 1.25));
       }
 
-      const zIndex = (xProg > 0.32 && xProg < 0.59) ? 5 : 15;
+      // Continuous C1-smooth avoidance field (zero jump discontinuity, silky deflection)
+      const clearRx = 480 * vpScale;
+      const clearRy = 195 * vpScale;
+      const normX = px / clearRx;
+      const normY = py / clearRy;
+      const dist = Math.sqrt(normX * normX + normY * normY);
+
+      if (dist < 1.30) {
+        const t = Math.max(0, (1.30 - dist) / 1.30);
+        const smoothT = t * t * (3 - 2 * t); // Smoothstep S-curve
+        const pushDist = smoothT * 75 * vpScale;
+        const angle = Math.atan2(normY, normX);
+        px += Math.cos(angle) * pushDist;
+        py += Math.sin(angle) * pushDist;
+        opacity *= (1.0 - smoothT * 0.85);
+      }
+
+      const zIndex = (xProg > 0.30 && xProg < 0.60) ? 6 : 9;
 
       item.style.width = w + 'px';
       item.style.height = h + 'px';
@@ -3283,8 +3399,7 @@ function initConstellationController() {
     requestAnimationFrame(animationLoop);
   }
 
-  // Pre-calculate and paint frame 0 immediately before RAF
-  animationLoop(performance.now());
+  // Single RAF loop initiation (clean, jitter-free lifecycle)
   requestAnimationFrame(animationLoop);
   return true;
 }

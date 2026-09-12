@@ -391,6 +391,16 @@ def landing_page(request):
         projects = []
 
     partner_logos = [logo for logo in (site_settings.partner_logos if site_settings else []) if logo]
+    if not partner_logos:
+        partners_file = os.path.join(settings.BASE_DIR, 'static', 'logos', 'clients', 'prepared_partners.json')
+        if os.path.exists(partners_file):
+            try:
+                import json
+                with open(partners_file, 'r', encoding='utf-8') as pf:
+                    partner_logos = json.load(pf)
+            except Exception:
+                pass
+
     if partner_logos:
         orbit_cards = []
         for idx, partner in enumerate(partner_logos):
@@ -402,7 +412,7 @@ def landing_page(request):
                 p_img = escape(str(partner), quote=True)
             orbit_cards.append(
                 f'<div class="spec-orbit-logo-item" data-index="{idx}" data-pad="1" title="{p_name}">'
-                f'<img src="{p_img}" alt="{p_name}" draggable="false" />'
+                f'<img src="{p_img}" alt="{p_name}" draggable="false" loading="eager" decoding="async" />'
                 f'</div>'
             )
         orbit_markup = ''.join(orbit_cards)
@@ -727,15 +737,25 @@ def landing_page(request):
         html = re.sub(r'Review quote placeholder[^<]*', replace_review_placeholder, html)
 
     if site_settings:
-        # Dynamic Favicon injection
-        fav_url = site_settings.favicon_image or 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23201e1d"/><text y=".9em" font-size="80" fill="%239e1b24">S</text></svg>'
-        fav_tag = f'<link rel="icon" href="{fav_url}">'
-        if '<link rel="icon"' in html:
-            html = re.sub(r'<link[^>]*rel=["\x27]icon["\x27][^>]*>', fav_tag, html)
+        # Dynamic Favicon injection with multi-resolution & SVG support
+        fav_url = site_settings.favicon_image or '/static/favicon.svg'
+        fav_tags = (
+            f'<link rel="icon" type="image/svg+xml" href="{fav_url}">\n'
+            f'  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">\n'
+            f'  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">\n'
+            f'  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">\n'
+            f'  <link rel="shortcut icon" href="/static/favicon.ico">'
+        )
+        if '<link rel="icon"' in html or '<link rel="shortcut icon"' in html:
+            html = re.sub(r'<link[^>]*rel=["\x27](?:shortcut )?icon["\x27][^>]*>', '', html)
+            if '<head>' in html:
+                html = html.replace('<head>', f'<head>\n  {fav_tags}', 1)
+            elif '<helmet>' in html:
+                html = html.replace('<helmet>', f'<helmet>\n  {fav_tags}', 1)
         elif '<head>' in html:
-            html = html.replace('<head>', f'<head>\n  {fav_tag}')
+            html = html.replace('<head>', f'<head>\n  {fav_tags}', 1)
         elif '<helmet>' in html:
-            html = html.replace('<helmet>', f'<helmet>\n  {fav_tag}')
+            html = html.replace('<helmet>', f'<helmet>\n  {fav_tags}', 1)
 
         # Dynamic Logo replacement with kinetic effects
         if site_settings.logo_image:

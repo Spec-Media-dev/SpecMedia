@@ -13,20 +13,27 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
-# If running on Vercel serverless, sync repository database and media assets to writable /tmp
+# If running on Vercel serverless, sync repository database, media, and static assets to writable /tmp
 if os.getenv('VERCEL'):
     try:
         # 1. Sync database from repo to /tmp/db.sqlite3 so local data is 100% identical on deployment
         db_source = BASE_DIR / 'db.sqlite3'
         db_target = Path('/tmp') / 'db.sqlite3'
-        if not db_target.exists() and db_source.exists():
-            shutil.copy2(db_source, db_target)
+        if db_source.exists():
+            if not db_target.exists() or db_target.stat().st_size == 0 or db_source.stat().st_size != db_target.stat().st_size:
+                shutil.copy2(db_source, db_target)
 
         # 2. Sync media assets from repo to /tmp/media
         media_source = BASE_DIR / 'media'
         media_target = Path('/tmp') / 'media'
         if media_source.exists() and not media_target.exists():
             shutil.copytree(media_source, media_target, dirs_exist_ok=True)
+
+        # 3. Sync static assets from repo to /tmp/staticfiles for WhiteNoise and Django fallback
+        static_source = BASE_DIR / 'static'
+        static_target = Path('/tmp') / 'staticfiles'
+        if static_source.exists() and not static_target.exists():
+            shutil.copytree(static_source, static_target, dirs_exist_ok=True)
     except Exception as _e:
         print("Vercel /tmp pre-sync note:", _e)
 

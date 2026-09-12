@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="specGradTrans" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C4021D"/>
+      <stop offset="100%" stop-color="#9E0115"/>
+    </linearGradient>
+  </defs>
+  <!-- Signature Geometric 'S' from Spec Media Logo -->
+  <g transform="translate(86, 42) scale(0.83)">
+    <path d="M 73 16 L 46 35 L 24 60 L 9 88 L 2 112 L 2 176 L 11 205 L 29 235 L 47 254 L 66 268 L 88 279 L 112 286 L 277 288 L 298 293 L 318 305 L 336 327 L 344 351 L 344 371 L 340 387 L 326 410 L 311 423 L 288 433 L 43 434 L 0 500 L 286 500 L 307 496 L 339 483 L 363 466 L 384 443 L 398 419 L 407 392 L 410 373 L 408 335 L 399 306 L 382 277 L 360 254 L 343 242 L 300 225 L 278 222 L 128 222 L 106 215 L 84 198 L 72 180 L 66 160 L 66 128 L 70 113 L 86 88 L 101 76 L 123 67 L 354 66 L 394 0 L 127 0 L 100 5 Z" fill="url(#specGradTrans)"/>
+  </g>
+</svg>

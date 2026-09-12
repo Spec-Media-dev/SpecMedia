@@ -6,7 +6,11 @@
   <title>404 — Page Not Found | Spec Media</title>
   <meta name="robots" content="noindex, follow">
   <meta name="description" content="The requested page could not be located in the Spec Media network. Return to the homepage or explore our work and capabilities.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23201e1d%22/><text y=%22.9em%22 font-size=%2280%22 fill=%22%239e1b24%22>S</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="{% if site_settings.favicon_image %}{{ site_settings.favicon_image }}{% else %}/static/favicon.svg{% endif %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/static/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -29,7 +33,11 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #000000;
+      background-color: #000000;
+      background-image: radial-gradient(circle at 50% 35%, rgba(158, 27, 36, 0.10) 0%, rgba(0, 0, 0, 0.85) 65%, #000000 100%);
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
       color: var(--text);
       font-family: var(--font-sans);
       min-height: 100vh;
@@ -37,9 +45,6 @@
       flex-direction: column;
       justify-content: space-between;
       overflow-x: hidden;
-      background-image: 
-        radial-gradient(circle at 50% 20%, rgba(158, 27, 36, 0.08) 0%, transparent 50%),
-        linear-gradient(to bottom, #141312 0%, #0d0c0c 100%);
     }
 
     header {
