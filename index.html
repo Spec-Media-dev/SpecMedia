@@ -1137,36 +1137,28 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 }
 
 
-/* --- INSTAGRAM LUXURY REVIEW CARDS --- */
+/* --- INSTAGRAM LUXURY REVIEW CARDS (Dark-to-Light scroll transition) --- */
 .ig-card {
-  --color-neutral-300: #ded3c3 !important;
-  --color-neutral-400: #a89f91 !important;
-  --color-neutral-500: #8c8273 !important;
-  --color-neutral-600: #70685c !important;
-  --color-bg: #ffffff !important;
   flex: none;
   width: clamp(310px, 26vw, 380px) !important;
-  background: #141312 !important;
-  color: #f5ead8 !important;
-  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  background-color: var(--color-card-bg, #141312) !important;
+  color: var(--color-card-text, var(--color-bg)) !important;
+  border: 1px solid var(--color-card-border, rgba(255, 255, 255, 0.09)) !important;
   border-radius: 18px !important;
   overflow: hidden !important;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: var(--color-card-shadow, 0 20px 50px rgba(0, 0, 0, 0.75), 0 4px 16px rgba(0, 0, 0, 0.5)) !important;
   display: flex !important;
   flex-direction: column !important;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, border-color 0.45s ease !important;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, border-color 0.45s ease, background-color 0.25s ease, color 0.25s ease !important;
+  will-change: background-color, border-color, box-shadow, color;
 }
 .ig-card:hover {
   transform: translateY(-6px) !important;
-  box-shadow: 0 32px 84px -12px rgba(0, 0, 0, 0.95), 0 0 24px rgba(158, 27, 36, 0.25) !important;
+  box-shadow: var(--color-card-hover-shadow, 0 32px 84px -12px rgba(0, 0, 0, 0.95), 0 0 24px rgba(158, 27, 36, 0.25)) !important;
   border-color: rgba(158, 27, 36, 0.4) !important;
 }
-.ig-card * {
-  --color-neutral-300: #ded3c3 !important;
-  --color-neutral-400: #a89f91 !important;
-  --color-neutral-500: #8c8273 !important;
-  --color-neutral-600: #70685c !important;
-  --color-bg: #ffffff !important;
+.ig-card > div:first-child {
+  border-bottom: 1px solid var(--color-card-border, rgba(255, 255, 255, 0.06)) !important;
 }
 .ig-heart-pulse {
   position: absolute;
@@ -1185,12 +1177,29 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 [data-screen-label="03b Statement"],
 [data-screen-label="04 The Reel"],
 [data-screen-label="05 Capabilities"],
-[data-screen-label="06 Green pass"],
-[data-screen-label="07 Reviews"],
-[data-screen-label="08 Footer"],
-footer#contact {
+[data-screen-label="06 Green pass"] {
   background-color: #000000 !important;
   background-image: radial-gradient(circle at 50% 50%, rgba(158, 27, 36, 0.08) 0%, rgba(0, 0, 0, 0.85) 65%, #000000 100%) !important;
+}
+
+/* Section 07 (Reviews) Dark-to-Light scroll transition */
+[data-screen-label="07 Reviews"] {
+  background-color: var(--color-reviews-bg, #000000) !important;
+  will-change: background-color, color;
+}
+
+/* Footer Dark-to-Light scroll transition */
+footer#contact {
+  background-color: var(--color-footer-bg, #000000);
+  will-change: background-color, color;
+}
+footer#contact a {
+  color: inherit;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+footer#contact a:hover {
+  color: var(--color-accent) !important;
+  opacity: 1 !important;
 }
 </style>
 </helmet>
@@ -1616,11 +1625,13 @@ footer#contact {
       </div>
     </div>
   </section>
-  <section ref="{{ reviewsRef }}" data-screen-label="07 Reviews" style="background:var(--color-text);position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:var(--space-8) 0;overflow:hidden">
-    <div data-blurable="1" style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:var(--space-6)">
+  <section ref="{{ reviewsRef }}" data-screen-label="07 Reviews" style="background:var(--color-reviews-bg, var(--color-text));position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:var(--space-8) 0;overflow:hidden">
+    <!-- Ambient Radial Glow overlay: fades out on scroll as dark mode transitions to light mode -->
+    <div id="spec-reviews-ambient-glow" style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(158,27,36,0.08) 0%, rgba(0,0,0,0.85) 65%, #000000 100%);pointer-events:none;z-index:0;opacity:1;will-change:opacity;"></div>
+    <div data-blurable="1" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:var(--space-6)">
       <div>
         <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:var(--color-neutral-500);margin-bottom:4px">07 / REVIEWS — VERIFIED VOICES</div>
-        <h2 style="margin:0;font-family:var(--font-heading);font-size:clamp(30px,4.4vw,64px);line-height:1.02;color:#f5ead8">Beyond clients.<br>Trusted partners.</h2>
+        <h2 style="margin:0;font-family:var(--font-heading);font-size:clamp(30px,4.4vw,64px);line-height:1.02;color:var(--color-bg)">Beyond clients.<br>Trusted partners.</h2>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
         <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid var(--color-neutral-800);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;font-size:10px;color:var(--color-accent)">
@@ -1631,7 +1642,7 @@ footer#contact {
     </div>
 
     <!-- Edge-to-edge full-bleed carousel wrapper spanning 100vw from left to right -->
-    <div class="spec-reviews-bleed" data-lenis-prevent="true" style="position:relative;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;overflow:hidden;padding:12px 0 28px;-webkit-mask-image:linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 96%, transparent 100%);mask-image:linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 96%, transparent 100%)">
+    <div class="spec-reviews-bleed" data-lenis-prevent="true" style="position:relative;z-index:1;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;overflow:hidden;padding:12px 0 28px;-webkit-mask-image:linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 96%, transparent 100%);mask-image:linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 96%, transparent 100%)">
       <div data-rvrow="1" style="display:flex;gap:clamp(20px,2.4vw,34px);overflow-x:auto;padding:16px max(32px, calc((100vw - 1440px)/2 + 24px)) 28px;scrollbar-width:none;-ms-overflow-style:none;cursor:grab;user-select:none;-webkit-user-select:none;will-change:transform">
       <!-- Card: @faisal.almarri -->
       <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:#141312;border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
@@ -2191,8 +2202,10 @@ footer#contact {
 
   <div style="height:100vh;pointer-events:none"></div>
 
-  <footer ref="{{ footerRef }}" id="contact" data-screen-label="08 Footer" style="position:fixed;left:0;right:0;bottom:0;height:auto;max-height:100vh;overflow:hidden;box-sizing:border-box;padding:clamp(18px,3vh,44px) 0 clamp(12px,2vh,22px);background:var(--color-neutral-900);display:flex;flex-direction:column;gap:clamp(14px,2.4vh,34px);z-index:0">
-    <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;display:flex;flex-direction:column;gap:30px;flex:1;justify-content:space-between;">
+  <footer ref="{{ footerRef }}" id="contact" data-screen-label="08 Footer" style="position:fixed;left:0;right:0;bottom:0;height:auto;max-height:100vh;overflow:hidden;box-sizing:border-box;padding:clamp(18px,3vh,44px) 0 clamp(12px,2vh,22px);background:var(--color-footer-bg, #000000);display:flex;flex-direction:column;gap:clamp(14px,2.4vh,34px);z-index:0">
+    <!-- Ambient Radial Glow overlay: fades out on scroll as dark mode transitions to light mode in the last section -->
+    <div id="spec-footer-ambient-glow" style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(158,27,36,0.08) 0%, rgba(0,0,0,0.85) 65%, #000000 100%);pointer-events:none;z-index:0;opacity:1;will-change:opacity;"></div>
+    <div style="position:relative;z-index:1;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;display:flex;flex-direction:column;gap:30px;flex:1;justify-content:space-between;">
     <div style="display:flex;flex-direction:column;gap:clamp(14px,2.4vh,34px)">
       <div style="display:flex;align-items:center;gap:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:10px;color:var(--color-neutral-500)">
         <span style="display:inline-block;width:7px;height:7px;border-radius:999px;background:var(--color-accent);animation:spec-pulse 2.4s infinite"></span>
@@ -2619,9 +2632,25 @@ class Component extends DCLogic {
     }
     if (this.heroCueRef.current) this.heroCueRef.current.style.opacity = String(Math.max(0, 1 - p * 3));
     const doc = document.documentElement;
-    // Light-to-dark transition in Scene 01 (Hero):
-    const themeProgress = Math.max(0, Math.min(1, y / (vh * 0.75)));
-    this.updateTheme(themeProgress);
+    // Theme transition:
+    // 1. Light-to-dark transition in Scene 01 (Hero): y = 0 -> vh * 0.75
+    // 2. Dark-to-light transition in Scene 07 (Reviews / Reviews cards) through Scene 08 (Footer)
+    const maxScroll = Math.max(1, doc.scrollHeight - vh);
+    const rest = Math.max(0, maxScroll - y);
+    const heroDarkProgress = Math.max(0, Math.min(1, y / (vh * 0.75)));
+    const footerReveal = Math.max(0, Math.min(1, 1 - rest / (vh * 0.88)));
+
+    const rv = (this.reviewsRef && this.reviewsRef.current) || document.querySelector('[data-screen-label="07 Reviews"]');
+    let reviewsReveal = 0;
+    if (rv) {
+      const rect = rv.getBoundingClientRect();
+      reviewsReveal = Math.max(0, Math.min(1, (vh - rect.top) / (vh * 0.75)));
+    }
+
+    const bottomLightReveal = Math.max(reviewsReveal, footerReveal);
+    // When in Hero: 0 (light) -> 1 (dark). In middle (02-06): 1 (dark). In Reviews/Footer (07-08): 1 (dark) -> 0 (light).
+    const themeProgress = Math.max(0, Math.min(1, heroDarkProgress * (1 - bottomLightReveal)));
+    this.updateTheme(themeProgress, bottomLightReveal);
 
     // Section 04 (THE REEL) - Slim width transition when near end of section
     if (this.progressRef.current) {
@@ -2850,26 +2879,39 @@ class Component extends DCLogic {
     }
 
     if (this.footerRef.current) {
-      const rest = doc.scrollHeight - vh - y;
-      const fp = Math.max(0, Math.min(1, 1 - rest / (vh * 0.9)));
+      const rest = Math.max(0, (doc.scrollHeight - vh) - y);
+      const fp = Math.max(0, Math.min(1, 1 - rest / (vh * 0.88)));
       this.footerRef.current.style.opacity = String(0.35 + fp * 0.65);
       this.footerRef.current.style.transform = 'translateY(' + (1 - fp) * 8 + '%)';
     }
   }
 
   // scroll-driven light-to-dark transition: Scene 01 begins in warm luxury light mode,
-  // scroll-driven light-to-dark transition: Scene 01 begins in warm luxury light mode,
-  // then smoothly transitions on scroll into deep obsidian dark mode with Trusted Partners ambient glow.
-  updateTheme(t){
+  // then smoothly transitions on scroll into deep obsidian dark mode,
+  // and in the last sections (07 Reviews and 08 Footer) smoothly transitions from deep obsidian dark mode back into warm luxury light mode.
+  updateTheme(t, bottomLightReveal = 0){
     const root = this.pageRef.current; if (!root) return;
-    const isScrolled = (window.scrollY || 0) > 20 || t > 0.04;
+    const isScrolled = (window.scrollY || 0) > 20;
     document.documentElement.classList.toggle('spec-scrolled', isScrolled);
-    document.documentElement.classList.toggle('spec-dark-mode', isScrolled);
+    // Dark mode is active when t > 0.08 (both top of Hero and bottom Reviews/Footer are light mode)
+    document.documentElement.classList.toggle('spec-dark-mode', t > 0.08);
 
     // Fade in ambient crimson glow overlay in Hero as light mode transitions to dark mode
     const heroGlow = document.getElementById('spec-hero-ambient-glow');
     if (heroGlow) {
       heroGlow.style.opacity = String(Math.max(0, Math.min(1, t * 1.15)));
+    }
+
+    // Fade out ambient crimson glow overlay in Reviews as dark mode transitions to light mode
+    const reviewsGlow = document.getElementById('spec-reviews-ambient-glow');
+    if (reviewsGlow) {
+      reviewsGlow.style.opacity = String(Math.max(0, Math.min(1, t * 1.15)));
+    }
+
+    // Fade out ambient crimson glow overlay in Footer as dark mode transitions to light mode
+    const footerGlow = document.getElementById('spec-footer-ambient-glow');
+    if (footerGlow) {
+      footerGlow.style.opacity = String(Math.max(0, Math.min(1, t * 1.15)));
     }
 
     if (Math.abs(t - (this.lastThemeP ?? -1)) < 0.003) return;
@@ -2901,6 +2943,45 @@ class Component extends DCLogic {
     inkTokens.forEach(([v, l, d]) => { root.style.setProperty(v, mix(l, d)); });
     document.body.style.background = mix('#f5ead8', '#000000');
     document.body.style.color = mix('#141211', '#f5ead8');
+
+    // Review cards dynamic tokens:
+    // Dark: #141312 surface, light border, deep dark shadow
+    // Light: #faf5ed luxury paper surface, soft dark border, warm dimensional shadow
+    const cardBg = mix('#faf5ed', '#141312');
+    const cardBorder = mix('rgba(20, 18, 17, 0.09)', 'rgba(255, 255, 255, 0.09)');
+    const cardText = mix('#141211', '#f5ead8');
+    const cardShadow = t > 0.5 
+      ? '0 20px 50px rgba(0, 0, 0, 0.75), 0 4px 16px rgba(0, 0, 0, 0.5)'
+      : '0 20px 50px rgba(20, 18, 17, 0.10), 0 4px 16px rgba(20, 18, 17, 0.05)';
+    const cardHoverShadow = t > 0.5
+      ? '0 32px 84px -12px rgba(0, 0, 0, 0.95), 0 0 24px rgba(158, 27, 36, 0.25)'
+      : '0 32px 84px -12px rgba(20, 18, 17, 0.18), 0 0 24px rgba(158, 27, 36, 0.25)';
+
+    root.style.setProperty('--color-card-bg', cardBg);
+    root.style.setProperty('--color-card-border', cardBorder);
+    root.style.setProperty('--color-card-text', cardText);
+    root.style.setProperty('--color-card-shadow', cardShadow);
+    root.style.setProperty('--color-card-hover-shadow', cardHoverShadow);
+
+    // Section 07 (Reviews) dynamic background & text
+    const reviewsEl = (this.reviewsRef && this.reviewsRef.current) || document.querySelector('[data-screen-label="07 Reviews"]');
+    if (reviewsEl) {
+      const reviewsBg = mix('#f5ead8', '#000000');
+      const reviewsInk = mix('#141211', '#f5ead8');
+      reviewsEl.style.setProperty('--color-reviews-bg', reviewsBg);
+      reviewsEl.style.backgroundColor = reviewsBg;
+      reviewsEl.style.color = reviewsInk;
+    }
+
+    // Direct footer styling for instantaneous, fluid 60fps color transition
+    const footerEl = this.footerRef ? this.footerRef.current : null;
+    if (footerEl) {
+      const footerBg = mix('#f5ead8', '#000000');
+      const footerInk = mix('#141211', '#f5ead8');
+      footerEl.style.setProperty('--color-footer-bg', footerBg);
+      footerEl.style.backgroundColor = footerBg;
+      footerEl.style.color = footerInk;
+    }
   }
 
   drawScrub(t){
