@@ -75,7 +75,14 @@
 
       if (card) {
         if (activeCard !== card) {
+          if (activeCard) {
+            activeCard.style.transform = '';
+            activeCard.classList.remove('is-card-hovered');
+          }
           activeCard = card;
+          activeCard.classList.add('is-card-hovered');
+          var grid = card.closest('[data-workgrid="1"]') || card.parentElement;
+          if (grid) grid.classList.add('has-card-hover');
           cursorRing.classList.add('is-card-hover');
           cursorDot.classList.add('is-card-hover');
           cursorRing.classList.remove('is-hovering');
@@ -91,13 +98,16 @@
 
         var normX = (relX / rect.width) - 0.5;
         var normY = (relY / rect.height) - 0.5;
-        var tiltX = (-normY * 12).toFixed(2);
-        var tiltY = (normX * 12).toFixed(2);
+        var tiltX = (-normY * 6).toFixed(2);
+        var tiltY = (normX * 6).toFixed(2);
 
-        card.style.transform = 'perspective(1000px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) translateY(-8px) scale3d(1.025, 1.025, 1.025)';
+        card.style.transform = 'perspective(1000px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) translateY(-10px) scale(1.028)';
       } else {
         if (activeCard) {
-          activeCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale3d(1, 1, 1)';
+          var grid = activeCard.closest('[data-workgrid="1"]') || activeCard.parentElement;
+          if (grid) grid.classList.remove('has-card-hover');
+          activeCard.style.transform = '';
+          activeCard.classList.remove('is-card-hovered');
           activeCard = null;
           cursorRing.classList.remove('is-card-hover');
           cursorDot.classList.remove('is-card-hover');
@@ -116,7 +126,10 @@
     document.addEventListener('mouseout', function(e) {
       var card = e.target ? e.target.closest('[data-card], .work-card') : null;
       if (card && (!e.relatedTarget || !card.contains(e.relatedTarget))) {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale3d(1, 1, 1)';
+        var grid = card.closest('[data-workgrid="1"]') || card.parentElement;
+        if (grid) grid.classList.remove('has-card-hover');
+        card.style.transform = '';
+        card.classList.remove('is-card-hovered');
         if (activeCard === card) {
           activeCard = null;
           cursorRing.classList.remove('is-card-hover');
@@ -125,20 +138,37 @@
       }
     });
 
+    var isMouseDown = false;
+
+    function createClickPulse(x, y) {
+      var pulse = document.createElement('div');
+      pulse.className = 'spec-click-pulse';
+      pulse.style.left = x + 'px';
+      pulse.style.top = y + 'px';
+      document.body.appendChild(pulse);
+      setTimeout(function() {
+        if (pulse.parentNode) pulse.parentNode.removeChild(pulse);
+      }, 550);
+    }
+
     // Fluid Inertial Follow Loop
     function render() {
       ringX += (mouseX - ringX) * 0.18;
       ringY += (mouseY - ringY) * 0.18;
-      cursorRing.style.transform = 'translate(' + ringX.toFixed(1) + 'px, ' + ringY.toFixed(1) + 'px) translate(-50%, -50%)';
+      var ringScale = isMouseDown ? 0.72 : 1;
+      cursorRing.style.transform = 'translate3d(' + ringX.toFixed(1) + 'px, ' + ringY.toFixed(1) + 'px, 0) translate(-50%, -50%) scale(' + ringScale + ')';
       requestAnimationFrame(render);
     }
     requestAnimationFrame(render);
 
-    window.addEventListener('mousedown', function() {
+    window.addEventListener('mousedown', function(e) {
+      isMouseDown = true;
       cursorRing.classList.add('is-active');
       cursorDot.classList.add('is-active');
+      createClickPulse(e.clientX, e.clientY);
     });
     window.addEventListener('mouseup', function() {
+      isMouseDown = false;
       cursorRing.classList.remove('is-active');
       cursorDot.classList.remove('is-active');
     });

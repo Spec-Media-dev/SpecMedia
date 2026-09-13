@@ -107,29 +107,76 @@
 
 /* Mousedown click compression physics */
 .spec-cursor-ring.is-active {
-  transform: translate(-50%, -50%) scale(0.72) !important;
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.45);
 }
 
-.spec-cursor-dot.is-active {
-  transform: translate(-50%, -50%) scale(0.6) !important;
+/* Click Ripple Pulse (centered precisely at click coordinates) */
+.spec-click-pulse {
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999990;
+  transform: translate(-50%, -50%);
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 18px rgba(158, 27, 36, 0.6);
+  animation: specClickPulseAnim 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes specClickPulseAnim {
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3.2);
+    opacity: 0;
+  }
 }
 
 /* Touch fallback */
 @media (hover: none) or (pointer: coarse) {
   .spec-cursor-dot,
-  .spec-cursor-ring {
+  .spec-cursor-ring,
+  .spec-click-pulse {
     display: none !important;
   }
 }
 
-/* --- SELECTED WORK CARDS HOVER & 3D TILT --- */
+/* --- SELECTED WORK CARDS HOVER & 3D ELEVATION --- */
 [data-card], .work-card {
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, filter, opacity;
+}
+
+/* Sibling dim & blur: ONLY applied to surrounding cards when a card in Works section is hovered */
+[data-workgrid="1"]:has([data-card]:hover) [data-card]:not(:hover),
+[data-screen-label="03 Work grid"]:has([data-card]:hover) [data-card]:not(:hover),
+[data-workgrid="1"].has-card-hover [data-card]:not(.is-card-hovered),
+.has-card-hover [data-card]:not(.is-card-hovered),
+.has-card-hover .work-card:not(.is-card-hovered) {
+  opacity: 0.35 !important;
+  filter: blur(5px) !important;
+  transform: scale(0.98) translateY(2px) !important;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Active Hovered Card: perfectly clear, highlighted, elevated forward with depth */
+[data-card]:hover,
+.work-card:hover,
+[data-card].is-card-hovered,
+.work-card.is-card-hovered {
+  opacity: 1 !important;
+  filter: blur(0px) !important;
+  transform: translateY(-10px) scale(1.028);
+  z-index: 30 !important;
 }
 
 [data-card] > div:first-child,
