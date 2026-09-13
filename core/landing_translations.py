@@ -57,6 +57,7 @@ SUPPLEMENTAL = {
         "03b / Statement": "03b / Statement",
         "04 / The Reel · Partners": "04 / The Reel · Partners",
         "05 / Capabilities": "05 / Capabilities",
+        "capabilities — hover a line": "capabilities — hover a line",
         "06 / Colour Pass": "06 / Colour Pass",
         "07 / Reviews": "07 / Reviews",
         "08 / Contact": "08 / Contact",

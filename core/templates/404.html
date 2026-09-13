@@ -48,11 +48,25 @@
     }
 
     header {
-      padding: 28px 48px;
+      position: fixed;
+      top: clamp(12px, 1.8vw, 20px);
+      left: clamp(14px, 3vw, 40px);
+      right: clamp(14px, 3vw, 40px);
+      margin: 0 auto;
+      max-width: 1440px;
+      width: auto;
+      box-sizing: border-box;
+      z-index: 100;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--border);
+      padding: clamp(10px, 1.2vw, 14px) clamp(18px, 2.5vw, 32px);
+      background: rgba(14, 13, 12, 0.78);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: clamp(14px, 1.8vw, 20px);
+      box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.65), 0 1px 0 0 rgba(255, 255, 255, 0.06) inset;
     }
 
     .brand-logo {
@@ -272,7 +286,13 @@
     }
 
     @media (max-width: 768px) {
-      header { padding: 16px 20px; }
+      header {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 10px 14px;
+        border-radius: 12px;
+      }
       .header-nav > a { display: none; }
       .header-nav { display: flex; gap: 8px; }
       footer { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; }

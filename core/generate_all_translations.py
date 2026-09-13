@@ -193,6 +193,10 @@ CATALOG = {
         "es": "Confiado por equipos que valoran experiencias digitales excepcionales.",
         "de": "Geschätzt von Teams, die außergewöhnliche digitale Erlebnisse verlangen.",
     },
+    "capabilities — hover a line": {
+        "ar": "القدرات — مرر على السطر",
+        "en": "capabilities — hover a line"
+    },
     "capabilities — hover to inspect work": {
         "ar": "القدرات — حرّك الفأرة لمعاينة الأعمال",
         "fr": "capacités — survolez pour inspecter les travaux",

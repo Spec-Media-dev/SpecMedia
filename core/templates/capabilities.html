@@ -75,19 +75,25 @@
     /* Top Navigation */
     .nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: clamp(12px, 1.8vw, 20px);
+      left: clamp(14px, 3vw, 40px);
+      right: clamp(14px, 3vw, 40px);
+      margin: 0 auto;
+      max-width: 1440px;
+      width: auto;
+      box-sizing: border-box;
       z-index: 100;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: clamp(16px, 2.5vw, 24px) clamp(20px, 4vw, 48px);
-      background: rgba(18, 17, 16, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(245, 234, 216, 0.08);
-      transition: all 0.3s ease;
+      padding: clamp(10px, 1.2vw, 14px) clamp(18px, 2.5vw, 32px);
+      background: rgba(14, 13, 12, 0.78);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: clamp(14px, 1.8vw, 20px);
+      box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.65), 0 1px 0 0 rgba(255, 255, 255, 0.06) inset;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
     .nav-logo {
       display: flex;
@@ -675,10 +681,20 @@
       user-select: none;
     }
     @media (max-width: 640px) {
-      .nav { padding: 12px 16px; }
-      .nav-logo-text { font-size: 16px; }
-      .nav-links { gap: 10px; font-size: 10px; }
+      .nav {
+        top: 10px;
+        left: 8px;
+        right: 8px;
+        padding: 8px 10px;
+        border-radius: 12px;
+        gap: 6px;
+      }
+      .nav-links { gap: 6px; font-size: 8.5px; white-space: nowrap; }
+      .nav-link { letter-spacing: 0.04em; white-space: nowrap; }
       .nav-cta { display: none; }
+      .spec-logo-char-img { height: 10.5px !important; }
+      .spec-char-gap { width: 4px !important; }
+      .nav-lang-switcher { padding: 2px 5px; font-size: 8.5px; gap: 4px; }
     }
   
     /* Universal RTL overrides */

@@ -759,22 +759,31 @@ html.spec-dark-mode [ref="logoRef"] img {
 }
 
 
-/* Top Chrome Navigation: cleanly split with compact logo on left and actions on right */
+/* Top Chrome Navigation: cleanly split with compact logo on left and actions on right in a modern floating pill */
 .spec-landing-chrome {
   direction: ltr !important;
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
   position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  padding: 14px clamp(20px, 4vw, 48px) !important;
+  top: clamp(12px, 1.8vw, 20px) !important;
+  left: clamp(14px, 3vw, 40px) !important;
+  right: clamp(14px, 3vw, 40px) !important;
+  margin: 0 auto !important;
+  max-width: 1440px !important;
+  width: auto !important;
+  padding: clamp(10px, 1.2vw, 14px) clamp(16px, 2.5vw, 32px) !important;
   box-sizing: border-box !important;
   z-index: 70;
+  border-radius: clamp(14px, 1.8vw, 20px) !important;
+  background: rgba(14, 13, 12, 0.78) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.65), 0 1px 0 0 rgba(255, 255, 255, 0.06) inset !important;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-8px);
+  transform: translateY(0);
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               background 0.35s ease,
@@ -789,14 +798,14 @@ html.spec-dark-mode [ref="logoRef"] img {
 .spec-chrome-actions {
   display: inline-flex;
   align-items: center;
-  gap: clamp(12px, 2vw, 28px);
+  gap: clamp(12px, 1.8vw, 24px);
 }
 
 /* Compact sticky logo in top navbar: hidden at top hero, appears smoothly on scroll */
 .spec-chrome-nav-logo {
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-4px);
+  transform: translateY(0);
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
@@ -815,25 +824,26 @@ html.spec-dark-mode.spec-scrolled .spec-chrome-nav-logo {
   width: auto !important;
 }
 
-/* Navbar on scroll: smoothly revealed with backdrop blur */
+/* Navbar on scroll: smoothly revealed with backdrop blur in floating pill shape */
 html.spec-scrolled .spec-landing-chrome {
   opacity: 1 !important;
   pointer-events: auto !important;
   transform: translateY(0) !important;
-  background: rgba(14, 13, 12, 0.82) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+  background: rgba(14, 13, 12, 0.78) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.65), 0 1px 0 0 rgba(255, 255, 255, 0.06) inset !important;
 }
 
 /* In light mode when scrolled: make the navbar background darker to clearly distinguish from content behind it */
 html.spec-scrolled:not(.spec-dark-mode) .spec-landing-chrome,
 html.spec-scrolled.spec-light-mode .spec-landing-chrome {
-  background: rgba(18, 16, 15, 0.88) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border-bottom: 1px solid rgba(245, 234, 216, 0.12) !important;
+  background: rgba(18, 16, 15, 0.85) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  border: 1px solid rgba(245, 234, 216, 0.12) !important;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.5), 0 1px 0 0 rgba(255, 255, 255, 0.08) inset !important;
   color: #f5ead8 !important;
 }
 
@@ -940,8 +950,12 @@ html.spec-dark-mode .spec-nav-lang-switcher {
     display: none !important;
   }
   .spec-landing-chrome {
-    gap: 12px !important;
-    padding: var(--space-4) 14px !important;
+    top: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+    padding: 10px 14px !important;
+    border-radius: 12px !important;
+    gap: 10px !important;
   }
   .spec-nav-lang-switcher {
     font-size: 9px !important;
@@ -1053,8 +1067,8 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 }
 .spec-orbit-logo-item img,
 .spec-orbit-logo-item svg {
-  max-width: clamp(190px, 18vw, 260px);
-  max-height: clamp(80px, 7.5vw, 110px);
+  max-width: clamp(110px, 20.5vw, 150px);
+  max-height: clamp(42px, 3.8vw, 60px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -1080,21 +1094,34 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 
 /* --- INSTAGRAM LUXURY REVIEW CARDS --- */
 .ig-card {
+  --color-neutral-300: #ded3c3 !important;
+  --color-neutral-400: #a89f91 !important;
+  --color-neutral-500: #8c8273 !important;
+  --color-neutral-600: #70685c !important;
+  --color-bg: #ffffff !important;
   flex: none;
-  width: clamp(320px, 28vw, 390px);
-  background: #141312;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.88), 0 8px 24px -4px rgba(0, 0, 0, 0.65);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, border-color 0.45s ease;
+  width: clamp(310px, 26vw, 380px) !important;
+  background: #141312 !important;
+  color: #f5ead8 !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, border-color 0.45s ease !important;
 }
 .ig-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 32px 84px -12px rgba(0, 0, 0, 0.95), 0 0 24px rgba(158, 27, 36, 0.22);
-  border-color: rgba(158, 27, 36, 0.35);
+  transform: translateY(-6px) !important;
+  box-shadow: 0 32px 84px -12px rgba(0, 0, 0, 0.95), 0 0 24px rgba(158, 27, 36, 0.25) !important;
+  border-color: rgba(158, 27, 36, 0.4) !important;
+}
+.ig-card * {
+  --color-neutral-300: #ded3c3 !important;
+  --color-neutral-400: #a89f91 !important;
+  --color-neutral-500: #8c8273 !important;
+  --color-neutral-600: #70685c !important;
+  --color-bg: #ffffff !important;
 }
 .ig-heart-pulse {
   position: absolute;
@@ -1122,8 +1149,8 @@ footer#contact {
 }
 </style>
 </helmet>
-<div ref="{{ pageRef }}" style="position:relative;color:var(--color-bg);font-family:var(--font-body)">
-  <div ref="{{ chromeRef }}" class="spec-landing-chrome" style="position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:14px clamp(20px,4vw,48px);z-index:70;mix-blend-mode:difference;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:#f5ead8;direction:ltr !important">
+<div ref="{{ pageRef }}" style="position:relative;color:#ffffff;font-family:var(--font-body)">
+  <div ref="{{ chromeRef }}" class="spec-landing-chrome" style="position:fixed;top:clamp(12px,1.8vw,20px);left:clamp(14px,3vw,40px);right:clamp(14px,3vw,40px);margin:0 auto;max-width:1440px;display:flex;align-items:center;justify-content:space-between;padding:clamp(10px,1.2vw,14px) clamp(16px,2.5vw,32px);z-index:70;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:#f5ead8;direction:ltr !important">
     <a href="/" class="spec-chrome-nav-logo" aria-label="Spec Media Home">
       <span class="spec-chars-wrap spec-nav-chars-wrap">
         <span class="spec-char spec-char-img" style="--char-i:0"><svg viewBox="0 0 411 502" fill-rule="evenodd" class="spec-logo-char-img"><path d="M 73 16 L 46 35 L 24 60 L 9 88 L 2 112 L 2 176 L 11 205 L 29 235 L 47 254 L 66 268 L 88 279 L 112 286 L 277 288 L 298 293 L 318 305 L 336 327 L 344 351 L 344 371 L 340 387 L 326 410 L 311 423 L 288 433 L 43 434 L 0 500 L 286 500 L 307 496 L 339 483 L 363 466 L 384 443 L 398 419 L 407 392 L 410 373 L 408 335 L 399 306 L 382 277 L 360 254 L 343 242 L 300 225 L 278 222 L 128 222 L 106 215 L 84 198 L 72 180 L 66 160 L 66 128 L 70 113 L 86 88 L 101 76 L 123 67 L 354 66 L 394 0 L 127 0 L 100 5 Z" fill="currentColor"/></svg></span>
@@ -1187,10 +1214,10 @@ footer#contact {
     
     <!-- BOTTOM ROW: Hero Copy -->
     <div ref="{{ heroCopyRef }}" class="spec-hero-copy-wrap" style="position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-end;justify-content:space-between;margin-top:clamp(40px, 12vh, 120px);">
-      <h1 class="spec-hero-title" style="margin:0;max-width:16ch;font-family:var(--font-heading);font-size:clamp(28px,4.2vw,66px);line-height:1.04;color:var(--color-bg)">You feel the brand before it speaks®</h1>
-      <p class="spec-hero-desc" style="max-width:38ch;margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.04em;font-size:12px;line-height:2;color:var(--color-neutral-400)">Spec Media builds brand identities & campaigns for companies that care how things feel and how they are perceived over time.</p>
+      <h1 class="spec-hero-title" style="margin:0;max-width:16ch;font-family:var(--font-heading);font-size:clamp(28px,4.2vw,66px);line-height:1.04;color:#ffffff">You feel the brand before it speaks®</h1>
+      <p class="spec-hero-desc" style="max-width:38ch;margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.04em;font-size:12px;line-height:2;color:#a89f91">Spec Media builds brand identities & campaigns for companies that care how things feel and how they are perceived over time.</p>
     </div>
-    <div style="position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between;margin-top:var(--space-6);padding-top:var(--space-4);border-top:1px solid var(--color-neutral-800);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:10px;color:var(--color-neutral-600)">
+    <div style="position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between;margin-top:var(--space-6);padding-top:var(--space-4);border-top:1px solid var(--color-neutral-800);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:10px;color:#70685c">
       <span>brand strategy</span><span>campaign production</span><span>performance media</span><span>content systems</span><span>est. placeholder</span>
     </div>
     </div>
@@ -1401,10 +1428,10 @@ footer#contact {
         <div style="position:absolute;width:clamp(360px, 85vw, 960px);height:clamp(280px, 50vh, 500px);border-radius:50%;background:radial-gradient(ellipse 65% 60% at 50% 50%, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.60) 45%, rgba(0,0,0,0) 80%);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none;z-index:-1;"></div>
 
         <!-- Header Badge -->
-        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;">
+        <!-- <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;">
           <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.22em;font-weight:700;text-transform:uppercase;color:#000000;background:#ffffff;padding:4px 12px;border-radius:3px">TRUSTED PARTNERS</span>
           <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,0.45)">04 / THE REEL</span>
-        </div>
+        </div> -->
 
         <!-- Word-by-Word Typography -->
         <div style="text-align:center;font-size:clamp(1.85rem, 4.2vw, 4.4rem);line-height:1.14;letter-spacing:-0.03em;">
@@ -1442,7 +1469,7 @@ footer#contact {
     <section ref="{{ svcRef }}" data-screen-label="05 Capabilities" style="background:var(--color-text);position:relative;z-index:1;min-height:100vh;box-sizing:border-box;padding:var(--space-8) 0;display:flex;align-items:center">
     <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:center;width:100%;">
     <div style="flex:1 1 480px;min-width:0">
-      <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:var(--space-4)">capabilities — hover to inspect work</div>
+      <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:var(--space-4)">capabilities — hover a line</div>
       <div data-svc="Brand strategy" style="display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-4);padding:var(--space-4) 0;border-bottom:1px solid var(--color-neutral-800);border-bottom-width:.5px;cursor:pointer;transition:color .3s ease,padding-left .3s ease">
         <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Brand strategy</span>
         <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500)">01</span>
@@ -1455,7 +1482,7 @@ footer#contact {
         <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Performance media</span>
         <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500)">03</span>
       </div>
-      <div data-svc="Content systems" style="display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-4);padding:var(--space-4) 0;border-bottom:1px solid var(--color-neutral-800);border-bottom-width:.5px;cursor:pointer;transition:color .3s ease,padding-left .3s ease">
+      <div data-svc="Content systems" style="display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-4);padding:var(--space-4) 0;cursor:pointer;transition:color .3s ease,padding-left .3s ease">
         <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Content systems</span>
         <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500)">04</span>
       </div>
@@ -1551,7 +1578,7 @@ footer#contact {
     <div data-blurable="1" style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:var(--space-6)">
       <div>
         <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:var(--color-neutral-500);margin-bottom:4px">07 / REVIEWS — VERIFIED VOICES</div>
-        <h2 style="margin:0;font-family:var(--font-heading);font-size:clamp(30px,4.4vw,64px);line-height:1.02;color:var(--color-bg)">Beyond clients.<br>Trusted partners.</h2>
+        <h2 style="margin:0;font-family:var(--font-heading);font-size:clamp(30px,4.4vw,64px);line-height:1.02;color:#f5ead8">Beyond clients.<br>Trusted partners.</h2>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
         <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid var(--color-neutral-800);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;font-size:10px;color:var(--color-accent)">
@@ -1565,7 +1592,7 @@ footer#contact {
     <div class="spec-reviews-bleed" data-lenis-prevent="true" style="position:relative;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;overflow:hidden;padding:12px 0 28px;-webkit-mask-image:linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 96%, transparent 100%);mask-image:linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 96%, transparent 100%)">
       <div data-rvrow="1" style="display:flex;gap:clamp(20px,2.4vw,34px);overflow-x:auto;padding:16px max(32px, calc((100vw - 1440px)/2 + 24px)) 28px;scrollbar-width:none;-ms-overflow-style:none;cursor:grab;user-select:none;-webkit-user-select:none;will-change:transform">
       <!-- Card: @faisal.almarri -->
-      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:#141312;border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
         <!-- Header -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1634,7 +1661,7 @@ footer#contact {
         </div>
       </article>
       <!-- Card: @tariq.mansoori -->
-      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:#141312;border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
         <!-- Header -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1703,7 +1730,7 @@ footer#contact {
         </div>
       </article>
       <!-- Card: @elena.rostova -->
-      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:#141312;border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
         <!-- Header -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1772,7 +1799,7 @@ footer#contact {
         </div>
       </article>
       <!-- Card: @khalid.alzahra -->
-      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:#141312;border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
         <!-- Header -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1841,7 +1868,7 @@ footer#contact {
         </div>
       </article>
       <!-- Card: @faisal.almarri -->
-      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:#141312;border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
         <!-- Header -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1910,7 +1937,7 @@ footer#contact {
         </div>
       </article>
       <!-- Card: @tariq.mansoori -->
-      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:#141312;border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
         <!-- Header -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1979,7 +2006,7 @@ footer#contact {
         </div>
       </article>
       <!-- Card: @elena.rostova -->
-      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:#141312;border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
         <!-- Header -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
           <div style="display:flex;align-items:center;gap:10px">
@@ -2048,7 +2075,7 @@ footer#contact {
         </div>
       </article>
       <!-- Card: @khalid.alzahra -->
-      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:color-mix(in oklab, var(--color-neutral-900) 95%, black);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);background:#141312;border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,0.6);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease;will-change:transform">
         <!-- Header -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
           <div style="display:flex;align-items:center;gap:10px">
@@ -3461,11 +3488,12 @@ function initConstellationController() {
 
   window.__specConstellationActive = true;
 
-  // Cinematic orbital path: sweeps wide around the central manifesto reading area
-  const splineX = [1050, 480, -340, -620, -480, 0, 480, 620, 340, -600, -680, -1050];
-  const splineY = [560, 480, 340, 20, -280, -350, -280, 20, 340, 540, 620, 820];
-  const splineScale = [0.4, 0.85, 1.0, 1.05, 1.0, 0.92, 1.0, 1.05, 1.0, 0.8, 0.55, 0.4];
-  const splineOpacity = [0, 0.8, 0.86, 0.9, 0.8, 0.72, 0.8, 0.9, 0.88, 0.58, 0.22, 0];
+  // Cinematic non-self-intersecting oval orbit: sweeps wide around the central manifesto reading area
+  // Racetrack waypoints: Right -> Bottom-Right -> Bottom -> Bottom-Left -> Left -> Top-Left -> Top -> Top-Right -> Right
+  const splineX = [ 720,  500,   80, -380, -560, -520, -220,  200,  540,  580,  340, -120];
+  const splineY = [ 160,  270,  300,  270,   50, -190, -280, -280, -180,   50,  280,  320];
+  const splineScale = [0.45, 0.68, 0.76, 0.76, 0.72, 0.68, 0.72, 0.76, 0.72, 0.68, 0.58, 0.45];
+  const splineOpacity = [0, 0.85, 0.90, 0.92, 0.88, 0.82, 0.88, 0.92, 0.88, 0.75, 0.40, 0];
 
   function catmullRom(pts, t) {
     const l = pts.length;
@@ -3510,8 +3538,8 @@ function initConstellationController() {
     else vpScale = Math.min(1, Math.max(0.85, w / 1440));
 
     // Position & dimension logos ONCE on resize/init (eliminates 100 forced layout reflows per frame!)
-    const logoW = Math.round(300 * vpScale);
-    const logoH = Math.round(160 * vpScale);
+    const logoW = Math.round(140 * vpScale);
+    const logoH = Math.round(65 * vpScale);
     logoItems.forEach(function(item) {
       item.style.width = logoW + 'px';
       item.style.height = logoH + 'px';
@@ -3537,7 +3565,7 @@ function initConstellationController() {
   }, { passive: true });
 
   const logoCount = logoItems.length;
-  const stagger = logoCount > 1 ? 0.88 / (logoCount - 1) : 0.09;
+  const stagger = 0.85 / (logoCount - 1);
   const totalProgRange = 1 + (logoCount - 1) * stagger;
 
   function animationLoop(now) {
@@ -3571,16 +3599,16 @@ function initConstellationController() {
     smoothMouseX += (mouseX - smoothMouseX) * 0.05;
     smoothMouseY += (mouseY - smoothMouseY) * 0.05;
 
-    // 1. Catmull-Rom Spline Flight Orbit for Active Visible Partner Logos
-    const clearRx = 480 * vpScale;
-    const clearRy = 195 * vpScale;
-    const clearDistLimit = 1.30;
+    // 1. Catmull-Rom Spline Flight Orbit with Anti-Collision Separation
+    const cRx = 280 * vpScale;
+    const cRy = 120 * vpScale;
+
+    const visibleItems = [];
 
     logoItems.forEach(function(item, idx) {
       const itemProg = totalProgRange * f - stagger * idx;
 
-      // CULL OFF-SCREEN LOGOS: If item is outside visible range, hide and skip!
-      if (itemProg <= 0.06 || itemProg >= 0.94) {
+      if (itemProg <= 0.04 || itemProg >= 0.96) {
         if (item._visible !== false) {
           item._visible = false;
           item.style.visibility = 'hidden';
@@ -3592,47 +3620,75 @@ function initConstellationController() {
       item._visible = true;
       const xProg = Math.max(0, Math.min(1, itemProg));
 
-      // Outward radial lane distribution (disperses away from center reading zone)
-      const laneIdx = idx % 3; // 0, 1, 2
-      const outwardSpread = (laneIdx * 42 + 18) * vpScale;
+      // Alternating radial lane offset prevents collinear clustering
+      const lane = (idx % 2 === 0 ? 1 : -1) * 32 * vpScale;
 
-      const rawX = catmullRom(splineX, xProg) * vpScale + (smoothMouseX * 16);
-      const rawY = catmullRom(splineY, xProg) * vpScale + (smoothMouseY * 16);
+      const rawX = catmullRom(splineX, xProg) * vpScale + (smoothMouseX * 12);
+      const rawY = catmullRom(splineY, xProg) * vpScale + (smoothMouseY * 12);
 
-      const dirX = rawX >= 0 ? 1 : -1;
-      const dirY = rawY >= 0 ? 1 : -1;
-      let px = rawX + dirX * ((idx % 2) * 35 * vpScale);
-      let py = rawY + dirY * outwardSpread;
+      // Tangent normal vector for outward radial displacement
+      const angle = Math.atan2(rawY, rawX);
+      let px = rawX + Math.cos(angle) * lane;
+      let py = rawY + Math.sin(angle) * lane;
       const scale = Math.max(0.1, catmullRom(splineScale, xProg));
 
-      // High-precision power-sine envelope so each partner shines with individual focus
-      const env = Math.pow(Math.sin((itemProg - 0.06) / 0.88 * Math.PI), 2.2);
-      let opacity = Math.max(0, Math.min(1, catmullRom(splineOpacity, xProg) * env * 1.25));
+      const env = Math.sin((itemProg - 0.04) / 0.92 * Math.PI);
+      let opacity = Math.max(0, Math.min(1, catmullRom(splineOpacity, xProg) * env * 1.35));
 
-      // Continuous C1-smooth avoidance field (zero jump discontinuity, silky deflection)
-      const normX = px / clearRx;
-      const normY = py / clearRy;
-      const dist = Math.sqrt(normX * normX + normY * normY);
+      // Center Avoidance field (keeps central text completely clear)
+      const distNorm = Math.sqrt(Math.pow(px / cRx, 2) + Math.pow(py / cRy, 2));
 
-      if (dist < clearDistLimit) {
-        const t = (clearDistLimit - dist) / clearDistLimit;
-        const smoothT = t * t * (3 - 2 * t); // Smoothstep S-curve
-        const pushDist = smoothT * 75 * vpScale;
-        const angle = Math.atan2(normY, normX);
-        px += Math.cos(angle) * pushDist;
-        py += Math.sin(angle) * pushDist;
-        opacity *= (1.0 - smoothT * 0.85);
+      if (distNorm < 1.1) {
+        const push = (1.1 - distNorm) * 50 * vpScale;
+        px += Math.cos(angle) * push;
+        py += Math.sin(angle) * push;
+        opacity *= 0.85;
       }
 
-      const zIndex = (xProg > 0.30 && xProg < 0.60) ? 6 : 9;
+      visibleItems.push({ item: item, px: px, py: py, scale: scale, opacity: opacity, xProg: xProg });
+    });
+
+    // Anti-Collision Relaxation Pass: Guarantees NO two logos overlap or sit on top of each other!
+    const minSepX = 135 * vpScale;
+    const minSepY = 55 * vpScale;
+    const numVisible = visibleItems.length;
+
+    for (let iter = 0; iter < 4; iter++) {
+      for (let i = 0; i < numVisible; i++) {
+        for (let j = i + 1; j < numVisible; j++) {
+          const a = visibleItems[i];
+          const b = visibleItems[j];
+          const dx = b.px - a.px;
+          const dy = b.py - a.py;
+          const ndx = Math.abs(dx) / minSepX;
+          const ndy = Math.abs(dy) / minSepY;
+          const cDist = Math.sqrt(ndx * ndx + ndy * ndy);
+
+          if (cDist < 1.0 && cDist > 0.001) {
+            const overlap = (1.0 - cDist) * 0.55;
+            const ca = Math.atan2(dy * minSepX, dx * minSepY);
+            const pX = Math.cos(ca) * minSepX * overlap;
+            const pY = Math.sin(ca) * minSepY * overlap;
+            a.px -= pX;
+            a.py -= pY;
+            b.px += pX;
+            b.py += pY;
+          }
+        }
+      }
+    }
+
+    // Apply computed non-colliding positions to DOM
+    visibleItems.forEach(function(entry) {
+      const item = entry.item;
+      const zIndex = (entry.xProg > 0.30 && entry.xProg < 0.60) ? 6 : 9;
       if (item._lastZ !== zIndex) {
         item._lastZ = zIndex;
         item.style.zIndex = zIndex;
       }
-
-      item.style.transform = 'translate3d(' + px.toFixed(1) + 'px, ' + py.toFixed(1) + 'px, 0) scale(' + scale.toFixed(3) + ')';
-      item.style.opacity = opacity.toFixed(2);
-      item.style.visibility = opacity < 0.02 ? 'hidden' : 'visible';
+      item.style.transform = 'translate3d(' + entry.px.toFixed(1) + 'px, ' + entry.py.toFixed(1) + 'px, 0) scale(' + entry.scale.toFixed(3) + ')';
+      item.style.opacity = entry.opacity.toFixed(2);
+      item.style.visibility = entry.opacity < 0.04 ? 'hidden' : 'visible';
     });
 
     // 2. Word-by-word Progressive Reveal
