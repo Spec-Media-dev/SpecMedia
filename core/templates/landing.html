@@ -802,7 +802,8 @@ a:hover{color:#f5ead8}
 /* Vector logo & theme transition */
 .spec-kinetic-logo {
   color: #141211;
-  transition: color 0.4s ease, filter 0.4s ease;
+  transition: color 0.4s ease, filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: filter;
 }
 
 /* Logo turns white when scrolling into dark sections */
@@ -825,7 +826,8 @@ html.spec-dark-mode .spec-landing-logo {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transform: translateZ(0);
-  transition: filter 0.4s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+  transition: filter 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+  will-change: transform, filter;
 }
 
 /* Solid black in Hero light mode */
@@ -851,8 +853,8 @@ html.spec-dark-mode [ref="logoRef"] img {
   align-items: center !important;
   position: fixed !important;
   top: clamp(12px, 1.8vw, 20px) !important;
-  left: clamp(14px, 3vw, 40px) !important;
-  right: clamp(14px, 3vw, 40px) !important;
+  left: clamp(20px, 4vw, 48px) !important;
+  right: clamp(20px, 4vw, 48px) !important;
   margin: 0 auto !important;
   max-width: 1440px !important;
   width: auto !important;
@@ -868,14 +870,16 @@ html.spec-dark-mode [ref="logoRef"] img {
   opacity: 0;
   pointer-events: none;
   transform: translateY(0);
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               background 0.35s ease,
               backdrop-filter 0.35s ease,
               -webkit-backdrop-filter 0.35s ease,
               border-color 0.35s ease,
-              box-shadow 0.35s ease;
+              box-shadow 0.35s ease !important;
 }
+
+/* Navbar persistent visibility */
 .spec-landing-chrome > * {
   pointer-events: auto;
 }
@@ -908,7 +912,7 @@ html.spec-dark-mode.spec-scrolled .spec-chrome-nav-logo {
   width: auto !important;
 }
 
-/* Navbar on scroll: low opacity with powerful backdrop blur to blur content scrolling behind it */
+/* Navbar on scroll: fixed, persistent with glassmorphism backdrop blur */
 html.spec-scrolled .spec-landing-chrome {
   opacity: 1 !important;
   pointer-events: auto !important;
@@ -1046,9 +1050,6 @@ canvas,
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  -webkit-mask-image: radial-gradient(circle var(--spot-r, 0px) at var(--spot-x, -999px) var(--spot-y, -999px), transparent 0%, transparent calc(100% - 0.5px), #000 100%);
-  mask-image: radial-gradient(circle var(--spot-r, 0px) at var(--spot-x, -999px) var(--spot-y, -999px), transparent 0%, transparent calc(100% - 0.5px), #000 100%);
-  will-change: mask-image, -webkit-mask-image;
   pointer-events: auto;
 }
 .spec-hero-logo-front .spec-chars-wrap {
@@ -1071,18 +1072,9 @@ canvas,
   color: #ffffff !important;
 }
 
-/* Hero Logo Back Red Layer (#b40119) */
+/* Hero Logo Back Red Layer - Hidden (Hover Iris Hole Removed) */
 .spec-hero-logo-back {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  pointer-events: none !important;
-  z-index: 1 !important;
-  color: #b40119 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
+  display: none !important;
 }
 .spec-hero-logo-back .spec-chars-wrap {
   width: 100% !important;
@@ -1220,11 +1212,10 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 
 /* Hover lift & ambient crimson glow */
 .spec-kinetic-logo:hover {
-  filter: drop-shadow(0 0 16px rgba(158, 27, 36, 0.65));
+  filter: none !important;
 }
 .spec-kinetic-logo:hover .spec-logo-char-img {
-  transform: translateY(-2px);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: none !important;
 }
 
 /* Responsive Breakpoints */
@@ -1440,17 +1431,50 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   display: none !important; /* Chrome, Safari, Opera */
 }
 
-/* Continuous Unified Background System: Section 04 (The Reel) and all subsequent sections share one seamless background */
+/* Partners Section (The Reel): Remove all text shadow from all text inside */
+#spec-reel-section,
+#spec-reel-section *,
 [data-screen-label="04 The Reel"],
-[data-screen-label="05 Capabilities"],
-[data-screen-label="06 Green pass"],
-[data-screen-label="07 Reviews"],
-[data-screen-label="08 Footer"] {
-  background-color: var(--color-reel-wine-bg, #2d0406) !important;
-  background-image: none !important;
+[data-screen-label="04 The Reel"] *,
+.orbit-word,
+#spec-manifesto-wrap,
+#spec-manifesto-wrap * {
+  text-shadow: none !important;
+}
+
+/* Section 04: The Reel - Starts Black (#000000), smoothly converts to Red Theme (#2d0406) in Middle of Animation */
+#spec-reel-section,
+#spec-constellation-stage {
+  background-color: #000000;
   border: none !important;
   box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Continuous Unified Background System: Section 05 through Section 08 Footer share the Red Theme (#2d0406) with Zero Cutoffs */
+[data-screen-label="05 Capabilities"],
+[data-screen-label="06 Green pass"],
+[data-screen-label="07 Reviews"] {
+  background: #2d0406 !important;
+  background-color: #2d0406 !important;
+  background-image: none !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
   margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Section 08 Footer: Smooth Transition to Black (#000000) */
+[data-screen-label="08 Footer"],
+footer#contact {
+  background: linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;
+  background-color: #000000 !important;
+  color: #f5ead8 !important;
+  border: none !important;
+  box-shadow: none !important;
   outline: none !important;
 }
 
@@ -1461,8 +1485,14 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+/* Section 08 Footer: Smooth Transition to Black (#000000) */
 [data-screen-label="08 Footer"] {
-  --color-footer-bg: #2d0406;
+  --color-footer-bg: #000000 !important;
+  background-color: #000000 !important;
+  background: linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 [data-screen-label="07 Reviews"] h2 {
@@ -1477,12 +1507,36 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   display: none !important;
 }
 
+/* Solved Shadow in Review Cards: zero muddy drop-shadows, sleek razor-sharp glass cards */
+.ig-card,
+.ig-card *,
+.ig-card:hover,
+[data-screen-label="07 Reviews"] .ig-card,
+[data-screen-label="07 Reviews"] .ig-card *,
+[data-screen-label="07 Reviews"] .ig-card:hover,
+[data-rv="1"],
+[data-rv="1"] *,
+[data-rv="1"]:hover {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
 .ig-card {
   background: rgba(22, 2, 4, 0.84) !important;
   border: 1px solid rgba(223, 22, 55, 0.25) !important;
   box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45), 0 3px 10px -2px rgba(0, 0, 0, 0.28) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   color: #d49b9e !important;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease !important;
 }
+
+.ig-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(223, 22, 55, 0.55) !important;
+}
+
 .ig-card span,
 .ig-card div,
 .ig-card p {
@@ -1491,14 +1545,17 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 .ig-card span[style*="font-weight:700"] {
   color: #e26b72 !important;
 }
+.ig-card div[style*="font-family:ui-monospace"] {
+  color: #df1637 !important;
+}
 
-/* Footer: Deep wine tone with rich crimson typography - NO WHITE COLOR */
+/* Footer: Smooth Transition to Black (#000000) */
 footer#contact {
-  background-color: var(--color-reel-wine-bg, #2d0406) !important;
-  background-image: none !important;
-  color: #d49b9e !important;
-  will-change: background-color, color;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  background: linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;
+  background-color: #000000 !important;
+  color: #f5ead8 !important;
+  will-change: background, background-color, color;
+  transition: background 0.4s ease, background-color 0.4s ease, color 0.4s ease;
   position: fixed !important;
   left: 0 !important;
   right: 0 !important;
@@ -1516,7 +1573,7 @@ footer#contact {
   z-index: 0 !important;
 }
 footer#contact a {
-  color: #c97b82 !important;
+  color: #f5ead8 !important;
   transition: color 0.2s ease, opacity 0.2s ease;
 }
 footer#contact a:hover {
@@ -1533,7 +1590,7 @@ footer#contact a[href="#contact"]:hover {
   filter: drop-shadow(0 0 18px rgba(223, 22, 55, 0.75));
 }
 footer#contact span {
-  color: #b37d82 !important;
+  color: rgba(245, 234, 216, 0.65) !important;
 }
 footer#contact div[style*="font-family:ui-monospace"] {
   color: #df1637 !important;
@@ -1541,7 +1598,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 </style>
 </helmet>
 <div ref="{{ pageRef }}" style="position:relative;color:#ffffff;font-family:var(--font-body)">
-  <div ref="{{ chromeRef }}" class="spec-landing-chrome" style="position:fixed;top:clamp(12px,1.8vw,20px);left:clamp(14px,3vw,40px);right:clamp(14px,3vw,40px);margin:0 auto;max-width:1440px;display:flex;align-items:center;justify-content:space-between;padding:clamp(10px,1.2vw,14px) clamp(16px,2.5vw,32px);z-index:70;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:#f5ead8;direction:ltr !important">
+  <div ref="{{ chromeRef }}" class="spec-landing-chrome" style="position:fixed;top:clamp(12px,1.8vw,20px);left:clamp(20px,4vw,48px);right:clamp(20px,4vw,48px);margin:0 auto;max-width:1440px;display:flex;align-items:center;justify-content:space-between;padding:clamp(10px,1.2vw,14px) clamp(16px,2.5vw,32px);z-index:70;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:#f5ead8;direction:ltr !important">
     <a href="/" class="spec-chrome-nav-logo" aria-label="Spec Media Home" style="position:relative;display:inline-flex;align-items:center;">
       <!-- Back Layer: Red Logo (#b40119) -->
       <span class="spec-nav-logo-back" aria-hidden="true" style="position:absolute;inset:0;display:inline-flex;align-items:center;color:#b40119;pointer-events:none;">
@@ -1591,7 +1648,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
 
   <section data-screen-label="01 Hero" style="background:var(--color-surface, var(--color-text));position:relative;z-index:1;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;">
-    <div style="max-width:1560px;margin:0 auto;width:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;flex:1;min-height:100vh;min-height:100dvh;padding:clamp(36px, 7.9vh, 64px) clamp(24px, 5.5vw, 72px) clamp(16px, 4vh, 28px);">
+    <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;flex:1;min-height:100vh;min-height:100dvh;padding:clamp(36px, 7.9vh, 64px) clamp(20px, 4vw, 48px) clamp(16px, 4vh, 28px);">
     <!-- Ambient Radial Glow overlay: fades in on scroll as light mode transitions to dark mode -->
     <div id="spec-hero-ambient-glow" style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(158,27,36,0.08) 0%, rgba(0,0,0,0.85) 65%, #000000 100%);pointer-events:none;z-index:0;opacity:1;will-change:opacity;"></div>
     <br/>
@@ -1679,7 +1736,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
   </section>
 
   <section ref="{{ cardsRef }}" data-screen-label="03 Work grid" style="background:var(--color-surface, var(--color-text));position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:var(--space-8) 0">
-    <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;">
+    <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);">
     <div data-blurable="1" style="display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:var(--space-6)">
       <h2 style="margin:0;font-family:var(--font-heading);font-size:clamp(30px,4.4vw,64px);color:var(--color-bg)">Selected work</h2>
       <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500)">2024 — 2026 · placeholder projects</span>
@@ -1734,7 +1791,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
         <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--color-neutral-900);display:grid;place-items:center">
           <div data-media="1" style="position:absolute;inset:0;display:grid;place-items:center;background:inherit;transition:transform .8s cubic-bezier(.22,1,.36,1),filter .8s ease;will-change:transform"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500)">image placeholder 16:10</span></div>
           <div style="position:absolute;left:var(--space-4);right:var(--space-4);bottom:var(--space-4);display:flex;flex-wrap:wrap;gap:6px">
-            <span style="padding:8px 14px;background:color-mix(in oklab, var(--color-text) 78%, transparent);backdrop-filter:blur(6px);color:var(--color-bg);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-size:10px">Brand strategy</span>
+            <span style="padding:8px 14px;background:color-mix(in oklab, var(--color-text) 78%, transparent);backdrop-filter:blur(6px);color:var(--color-bg);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-size:10px">Brand Strategy</span>
             <span style="padding:8px 14px;background:color-mix(in oklab, var(--color-text) 78%, transparent);backdrop-filter:blur(6px);color:var(--color-bg);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-size:10px">Identity</span>
             <span style="padding:8px 14px;background:color-mix(in oklab, var(--color-text) 78%, transparent);backdrop-filter:blur(6px);color:var(--color-bg);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-size:10px">Content</span>
           </div>
@@ -1749,7 +1806,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
   </section>
 
   <section ref="{{ statRef }}" data-screen-label="03b Statement" style="background:var(--color-surface, var(--color-text));position:relative;z-index:1;min-height:120vh;display:flex;align-items:center;padding:var(--space-8) 0">
-    <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;">
+    <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);">
       <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:10px;color:var(--color-neutral-600);margin-bottom:var(--space-6)">[ what we believe ]</div>
       <h2 style="margin:0;display:flex;flex-wrap:wrap;gap:0 .28em;font-family:var(--font-heading);font-size:clamp(38px,8.4vw,150px);line-height:.98;color:var(--color-neutral-800)">
         <span data-word="1" style="display:inline-block;transition:color .5s ease,transform .6s cubic-bezier(.22,1,.36,1),opacity .5s ease;transform:translateY(18px);opacity:.35">Attention</span>
@@ -1768,7 +1825,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
   <!-- 03c Strategy — Expanding Flexbox Accordion Video Gallery -->
   <section id="spec-accordion-section" data-screen-label="03c Strategy" style="background:var(--color-surface, #000000);position:relative;z-index:2;box-sizing:border-box;padding:clamp(48px, 7vh, 88px) 0;overflow:hidden;">
-    <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;">
+    <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);">
       
       <!-- Gallery Header / Eyebrow -->
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-6);">
@@ -1836,15 +1893,17 @@ footer#contact div[style*="font-family:ui-monospace"] {
     </div>
   </section>
 
-  <section id="spec-reel-section" data-screen-label="04 The Reel" style="background:#2d0406;position:relative;z-index:10;min-height:700vh;box-sizing:border-box;">
+  <section id="spec-reel-section" data-screen-label="04 The Reel" style="background:#000000;position:relative;z-index:10;min-height:700vh;box-sizing:border-box;">
     <!-- Sticky Full-Viewport Stage -->
     <div id="spec-constellation-stage" style="position:sticky;top:0;height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;background-color:#000000;perspective:1600px;">
       
       <!-- Dynamic Background Transition: smooth velvety gradient into #2d0406 -->
       <div id="spec-partners-dynamic-bg" style="position:absolute;inset:0;background:radial-gradient(ellipse 120% 85% at 50% 35%, rgba(223, 22, 55, 0.16) 0%, rgba(110, 12, 27, 0.28) 45%, rgba(45, 4, 6, 0.75) 75%, #2d0406 100%);pointer-events:none;z-index:1;opacity:0;will-change:opacity;transition:opacity 0.08s linear;"></div>
 
-      <!-- Ambient Radial Lighting / Soft Vignette without black border cutoff -->
-      <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(223,22,55,0.06) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0) 100%);pointer-events:none;z-index:2;"></div>
+      <!-- Ambient Red Atmosphere Mix in Middle of Orbit Animation -->
+      <div id="spec-partners-ambient-glow" style="position:absolute;inset:0;background:radial-gradient(ellipse 75% 60% at 50% 50%, rgba(223, 22, 55, 0.25) 0%, rgba(110, 12, 27, 0.12) 45%, transparent 75%);pointer-events:none;z-index:2;opacity:0;will-change:opacity;transition:opacity 0.25s ease;"></div>
+
+      <!-- Ambient Radial Vignette removed to eliminate dark horizontal edge and preserve continuous seamless background -->
 
       <!-- Orbit Logos Stage (Catmull-Rom Spline Flight Path) -->
       <div id="spec-orbit-logos-container" style="position:absolute;inset:0;pointer-events:none;z-index:6;">
@@ -1928,8 +1987,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
       <!-- Center Typography Manifesto with Progressive Blur Reveal -->
       <div id="spec-manifesto-wrap" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:30;padding:0 20px;pointer-events:none;user-select:none;will-change:opacity,filter,transform;">
         
-        <!-- Ambient Dark Radial Vignette & Soft Glow matching Trusted Partners -->
-        <div style="position:absolute;width:clamp(360px, 85vw, 960px);height:clamp(280px, 50vh, 500px);border-radius:50%;background:radial-gradient(ellipse 65% 60% at 50% 50%, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.60) 45%, rgba(0,0,0,0) 80%);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none;z-index:-1;"></div>
+        <!-- Ambient Dark Radial Vignette removed to eliminate text shadow effect -->
 
         <!-- Header Badge -->
         <!-- <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;">
@@ -1960,8 +2018,8 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
       </div>
 
-      <!-- Bottom Vertical Scroll Indicator -->
-      <div style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:25;pointer-events:none;">
+      <!-- Bottom Vertical Scroll Indicator with Smooth Exit Fade -->
+      <div id="spec-reel-scroll-indicator" style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:25;pointer-events:none;transition:opacity 0.25s ease;">
         <div style="height:40px;width:1px;overflow:hidden;border-radius:999px;background:rgba(255,255,255,0.12);">
           <div id="spec-reel-progress-fill" style="height:100%;width:100%;transform-origin:top;background:rgba(255,255,255,0.6);transform:scaleY(0);"></div>
         </div>
@@ -1973,23 +2031,23 @@ footer#contact div[style*="font-family:ui-monospace"] {
   </section>
 
   <section ref="{{ svcRef }}" data-screen-label="05 Capabilities" style="background:#2d0406;position:relative;z-index:1;min-height:100vh;box-sizing:border-box;padding:var(--space-8) 0;display:flex;align-items:center">
-    <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:center;width:100%;">
+    <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:center;width:100%;">
     <div style="flex:1 1 480px;min-width:0">
       <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:var(--space-4)">capabilities — hover a line</div>
       <div data-svc="Brand strategy" style="display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-4);padding:var(--space-4) 0;border-bottom:1px solid var(--color-neutral-800);border-bottom-width:.5px;cursor:pointer;transition:color .3s ease,padding-left .3s ease">
-        <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Brand strategy</span>
+        <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Brand Strategy</span>
         <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500)">01</span>
       </div>
       <div data-svc="Campaign production" style="display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-4);padding:var(--space-4) 0;border-bottom:1px solid var(--color-neutral-800);border-bottom-width:.5px;cursor:pointer;transition:color .3s ease,padding-left .3s ease">
-        <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Campaign production</span>
+        <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Campaign Production</span>
         <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500)">02</span>
       </div>
       <div data-svc="Performance media" style="display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-4);padding:var(--space-4) 0;border-bottom:1px solid var(--color-neutral-800);border-bottom-width:.5px;cursor:pointer;transition:color .3s ease,padding-left .3s ease">
-        <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Performance media</span>
+        <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Performance Media</span>
         <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500)">03</span>
       </div>
       <div data-svc="Content systems" style="display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-4);padding:var(--space-4) 0;cursor:pointer;transition:color .3s ease,padding-left .3s ease">
-        <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Content systems</span>
+        <span style="font-family:var(--font-heading);font-size:clamp(24px,3.4vw,44px)">Content Systems</span>
         <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500)">04</span>
       </div>
     </div>
@@ -2073,7 +2131,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
     <div id="spec-s05-atmospheric-bridge" class="spec-section-bridge" style="display:none;height:0;"></div>
   </section>
 
-  <section data-screen-label="06 Green pass" style="background:#2d0406;position:relative;z-index:1;height:280vh">
+  <section data-screen-label="06 Green pass" style="background:#000000;position:relative;z-index:1;height:280vh">
     <!-- Continuous unified #2d0406 background shared with Section 04, 05, 07 -->
     <div id="spec-s06-dynamic-bg" style="display:none;height:0;"></div>
     <div style="position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden">
@@ -2086,10 +2144,10 @@ footer#contact div[style*="font-family:ui-monospace"] {
     <!-- Atmospheric transition bridging Section 06 into Section 07 seamlessly -->
     <div id="spec-s06-atmospheric-bridge" style="display:none;height:0;"></div>
   </section>
-  <section ref="{{ reviewsRef }}" data-screen-label="07 Reviews" style="background:#2d0406;position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:var(--space-8) 0;overflow:hidden">
+  <section ref="{{ reviewsRef }}" data-screen-label="07 Reviews" style="background:#000000;position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:var(--space-8) 0;overflow:hidden">
     <!-- Ambient Radial Glow overlay: fades out on scroll as dark mode transitions to light mode -->
     <div id="spec-reviews-ambient-glow" style="display:none;pointer-events:none;opacity:0;" aria-hidden="true"></div>
-    <div data-blurable="1" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:var(--space-6)">
+    <div data-blurable="1" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:var(--space-6)">
       <div>
         <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:var(--color-neutral-500);margin-bottom:4px">07 / REVIEWS — VERIFIED VOICES</div>
         <h2 style="margin:0;font-family:var(--font-heading);font-size:clamp(30px,4.4vw,64px);line-height:1.02;color:var(--color-bg)">Beyond clients.<br>Trusted partners.</h2>
@@ -2663,10 +2721,10 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
   <div style="height:100vh;pointer-events:none"></div>
 
-  <footer ref="{{ footerRef }}" id="contact" data-screen-label="08 Footer" style="position:fixed;left:0;right:0;top:0;bottom:0;width:100%;height:100vh;min-height:100vh;max-height:100vh;overflow:hidden;box-sizing:border-box;padding:clamp(18px,3vh,44px) 0 clamp(12px,2vh,22px);background:var(--color-footer-bg, #2d0406);display:flex;flex-direction:column;justify-content:flex-end;gap:clamp(14px,2.4vh,34px);z-index:0">
-    <!-- Ambient Radial Glow overlay: unified soft ambient lighting matching Section 04-07 -->
-    <div id="spec-footer-ambient-glow" style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(223, 22, 55, 0.08) 0%, rgba(45, 4, 6, 0.40) 65%, #2d0406 100%);pointer-events:none;z-index:0;opacity:1;will-change:opacity;"></div>
-    <div style="position:relative;z-index:1;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 20px;display:flex;flex-direction:column;gap:clamp(16px,2.6vh,32px);width:100%;">
+  <footer ref="{{ footerRef }}" id="contact" data-screen-label="08 Footer" style="position:fixed;left:0;right:0;top:0;bottom:0;width:100%;height:100vh;min-height:100vh;max-height:100vh;overflow:hidden;box-sizing:border-box;padding:clamp(18px,3vh,44px) 0 clamp(12px,2vh,22px);background:linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;display:flex;flex-direction:column;justify-content:flex-end;gap:clamp(14px,2.4vh,34px);z-index:0">
+    <!-- Ambient Radial Glow overlay: unified with #2d0406 background -->
+    <div id="spec-footer-ambient-glow" style="position:absolute;inset:0;background:#000000;pointer-events:none;z-index:0;opacity:0;display:none;"></div>
+    <div style="position:relative;z-index:1;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);display:flex;flex-direction:column;gap:clamp(16px,2.6vh,32px);width:100%;">
     <div style="display:flex;flex-direction:column;gap:clamp(14px,2.4vh,34px)">
       <div style="display:flex;align-items:center;gap:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:10px;color:var(--color-neutral-500)">
         <span style="display:inline-block;width:7px;height:7px;border-radius:999px;background:var(--color-accent);animation:spec-pulse 2.4s infinite"></span>
@@ -3111,10 +3169,23 @@ class Component extends DCLogic {
     }
 
     const bottomLightReveal = Math.max(reviewsReveal, footerReveal);
-    // Section 1 (Hero) through Section 6 are all in deep obsidian dark mode.
-    // The final sections (07 Reviews and 08 Footer) maintain the deep dark wine theme (#2d0406) established by Section 6:
+    // Section 1 (Hero) through Section 6 are in deep dark mode.
+    // Section 04 through 07 Reviews maintain the deep dark wine theme (#2d0406).
+    // Section 08 Footer smoothly transitions to Black (#000000):
     const themeProgress = 1;
     this.updateTheme(themeProgress, bottomLightReveal);
+
+    const fEl = this.footerRef ? this.footerRef.current : null;
+    if (fEl) {
+      const tF = footerReveal;
+      const sF = tF * tF * (3 - 2 * tF); // Hermite smoothstep
+      const fR = Math.round(45 * (1 - sF));
+      const fG = Math.round(4 * (1 - sF));
+      const fB = Math.round(6 * (1 - sF));
+      const midStop = Math.round(22 * (1 - sF));
+      const darkStop = Math.round(60 + 35 * sF);
+      fEl.style.background = 'linear-gradient(to bottom, rgb(' + fR + ',' + fG + ',' + fB + ') 0%, #150204 ' + midStop + '%, #000000 ' + darkStop + '%, #000000 100%)';
+    }
 
     // Section 04 (THE REEL) - Slim width transition when near end of section
     if (this.progressRef.current) {
@@ -3314,23 +3385,50 @@ class Component extends DCLogic {
     // Start the background transition at Section 04 — Reel Section.
     // When the user reaches/starts scrolling through Section 04 (Reel Section), begin the background transition there.
     // The transition smoothly continues from Section 04 into every section after it.
+    // Section 04 (Reel Section): Unified with website black background (#000000).
+    // The partners section is mixed seamlessly with all sections using the website's continuous black background.
     const reelSec = document.getElementById('spec-reel-section');
     const stage = document.getElementById('spec-constellation-stage');
     const partnersBg = document.getElementById('spec-partners-dynamic-bg');
+    const ambientGlow = document.getElementById('spec-partners-ambient-glow');
     if (reelSec) {
       const r = reelSec.getBoundingClientRect();
-      const span = Math.max(vh * 1.2, r.height * 0.32);
-      const pPartners = Math.max(0, Math.min(1, (vh * 0.90 - r.top) / span));
-      const smoothP = pPartners * pPartners * (3 - 2 * pPartners); // Hermite smoothstep
-      
-      if (stage) {
-        const bgR = Math.round(45 * smoothP);
-        const bgG = Math.round(4 * smoothP);
-        const bgB = Math.round(6 * smoothP);
-        stage.style.backgroundColor = 'rgb(' + bgR + ',' + bgG + ',' + bgB + ')';
+      const scrollThroughReel = Math.max(0, -r.top);
+      const maxScrollReel = Math.max(1, r.height - vh);
+      const reelProgress = Math.max(0, Math.min(1, scrollThroughReel / maxScrollReel));
+
+      // Background Transition: starts black (#000000), converts to red theme (#2d0406) in the middle of animation (reelProgress ~ 0.20 to 0.60)
+      let smoothP = 0;
+      if (reelProgress >= 0.20 && reelProgress <= 0.60) {
+        const tColor = (reelProgress - 0.20) / (0.60 - 0.20);
+        smoothP = tColor * tColor * (3 - 2 * tColor); // Hermite smoothstep
+      } else if (reelProgress > 0.60) {
+        smoothP = 1;
+      } else {
+        smoothP = 0;
       }
+
+      const bgR = Math.round(45 * smoothP); // 0 -> 45 (#2d)
+      const bgG = Math.round(4 * smoothP);  // 0 -> 4  (#04)
+      const bgB = Math.round(6 * smoothP);  // 0 -> 6  (#06)
+      const colStr = 'rgb(' + bgR + ',' + bgG + ',' + bgB + ')';
+
+      if (stage) stage.style.backgroundColor = colStr;
+      reelSec.style.backgroundColor = colStr;
+
+      // Smoothly fade overlay gradients before unpinning to ensure solid #2d0406 seamless transition into Section 05
+      let overlayP = smoothP;
+      if (reelProgress > 0.70) {
+        const fadeOut = Math.max(0, 1 - (reelProgress - 0.70) / 0.15);
+        overlayP = smoothP * fadeOut;
+      }
+
       if (partnersBg) {
-        partnersBg.style.opacity = smoothP.toFixed(3);
+        partnersBg.style.opacity = overlayP.toFixed(3);
+        partnersBg.style.display = overlayP > 0.005 ? 'block' : 'none';
+      }
+      if (ambientGlow) {
+        ambientGlow.style.opacity = overlayP.toFixed(3);
       }
     }
 
@@ -3506,9 +3604,8 @@ class Component extends DCLogic {
 
     const footerEl = this.footerRef ? this.footerRef.current : null;
     if (footerEl) {
-      footerEl.style.setProperty('--color-footer-bg', '#2d0406');
-      footerEl.style.backgroundColor = '#2d0406';
-      footerEl.style.color = '#d49b9e';
+      footerEl.style.setProperty('--color-footer-bg', '#000000');
+      footerEl.style.color = '#f5ead8';
     }
   }
 
@@ -3729,11 +3826,18 @@ class Component extends DCLogic {
         if (!hit) return;
         const capName = hit.dataset.svc;
 
+        this.cur.tx = ev.clientX;
+        this.cur.ty = ev.clientY;
+        if (!this.cur.x || this.cur.x === 0) {
+          this.cur.x = ev.clientX;
+          this.cur.y = ev.clientY;
+        }
+
         svc.querySelectorAll('[data-svc]').forEach(el => {
           const isHit = el === hit;
-          el.style.color = isHit ? 'var(--color-accent)' : '';
+          el.style.color = isHit ? '#ffffff' : 'rgba(255, 255, 255, 0.40)';
           el.style.paddingLeft = isHit ? '16px' : '0';
-          el.style.transition = 'color .2s ease, padding-left .2s ease';
+          el.style.transition = 'color .25s ease, padding-left .25s ease, opacity .25s ease';
         });
 
         const pv = this.previewRef.current;
@@ -3777,8 +3881,32 @@ class Component extends DCLogic {
         }
       });
 
-      this.cur = { x: window.innerWidth / 2, y: window.innerHeight / 2, tx: 0, ty: 0 };
-      svc.addEventListener('mousemove', ev => { this.cur.tx = ev.clientX; this.cur.ty = ev.clientY; });
+      this.cur = { x: window.innerWidth * 0.65, y: window.innerHeight * 0.5, tx: window.innerWidth * 0.65, ty: window.innerHeight * 0.5 };
+      svc.addEventListener('mousemove', ev => {
+        const hit = ev.target.closest('[data-svc]');
+        if (hit) {
+          this.cur.tx = ev.clientX;
+          this.cur.ty = ev.clientY;
+        } else if (this.activeSvc) {
+          this.activeSvc = null;
+          if (this.pvSlideTimer) {
+            clearInterval(this.pvSlideTimer);
+            this.pvSlideTimer = null;
+          }
+          svc.querySelectorAll('[data-svc]').forEach(el => { el.style.color = '#ffffff'; el.style.paddingLeft = '0'; });
+          const pv = this.previewRef.current;
+          if (pv) {
+            pv.style.opacity = '0';
+            pv.querySelectorAll('[data-pv]').forEach(el => {
+              el.style.opacity = '0';
+              el.style.transform = 'scale(0.96)';
+              el.style.filter = 'blur(4px)';
+            });
+            const idle = pv.querySelector('[data-pvidle]');
+            if (idle) idle.style.opacity = '1';
+          }
+        }
+      });
       svc.addEventListener('mouseenter', ev => {
         this.cur.tx = this.cur.x = ev.clientX; this.cur.ty = this.cur.y = ev.clientY;
       });
@@ -3788,7 +3916,7 @@ class Component extends DCLogic {
           clearInterval(this.pvSlideTimer);
           this.pvSlideTimer = null;
         }
-        svc.querySelectorAll('[data-svc]').forEach(el => { el.style.color = ''; el.style.paddingLeft = '0'; });
+        svc.querySelectorAll('[data-svc]').forEach(el => { el.style.color = '#ffffff'; el.style.paddingLeft = '0'; });
         const pv = this.previewRef.current;
         if (pv) {
           pv.style.opacity = '0';
@@ -4259,6 +4387,7 @@ function initConstellationController() {
   const words = stage.querySelectorAll('.orbit-word');
   const manifestoWrap = document.getElementById('spec-manifesto-wrap');
   const progressFill = document.getElementById('spec-reel-progress-fill');
+  const scrollIndicator = document.getElementById('spec-reel-scroll-indicator');
 
   window.__specConstellationActive = true;
 
@@ -4513,9 +4642,58 @@ function initConstellationController() {
       }
     }
 
-    // 4. Sleek Vertical Scroll Progress Fill
+    // Dynamic Background Transition: Starts Black (#000000), converts to Red Theme (#2d0406) in Middle (f ~ 0.20 to 0.60)
+    let sCol = 0;
+    if (f >= 0.20 && f <= 0.60) {
+      const tCol = (f - 0.20) / (0.60 - 0.20);
+      sCol = tCol * tCol * (3 - 2 * tCol); // Hermite smoothstep
+    } else if (f > 0.60) {
+      sCol = 1;
+    } else {
+      sCol = 0;
+    }
+    const rVal = Math.round(sCol * 45); // 0 -> 45 (#2d)
+    const gVal = Math.round(sCol * 4);  // 0 -> 4  (#04)
+    const bVal = Math.round(sCol * 6);  // 0 -> 6  (#06)
+    const cStr = 'rgb(' + rVal + ', ' + gVal + ', ' + bVal + ')';
+    stage.style.backgroundColor = cStr;
+    section.style.backgroundColor = cStr;
+
+    // Smoothly fade overlay gradients before unpinning to guarantee 100% solid seamless background into Section 05
+    let overlayCol = sCol;
+    if (f > 0.70) {
+      const fadeOut = Math.max(0, 1 - (f - 0.70) / 0.15);
+      overlayCol = sCol * fadeOut;
+    }
+
+    const dynBg = document.getElementById('spec-partners-dynamic-bg');
+    if (dynBg) {
+      dynBg.style.opacity = overlayCol.toFixed(3);
+      dynBg.style.display = overlayCol > 0.005 ? 'block' : 'none';
+    }
+    const ambGlow = document.getElementById('spec-partners-ambient-glow');
+    if (ambGlow) {
+      ambGlow.style.opacity = overlayCol.toFixed(3);
+    }
+
+    // 4. Sleek Vertical Scroll Progress Fill with early seamless fade-out to prevent any section cutoffs
     if (progressFill) {
       progressFill.style.transform = 'scaleY(' + f.toFixed(3) + ')';
+    }
+    if (scrollIndicator) {
+      if (f > 0.65) {
+        const indProg = Math.max(0, Math.min(1, (f - 0.65) / 0.13));
+        const indOp = Math.max(0, 1 - indProg);
+        scrollIndicator.style.opacity = indOp.toFixed(2);
+        if (indOp <= 0.02) {
+          scrollIndicator.style.visibility = 'hidden';
+        } else {
+          scrollIndicator.style.visibility = 'visible';
+        }
+      } else {
+        scrollIndicator.style.opacity = '1';
+        scrollIndicator.style.visibility = 'visible';
+      }
     }
 
     requestAnimationFrame(animationLoop);
@@ -5623,6 +5801,20 @@ function initSpecCustomCursor() {
   var activeCard = null;
   var isMouseDown = false;
 
+  var currentSpotR = 0;
+  var targetSpotR = 0;
+  var currentSpotX = 0;
+  var targetSpotX = 0;
+  var currentSpotY = 0;
+  var targetSpotY = 0;
+
+  var currentNavSpotR = 0;
+  var targetNavSpotR = 0;
+  var currentNavSpotX = 0;
+  var targetNavSpotX = 0;
+  var currentNavSpotY = 0;
+  var targetNavSpotY = 0;
+
   function createClickPulse(x, y) {
     var pulse = document.createElement('div');
     pulse.className = 'spec-click-pulse';
@@ -5654,26 +5846,18 @@ function initSpecCustomCursor() {
     var navLogo = target ? target.closest('.spec-chrome-nav-logo') : null;
     var interactive = target ? target.closest('a, button, [role="button"], input, select, textarea, .spec-orbit-logo-item, .tag, .tab-btn') : null;
 
-    // 1. Hero Logo hover lens (hide white space to see red logo behind)
-    var heroRow = document.querySelector('.spec-hero-logo-row');
-    if (heroLogo && heroRow) {
-      var hRect = heroRow.getBoundingClientRect();
-      heroRow.style.setProperty('--spot-x', (mouseX - hRect.left).toFixed(1) + 'px');
-      heroRow.style.setProperty('--spot-y', (mouseY - hRect.top).toFixed(1) + 'px');
-      heroRow.style.setProperty('--spot-r', '42px');
-    } else if (heroRow) {
-      heroRow.style.setProperty('--spot-r', '0px');
-    }
+    // 1. Hero Logo hover lens targets removed (clean solid logo, no cutout hole)
+    targetSpotR = 0;
 
-    // 2. Navbar Logo hover lens
+    // 2. Navbar Logo hover lens targets (smoothly interpolated in renderCursor)
     var navLogoEl = document.querySelector('.spec-chrome-nav-logo');
     if (navLogo && navLogoEl) {
       var nRect = navLogoEl.getBoundingClientRect();
-      navLogoEl.style.setProperty('--nav-spot-x', (mouseX - nRect.left).toFixed(1) + 'px');
-      navLogoEl.style.setProperty('--nav-spot-y', (mouseY - nRect.top).toFixed(1) + 'px');
-      navLogoEl.style.setProperty('--nav-spot-r', '22px');
-    } else if (navLogoEl) {
-      navLogoEl.style.setProperty('--nav-spot-r', '0px');
+      targetNavSpotX = mouseX - nRect.left;
+      targetNavSpotY = mouseY - nRect.top;
+      targetNavSpotR = 24;
+    } else {
+      targetNavSpotR = 0;
     }
 
     if (card) {
@@ -5716,7 +5900,7 @@ function initSpecCustomCursor() {
         cursorDot.classList.remove('is-card-hover');
       }
 
-      if (heroLogo || navLogo) {
+      if (navLogo) {
         cursorRing.classList.add('is-logo-interacting');
         cursorDot.classList.add('is-logo-interacting');
         cursorRing.classList.remove('is-hovering');
@@ -5749,13 +5933,11 @@ function initSpecCustomCursor() {
     }
     var heroLogo = e.target ? e.target.closest('.spec-hero-logo-row') : null;
     if (heroLogo && (!e.relatedTarget || !heroLogo.contains(e.relatedTarget))) {
-      var heroRow = document.querySelector('.spec-hero-logo-row');
-      if (heroRow) heroRow.style.setProperty('--spot-r', '0px');
+      targetSpotR = 0;
     }
     var navLogo = e.target ? e.target.closest('.spec-chrome-nav-logo') : null;
     if (navLogo && (!e.relatedTarget || !navLogo.contains(e.relatedTarget))) {
-      var navLogoEl = document.querySelector('.spec-chrome-nav-logo');
-      if (navLogoEl) navLogoEl.style.setProperty('--nav-spot-r', '0px');
+      targetNavSpotR = 0;
     }
   });
 
@@ -5775,6 +5957,39 @@ function initSpecCustomCursor() {
     ringY += (mouseY - ringY) * factor;
     var ringScale = isMouseDown ? 0.75 : 1;
     cursorRing.style.transform = 'translate3d(' + ringX.toFixed(1) + 'px, ' + ringY.toFixed(1) + 'px, 0) translate(-50%, -50%) scale(' + ringScale + ')';
+
+    // Smooth spotlight easing for Section 01 Hero Logo
+    currentSpotR += (targetSpotR - currentSpotR) * 0.14;
+    currentSpotX += (targetSpotX - currentSpotX) * 0.20;
+    currentSpotY += (targetSpotY - currentSpotY) * 0.20;
+    var heroRowEl = document.querySelector('.spec-hero-logo-row');
+    if (heroRowEl) {
+      if (currentSpotR < 0.1) {
+        currentSpotR = 0;
+        heroRowEl.style.setProperty('--spot-r', '0px');
+      } else {
+        heroRowEl.style.setProperty('--spot-r', currentSpotR.toFixed(1) + 'px');
+        heroRowEl.style.setProperty('--spot-x', currentSpotX.toFixed(1) + 'px');
+        heroRowEl.style.setProperty('--spot-y', currentSpotY.toFixed(1) + 'px');
+      }
+    }
+
+    // Smooth spotlight easing for Navbar Logo
+    currentNavSpotR += (targetNavSpotR - currentNavSpotR) * 0.16;
+    currentNavSpotX += (targetNavSpotX - currentNavSpotX) * 0.22;
+    currentNavSpotY += (targetNavSpotY - currentNavSpotY) * 0.22;
+    var navRowEl = document.querySelector('.spec-chrome-nav-logo');
+    if (navRowEl) {
+      if (currentNavSpotR < 0.1) {
+        currentNavSpotR = 0;
+        navRowEl.style.setProperty('--nav-spot-r', '0px');
+      } else {
+        navRowEl.style.setProperty('--nav-spot-r', currentNavSpotR.toFixed(1) + 'px');
+        navRowEl.style.setProperty('--nav-spot-x', currentNavSpotX.toFixed(1) + 'px');
+        navRowEl.style.setProperty('--nav-spot-y', currentNavSpotY.toFixed(1) + 'px');
+      }
+    }
+
     requestAnimationFrame(renderCursor);
   }
   requestAnimationFrame(renderCursor);
@@ -5797,6 +6012,8 @@ function initSpecCustomCursor() {
     cursorDot.style.opacity = '0';
     cursorRing.style.opacity = '0';
     isVisible = false;
+    targetSpotR = 0;
+    targetNavSpotR = 0;
     var heroRow = document.querySelector('.spec-hero-logo-row');
     if (heroRow) heroRow.style.setProperty('--spot-r', '0px');
     var navLogoEl = document.querySelector('.spec-chrome-nav-logo');
@@ -5979,8 +6196,62 @@ function initReviewsScrollAnimation() {
   return true;
 }
 
+function initNavbarScrollBehavior() {
+  if (window.__specNavbarScrollInit) return;
+  window.__specNavbarScrollInit = true;
+
+  var lastScrollY = window.scrollY || window.pageYOffset || 0;
+  var chrome = document.querySelector('.spec-landing-chrome');
+  var ticking = false;
+
+  function updateNavbar() {
+    if (!chrome) chrome = document.querySelector('.spec-landing-chrome');
+    if (!chrome) {
+      ticking = false;
+      return;
+    }
+
+    var currentScrollY = window.scrollY || window.pageYOffset || 0;
+    if (currentScrollY < 0) currentScrollY = 0;
+
+    // Navbar remains permanently visible at all times - never hidden on scroll down
+    chrome.classList.remove('is-hidden');
+
+    if (currentScrollY > 25) {
+      document.documentElement.classList.add('spec-scrolled');
+    } else {
+      document.documentElement.classList.remove('spec-scrolled');
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateNavbar);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  if (window.lenis && typeof window.lenis.on === 'function') {
+    window.lenis.on('scroll', onScroll);
+  } else {
+    var lenisCheckTimer = setInterval(function() {
+      if (window.lenis && typeof window.lenis.on === 'function') {
+        window.lenis.on('scroll', onScroll);
+        clearInterval(lenisCheckTimer);
+      }
+    }, 200);
+    setTimeout(function() { clearInterval(lenisCheckTimer); }, 4000);
+  }
+}
+
 function bootSpecApp() {
   initSmoothScroll();
+  initNavbarScrollBehavior();
   initSpecIntegration();
   initWorksScrollAnimation();
   initAccordionGallery();
