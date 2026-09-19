@@ -1712,9 +1712,15 @@ footer#contact div[style*="font-family:ui-monospace"] {
         <!-- Hidden canvas to satisfy DCLogic ref safely -->
         <canvas ref="{{ canvasScrubRef }}" style="display:none !important;" aria-hidden="true"></canvas>
 
-        <!-- Phase 1: 24-Slice Fragmented Assembly Container -->
-        <div id="spec-slices-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;overflow:hidden;display:flex;flex-direction:column;pointer-events:none;">
-            <div class="spec-slice" data-slice="0" data-row="0" data-col="0" style="position:absolute;left:0.0000%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_01.jpg" alt="slice 01" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+                <!-- Phase 1: 6-Cube Floating Assembly Container -->
+        <div id="spec-cubes-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;overflow:hidden;pointer-events:none;perspective:1400px;perspective-origin:50% 50%;">
+          <div class="spec-cube" data-cube="0" data-row="0" data-col="0" style="position:absolute;left:0.0000%;top:0.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_01.jpg" alt="cube 1" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+          <div class="spec-cube" data-cube="1" data-row="0" data-col="1" style="position:absolute;left:33.3333%;top:0.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_02.jpg" alt="cube 2" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+          <div class="spec-cube" data-cube="2" data-row="0" data-col="2" style="position:absolute;left:66.6667%;top:0.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_03.jpg" alt="cube 3" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+          <div class="spec-cube" data-cube="3" data-row="1" data-col="0" style="position:absolute;left:0.0000%;top:50.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_04.jpg" alt="cube 4" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+          <div class="spec-cube" data-cube="4" data-row="1" data-col="1" style="position:absolute;left:33.3333%;top:50.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_05.jpg" alt="cube 5" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+          <div class="spec-cube" data-cube="5" data-row="1" data-col="2" style="position:absolute;left:66.6667%;top:50.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_06.jpg" alt="cube 6" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+        </div>
             <div class="spec-slice" data-slice="1" data-row="0" data-col="1" style="position:absolute;left:16.6667%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_02.jpg" alt="slice 02" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
             <div class="spec-slice" data-slice="2" data-row="0" data-col="2" style="position:absolute;left:33.3333%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_03.jpg" alt="slice 03" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
             <div class="spec-slice" data-slice="3" data-row="0" data-col="3" style="position:absolute;left:50.0000%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_04.jpg" alt="slice 04" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
@@ -6401,10 +6407,10 @@ if (document.readyState === 'loading') {
   // 2. Section 02: 4-Phase Slices Assembly -> Master Image -> Scroll Video
   function initSection2Controller() {
     var sec = document.getElementById('spec-scene2-section');
-    var slicesCont = document.getElementById('spec-slices-container');
+    var cubesCont = document.getElementById('spec-cubes-container');
     var masterImg = document.getElementById('spec-master-image');
     var video = document.getElementById('spec-scene2-video');
-    if (!sec || !slicesCont || !masterImg || !video) return;
+    if (!sec || !cubesCont || !masterImg || !video) return;
 
     // Ensure correct video asset is loaded
     if (!video.src || !video.src.includes('reference_video.mp4')) {
@@ -6412,9 +6418,19 @@ if (document.readyState === 'loading') {
       try { video.load(); } catch(_) {}
     }
 
-    var slices = slicesCont.querySelectorAll('.spec-slice');
+    var cubes = cubesCont.querySelectorAll('.spec-cube');
     var isSeeking = false;
     var pendingTime = null;
+
+    // Distinct, intentional 3D flight paths for the 6 cubes
+    var cubeVectors = [
+      { dx: -280, dy: -240, dz: -160, rx: 18,  ry: -20, rz: -12, scale: 0.82 }, // Cube 0: Top-Left
+      { dx: 20,   dy: -320, dz: 140,  rx: -22, ry: 10,  rz: 8,   scale: 1.15 }, // Cube 1: Top-Center
+      { dx: 300,  dy: -250, dz: -140, rx: 20,  ry: 22,  rz: 14,  scale: 0.85 }, // Cube 2: Top-Right
+      { dx: -310, dy: 270,  dz: -120, rx: -20, ry: -16, rz: 14,  scale: 0.84 }, // Cube 3: Bottom-Left
+      { dx: -20,  dy: 340,  dz: 160,  rx: 24,  ry: -10, rz: -7,  scale: 1.18 }, // Cube 4: Bottom-Center
+      { dx: 330,  dy: 290,  dz: -150, rx: -18, ry: 18,  rz: -15, scale: 0.83 }  // Cube 5: Bottom-Right
+    ];
 
     video.addEventListener('seeked', function() {
       isSeeking = false;
@@ -6443,35 +6459,37 @@ if (document.readyState === 'loading') {
       var currentScroll = -rect.top;
       var p = Math.max(0, Math.min(1, currentScroll / maxScroll));
 
-      // Phase 1 (0.00 -> 0.38): 6x4 Grid Slices 2D Assembly into Reference Image
+      // Phase 1 (0.00 -> 0.38): 6 Cubes Floating 3D Assembly + Blur Dissolve
       var a = Math.min(1, p / 0.38);
-      // Ease out cubic
-      var easeA = 1 - Math.pow(1 - a, 3);
-      slices.forEach(function(slice, i) {
-        var row = parseInt(slice.getAttribute('data-row') || Math.floor(i / 6), 10);
-        var col = parseInt(slice.getAttribute('data-col') || (i % 6), 10);
+      var easeA = 1 - Math.pow(1 - a, 3); // Cubic ease out
+      var dist = 1 - easeA;
 
-        // Disperse outwards from center of the 6x4 grid
-        var relX = (col - 2.5) / 2.5; // -1 to 1
-        var relY = (row - 1.5) / 1.5; // -1 to 1
+      cubes.forEach(function(cube, i) {
+        var v = cubeVectors[i] || { dx: 0, dy: 0, dz: 0, rx: 0, ry: 0, rz: 0, scale: 1 };
+        var tx = (v.dx * dist).toFixed(1);
+        var ty = (v.dy * dist).toFixed(1);
+        var tz = (v.dz * dist).toFixed(1);
+        var rx = (v.rx * dist).toFixed(1);
+        var ry = (v.ry * dist).toFixed(1);
+        var rz = (v.rz * dist).toFixed(1);
+        var s = (1.0 + (v.scale - 1.0) * dist).toFixed(3);
 
-        var staggerX = relX * (160 + (i % 5) * 35) * (1 - easeA);
-        var staggerY = relY * (120 + (i % 4) * 30) * (1 - easeA);
-        var rot = ((col + row) % 2 === 0 ? 1 : -1) * (4 + (i % 3) * 2) * (1 - easeA);
-        var op = 0.40 + 0.60 * easeA;
+        // Strong cinematic blur (up to 32px) decreasing to 0px
+        var blurVal = (32 * dist).toFixed(1);
 
-        slice.style.transform = 'translate(' + staggerX.toFixed(1) + 'px, ' + staggerY.toFixed(1) + 'px) rotate(' + rot.toFixed(2) + 'deg)';
-        slice.style.opacity = op.toFixed(3);
+        cube.style.transform = 'translate3d(' + tx + 'px, ' + ty + 'px, ' + tz + 'px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) rotateZ(' + rz + 'deg) scale(' + s + ')';
+        cube.style.filter = dist > 0.01 ? 'blur(' + blurVal + 'px)' : 'none';
+        cube.style.opacity = (0.35 + 0.65 * easeA).toFixed(3);
       });
 
-      // Phase 2 (0.38 -> 0.50): Master Completed Image
+      // Phase 2 (0.38 -> 0.52): Hold Completed Sharp Original Image
       if (p >= 0.36 && p < 0.52) {
         masterImg.style.opacity = '1';
       } else if (p < 0.36) {
         masterImg.style.opacity = '0';
       }
 
-      // Phase 3 (0.50 -> 0.94): Scroll-Controlled Video
+      // Phase 3 (0.50 -> 0.94): Smooth Dissolve into First Frame and Scroll-Controlled Video
       if (p >= 0.48) {
         video.style.opacity = '1';
         masterImg.style.opacity = '0';
