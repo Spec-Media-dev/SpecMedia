@@ -875,10 +875,10 @@ html.spec-scrolled .spec-landing-chrome.is-hidden,
   box-sizing: border-box !important;
   z-index: 70;
   border-radius: 0 !important;
-  background: rgba(10, 9, 8, 0.28) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  background: rgba(10, 9, 8, 0.94) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(255, 255, 255, 0.06) inset !important;
   opacity: 0;
   pointer-events: none;
@@ -886,8 +886,6 @@ html.spec-scrolled .spec-landing-chrome.is-hidden,
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               background 0.35s ease,
-              backdrop-filter 0.35s ease,
-              -webkit-backdrop-filter 0.35s ease,
               border-color 0.35s ease,
               box-shadow 0.35s ease;
 }
@@ -923,29 +921,29 @@ html.spec-dark-mode.spec-scrolled .spec-chrome-nav-logo {
   width: auto !important;
 }
 
-/* Navbar on scroll: low opacity with powerful backdrop blur to blur content scrolling behind it */
+/* Navbar on scroll: fixed, clean, sharp, NO blur */
 html.spec-scrolled .spec-landing-chrome {
   opacity: 1 !important;
   pointer-events: auto !important;
   transform: translateY(0) !important;
   border-radius: 0 !important;
-  background: rgba(10, 9, 8, 0.28) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  background: rgba(10, 9, 8, 0.94) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(255, 255, 255, 0.06) inset !important;
 }
 
-/* In light mode when scrolled: keep low opacity and strong blur */
+/* In light mode when scrolled: crisp solid background, NO blur */
 html.spec-scrolled:not(.spec-dark-mode) .spec-landing-chrome,
 html.spec-scrolled.spec-light-mode .spec-landing-chrome {
   border-radius: 0 !important;
-  background: rgba(18, 16, 15, 0.35) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-  border: 1px solid rgba(245, 234, 216, 0.12) !important;
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.35), 0 1px 0 0 rgba(255, 255, 255, 0.08) inset !important;
-  color: #f5ead8 !important;
+  background: rgba(245, 234, 216, 0.96) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(18, 16, 15, 0.14) !important;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.25), 0 1px 0 0 rgba(255, 255, 255, 0.08) inset !important;
+  color: #12100e !important;
 }
 
 
@@ -1803,32 +1801,60 @@ footer#contact div[style*="font-family:ui-monospace"] {
     <div id="spec-s01-atmospheric-bridge" class="spec-section-bridge" style="display:none;height:0;"></div>
   </section>
 
-  <section data-screen-label="02 Frame scrub" style="background:var(--color-surface, var(--color-text));position:relative;z-index:1;height:260vh">
-    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center">
-      <div ref="{{ scrubBoxRef }}" class="spec-scrub-box" style="position:relative;width:46%;height:52%;border-radius:var(--radius-lg);overflow:hidden;will-change:transform,opacity,width,height;cursor:ew-resize;user-select:none;touch-action:none;opacity:0;transform:scale(0.95)">
-        <canvas ref="{{ canvasScrubRef }}" style="display:block;width:100%;height:100%;object-fit:cover;background:#141211;position:absolute;inset:0;z-index:2;pointer-events:none;"></canvas>
-        <video id="spec-scene2-video" playsinline muted preload="auto" style="display:none;width:100%;height:100%;object-fit:cover;background:#141211;position:absolute;inset:0;z-index:1;pointer-events:none;">
-          <source src="https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/videos/scene2_brain.mp4" type="video/mp4">
-          <source src="/static/scene2_brain.mp4" type="video/mp4">
-          <source src="./static/scene2_brain.mp4" type="video/mp4">
-          <source src="scene2_brain.mp4" type="video/mp4">
+  <section id="spec-scene2-section" data-screen-label="02 Frame scrub" style="background:#000000;position:relative;z-index:10;height:380vh">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#000000">
+      <div ref="{{ scrubBoxRef }}" id="spec-scene2-stage" class="spec-scrub-box" style="position:relative;width:min(90vw, 1120px);aspect-ratio:16/9;max-height:80vh;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.8);background:#000000;will-change:transform,opacity;opacity:1;transform:none;">
+        
+        <!-- Hidden canvas to satisfy DCLogic ref safely -->
+        <canvas ref="{{ canvasScrubRef }}" style="display:none !important;" aria-hidden="true"></canvas>
+
+        <!-- Phase 1: 24-Slice Fragmented Assembly Container -->
+        <div id="spec-slices-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;overflow:hidden;display:flex;flex-direction:column;pointer-events:none;">
+            <div class="spec-slice" data-slice="0" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_01.jpg" alt="slice 01" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="1" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_02.jpg" alt="slice 02" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="2" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_03.jpg" alt="slice 03" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="3" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_04.jpg" alt="slice 04" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="4" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_05.jpg" alt="slice 05" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="5" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_06.jpg" alt="slice 06" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="6" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_07.jpg" alt="slice 07" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="7" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_08.jpg" alt="slice 08" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="8" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_09.jpg" alt="slice 09" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="9" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_10.jpg" alt="slice 10" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="10" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_11.jpg" alt="slice 11" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="11" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_12.jpg" alt="slice 12" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="12" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_13.jpg" alt="slice 13" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="13" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_14.jpg" alt="slice 14" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="14" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_15.jpg" alt="slice 15" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="15" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_16.jpg" alt="slice 16" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="16" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_17.jpg" alt="slice 17" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="17" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_18.jpg" alt="slice 18" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="18" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_19.jpg" alt="slice 19" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="19" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_20.jpg" alt="slice 20" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="20" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_21.jpg" alt="slice 21" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="21" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_22.jpg" alt="slice 22" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="22" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_23.jpg" alt="slice 23" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+            <div class="spec-slice" data-slice="23" style="position:relative;width:100%;height:calc(100% / 24);overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_24.jpg" alt="slice 24" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+        </div>
+
+        <!-- Phase 2: Completed Master Reference Image -->
+        <div id="spec-master-image" style="position:absolute;inset:0;width:100%;height:100%;z-index:4;opacity:0;pointer-events:none;transition:opacity 0.25s ease;">
+          <img src="/static/slices/duck_master.jpg" alt="Spec Media Master" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+
+        <!-- Phase 3: Scroll-Controlled Reference Video -->
+        <video id="spec-scene2-video" src="/static/reference_video.mp4" playsinline muted preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:5;opacity:0;pointer-events:none;background:#000000;">
+          <source src="/static/reference_video.mp4" type="video/mp4">
         </video>
-        <!-- Text overlays removed from video frame per user request -->
+
+        <!-- Legacy ref tags preserved invisibly for DCLogic stability -->
         <div style="display:none !important;" aria-hidden="true">
-          <span>scene 02</span>
-          <span ref="{{ frameLabelRef }}">frame 001 / 192</span>
-        </div>
-        <div ref="{{ scrubHintRef }}" style="display:none !important;" aria-hidden="true">keep scrolling or drag mouse to play • frame pauses instantly</div>
-        <div style="display:none !important;" aria-hidden="true">
-          <span>60 FPS SMOOTH SCRUB</span>
-        </div>
-        <div style="display:none !important;" aria-hidden="true">
+          <span ref="{{ frameLabelRef }}"></span>
+          <div ref="{{ scrubHintRef }}"></div>
           <div ref="{{ scrubBarRef }}"></div>
         </div>
+
       </div>
     </div>
-    <!-- Atmospheric transition bridge deactivated for seamless continuity -->
-    <div id="spec-s02-atmospheric-bridge" class="spec-section-bridge" style="display:none;height:0;"></div>
   </section>
 
   <section ref="{{ cardsRef }}" data-screen-label="03 Work grid" style="background:var(--color-surface, var(--color-text));position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:var(--space-8) 0">
@@ -2240,7 +2266,8 @@ footer#contact div[style*="font-family:ui-monospace"] {
     <!-- Atmospheric transition bridging Section 06 into Section 07 seamlessly -->
     <div id="spec-s06-atmospheric-bridge" style="display:none;height:0;"></div>
   </section>
-  <section ref="{{ reviewsRef }}" data-screen-label="07 Reviews" style="background:#000000;position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:var(--space-8) 0;overflow:hidden">
+  <section ref="{{ reviewsRef }}" id="spec-reviews-section" data-screen-label="07 Reviews" style="background:#000000;position:relative;z-index:10;height:280vh;box-sizing:border-box;">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:var(--space-8) 0;">
     <!-- Ambient Radial Glow overlay: fades out on scroll as dark mode transitions to light mode -->
     <div id="spec-reviews-ambient-glow" style="display:none;pointer-events:none;opacity:0;" aria-hidden="true"></div>
     <div data-blurable="1" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:var(--space-6)">
@@ -2258,7 +2285,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
     <!-- Edge-to-edge full-bleed carousel wrapper spanning 100vw from left to right -->
     <div class="spec-reviews-bleed" data-lenis-prevent="true" style="position:relative;z-index:1;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;overflow:hidden;padding:12px 0 28px">
-      <div data-rvrow="1" style="display:flex;gap:clamp(20px,2.4vw,34px);overflow-x:auto;padding:16px max(32px, calc((100vw - 1440px)/2 + 24px)) 28px;scrollbar-width:none;-ms-overflow-style:none;cursor:grab;user-select:none;-webkit-user-select:none;will-change:transform">
+      <div data-rvrow="1" style="display:flex;gap:clamp(20px,2.4vw,34px);overflow-x:hidden;padding:16px max(32px, calc((100vw - 1440px)/2 + 24px)) 28px;scrollbar-width:none;-ms-overflow-style:none;cursor:default;user-select:none;-webkit-user-select:none;will-change:transform">
       <!-- Card: @faisal.almarri -->
       <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;will-change:transform">
         <!-- Header -->
@@ -2815,6 +2842,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
     </div>
     <!-- Seamless atmospheric dissolve deactivated for continuous background continuity -->
     <div class="spec-section-bridge" style="display:none;height:0;"></div>
+      </div>
   </section>
 
   <div style="height:100vh;pointer-events:none"></div>
@@ -3304,10 +3332,7 @@ class Component extends DCLogic {
         this.scene2AutoPlaying = false;
       }
 
-      // Auto-play to the end when reaching the middle of the video moving forward, and smoothly continue into Scene 03
-      if (targetProgress >= 0.40 && targetProgress < 0.90 && this.vel >= 0 && !this.scene2AutoPlaying && !this.scene2AutoCompleted) {
-        this.triggerScene2AutoPlay(sec, vh, targetProgress);
-      }
+      // Scene 02 auto-play disabled per user request (scroll-controlled video progression)
 
       if (this.scrubHintRef.current) {
         this.scrubHintRef.current.style.opacity = (targetProgress > 0.02 && targetProgress < 0.98) ? '1' : '0';
@@ -3378,13 +3403,7 @@ class Component extends DCLogic {
     }
 
     const fi = Math.max(0, Math.min(this.frames - 1, Math.round(this.scrubCur * (this.frames - 1))));
-    if (force || fi !== this.lastFrame) {
-      this.lastFrame = fi;
-      this.drawScrub(this.scrubCur);
-      if (this.frameLabelRef.current) {
-        this.frameLabelRef.current.textContent = 'frame ' + String(fi + 1).padStart(3, '0') + ' / ' + this.frames;
-      }
-    }
+    if (this.frameLabelRef.current) { this.frameLabelRef.current.textContent = ""; }
 
     // Video synchronization (handles Scene 02 3D brain video and custom assets with zero-lag hardware seeking)
     const vid = document.getElementById('spec-scene2-video');
@@ -3569,11 +3588,7 @@ class Component extends DCLogic {
       });
     }
 
-    if (this.rvRow && !this.rvHover) {
-      const half = this.rvRow.scrollWidth / 2;
-      this.rvRow.scrollLeft += 0.65;
-      if (half > 0 && this.rvRow.scrollLeft >= half) this.rvRow.scrollLeft -= half;
-    }
+    // Reviews auto-glide disabled per user request (scroll-only control)
 
     if (this.cur && this.previewRef.current) {
       this.cur.x += (this.cur.tx - this.cur.x) * 0.16;
@@ -4090,18 +4105,7 @@ class Component extends DCLogic {
         });
 
         // 2. Click and Drag (Grab to Pan) with Momentum
-        row.addEventListener('mousedown', ev => {
-          if (ev.button !== 0) return;
-          isDown = true;
-          hasMoved = false;
-          startX = ev.clientX;
-          scrollStart = row.scrollLeft;
-          lastX = ev.clientX;
-          lastTime = performance.now();
-          velX = 0;
-          cancelAnimationFrame(momentumRaf);
-          row.style.cursor = 'grabbing';
-        });
+        // Dragging disabled per user request
 
         window.addEventListener('mousemove', ev => {
           if (!isDown) return;
@@ -6448,5 +6452,232 @@ if (document.readyState === 'loading') {
 } else {
   bootSpecApp();
 }
+</script>
+<script>
+// =========================================================================
+// MASTER CONTROLLER: LOGO FLIGHT & DYNAMIC CONTRAST, S2 4-PHASE, S7 REVIEWS
+// =========================================================================
+(function() {
+  // 1. Centered Hero Logo -> Animated Navbar Transition & Dynamic Contrast
+  function initHeroLogoFlight() {
+    var heroLogoRow = document.querySelector('.spec-hero-logo-row');
+    var chromeNav = document.querySelector('.spec-landing-chrome');
+    var navLogo = document.querySelector('.spec-chrome-nav-logo');
+    if (!heroLogoRow || !chromeNav || !navLogo) return;
+
+    // Create persistent flying logo container if not existing
+    var flightLogo = document.getElementById('spec-flight-logo');
+    if (!flightLogo) {
+      flightLogo = document.createElement('div');
+      flightLogo.id = 'spec-flight-logo';
+      flightLogo.style.cssText = 'position:fixed;z-index:95;pointer-events:none;will-change:transform,color;transition:color 0.35s ease;display:inline-flex;align-items:center;left:0;top:0;';
+      flightLogo.innerHTML = navLogo.innerHTML;
+      document.body.appendChild(flightLogo);
+    }
+
+    // Hide in-flow hero logo and navbar logo during flight
+    heroLogoRow.style.opacity = '0';
+    heroLogoRow.style.pointerEvents = 'none';
+
+    // Helper: Determine luminance of background
+    function isLightAt(x, y) {
+      var el = document.elementFromPoint(x, y);
+      while (el && el !== document.body && el !== document.documentElement) {
+        var bg = window.getComputedStyle(el).backgroundColor;
+        if (bg && bg !== 'transparent' && bg !== 'rgba(0, 0, 0, 0)') {
+          var match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+          if (match) {
+            var r = parseInt(match[1], 10), g = parseInt(match[2], 10), b = parseInt(match[3], 10);
+            var lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            return lum > 0.45;
+          }
+        }
+        el = el.parentElement;
+      }
+      return document.documentElement.classList.contains('spec-light-mode');
+    }
+
+    function updateFlight() {
+      var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var vh = window.innerHeight;
+      var vw = window.innerWidth;
+
+      var flightDist = Math.max(220, Math.min(420, vh * 0.45));
+      var p = Math.max(0, Math.min(1, scrollY / flightDist));
+      var ease = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
+
+      var navRect = navLogo.getBoundingClientRect();
+      var targetCenterX = navRect.left + (navRect.width || 140) / 2;
+      var targetCenterY = navRect.top + (navRect.height || 22) / 2;
+      var targetW = navRect.width || 140;
+      var targetH = navRect.height || 22;
+
+      // Hero Center
+      var screenCenterX = vw / 2;
+      var screenCenterY = vh / 2;
+      var heroLogoW = Math.min(vw * 0.82, 880);
+      var initialScale = heroLogoW / targetW;
+
+      // Current position and scale
+      var curCenterX = screenCenterX + (targetCenterX - screenCenterX) * ease;
+      var curCenterY = screenCenterY + (targetCenterY - screenCenterY) * ease;
+      var curScale = initialScale + (1.0 - initialScale) * ease;
+
+      flightLogo.style.transform = 'translate(' + (curCenterX - targetW / 2).toFixed(1) + 'px, ' + (curCenterY - targetH / 2).toFixed(1) + 'px) scale(' + curScale.toFixed(4) + ')';
+      flightLogo.style.transformOrigin = 'center center';
+
+      // Synchronize Navbar appearance
+      if (p <= 0.05) {
+        chromeNav.style.opacity = '0';
+        chromeNav.style.pointerEvents = 'none';
+        navLogo.style.opacity = '0';
+      } else if (p < 0.95) {
+        var navAlpha = Math.max(0, (p - 0.2) / 0.75);
+        chromeNav.style.opacity = navAlpha.toFixed(3);
+        chromeNav.style.pointerEvents = 'none';
+        navLogo.style.opacity = '0';
+      } else {
+        chromeNav.style.opacity = '1';
+        chromeNav.style.pointerEvents = 'auto';
+        navLogo.style.opacity = '0';
+      }
+
+      // Dynamic Contrast Adaptation
+      var isLight = isLightAt(curCenterX, curCenterY);
+      var logoColor = isLight ? '#12100e' : '#ffffff';
+      flightLogo.style.color = logoColor;
+      navLogo.style.color = logoColor;
+    }
+
+    window.addEventListener('scroll', updateFlight, { passive: true });
+    window.addEventListener('resize', updateFlight, { passive: true });
+    updateFlight();
+  }
+
+  // 2. Section 02: 4-Phase Slices Assembly -> Master Image -> Scroll Video
+  function initSection2Controller() {
+    var sec = document.getElementById('spec-scene2-section');
+    var slicesCont = document.getElementById('spec-slices-container');
+    var masterImg = document.getElementById('spec-master-image');
+    var video = document.getElementById('spec-scene2-video');
+    if (!sec || !slicesCont || !masterImg || !video) return;
+
+    // Ensure correct video asset is loaded
+    if (!video.src || !video.src.includes('reference_video.mp4')) {
+      video.src = '/static/reference_video.mp4';
+      try { video.load(); } catch(_) {}
+    }
+
+    var slices = slicesCont.querySelectorAll('.spec-slice');
+    var isSeeking = false;
+    var pendingTime = null;
+
+    video.addEventListener('seeked', function() {
+      isSeeking = false;
+      if (pendingTime !== null) {
+        var t = pendingTime;
+        pendingTime = null;
+        seekVideo(t);
+      }
+    });
+
+    function seekVideo(time) {
+      if (isSeeking) {
+        pendingTime = time;
+        return;
+      }
+      if (video.fastSeek) {
+        try { isSeeking = true; video.fastSeek(time); return; } catch(_) {}
+      }
+      try { isSeeking = true; video.currentTime = time; } catch(_) { isSeeking = false; }
+    }
+
+    function updateSection2() {
+      var rect = sec.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var maxScroll = Math.max(1, sec.offsetHeight - vh);
+      var currentScroll = -rect.top;
+      var p = Math.max(0, Math.min(1, currentScroll / maxScroll));
+
+      // Phase 1 (0.00 -> 0.38): Slices Assembly
+      var a = Math.min(1, p / 0.38);
+      slices.forEach(function(slice, i) {
+        var dir = (i % 2 === 0 ? 1 : -1);
+        var staggerX = dir * (140 + (i % 6) * 28) * (1 - a);
+        var staggerY = ((i - 11.5) / 12) * 36 * (1 - a);
+        var rot = dir * (2.2 + (i % 4) * 1.2) * (1 - a);
+        var op = 0.55 + 0.45 * a;
+        slice.style.transform = 'translate(' + staggerX.toFixed(1) + 'px, ' + staggerY.toFixed(1) + 'px) rotate(' + rot.toFixed(2) + 'deg)';
+        slice.style.opacity = op.toFixed(3);
+      });
+
+      // Phase 2 (0.38 -> 0.50): Master Completed Image
+      if (p >= 0.36 && p < 0.52) {
+        masterImg.style.opacity = '1';
+      } else if (p < 0.36) {
+        masterImg.style.opacity = '0';
+      }
+
+      // Phase 3 (0.50 -> 0.94): Scroll-Controlled Video
+      if (p >= 0.48) {
+        video.style.opacity = '1';
+        masterImg.style.opacity = '0';
+        var vidP = Math.max(0, Math.min(1, (p - 0.50) / 0.44));
+        var duration = video.duration || 5.0;
+        var targetTime = vidP * Math.max(0, duration - 0.04);
+        if (Math.abs((video.currentTime || 0) - targetTime) > 0.03) {
+          seekVideo(targetTime);
+        }
+      } else {
+        video.style.opacity = '0';
+        if (video.currentTime > 0) {
+          try { video.currentTime = 0; } catch(_) {}
+        }
+      }
+    }
+
+    window.addEventListener('scroll', updateSection2, { passive: true });
+    updateSection2();
+  }
+
+  // 3. Section 07 Reviews: Pinned Scroll-Only Interaction
+  function initReviewsScrollOnly() {
+    var sec = document.getElementById('spec-reviews-section');
+    var row = sec ? sec.querySelector('[data-rvrow]') : document.querySelector('[data-rvrow]');
+    if (!sec || !row) return;
+
+    // Prevent any drag or mouse interaction
+    row.style.cursor = 'default';
+    row.style.overflowX = 'hidden';
+
+    function updateReviews() {
+      var rect = sec.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var maxScroll = Math.max(1, sec.offsetHeight - vh);
+      var currentScroll = -rect.top;
+      var p = Math.max(0, Math.min(1, currentScroll / maxScroll));
+
+      var maxRowScroll = Math.max(0, row.scrollWidth - row.clientWidth);
+      row.scrollLeft = p * maxRowScroll;
+    }
+
+    window.addEventListener('scroll', updateReviews, { passive: true });
+    window.addEventListener('resize', updateReviews, { passive: true });
+    updateReviews();
+  }
+
+  // Initialize all controllers on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initHeroLogoFlight();
+      initSection2Controller();
+      initReviewsScrollOnly();
+    });
+  } else {
+    initHeroLogoFlight();
+    initSection2Controller();
+    initReviewsScrollOnly();
+  }
+})();
 </script>
 </body></html>
