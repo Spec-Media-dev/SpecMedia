@@ -1808,41 +1808,35 @@ footer#contact div[style*="font-family:ui-monospace"] {
         <!-- Hidden canvas to satisfy DCLogic ref safely -->
         <canvas ref="{{ canvasScrubRef }}" style="display:none !important;" aria-hidden="true"></canvas>
 
-                <!-- Phase 1: 6-Cube Floating Assembly Container -->
-        <div id="spec-cubes-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;overflow:hidden;pointer-events:none;perspective:1400px;perspective-origin:50% 50%;">
-          <div class="spec-cube" data-cube="0" data-row="0" data-col="0" style="position:absolute;left:0.0000%;top:0.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_01.jpg" alt="cube 1" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-          <div class="spec-cube" data-cube="1" data-row="0" data-col="1" style="position:absolute;left:33.3333%;top:0.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_02.jpg" alt="cube 2" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-          <div class="spec-cube" data-cube="2" data-row="0" data-col="2" style="position:absolute;left:66.6667%;top:0.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_03.jpg" alt="cube 3" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-          <div class="spec-cube" data-cube="3" data-row="1" data-col="0" style="position:absolute;left:0.0000%;top:50.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_04.jpg" alt="cube 4" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-          <div class="spec-cube" data-cube="4" data-row="1" data-col="1" style="position:absolute;left:33.3333%;top:50.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_05.jpg" alt="cube 5" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-          <div class="spec-cube" data-cube="5" data-row="1" data-col="2" style="position:absolute;left:66.6667%;top:50.0000%;width:33.3333%;height:50.0000%;overflow:hidden;will-change:transform,filter,opacity;box-shadow:0 18px 40px rgba(0,0,0,0.6);border-radius:2px;"><img src="/static/slices/cubes/cube_06.jpg" alt="cube 6" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-        </div>
-            <div class="spec-slice" data-slice="1" data-row="0" data-col="1" style="position:absolute;left:16.6667%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_02.jpg" alt="slice 02" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="2" data-row="0" data-col="2" style="position:absolute;left:33.3333%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_03.jpg" alt="slice 03" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="3" data-row="0" data-col="3" style="position:absolute;left:50.0000%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_04.jpg" alt="slice 04" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="4" data-row="0" data-col="4" style="position:absolute;left:66.6667%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_05.jpg" alt="slice 05" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="5" data-row="0" data-col="5" style="position:absolute;left:83.3333%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_06.jpg" alt="slice 06" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="6" data-row="1" data-col="0" style="position:absolute;left:0.0000%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_07.jpg" alt="slice 07" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="7" data-row="1" data-col="1" style="position:absolute;left:16.6667%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_08.jpg" alt="slice 08" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="8" data-row="1" data-col="2" style="position:absolute;left:33.3333%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_09.jpg" alt="slice 09" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="9" data-row="1" data-col="3" style="position:absolute;left:50.0000%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_10.jpg" alt="slice 10" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="10" data-row="1" data-col="4" style="position:absolute;left:66.6667%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_11.jpg" alt="slice 11" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="11" data-row="1" data-col="5" style="position:absolute;left:83.3333%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_12.jpg" alt="slice 12" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="12" data-row="2" data-col="0" style="position:absolute;left:0.0000%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_13.jpg" alt="slice 13" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="13" data-row="2" data-col="1" style="position:absolute;left:16.6667%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_14.jpg" alt="slice 14" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="14" data-row="2" data-col="2" style="position:absolute;left:33.3333%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_15.jpg" alt="slice 15" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="15" data-row="2" data-col="3" style="position:absolute;left:50.0000%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_16.jpg" alt="slice 16" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="16" data-row="2" data-col="4" style="position:absolute;left:66.6667%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_17.jpg" alt="slice 17" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="17" data-row="2" data-col="5" style="position:absolute;left:83.3333%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_18.jpg" alt="slice 18" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="18" data-row="3" data-col="0" style="position:absolute;left:0.0000%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_19.jpg" alt="slice 19" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="19" data-row="3" data-col="1" style="position:absolute;left:16.6667%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_20.jpg" alt="slice 20" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="20" data-row="3" data-col="2" style="position:absolute;left:33.3333%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_21.jpg" alt="slice 21" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="21" data-row="3" data-col="3" style="position:absolute;left:50.0000%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_22.jpg" alt="slice 22" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="22" data-row="3" data-col="4" style="position:absolute;left:66.6667%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_23.jpg" alt="slice 23" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
-            <div class="spec-slice" data-slice="23" data-row="3" data-col="5" style="position:absolute;left:83.3333%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;will-change:transform,opacity;"><img src="/static/slices/horizontal/s_24.jpg" alt="slice 24" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>
+                        <!-- Phase 1: Coordinated Square Tile Reveal Container -->
+        <div id="spec-tiles-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;overflow:hidden;pointer-events:none;">
+          <div class="spec-tile" data-tile="0" data-row="0" data-col="0" data-stagger="1.000" style="position:absolute;left:0.0000%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:0.00%;top:0.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="1" data-row="0" data-col="1" data-stagger="0.640" style="position:absolute;left:16.6667%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-100.00%;top:0.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="2" data-row="0" data-col="2" data-stagger="0.396" style="position:absolute;left:33.3333%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-200.00%;top:0.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="3" data-row="0" data-col="3" data-stagger="0.396" style="position:absolute;left:50.0000%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-300.00%;top:0.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="4" data-row="0" data-col="4" data-stagger="0.640" style="position:absolute;left:66.6667%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-400.00%;top:0.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="5" data-row="0" data-col="5" data-stagger="1.000" style="position:absolute;left:83.3333%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-500.00%;top:0.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="6" data-row="1" data-col="0" data-stagger="0.834" style="position:absolute;left:0.0000%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:0.00%;top:-100.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="7" data-row="1" data-col="1" data-stagger="0.396" style="position:absolute;left:16.6667%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-100.00%;top:-100.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="8" data-row="1" data-col="2" data-stagger="0.000" style="position:absolute;left:33.3333%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-200.00%;top:-100.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="9" data-row="1" data-col="3" data-stagger="0.000" style="position:absolute;left:50.0000%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-300.00%;top:-100.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="10" data-row="1" data-col="4" data-stagger="0.396" style="position:absolute;left:66.6667%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-400.00%;top:-100.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="11" data-row="1" data-col="5" data-stagger="0.834" style="position:absolute;left:83.3333%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-500.00%;top:-100.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="12" data-row="2" data-col="0" data-stagger="0.834" style="position:absolute;left:0.0000%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:0.00%;top:-200.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="13" data-row="2" data-col="1" data-stagger="0.396" style="position:absolute;left:16.6667%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-100.00%;top:-200.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="14" data-row="2" data-col="2" data-stagger="0.000" style="position:absolute;left:33.3333%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-200.00%;top:-200.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="15" data-row="2" data-col="3" data-stagger="0.000" style="position:absolute;left:50.0000%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-300.00%;top:-200.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="16" data-row="2" data-col="4" data-stagger="0.396" style="position:absolute;left:66.6667%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-400.00%;top:-200.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="17" data-row="2" data-col="5" data-stagger="0.834" style="position:absolute;left:83.3333%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-500.00%;top:-200.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="18" data-row="3" data-col="0" data-stagger="1.000" style="position:absolute;left:0.0000%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:0.00%;top:-300.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="19" data-row="3" data-col="1" data-stagger="0.640" style="position:absolute;left:16.6667%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-100.00%;top:-300.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="20" data-row="3" data-col="2" data-stagger="0.396" style="position:absolute;left:33.3333%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-200.00%;top:-300.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="21" data-row="3" data-col="3" data-stagger="0.396" style="position:absolute;left:50.0000%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-300.00%;top:-300.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="22" data-row="3" data-col="4" data-stagger="0.640" style="position:absolute;left:66.6667%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-400.00%;top:-300.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
+          <div class="spec-tile" data-tile="23" data-row="3" data-col="5" data-stagger="1.000" style="position:absolute;left:83.3333%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/slices/duck_master.jpg" alt="tile" style="position:absolute;left:-500.00%;top:-300.00%;width:600%;height:400%;object-fit:fill;display:block;pointer-events:none;" /></div>
         </div>
 
-        <!-- Phase 2: Completed Master Reference Image -->
+<!-- Phase 2: Completed Master Reference Image -->
         <div id="spec-master-image" style="position:absolute;inset:0;width:100%;height:100%;z-index:4;opacity:0;pointer-events:none;transition:opacity 0.25s ease;">
           <img src="/static/slices/duck_master.jpg" alt="Spec Media Master" style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
@@ -6563,30 +6557,19 @@ if (document.readyState === 'loading') {
   // 2. Section 02: 4-Phase Slices Assembly -> Master Image -> Scroll Video
   function initSection2Controller() {
     var sec = document.getElementById('spec-scene2-section');
-    var cubesCont = document.getElementById('spec-cubes-container');
+    var tilesCont = document.getElementById('spec-tiles-container') || document.getElementById('spec-cubes-container');
     var masterImg = document.getElementById('spec-master-image');
     var video = document.getElementById('spec-scene2-video');
-    if (!sec || !cubesCont || !masterImg || !video) return;
+    if (!sec || !tilesCont || !masterImg || !video) return;
 
-    // Ensure correct video asset is loaded
     if (!video.src || !video.src.includes('reference_video.mp4')) {
       video.src = '/static/reference_video.mp4';
       try { video.load(); } catch(_) {}
     }
 
-    var cubes = cubesCont.querySelectorAll('.spec-cube');
+    var tiles = tilesCont.querySelectorAll('.spec-tile, .spec-cube');
     var isSeeking = false;
     var pendingTime = null;
-
-    // Distinct, intentional 3D flight paths for the 6 cubes
-    var cubeVectors = [
-      { dx: -280, dy: -240, dz: -160, rx: 18,  ry: -20, rz: -12, scale: 0.82 }, // Cube 0: Top-Left
-      { dx: 20,   dy: -320, dz: 140,  rx: -22, ry: 10,  rz: 8,   scale: 1.15 }, // Cube 1: Top-Center
-      { dx: 300,  dy: -250, dz: -140, rx: 20,  ry: 22,  rz: 14,  scale: 0.85 }, // Cube 2: Top-Right
-      { dx: -310, dy: 270,  dz: -120, rx: -20, ry: -16, rz: 14,  scale: 0.84 }, // Cube 3: Bottom-Left
-      { dx: -20,  dy: 340,  dz: 160,  rx: 24,  ry: -10, rz: -7,  scale: 1.18 }, // Cube 4: Bottom-Center
-      { dx: 330,  dy: 290,  dz: -150, rx: -18, ry: 18,  rz: -15, scale: 0.83 }  // Cube 5: Bottom-Right
-    ];
 
     video.addEventListener('seeked', function() {
       isSeeking = false;
@@ -6615,30 +6598,39 @@ if (document.readyState === 'loading') {
       var currentScroll = -rect.top;
       var p = Math.max(0, Math.min(1, currentScroll / maxScroll));
 
-      // Phase 1 (0.00 -> 0.38): 6 Cubes Floating 3D Assembly + Blur Dissolve
-      var a = Math.min(1, p / 0.38);
-      var easeA = 1 - Math.pow(1 - a, 3); // Cubic ease out
-      var dist = 1 - easeA;
+      // Phase 1 (0.00 -> 0.38): Coordinated Square Tiles Staggered Blur Reveal & Assembly
+      var a = Math.max(0, Math.min(1, p / 0.38));
 
-      cubes.forEach(function(cube, i) {
-        var v = cubeVectors[i] || { dx: 0, dy: 0, dz: 0, rx: 0, ry: 0, rz: 0, scale: 1 };
-        var tx = (v.dx * dist).toFixed(1);
-        var ty = (v.dy * dist).toFixed(1);
-        var tz = (v.dz * dist).toFixed(1);
-        var rx = (v.rx * dist).toFixed(1);
-        var ry = (v.ry * dist).toFixed(1);
-        var rz = (v.rz * dist).toFixed(1);
-        var s = (1.0 + (v.scale - 1.0) * dist).toFixed(3);
+      tiles.forEach(function(tile) {
+        var s = parseFloat(tile.getAttribute('data-stagger') || 0);
+        // Coordinated staggered activation window: starts at s * 0.42, lasts 0.58
+        var start = s * 0.42;
+        var progress = Math.max(0, Math.min(1, (a - start) / 0.58));
+        var ease = 1 - Math.pow(1 - progress, 3); // Smooth cubic ease out
 
-        // Strong cinematic blur (up to 32px) decreasing to 0px
-        var blurVal = (32 * dist).toFixed(1);
+        // Initially completely hidden
+        if (progress <= 0) {
+          tile.style.opacity = '0';
+          tile.style.filter = 'blur(28px)';
+          tile.style.transform = 'scale(0.72)';
+          return;
+        }
 
-        cube.style.transform = 'translate3d(' + tx + 'px, ' + ty + 'px, ' + tz + 'px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) rotateZ(' + rz + 'deg) scale(' + s + ')';
-        cube.style.filter = dist > 0.01 ? 'blur(' + blurVal + 'px)' : 'none';
-        cube.style.opacity = (0.35 + 0.65 * easeA).toFixed(3);
+        var c = parseInt(tile.getAttribute('data-col'), 10) || 0;
+        var r = parseInt(tile.getAttribute('data-row'), 10) || 0;
+        
+        // Gentle movement drift converging toward home position
+        var driftX = (c - 2.5) * 36 * (1 - ease);
+        var driftY = (r - 1.5) * 28 * (1 - ease);
+        var scale = 0.76 + 0.24 * ease;
+        var blurPx = (28 * (1 - ease)).toFixed(1);
+
+        tile.style.opacity = (ease * 1.0).toFixed(3);
+        tile.style.transform = 'translate3d(' + driftX.toFixed(1) + 'px, ' + driftY.toFixed(1) + 'px, 0) scale(' + scale.toFixed(3) + ')';
+        tile.style.filter = blurPx > 0.1 ? 'blur(' + blurPx + 'px)' : 'none';
       });
 
-      // Phase 2 (0.38 -> 0.52): Hold Completed Sharp Original Image
+      // Phase 2 (0.38 -> 0.52): Seamless Merge into 100% Complete Unsliced Master Image
       if (p >= 0.36 && p < 0.52) {
         masterImg.style.opacity = '1';
       } else if (p < 0.36) {
