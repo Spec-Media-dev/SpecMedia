@@ -1106,11 +1106,12 @@ html.spec-scrolled .spec-landing-chrome.is-hidden,
   box-sizing: border-box !important;
   z-index: 70;
   border-radius: 0 !important;
-  background: rgba(10, 9, 8, 0.94) !important;
+  background: transparent !important;
+  background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(255, 255, 255, 0.06) inset !important;
+  border: none !important;
+  box-shadow: none !important;
   opacity: 0;
   pointer-events: none;
   transform: translateY(0);
@@ -1158,22 +1159,24 @@ html.spec-scrolled .spec-landing-chrome {
   pointer-events: auto !important;
   transform: translateY(0) !important;
   border-radius: 0 !important;
-  background: rgba(10, 9, 8, 0.94) !important;
+  background: transparent !important;
+  background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(255, 255, 255, 0.06) inset !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 /* In light mode when scrolled: crisp solid background, NO blur */
 html.spec-scrolled:not(.spec-dark-mode) .spec-landing-chrome,
 html.spec-scrolled.spec-light-mode .spec-landing-chrome {
   border-radius: 0 !important;
-  background: rgba(245, 234, 216, 0.96) !important;
+  background: transparent !important;
+  background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  border: 1px solid rgba(18, 16, 15, 0.14) !important;
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.25), 0 1px 0 0 rgba(255, 255, 255, 0.08) inset !important;
+  border: none !important;
+  box-shadow: none !important;
   color: #12100e !important;
 }
 
@@ -1369,10 +1372,26 @@ canvas,
   mask-image: radial-gradient(circle var(--nav-spot-r, 0px) at var(--nav-spot-x, -999px) var(--nav-spot-y, -999px), transparent 0%, transparent calc(100% - 0.5px), #000 100%);
   will-change: mask-image, -webkit-mask-image;
 }
+/* Intelligent Dynamic Logo Color System: Pure White (#FFFFFF) on dark, Pure Black (#000000) on light */
+:root {
+  --spec-nav-logo-color: #FFFFFF;
+}
+
+.spec-chrome-nav-logo,
+.spec-nav-logo-front,
 .spec-nav-logo-front .spec-logo-char-img,
-.spec-nav-logo-front .spec-logo-char-img path {
-  fill: #f5ead8 !important;
-  color: #f5ead8 !important;
+.spec-nav-logo-front .spec-logo-char-img path,
+#spec-flight-logo,
+#spec-flight-logo .spec-nav-logo-front,
+#spec-flight-logo .spec-logo-char-img,
+#spec-flight-logo .spec-logo-char-img path {
+  color: var(--spec-nav-logo-color, #FFFFFF) !important;
+  fill: var(--spec-nav-logo-color, #FFFFFF) !important;
+  transition: color 0.22s cubic-bezier(0.16, 1, 0.3, 1), fill 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.spec-nav-logo-back {
+  display: none !important;
 }
 
 .spec-hero-copy-wrap {
@@ -6689,7 +6708,7 @@ if (document.readyState === 'loading') {
 // MASTER CONTROLLER: LOGO FLIGHT & DYNAMIC CONTRAST, S2 4-PHASE, S7 REVIEWS
 // =========================================================================
 (function() {
-  // 1. Centered Hero Logo -> Animated Navbar Transition & Dynamic Contrast
+  // 1. Centered Hero Logo -> Animated Navbar Transition & Intelligent Dynamic Contrast
   function initHeroLogoFlight() {
     var heroLogoRow = document.querySelector('.spec-hero-logo-row');
     var chromeNav = document.querySelector('.spec-landing-chrome');
@@ -6701,32 +6720,113 @@ if (document.readyState === 'loading') {
     if (!flightLogo) {
       flightLogo = document.createElement('div');
       flightLogo.id = 'spec-flight-logo';
-      flightLogo.style.cssText = 'position:fixed;z-index:95;pointer-events:none;will-change:transform,color;transition:color 0.35s ease;display:inline-flex;align-items:center;left:0;top:0;';
+      flightLogo.style.cssText = 'position:fixed;z-index:95;pointer-events:none;will-change:transform,color;transition:color 0.22s cubic-bezier(0.16,1,0.3,1);display:inline-flex;align-items:center;left:0;top:0;';
       flightLogo.innerHTML = navLogo.innerHTML;
       document.body.appendChild(flightLogo);
     }
 
-    // Hide in-flow hero logo and navbar logo during flight
+    // Hide in-flow hero logo during flight
     heroLogoRow.style.opacity = '0';
     heroLogoRow.style.pointerEvents = 'none';
 
-    // Helper: Determine luminance of background
-    function isLightAt(x, y) {
-      var el = document.elementFromPoint(x, y);
-      while (el && el !== document.body && el !== document.documentElement) {
+    // Reusable 1x1 canvas for sampling real image, video, canvas pixels
+    var sampleCanvas = document.createElement('canvas');
+    sampleCanvas.width = 1;
+    sampleCanvas.height = 1;
+    var sampleCtx = null;
+    try {
+      sampleCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
+    } catch(_) {
+      sampleCtx = sampleCanvas.getContext('2d');
+    }
+
+    // Intelligent Luminance Analyzer: Detects real visual content passing behind a coordinate
+    function getLuminanceAt(x, y) {
+      if (x < 0 || y < 0 || x > window.innerWidth || y > window.innerHeight) return null;
+      var els = null;
+      try {
+        els = document.elementsFromPoint(x, y);
+      } catch(_) {
+        return null;
+      }
+      if (!els || !els.length) return null;
+
+      for (var i = 0; i < els.length; i++) {
+        var el = els[i];
+        if (!el || el === document.documentElement || el === document.body) continue;
+        // Ignore navbar chrome, flight logo, custom cursor, overlays
+        if (el.closest('.spec-landing-chrome') || el.closest('#spec-flight-logo') || el.id === 'spec-flight-logo' || el.classList.contains('spec-custom-cursor')) {
+          continue;
+        }
+
+        // 1. Check if el is an <img>
+        if (el.tagName === 'IMG' && el.complete && el.naturalWidth > 0 && sampleCtx) {
+          try {
+            var r = el.getBoundingClientRect();
+            if (r.width > 0 && r.height > 0) {
+              var u = Math.max(0, Math.min(1, (x - r.left) / r.width));
+              var v = Math.max(0, Math.min(1, (y - r.top) / r.height));
+              sampleCtx.clearRect(0, 0, 1, 1);
+              sampleCtx.drawImage(el, u * el.naturalWidth, v * el.naturalHeight, 1, 1, 0, 0, 1, 1);
+              var px = sampleCtx.getImageData(0, 0, 1, 1).data;
+              if (px[3] > 30) {
+                return (0.299 * px[0] + 0.587 * px[1] + 0.114 * px[2]) / 255;
+              }
+            }
+          } catch(_) {}
+        }
+
+        // 2. Check if el is a <video>
+        if (el.tagName === 'VIDEO' && el.readyState >= 2 && el.videoWidth > 0 && sampleCtx) {
+          try {
+            var r = el.getBoundingClientRect();
+            if (r.width > 0 && r.height > 0) {
+              var u = Math.max(0, Math.min(1, (x - r.left) / r.width));
+              var v = Math.max(0, Math.min(1, (y - r.top) / r.height));
+              sampleCtx.clearRect(0, 0, 1, 1);
+              sampleCtx.drawImage(el, u * el.videoWidth, v * el.videoHeight, 1, 1, 0, 0, 1, 1);
+              var px = sampleCtx.getImageData(0, 0, 1, 1).data;
+              if (px[3] > 30) {
+                return (0.299 * px[0] + 0.587 * px[1] + 0.114 * px[2]) / 255;
+              }
+            }
+          } catch(_) {}
+        }
+
+        // 3. Check if el is a <canvas>
+        if (el.tagName === 'CANVAS' && el.width > 0 && sampleCtx) {
+          try {
+            var r = el.getBoundingClientRect();
+            if (r.width > 0 && r.height > 0) {
+              var u = Math.max(0, Math.min(1, (x - r.left) / r.width));
+              var v = Math.max(0, Math.min(1, (y - r.top) / r.height));
+              sampleCtx.clearRect(0, 0, 1, 1);
+              sampleCtx.drawImage(el, u * el.width, v * el.height, 1, 1, 0, 0, 1, 1);
+              var px = sampleCtx.getImageData(0, 0, 1, 1).data;
+              if (px[3] > 30) {
+                return (0.299 * px[0] + 0.587 * px[1] + 0.114 * px[2]) / 255;
+              }
+            }
+          } catch(_) {}
+        }
+
+        // 4. Check computed backgroundColor
         var bg = window.getComputedStyle(el).backgroundColor;
         if (bg && bg !== 'transparent' && bg !== 'rgba(0, 0, 0, 0)') {
-          var match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
-          if (match) {
-            var r = parseInt(match[1], 10), g = parseInt(match[2], 10), b = parseInt(match[3], 10);
-            var lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-            return lum > 0.45;
+          var m = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+          if (m) {
+            var a = m[4] !== undefined ? parseFloat(m[4]) : 1;
+            if (a > 0.15) {
+              var r = parseInt(m[1], 10), g = parseInt(m[2], 10), b = parseInt(m[3], 10);
+              return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            }
           }
         }
-        el = el.parentElement;
       }
-      return document.documentElement.classList.contains('spec-light-mode');
+      return document.documentElement.classList.contains('spec-light-mode') ? 0.95 : 0.05;
     }
+
+    var lastIsLight = false;
 
     function updateFlight() {
       var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
@@ -6757,7 +6857,7 @@ if (document.readyState === 'loading') {
       flightLogo.style.transform = 'translate(' + (curCenterX - targetW / 2).toFixed(1) + 'px, ' + (curCenterY - targetH / 2).toFixed(1) + 'px) scale(' + curScale.toFixed(4) + ')';
       flightLogo.style.transformOrigin = 'center center';
 
-      // Synchronize Navbar appearance
+      // Synchronize Navbar appearance (always fully transparent background)
       if (p <= 0.05) {
         chromeNav.style.opacity = '0';
         chromeNav.style.pointerEvents = 'none';
@@ -6773,15 +6873,43 @@ if (document.readyState === 'loading') {
         navLogo.style.opacity = '0';
       }
 
-      // Dynamic Contrast Adaptation
-      var isLight = isLightAt(curCenterX, curCenterY);
-      var logoColor = isLight ? '#12100e' : '#ffffff';
-      flightLogo.style.color = logoColor;
-      navLogo.style.color = logoColor;
+      // Intelligent Dynamic Contrast: Sample 3 points across the logo width
+      var activeRect = flightLogo.getBoundingClientRect();
+      var checkY = activeRect.top + activeRect.height / 2;
+      var pts = [
+        activeRect.left + activeRect.width * 0.20,
+        activeRect.left + activeRect.width * 0.50,
+        activeRect.left + activeRect.width * 0.80
+      ];
+
+      var totalLum = 0;
+      var count = 0;
+      for (var j = 0; j < pts.length; j++) {
+        var lum = getLuminanceAt(pts[j], checkY);
+        if (lum !== null) {
+          totalLum += lum;
+          count++;
+        }
+      }
+      var avgLum = count > 0 ? (totalLum / count) : (document.documentElement.classList.contains('spec-light-mode') ? 0.95 : 0.05);
+
+      // Hysteresis threshold to prevent flickering at boundaries
+      var isLight = lastIsLight ? (avgLum > 0.44) : (avgLum > 0.52);
+      lastIsLight = isLight;
+
+      // Strictly ONLY two colors: White (#FFFFFF) when dark, Black (#000000) when light
+      var targetColor = isLight ? '#000000' : '#FFFFFF';
+
+      document.documentElement.style.setProperty('--spec-nav-logo-color', targetColor);
+      flightLogo.style.color = targetColor;
+      navLogo.style.color = targetColor;
     }
 
     window.addEventListener('scroll', updateFlight, { passive: true });
     window.addEventListener('resize', updateFlight, { passive: true });
+    if (window.lenis && typeof window.lenis.on === 'function') {
+      window.lenis.on('scroll', updateFlight);
+    }
     updateFlight();
   }
 
