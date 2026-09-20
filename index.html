@@ -3497,30 +3497,9 @@ class Component extends DCLogic {
     const p = Math.max(0, Math.min(1, y / (vh * 0.75)));
     const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
     if (this.logoRef.current) {
-      if (!this.logoMorph) this.measure();
-      if (this.logoMorph) {
-        const morphDist = Math.min(vh * 0.35, 180);
-        const pLogo = Math.max(0, Math.min(1, y / morphDist));
-        const eLogo = pLogo < 0.5 ? 4 * pLogo * pLogo * pLogo : 1 - Math.pow(-2 * pLogo + 2, 3) / 2;
-
-        const curScale = 1.0 - (1.0 - this.logoMorph.targetScale) * eLogo;
-        const curX = this.logoMorph.dx * eLogo;
-        const curY = (this.logoMorph.dy + y) * eLogo;
-
-        this.logoRef.current.style.transform = 'translate3d(' + curX.toFixed(2) + 'px, ' + curY.toFixed(2) + 'px, 0) scale(' + curScale.toFixed(4) + ')';
-        this.logoRef.current.style.transformOrigin = 'top left';
-
-        // Seamless, continuous handover into navbar logo
-        const navLogo = document.querySelector('.spec-chrome-nav-logo');
-        if (pLogo >= 0.90) {
-          const handOver = (pLogo - 0.90) / 0.10;
-          this.logoRef.current.style.opacity = String(Math.max(0, 1 - handOver));
-          if (navLogo) navLogo.style.opacity = String(Math.min(1, handOver));
-        } else {
-          this.logoRef.current.style.opacity = '1';
-          if (navLogo) navLogo.style.opacity = '0';
-        }
-      }
+      // In-flow hero logo is hidden in favor of unified centered-to-navbar flight controller
+      this.logoRef.current.style.opacity = '0';
+      this.logoRef.current.style.pointerEvents = 'none';
     }
     if (this.heroCopyRef.current) {
       const copyFade = Math.max(0, 1 - p * 1.35);
@@ -6713,21 +6692,23 @@ if (document.readyState === 'loading') {
     var heroLogoRow = document.querySelector('.spec-hero-logo-row');
     var chromeNav = document.querySelector('.spec-landing-chrome');
     var navLogo = document.querySelector('.spec-chrome-nav-logo');
-    if (!heroLogoRow || !chromeNav || !navLogo) return;
+    if (!chromeNav || !navLogo) return;
+
+    if (heroLogoRow) {
+      heroLogoRow.style.opacity = '0';
+      heroLogoRow.style.pointerEvents = 'none';
+      heroLogoRow.style.visibility = 'hidden';
+    }
 
     // Create persistent flying logo container if not existing
     var flightLogo = document.getElementById('spec-flight-logo');
     if (!flightLogo) {
       flightLogo = document.createElement('div');
       flightLogo.id = 'spec-flight-logo';
-      flightLogo.style.cssText = 'position:fixed;z-index:95;pointer-events:none;will-change:transform,color;transition:color 0.22s cubic-bezier(0.16,1,0.3,1);display:inline-flex;align-items:center;left:0;top:0;';
+      flightLogo.style.cssText = 'position:fixed;z-index:95;pointer-events:none;will-change:transform,color;transition:color 0.22s cubic-bezier(0.16,1,0.3,1);display:inline-flex;align-items:center;left:0;top:0;transform-origin:center center;';
       flightLogo.innerHTML = navLogo.innerHTML;
       document.body.appendChild(flightLogo);
     }
-
-    // Hide in-flow hero logo during flight
-    heroLogoRow.style.opacity = '0';
-    heroLogoRow.style.pointerEvents = 'none';
 
     // Reusable 1x1 canvas for sampling real image, video, canvas pixels
     var sampleCanvas = document.createElement('canvas');
@@ -6754,7 +6735,6 @@ if (document.readyState === 'loading') {
       for (var i = 0; i < els.length; i++) {
         var el = els[i];
         if (!el || el === document.documentElement || el === document.body) continue;
-        // Ignore navbar chrome, flight logo, custom cursor, overlays
         if (el.closest('.spec-landing-chrome') || el.closest('#spec-flight-logo') || el.id === 'spec-flight-logo' || el.classList.contains('spec-custom-cursor')) {
           continue;
         }
@@ -6833,37 +6813,41 @@ if (document.readyState === 'loading') {
       var vh = window.innerHeight;
       var vw = window.innerWidth;
 
-      var flightDist = Math.max(220, Math.min(420, vh * 0.45));
+      // Flight runway distance
+      var flightDist = Math.max(260, Math.min(500, vh * 0.55));
       var p = Math.max(0, Math.min(1, scrollY / flightDist));
-      var ease = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
+      // Smooth cubic bezier easing
+      var ease = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
 
+      // Exact upper-left dock coordinates inside navbar
       var navRect = navLogo.getBoundingClientRect();
-      var targetCenterX = navRect.left + (navRect.width || 140) / 2;
-      var targetCenterY = navRect.top + (navRect.height || 22) / 2;
-      var targetW = navRect.width || 140;
-      var targetH = navRect.height || 22;
+      var targetW = navRect.width > 10 ? navRect.width : 140;
+      var targetH = navRect.height > 10 ? navRect.height : 22;
+      var targetCenterX = (navRect.left > 0 ? navRect.left : Math.min(48, Math.max(20, vw * 0.04))) + targetW / 2;
+      var targetCenterY = (navRect.top > 0 ? navRect.top : Math.min(20, Math.max(12, vw * 0.018))) + targetH / 2;
 
-      // Hero Center
+      // Exact Screen Center for initial hero state
       var screenCenterX = vw / 2;
       var screenCenterY = vh / 2;
-      var heroLogoW = Math.min(vw * 0.82, 880);
+      var heroLogoW = Math.min(vw * 0.84, 880);
       var initialScale = heroLogoW / targetW;
 
-      // Current position and scale
+      // Animate position from Center to Upper-Left
       var curCenterX = screenCenterX + (targetCenterX - screenCenterX) * ease;
       var curCenterY = screenCenterY + (targetCenterY - screenCenterY) * ease;
+      // Animate scale from Hero center size down to Navbar logo size
       var curScale = initialScale + (1.0 - initialScale) * ease;
 
       flightLogo.style.transform = 'translate(' + (curCenterX - targetW / 2).toFixed(1) + 'px, ' + (curCenterY - targetH / 2).toFixed(1) + 'px) scale(' + curScale.toFixed(4) + ')';
       flightLogo.style.transformOrigin = 'center center';
 
-      // Synchronize Navbar appearance (always fully transparent background)
-      if (p <= 0.05) {
+      // Synchronize Navbar appearance: hidden at center, smoothly reveals as logo flies into upper-left
+      if (p <= 0.04) {
         chromeNav.style.opacity = '0';
         chromeNav.style.pointerEvents = 'none';
         navLogo.style.opacity = '0';
-      } else if (p < 0.95) {
-        var navAlpha = Math.max(0, (p - 0.2) / 0.75);
+      } else if (p < 0.92) {
+        var navAlpha = Math.max(0, (p - 0.04) / 0.88);
         chromeNav.style.opacity = navAlpha.toFixed(3);
         chromeNav.style.pointerEvents = 'none';
         navLogo.style.opacity = '0';
