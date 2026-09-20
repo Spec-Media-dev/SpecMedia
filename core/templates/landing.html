@@ -1983,42 +1983,32 @@ footer#contact div[style*="font-family:ui-monospace"] {
         <!-- Hidden canvas to satisfy DCLogic ref safely -->
         <canvas ref="{{ canvasScrubRef }}" style="display:none !important;" aria-hidden="true"></canvas>
 
-                                <!-- Phase 1: 24-Slice Coordinated Picture Slicing Assembly -->
+        <!-- Phase 1: Responsive Image Slicing & Progressive Reveal Container -->
         <div id="spec-slices-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;overflow:hidden;pointer-events:none;">
-          <div class="spec-slice" data-slice="0" data-row="0" data-col="0" data-stagger="1.000" style="position:absolute;left:0.0000%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_01.jpg" alt="slice 01" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="1" data-row="0" data-col="1" data-stagger="0.640" style="position:absolute;left:16.6667%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_02.jpg" alt="slice 02" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="2" data-row="0" data-col="2" data-stagger="0.396" style="position:absolute;left:33.3333%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_03.jpg" alt="slice 03" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="3" data-row="0" data-col="3" data-stagger="0.396" style="position:absolute;left:50.0000%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_04.jpg" alt="slice 04" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="4" data-row="0" data-col="4" data-stagger="0.640" style="position:absolute;left:66.6667%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_05.jpg" alt="slice 05" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="5" data-row="0" data-col="5" data-stagger="1.000" style="position:absolute;left:83.3333%;top:0.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_06.jpg" alt="slice 06" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="6" data-row="1" data-col="0" data-stagger="0.834" style="position:absolute;left:0.0000%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_07.jpg" alt="slice 07" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="7" data-row="1" data-col="1" data-stagger="0.396" style="position:absolute;left:16.6667%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_08.jpg" alt="slice 08" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="8" data-row="1" data-col="2" data-stagger="0.000" style="position:absolute;left:33.3333%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_09.jpg" alt="slice 09" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="9" data-row="1" data-col="3" data-stagger="0.000" style="position:absolute;left:50.0000%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_10.jpg" alt="slice 10" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="10" data-row="1" data-col="4" data-stagger="0.396" style="position:absolute;left:66.6667%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_11.jpg" alt="slice 11" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="11" data-row="1" data-col="5" data-stagger="0.834" style="position:absolute;left:83.3333%;top:25.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_12.jpg" alt="slice 12" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="12" data-row="2" data-col="0" data-stagger="0.834" style="position:absolute;left:0.0000%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_13.jpg" alt="slice 13" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="13" data-row="2" data-col="1" data-stagger="0.396" style="position:absolute;left:16.6667%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_14.jpg" alt="slice 14" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="14" data-row="2" data-col="2" data-stagger="0.000" style="position:absolute;left:33.3333%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_15.jpg" alt="slice 15" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="15" data-row="2" data-col="3" data-stagger="0.000" style="position:absolute;left:50.0000%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_16.jpg" alt="slice 16" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="16" data-row="2" data-col="4" data-stagger="0.396" style="position:absolute;left:66.6667%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_17.jpg" alt="slice 17" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="17" data-row="2" data-col="5" data-stagger="0.834" style="position:absolute;left:83.3333%;top:50.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_18.jpg" alt="slice 18" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="18" data-row="3" data-col="0" data-stagger="1.000" style="position:absolute;left:0.0000%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_19.jpg" alt="slice 19" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="19" data-row="3" data-col="1" data-stagger="0.640" style="position:absolute;left:16.6667%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_20.jpg" alt="slice 20" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="20" data-row="3" data-col="2" data-stagger="0.396" style="position:absolute;left:33.3333%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_21.jpg" alt="slice 21" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="21" data-row="3" data-col="3" data-stagger="0.396" style="position:absolute;left:50.0000%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_22.jpg" alt="slice 22" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="22" data-row="3" data-col="4" data-stagger="0.640" style="position:absolute;left:66.6667%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_23.jpg" alt="slice 23" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-slice="23" data-row="3" data-col="5" data-stagger="1.000" style="position:absolute;left:83.3333%;top:75.0000%;width:16.6667%;height:25.0000%;overflow:hidden;opacity:1;will-change:transform,filter,opacity;"><img src="/static/slices/horizontal/s_24.jpg" alt="slice 24" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" /></div>
+          <div class="spec-slice" data-col="0" data-row="0" data-dist="1.000" style="position:absolute;left:0.0000%;top:0.0000%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 0-0" style="position:absolute;left:0.0000%;top:0.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+          <div class="spec-slice" data-col="1" data-row="0" data-dist="0.620" style="position:absolute;left:25.0000%;top:0.0000%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 0-1" style="position:absolute;left:-100.0000%;top:0.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+          <div class="spec-slice" data-col="2" data-row="0" data-dist="0.620" style="position:absolute;left:50.0000%;top:0.0000%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 0-2" style="position:absolute;left:-200.0000%;top:0.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+          <div class="spec-slice" data-col="3" data-row="0" data-dist="1.000" style="position:absolute;left:75.0000%;top:0.0000%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 0-3" style="position:absolute;left:-300.0000%;top:0.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+
+          <div class="spec-slice" data-col="0" data-row="1" data-dist="0.832" style="position:absolute;left:0.0000%;top:33.3333%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 1-0" style="position:absolute;left:0.0000%;top:-100.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+          <div class="spec-slice" data-col="1" data-row="1" data-dist="0.277" style="position:absolute;left:25.0000%;top:33.3333%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 1-1" style="position:absolute;left:-100.0000%;top:-100.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+          <div class="spec-slice" data-col="2" data-row="1" data-dist="0.277" style="position:absolute;left:50.0000%;top:33.3333%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 1-2" style="position:absolute;left:-200.0000%;top:-100.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+          <div class="spec-slice" data-col="3" data-row="1" data-dist="0.832" style="position:absolute;left:75.0000%;top:33.3333%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 1-3" style="position:absolute;left:-300.0000%;top:-100.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+
+          <div class="spec-slice" data-col="0" data-row="2" data-dist="1.000" style="position:absolute;left:0.0000%;top:66.6667%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 2-0" style="position:absolute;left:0.0000%;top:-200.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+          <div class="spec-slice" data-col="1" data-row="2" data-dist="0.620" style="position:absolute;left:25.0000%;top:66.6667%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 2-1" style="position:absolute;left:-100.0000%;top:-200.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+          <div class="spec-slice" data-col="2" data-row="2" data-dist="0.620" style="position:absolute;left:50.0000%;top:66.6667%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 2-2" style="position:absolute;left:-200.0000%;top:-200.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+          <div class="spec-slice" data-col="3" data-row="2" data-dist="1.000" style="position:absolute;left:75.0000%;top:66.6667%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:0;will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 2-3" style="position:absolute;left:-300.0000%;top:-200.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
         </div>
 
-<!-- Phase 2: Completed Master Reference Image -->
+        <!-- Phase 2: Completed Master Reference Image -->
         <div id="spec-master-image" style="position:absolute;inset:0;width:100%;height:100%;z-index:4;opacity:0;pointer-events:none;transition:opacity 0.25s ease;">
-          <img src="/static/slices/duck_master.jpg" alt="Spec Media Master" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img id="spec-master-img-el" src="/static/SPEC_video-poster_horizontal.jpg" alt="Spec Media Master" style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
 
-        <!-- Phase 3: Scroll-Controlled Reference Video -->
-        <video id="spec-scene2-video" src="/static/reference_video.mp4" playsinline muted preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:5;opacity:0;pointer-events:none;background:#000000;">
-          <source src="/static/reference_video.mp4" type="video/mp4">
+        <!-- Phase 3: Seamless Autoplay Video -->
+        <video id="spec-scene2-video" src="/static/Main%20-%20hir%20-%20f.mp4" playsinline muted loop preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:5;opacity:0;pointer-events:none;background:#000000;">
+          <source id="spec-scene2-video-src" src="/static/Main%20-%20hir%20-%20f.mp4" type="video/mp4">
         </video>
 
         <!-- Legacy ref tags preserved invisibly for DCLogic stability -->
@@ -3507,40 +3497,17 @@ class Component extends DCLogic {
 
         const isMobile = window.innerWidth <= 768;
         if (isMobile) {
-          box.style.aspectRatio = '16 / 9';
-          if (this.vp <= 0.70) {
-            const g = Math.min(1, this.vp / 0.45);
-            const ge = 1 - Math.pow(1 - g, 3);
-            box.style.width = (92 + 8 * ge).toFixed(1) + '%';
-            box.style.height = 'auto';
-            box.style.borderRadius = ((1 - ge) * 16).toFixed(1) + 'px';
-          } else {
-            const exitP = Math.min(1, (this.vp - 0.70) / 0.30);
-            const exitEase = 1 - Math.pow(1 - exitP, 2);
-            const w = 100 - (8 * exitEase);
-            box.style.width = w.toFixed(1) + '%';
-            box.style.height = 'auto';
-            box.style.borderRadius = (exitEase * 16).toFixed(1) + 'px';
-          }
+          box.style.aspectRatio = '9 / 16';
+          box.style.width = 'min(88vw, 420px)';
+          box.style.maxHeight = '75vh';
+          box.style.height = 'auto';
+          box.style.borderRadius = '14px';
         } else {
-          // Desktop: 100% UNCHANGED and preserved
-          box.style.aspectRatio = '';
-          if (this.vp <= 0.70) {
-            const g = Math.min(1, this.vp / 0.45);
-            const ge = 1 - Math.pow(1 - g, 3);
-            box.style.width = (46 + 54 * ge).toFixed(1) + '%';
-            box.style.height = (52 + 48 * ge).toFixed(1) + '%';
-            box.style.borderRadius = ((1 - ge) * 20).toFixed(1) + 'px';
-          } else {
-            // At the end of the video: smoothly contract to compact frame
-            const exitP = Math.min(1, (this.vp - 0.70) / 0.30);
-            const exitEase = 1 - Math.pow(1 - exitP, 2);
-            const w = 100 - (58 * exitEase); // collapses from 100% down to 42%
-            const h = 100 - (52 * exitEase); // collapses from 100% down to 48%
-            box.style.width = w.toFixed(1) + '%';
-            box.style.height = h.toFixed(1) + '%';
-            box.style.borderRadius = (exitEase * 18).toFixed(1) + 'px';
-          }
+          box.style.aspectRatio = '16 / 9';
+          box.style.width = 'min(90vw, 1120px)';
+          box.style.maxHeight = '80vh';
+          box.style.height = 'auto';
+          box.style.borderRadius = '18px';
         }
       }
     }
@@ -3557,78 +3524,10 @@ class Component extends DCLogic {
     const fi = Math.max(0, Math.min(this.frames - 1, Math.round(this.scrubCur * (this.frames - 1))));
     if (this.frameLabelRef.current) { this.frameLabelRef.current.textContent = ""; }
 
-    // Video synchronization (handles Scene 02 3D brain video and custom assets with zero-lag hardware seeking)
+    // Video synchronization (delegated to dedicated Section 2 controller)
     const vid = document.getElementById('spec-scene2-video');
     if (vid) {
-      vid.muted = true;
-      vid.volume = 0;
-      const hasCanvasFrames = (this.spriteImg && this.spriteImg.complete) || (this.brainFramesLoaded > 12);
-      if (hasCanvasFrames) {
-        if (vid.style.display !== 'none') vid.style.display = 'none';
-      } else {
-        if (vid.style.display !== 'block') vid.style.display = 'block';
-      }
-
-      // Preload video into memory Blob to eliminate network byte-range seeking latency
-      if (!vid._blobPrefetched && vid.currentSrc && !vid.currentSrc.startsWith('blob:') && !vid.currentSrc.startsWith('data:') && vid.currentSrc.startsWith('http')) {
-        vid._blobPrefetched = true;
-        fetch(vid.currentSrc)
-          .then(res => res.ok ? res.blob() : null)
-          .then(blob => {
-            if (blob && blob.size > 2000) {
-              const blobUrl = URL.createObjectURL(blob);
-              const curTime = vid.currentTime || 0;
-              vid.src = blobUrl;
-              vid.currentTime = curTime;
-            }
-          })
-          .catch(() => {});
-      }
-
-      if (vid.duration && !isNaN(vid.duration)) {
-        const vidTarget = Math.max(0, Math.min(vid.duration - 0.04, this.scrubCur * vid.duration));
-        const now = performance.now();
-        const timeSinceLastSeek = now - (vid._lastSeekTime || 0);
-
-        if (this.scene2AutoPlaying) {
-          // During auto-play, utilize native hardware video playback for flawless 60 FPS
-          if (vid.paused) {
-            vid.muted = true;
-            vid.volume = 0;
-            try { vid.playbackRate = 1.0; vid.play().catch(() => {}); } catch (_) {}
-          }
-        } else {
-          // When scrubbing manually or stopped, pause and seek using non-blocking RAF gating
-          if (!vid.paused) vid.pause();
-
-          if (!vid.seeking && timeSinceLastSeek > 24) {
-            if (Math.abs(vid.currentTime - vidTarget) > 0.02) {
-              vid._lastSeekTime = now;
-              if (typeof vid.fastSeek === 'function') {
-                vid.fastSeek(vidTarget);
-              } else {
-                vid.currentTime = vidTarget;
-              }
-            }
-          } else {
-            vid._pendingTarget = vidTarget;
-            if (!vid._hasSeekedListener) {
-              vid._hasSeekedListener = true;
-              vid.addEventListener('seeked', () => {
-                if (typeof vid._pendingTarget === 'number' && Math.abs(vid.currentTime - vid._pendingTarget) > 0.02) {
-                  const target = vid._pendingTarget;
-                  vid._pendingTarget = null;
-                  if (typeof vid.fastSeek === 'function') {
-                    vid.fastSeek(target);
-                  } else {
-                    vid.currentTime = target;
-                  }
-                }
-              });
-            }
-          }
-        }
-      }
+      if (vid.style.display !== 'block') vid.style.display = 'block';
     }
 
     const pg = this.prog(this.canvasGreenRef.current ? this.canvasGreenRef.current.closest('section') : null);
@@ -4370,6 +4269,28 @@ class Component extends DCLogic {
 </script>
 
 <style id="spec-interactive-enhancements">
+  /* Section 02 Responsive Stage & Media */
+  @media (max-width: 768px) {
+    #spec-scene2-stage {
+      width: min(88vw, 420px) !important;
+      aspect-ratio: 9 / 16 !important;
+      max-height: 75vh !important;
+      border-radius: 14px !important;
+    }
+  }
+  @media (min-width: 769px) {
+    #spec-scene2-stage {
+      width: min(90vw, 1120px) !important;
+      aspect-ratio: 16 / 9 !important;
+      max-height: 80vh !important;
+      border-radius: 18px !important;
+    }
+  }
+  .spec-slice {
+    transform-origin: center center;
+    box-sizing: border-box;
+  }
+
   /* THE REEL Gallery Styles */
   #spec-reel-container {
     cursor: grab;
@@ -6787,42 +6708,118 @@ if (document.readyState === 'loading') {
     updateFlight();
   }
 
-  // 2. Section 02: Photo Slicing in First -> Collect Images -> Start Video
+  // 2. Section 02: Responsive Image Slicing & Progressive Reveal -> Reconstructed Hold -> Seamless Video Autoplay
   function initSection2Controller() {
     var sec = document.getElementById('spec-scene2-section');
+    var stage = document.getElementById('spec-scene2-stage');
     var slicesCont = document.getElementById('spec-slices-container') || document.getElementById('spec-tiles-container');
     var masterImg = document.getElementById('spec-master-image');
+    var masterImgEl = document.getElementById('spec-master-img-el');
     var video = document.getElementById('spec-scene2-video');
-    if (!sec || !slicesCont || !masterImg || !video) return;
+    if (!sec || !stage || !slicesCont || !masterImg || !video) return;
 
-    if (!video.src || !video.src.includes('reference_video.mp4')) {
-      video.src = '/static/reference_video.mp4';
-      try { video.load(); } catch(_) {}
+    video._customSec2Controller = true;
+
+    var currentMode = null;
+    var slices = [];
+    var cols = 4;
+    var rows = 3;
+    var cx = 1.5;
+    var cy = 1.0;
+    var maxD = 1.0;
+
+    function buildSlices() {
+      var isMobile = window.innerWidth <= 768;
+      var targetMode = isMobile ? 'mobile' : 'desktop';
+      if (currentMode === targetMode && slicesCont.children.length > 0) return;
+      currentMode = targetMode;
+
+      cols = isMobile ? 3 : 4;
+      rows = isMobile ? 4 : 3;
+      cx = (cols - 1) / 2;
+      cy = (rows - 1) / 2;
+      maxD = Math.sqrt(cx * cx + cy * cy) || 1;
+
+      var imgSrc = isMobile
+        ? '/static/SPEC_video-poster_vertical.jpg'
+        : '/static/SPEC_video-poster_horizontal.jpg';
+      var vidSrc = isMobile
+        ? '/static/Main%20-%20vir%20-%20f.mp4'
+        : '/static/Main%20-%20hir%20-%20f.mp4';
+
+      // Update stage sizing & aspect ratio
+      if (isMobile) {
+        stage.style.aspectRatio = '9 / 16';
+        stage.style.width = 'min(88vw, 420px)';
+        stage.style.maxHeight = '75vh';
+        stage.style.borderRadius = '14px';
+      } else {
+        stage.style.aspectRatio = '16 / 9';
+        stage.style.width = 'min(90vw, 1120px)';
+        stage.style.maxHeight = '80vh';
+        stage.style.borderRadius = '18px';
+      }
+
+      // Update master image
+      if (!masterImgEl) {
+        masterImgEl = masterImg.querySelector('img');
+      }
+      if (masterImgEl && masterImgEl.src !== imgSrc) {
+        masterImgEl.src = imgSrc;
+      }
+
+      // Update video source
+      var currentVidSrc = video.currentSrc || video.src || '';
+      var expectedKeyword = isMobile ? 'vir' : 'hir';
+      if (!currentVidSrc.includes(expectedKeyword)) {
+        video.src = vidSrc;
+        try { video.load(); } catch(_) {}
+      }
+
+      // Generate slices
+      slicesCont.innerHTML = '';
+      var frag = document.createDocumentFragment();
+
+      for (var r = 0; r < rows; r++) {
+        for (var c = 0; c < cols; c++) {
+          var slice = document.createElement('div');
+          slice.className = 'spec-slice';
+          slice.setAttribute('data-col', c);
+          slice.setAttribute('data-row', r);
+
+          var distCenter = Math.sqrt((c - cx) * (c - cx) + (r - cy) * (r - cy)) / maxD;
+          slice.setAttribute('data-dist', distCenter.toFixed(3));
+
+          slice.style.position = 'absolute';
+          slice.style.left = (c / cols * 100).toFixed(4) + '%';
+          slice.style.top = (r / rows * 100).toFixed(4) + '%';
+          slice.style.width = (100 / cols).toFixed(4) + '%';
+          slice.style.height = (100 / rows).toFixed(4) + '%';
+          slice.style.overflow = 'hidden';
+          slice.style.opacity = '0';
+          slice.style.willChange = 'transform, filter, opacity';
+
+          var img = document.createElement('img');
+          img.src = imgSrc;
+          img.alt = 'slice ' + r + '-' + c;
+          img.style.position = 'absolute';
+          img.style.left = (-c * 100).toFixed(4) + '%';
+          img.style.top = (-r * 100).toFixed(4) + '%';
+          img.style.width = (cols * 100).toFixed(4) + '%';
+          img.style.height = (rows * 100).toFixed(4) + '%';
+          img.style.objectFit = 'cover';
+          img.style.display = 'block';
+          img.style.pointerEvents = 'none';
+
+          slice.appendChild(img);
+          frag.appendChild(slice);
+        }
+      }
+      slicesCont.appendChild(frag);
+      slices = slicesCont.querySelectorAll('.spec-slice');
     }
 
-    var slices = slicesCont.querySelectorAll('.spec-slice, .spec-tile');
-    var isSeeking = false;
-    var pendingTime = null;
-
-    video.addEventListener('seeked', function() {
-      isSeeking = false;
-      if (pendingTime !== null) {
-        var t = pendingTime;
-        pendingTime = null;
-        seekVideo(t);
-      }
-    });
-
-    function seekVideo(time) {
-      if (isSeeking) {
-        pendingTime = time;
-        return;
-      }
-      if (video.fastSeek) {
-        try { isSeeking = true; video.fastSeek(time); return; } catch(_) {}
-      }
-      try { isSeeking = true; video.currentTime = time; } catch(_) { isSeeking = false; }
-    }
+    buildSlices();
 
     function updateSection2() {
       var rect = sec.getBoundingClientRect();
@@ -6831,60 +6828,85 @@ if (document.readyState === 'loading') {
       var currentScroll = -rect.top;
       var p = Math.max(0, Math.min(1, currentScroll / maxScroll));
 
-      // Phase 1 (0.00 -> 0.38): Photo Slicing Visible at First -> Smoothly Collect Images on Scroll
-      var a = Math.max(0, Math.min(1, p / 0.38));
-      var ease = 1 - Math.pow(1 - a, 3); // Smooth cubic ease out
-      var dist = 1 - ease;
-
-      slicesCont.style.opacity = p >= 0.48 ? '0' : '1';
-
-      slices.forEach(function(slice, idx) {
-        var c = parseInt(slice.getAttribute('data-col'), 10);
-        var r = parseInt(slice.getAttribute('data-row'), 10);
-        if (isNaN(c)) c = idx % 6;
-        if (isNaN(r)) r = Math.floor(idx / 6);
-
-        // Dispersed separation: slices start noticeably floating apart
-        var driftX = (c - 2.5) * 44 * dist;
-        var driftY = (r - 1.5) * 36 * dist;
-        var rotZ = ((c + r) % 2 === 0 ? 1 : -1) * (3.5 + (c + r) * 1.2) * dist;
-        var scale = 0.84 + 0.16 * ease;
-        var blurPx = (14 * dist).toFixed(1);
-
-        // Always 100% visible at the start, converging to seamless alignment
-        slice.style.opacity = '1';
-        slice.style.transform = 'translate3d(' + driftX.toFixed(1) + 'px, ' + driftY.toFixed(1) + 'px, 0) scale(' + scale.toFixed(4) + ') rotate(' + rotZ.toFixed(2) + 'deg)';
-        slice.style.filter = blurPx > 0.2 ? 'blur(' + blurPx + 'px)' : 'none';
-      });
-
-      // Phase 2 (0.38 -> 0.50): Hold Collected Pristine Master Image
-      if (p >= 0.36 && p < 0.54) {
-        if (p < 0.48) {
-          masterImg.style.opacity = '1';
+      var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) {
+        slicesCont.style.opacity = p < 0.40 ? '1' : '0';
+        masterImg.style.opacity = (p >= 0.40 && p < 0.52) ? '1' : '0';
+        video.style.opacity = p >= 0.52 ? '1' : '0';
+        if (p >= 0.52) {
+          if (video.paused) { video.play().catch(function() {}); }
         } else {
-          // Cross-fade smoothly into video
-          var fadeOut = Math.max(0, 1 - (p - 0.48) / 0.06);
-          masterImg.style.opacity = fadeOut.toFixed(3);
+          if (!video.paused) { video.pause(); video.currentTime = 0; }
         }
-      } else if (p < 0.36) {
-        masterImg.style.opacity = '0';
+        return;
+      }
+
+      var isMobile = currentMode === 'mobile';
+
+      // Phase 1 (0.00 -> 0.40): Progressive reveal of blurred fragmented slices -> collecting smoothly to reconstruct original image
+      if (p < 0.46) {
+        slicesCont.style.opacity = '1';
+
+        // Assembly progress curve
+        var a = Math.max(0, Math.min(1, p / 0.38));
+        var ease = 1 - Math.pow(1 - a, 3); // Smooth cubic ease out
+        var dist = 1 - ease;
+
+        slices.forEach(function(slice) {
+          var c = parseInt(slice.getAttribute('data-col'), 10);
+          var r = parseInt(slice.getAttribute('data-row'), 10);
+          var distCenter = parseFloat(slice.getAttribute('data-dist')) || 0;
+
+          // Progressive entrance reveal: slices appear progressively with smooth blur
+          var sliceReveal = Math.min(1, Math.max(0, (p + 0.02 - (1 - distCenter) * 0.03) / 0.07));
+          slice.style.opacity = sliceReveal.toFixed(3);
+
+          // Dispersed separation: slices start floating apart, then smoothly converge
+          var driftX = (c - cx) * (isMobile ? 38 : 58) * dist;
+          var driftY = (r - cy) * (isMobile ? 34 : 46) * dist;
+          var rotZ = ((c + r) % 2 === 0 ? 1 : -1) * (3.0 + distCenter * 3.5) * dist;
+          var scale = 0.86 + 0.14 * ease;
+          var blurPx = (18 * dist).toFixed(1);
+
+          slice.style.transform = 'translate3d(' + driftX.toFixed(1) + 'px, ' + driftY.toFixed(1) + 'px, 0) scale(' + scale.toFixed(4) + ') rotate(' + rotZ.toFixed(2) + 'deg)';
+          slice.style.filter = blurPx > 0.15 ? 'blur(' + blurPx + 'px)' : 'none';
+        });
+      } else {
+        slicesCont.style.opacity = '0';
+      }
+
+      // Phase 2 (0.38 -> 0.52): Hold Reconstructed Pristine Complete Image
+      if (p >= 0.38 && p < 0.52) {
+        masterImg.style.opacity = '1';
+      } else if (p >= 0.52 && p < 0.60) {
+        // Smooth cross-fade transition into video
+        var fadeOut = Math.max(0, 1 - (p - 0.52) / 0.08);
+        masterImg.style.opacity = fadeOut.toFixed(3);
       } else {
         masterImg.style.opacity = '0';
       }
 
-      // Phase 3 (0.48 -> 0.94): Start and Play Video with Direct Scroll Progression
-      if (p >= 0.48) {
-        var vidAlpha = Math.min(1, (p - 0.48) / 0.06);
+      // Phase 3 (0.52 -> 0.96): Seamless Video Transition & Automatic Playback
+      if (p >= 0.52) {
+        var vidAlpha = Math.min(1, (p - 0.52) / 0.08);
         video.style.opacity = vidAlpha.toFixed(3);
+        video.style.pointerEvents = 'auto';
 
-        var vidP = Math.max(0, Math.min(1, (p - 0.50) / 0.44));
-        var duration = video.duration || 5.0;
-        var targetTime = vidP * Math.max(0, duration - 0.04);
-        if (Math.abs((video.currentTime || 0) - targetTime) > 0.03) {
-          seekVideo(targetTime);
+        // Play video automatically when visible
+        if (video.paused) {
+          video.muted = true;
+          video.playsInline = true;
+          var playP = video.play();
+          if (playP !== undefined) {
+            playP.catch(function() {});
+          }
         }
       } else {
         video.style.opacity = '0';
+        video.style.pointerEvents = 'none';
+        if (!video.paused) {
+          video.pause();
+        }
         if (video.currentTime > 0) {
           try { video.currentTime = 0; } catch(_) {}
         }
@@ -6892,6 +6914,10 @@ if (document.readyState === 'loading') {
     }
 
     window.addEventListener('scroll', updateSection2, { passive: true });
+    window.addEventListener('resize', function() {
+      buildSlices();
+      updateSection2();
+    }, { passive: true });
     if (window.lenis && typeof window.lenis.on === 'function') {
       window.lenis.on('scroll', updateSection2);
     }
