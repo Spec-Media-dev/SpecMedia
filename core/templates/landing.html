@@ -6619,39 +6619,38 @@ if (document.readyState === 'loading') {
     var COLS = 3;
     var ROWS = 2;
 
-    // --- 6-Cube Cinematic Spatial Displacement Vectors ---
-    // Wide, prominent 3D dispersal so cubes clearly float independently in space with noticeable spacing
-    // Desktop: 3 cols x 2 rows = 6 large square cube tiles
-    // [col, row, driftX, driftY, driftZ, rotateX, rotateY, rotateZ]
+    // --- 6-Square Cinematic Spatial Displacement Vectors ---
+    // Wide, prominent 3D dispersal so 6 square slices clearly float independently in space with noticeable depth
+    // Desktop: 3 cols x 2 rows = 6 squares
     var CUBE_DEFS_DESKTOP = [
       // Top-Left: floats far up & left, deep 3D perspective tilt
-      { c: 0, r: 0, dx: -460, dy: -300, dz: -280, rx:  16, ry: -20, rz: -16 },
+      { c: 0, r: 0, src: '/static/slices/cubes/cube_01.jpg', dx: -460, dy: -300, dz: -280, rx:  16, ry: -20, rz: -16 },
       // Top-Center: floats high above center with subtle pitch
-      { c: 1, r: 0, dx:   40, dy: -380, dz: -220, rx: -18, ry:  10, rz:  10 },
+      { c: 1, r: 0, src: '/static/slices/cubes/cube_02.jpg', dx:   40, dy: -380, dz: -220, rx: -18, ry:  10, rz:  10 },
       // Top-Right: floats far up & right with clockwise tilt
-      { c: 2, r: 0, dx:  460, dy: -290, dz: -290, rx:  14, ry:  20, rz:  18 },
+      { c: 2, r: 0, src: '/static/slices/cubes/cube_03.jpg', dx:  460, dy: -290, dz: -290, rx:  14, ry:  20, rz:  18 },
       // Bottom-Left: sweeps far down & left with counter-clockwise tilt
-      { c: 0, r: 1, dx: -440, dy:  310, dz: -260, rx: -14, ry: -18, rz:  14 },
+      { c: 0, r: 1, src: '/static/slices/cubes/cube_04.jpg', dx: -440, dy:  310, dz: -260, rx: -14, ry: -18, rz:  14 },
       // Bottom-Center: floats deep beneath center
-      { c: 1, r: 1, dx:  -35, dy:  380, dz: -240, rx:  18, ry: -10, rz:  -8 },
+      { c: 1, r: 1, src: '/static/slices/cubes/cube_05.jpg', dx:  -35, dy:  380, dz: -240, rx:  18, ry: -10, rz:  -8 },
       // Bottom-Right: sweeps far down & right
-      { c: 2, r: 1, dx:  450, dy:  300, dz: -280, rx: -16, ry:  18, rz: -16 }
+      { c: 2, r: 1, src: '/static/slices/cubes/cube_06.jpg', dx:  450, dy:  300, dz: -280, rx: -16, ry:  18, rz: -16 }
     ];
 
-    // Mobile: 2 cols x 3 rows = 6 large square cube tiles for vertical 9:16 screen
+    // Mobile: 2 cols x 3 rows = 6 squares for vertical 9:16 screen
     var CUBE_DEFS_MOBILE = [
       // Top-Left
-      { c: 0, r: 0, dx: -220, dy: -230, dz: -200, rx:  14, ry: -16, rz: -12 },
+      { c: 0, r: 0, src: '/static/slices/cubes/cube_v01.jpg', dx: -220, dy: -230, dz: -200, rx:  14, ry: -16, rz: -12 },
       // Top-Right
-      { c: 1, r: 0, dx:  220, dy: -220, dz: -210, rx:  14, ry:  16, rz:  14 },
+      { c: 1, r: 0, src: '/static/slices/cubes/cube_v02.jpg', dx:  220, dy: -220, dz: -210, rx:  14, ry:  16, rz:  14 },
       // Mid-Left
-      { c: 0, r: 1, dx: -260, dy:   15, dz: -230, rx: -12, ry: -18, rz:  10 },
+      { c: 0, r: 1, src: '/static/slices/cubes/cube_v03.jpg', dx: -260, dy:   15, dz: -230, rx: -12, ry: -18, rz:  10 },
       // Mid-Right
-      { c: 1, r: 1, dx:  260, dy:  -15, dz: -220, rx:  12, ry:  18, rz: -10 },
+      { c: 1, r: 1, src: '/static/slices/cubes/cube_v04.jpg', dx:  260, dy:  -15, dz: -220, rx:  12, ry:  18, rz: -10 },
       // Bottom-Left
-      { c: 0, r: 2, dx: -210, dy:  240, dz: -200, rx: -14, ry: -14, rz: -12 },
+      { c: 0, r: 2, src: '/static/slices/cubes/cube_v05.jpg', dx: -210, dy:  240, dz: -200, rx: -14, ry: -14, rz: -12 },
       // Bottom-Right
-      { c: 1, r: 2, dx:  210, dy:  250, dz: -210, rx: -14, ry:  16, rz:  12 }
+      { c: 1, r: 2, src: '/static/slices/cubes/cube_v06.jpg', dx:  210, dy:  250, dz: -210, rx: -14, ry:  16, rz:  12 }
     ];
 
     var activeDefs = CUBE_DEFS_DESKTOP;
@@ -6690,7 +6689,7 @@ if (document.readyState === 'loading') {
         try { video.load(); } catch(_) {}
       }
 
-      // Build exactly 6 cubes with subpixel 1.5px overlap to guarantee zero seams
+      // Build exactly 6 squares with subpixel 1.5px overlap to guarantee zero seams
       slicesCont.innerHTML = '';
       slicesCont.style.overflow = 'visible';
       var frag = document.createDocumentFragment();
@@ -6699,7 +6698,7 @@ if (document.readyState === 'loading') {
         var def = activeDefs[i];
         var c = def.c, r = def.r;
         var cube = document.createElement('div');
-        cube.className = 'spec-slice';
+        cube.className = 'spec-slice spec-cube';
         cube.setAttribute('data-col', c);
         cube.setAttribute('data-row', r);
         cube.setAttribute('data-idx', i);
@@ -6724,17 +6723,12 @@ if (document.readyState === 'loading') {
         ].join(';');
 
         var img = document.createElement('img');
-        img.src = imgSrc;
-        img.alt = 'spec-cube-' + i;
+        img.src = def.src;
+        img.alt = 'spec-slice-' + (i + 1);
         img.style.cssText = [
-          'position:absolute',
-          'left:' + (-c * 100).toFixed(4) + '%',
-          'top:' + (-r * 100).toFixed(4) + '%',
-          'width:' + (COLS * 100).toFixed(4) + '%',
-          'height:' + (ROWS * 100).toFixed(4) + '%',
-          'object-fit:fill',
-          'max-width:none',
-          'max-height:none',
+          'width:100%',
+          'height:100%',
+          'object-fit:cover',
           'display:block',
           'pointer-events:none'
         ].join(';');
@@ -6894,10 +6888,10 @@ if (document.readyState === 'loading') {
           var def = activeDefs[i] || activeDefs[0];
 
           // Staggered individual slice progression
-          var st = i * 0.022; // individual staggered delay
-          var dur = assembleEnd - st;
+          var st = i * 0.02;
+          var dur = assembleEnd - 0.06;
           var p_i = Math.max(0, Math.min(1, (p - st) / Math.max(0.12, dur)));
-          var ease_i = 1 - Math.pow(1 - p_i, 1.6);
+          var ease_i = 1 - Math.pow(1 - p_i, 1.8);
           var dist_i = 1 - ease_i;
 
           var driftX = (def.dx * dist_i).toFixed(1);
@@ -6915,16 +6909,14 @@ if (document.readyState === 'loading') {
           var spreadPx = Math.round(40 * dist_i);
           var br = Math.round(8 * dist_i);
 
-          // Slices appear individually as Section 2 enters
-          var sliceAlpha = Math.min(1, Math.max(0, (p - (st * 0.4)) / 0.05 + 0.20));
-
-          slice.style.opacity = sliceAlpha.toFixed(3);
+          // Slices are fully visible from the start so user clearly sees them dispersed and collecting
+          slice.style.opacity = '1';
           slice.style.transform = 'translate3d(' + driftX + 'px,' + driftY + 'px,' + driftZ + 'px)' +
             ' rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) rotateZ(' + rz + 'deg)' +
             ' scale(' + scale + ')';
           slice.style.filter = parseFloat(blurPx) > 0.15 ? 'blur(' + blurPx + 'px)' : 'none';
           slice.style.boxShadow = dist_i > 0.04
-            ? '0 10px ' + spreadPx + 'px rgba(0,0,0,' + shadowAlpha + ')'
+            ? '0 12px ' + spreadPx + 'px rgba(0,0,0,' + shadowAlpha + ')'
             : 'none';
           slice.style.borderRadius = br > 0 ? br + 'px' : '0';
         });
