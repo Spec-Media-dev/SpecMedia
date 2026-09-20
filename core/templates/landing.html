@@ -1155,8 +1155,8 @@ html.spec-dark-mode [ref="logoRef"] img {
   -webkit-backdrop-filter: none !important;
   border: none !important;
   box-shadow: none !important;
-  opacity: 0;
-  pointer-events: none;
+  opacity: 1 !important;
+  pointer-events: auto !important;
   transform: translateY(0);
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1175,22 +1175,23 @@ html.spec-dark-mode [ref="logoRef"] img {
   gap: clamp(12px, 1.8vw, 24px);
 }
 
-/* Compact sticky logo in top navbar: hidden at top hero, appears smoothly on scroll */
+/* Hero logo starts centered in upper area of monitor, flies smoothly to navbar on scroll */
 .spec-chrome-nav-logo {
-  opacity: 0;
-  pointer-events: none;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
   transform: translateY(0);
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
-  color: #f5ead8;
+  color: #FFFFFF;
   text-decoration: none;
   flex-shrink: 0;
 }
 html.spec-scrolled .spec-chrome-nav-logo,
 html.spec-dark-mode.spec-scrolled .spec-chrome-nav-logo {
-  opacity: 1;
-  pointer-events: auto;
+  opacity: 1 !important;
+  pointer-events: auto !important;
   transform: translateY(0);
 }
 .spec-nav-chars-wrap .spec-logo-char-img {
@@ -1980,25 +1981,11 @@ footer#contact div[style*="font-family:ui-monospace"] {
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#000000">
       <div ref="{{ scrubBoxRef }}" id="spec-scene2-stage" class="spec-scrub-box" style="position:relative;width:min(90vw, 1120px);aspect-ratio:16/9;max-height:80vh;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.8);background:#000000;will-change:transform,opacity;opacity:1;transform:none;">
         
-        <!-- Hidden canvas to satisfy DCLogic ref safely -->
-        <canvas ref="{{ canvasScrubRef }}" style="display:none !important;" aria-hidden="true"></canvas>
+        <!-- Ref placeholder for DCLogic stability (brain canvas removed per request) -->
+        <div ref="{{ canvasScrubRef }}" style="display:none !important;width:0;height:0;position:absolute;pointer-events:none;" aria-hidden="true"></div>
 
-        <!-- Phase 1: Responsive Image Slicing & Progressive Reveal Container -->
-        <div id="spec-slices-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;overflow:hidden;pointer-events:none;">
-          <div class="spec-slice" data-col="0" data-row="0" data-dist="1.000" style="position:absolute;left:0.0000%;top:0.0000%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 0-0" style="position:absolute;left:0.0000%;top:0.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-col="1" data-row="0" data-dist="0.620" style="position:absolute;left:25.0000%;top:0.0000%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 0-1" style="position:absolute;left:-100.0000%;top:0.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-col="2" data-row="0" data-dist="0.620" style="position:absolute;left:50.0000%;top:0.0000%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 0-2" style="position:absolute;left:-200.0000%;top:0.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-col="3" data-row="0" data-dist="1.000" style="position:absolute;left:75.0000%;top:0.0000%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 0-3" style="position:absolute;left:-300.0000%;top:0.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-
-          <div class="spec-slice" data-col="0" data-row="1" data-dist="0.832" style="position:absolute;left:0.0000%;top:33.3333%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 1-0" style="position:absolute;left:0.0000%;top:-100.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-col="1" data-row="1" data-dist="0.277" style="position:absolute;left:25.0000%;top:33.3333%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 1-1" style="position:absolute;left:-100.0000%;top:-100.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-col="2" data-row="1" data-dist="0.277" style="position:absolute;left:50.0000%;top:33.3333%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 1-2" style="position:absolute;left:-200.0000%;top:-100.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-col="3" data-row="1" data-dist="0.832" style="position:absolute;left:75.0000%;top:33.3333%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 1-3" style="position:absolute;left:-300.0000%;top:-100.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-
-          <div class="spec-slice" data-col="0" data-row="2" data-dist="1.000" style="position:absolute;left:0.0000%;top:66.6667%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 2-0" style="position:absolute;left:0.0000%;top:-200.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-col="1" data-row="2" data-dist="0.620" style="position:absolute;left:25.0000%;top:66.6667%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 2-1" style="position:absolute;left:-100.0000%;top:-200.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-col="2" data-row="2" data-dist="0.620" style="position:absolute;left:50.0000%;top:66.6667%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 2-2" style="position:absolute;left:-200.0000%;top:-200.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
-          <div class="spec-slice" data-col="3" data-row="2" data-dist="1.000" style="position:absolute;left:75.0000%;top:66.6667%;width:25.0000%;height:33.3333%;overflow:hidden;opacity:1;filter:blur(18px);will-change:transform,filter,opacity;"><img src="/static/SPEC_video-poster_horizontal.jpg" alt="slice 2-3" style="position:absolute;left:-300.0000%;top:-200.0000%;width:400%;height:300%;object-fit:cover;display:block;pointer-events:none;" /></div>
+        <!-- Phase 1: 6-Cube Assembly Container (JS-generated) -->
+        <div id="spec-slices-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;">
         </div>
 
         <!-- Phase 2: Completed Master Reference Image -->
@@ -3078,79 +3065,10 @@ class Component extends DCLogic {
   get grade(){ return this.props.gradeColor ?? '#7a8a5e'; }
 
   initBrainFrames(){
-    const total = 192;
-    this.brainFrames = new Array(total);
+    // Completely disabled and removed brain frames per user instruction
+    this.brainFrames = [];
     this.brainFramesLoaded = 0;
-
-    const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-    const cdnBase = 'https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/hd_frames/frame_';
-    const localBase = '/static/hd_frames/frame_';
-    const primaryBase = isLocalhost ? localBase : cdnBase;
-    const secondaryBase = isLocalhost ? cdnBase : localBase;
-
-    const loadFrame = (idx) => {
-      const num = String(idx + 1).padStart(3, '0');
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.src = primaryBase + num + '.webp';
-      img.onload = () => {
-        this.brainFrames[idx] = img;
-        this.brainFramesLoaded++;
-        if (!this.hasDrawnFirst || idx === 0) {
-          this.hasDrawnFirst = true;
-          this.drawScrub(this.scrubCur || 0);
-        }
-      };
-      img.onerror = () => {
-        const fallback = new Image();
-        fallback.crossOrigin = 'anonymous';
-        fallback.src = secondaryBase + num + '.webp';
-        fallback.onload = () => {
-          this.brainFrames[idx] = fallback;
-          this.brainFramesLoaded++;
-          if (!this.hasDrawnFirst || idx === 0) {
-            this.hasDrawnFirst = true;
-            this.drawScrub(this.scrubCur || 0);
-          }
-        };
-        fallback.onerror = () => {
-          const jpgFallback = new Image();
-          jpgFallback.crossOrigin = 'anonymous';
-          jpgFallback.src = '/static/brain_frames/frame_' + num + '.jpg';
-          jpgFallback.onload = () => {
-            this.brainFrames[idx] = jpgFallback;
-            this.brainFramesLoaded++;
-            if (!this.hasDrawnFirst || idx === 0) {
-              this.hasDrawnFirst = true;
-              this.drawScrub(this.scrubCur || 0);
-            }
-          };
-        };
-      };
-    };
-
-    // Stage 1: Load 24 keyframes evenly spaced across the scrub range for instant (<50ms) initial render
-    const step = Math.floor(total / 24);
-    for (let i = 0; i < total; i += step) {
-      loadFrame(i);
-    }
-    loadFrame(0);
-    loadFrame(total - 1);
-
-    // Stage 2: Stream all remaining frames asynchronously in the background
-    setTimeout(() => {
-      for (let i = 0; i < total; i++) {
-        if (!this.brainFrames[i]) {
-          loadFrame(i);
-        }
-      }
-    }, 25);
-
-    // Also load 7200x4050 high-definition sprite sheet as secondary fallback
-    const spriteUrl = (window.__SPEC_SCENE2_SPRITE_URL) || 'https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/sprites/scene2_sprite.jpg';
-    this.spriteImg = new Image();
-    this.spriteImg.crossOrigin = 'anonymous';
-    this.spriteImg.src = spriteUrl;
+    return;
   }
 
   bindMouseScrub(){
@@ -3388,7 +3306,7 @@ class Component extends DCLogic {
 
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     const cs2 = this.canvasScrubRef.current;
-    if (cs2) { cs2.width = 1920; cs2.height = 1080; }
+    if (cs2 && cs2.tagName === 'CANVAS') { cs2.width = 1920; cs2.height = 1080; }
     const cg = this.canvasGreenRef.current;
     if (cg) { const r = cg.getBoundingClientRect(); cg.width = Math.round(r.width * dpr); cg.height = Math.round(r.height * dpr); }
   }
@@ -3774,65 +3692,8 @@ class Component extends DCLogic {
   }
 
   drawScrub(t){
-    const canvas = this.canvasScrubRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Lock canvas internal buffer to native 1080p Full HD (1920x1080) for 1:1 pixel perfection.
-    // CSS width:100%;height:100%;object-fit:cover handles smooth GPU-accelerated container scaling at 120 FPS.
-    const cw = 1920, ch = 1080;
-    if (canvas.width !== cw || canvas.height !== ch) {
-      canvas.width = cw;
-      canvas.height = ch;
-    }
-
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-
-    const total = this.frames;
-    const fi = Math.max(0, Math.min(total - 1, Math.round(t * (total - 1))));
-
-    // 1. PRIMARY: 1080p Full HD crystal-clear frame rendering
-    let img = this.brainFrames && this.brainFrames[fi];
-
-    if (!img || !img.complete || !img.naturalWidth) {
-      if (this.brainFrames) {
-        // Find nearest loaded 1080p keyframe for instant zero-lag display
-        for (let d = 1; d < total; d++) {
-          if (fi - d >= 0 && this.brainFrames[fi - d] && this.brainFrames[fi - d].complete && this.brainFrames[fi - d].naturalWidth) {
-            img = this.brainFrames[fi - d];
-            break;
-          }
-          if (fi + d < total && this.brainFrames[fi + d] && this.brainFrames[fi + d].complete && this.brainFrames[fi + d].naturalWidth) {
-            img = this.brainFrames[fi + d];
-            break;
-          }
-        }
-      }
-    }
-
-    if (img && img.complete && img.naturalWidth > 0) {
-      ctx.clearRect(0, 0, cw, ch);
-      ctx.drawImage(img, 0, 0, cw, ch);
-      return;
-    }
-
-    // 2. SECONDARY: 7200x4050 High-Definition Sprite sheet fallback (only if zero HD frames are in memory yet)
-    if (this.spriteImg && this.spriteImg.complete && this.spriteImg.naturalWidth > 0) {
-      const totalSprite = 100;
-      const sfi = Math.max(0, Math.min(totalSprite - 1, Math.round(t * (totalSprite - 1))));
-      const cols = 10;
-      const col = sfi % cols;
-      const row = Math.floor(sfi / cols);
-      const sw = this.spriteImg.naturalWidth / cols;
-      const sh = this.spriteImg.naturalHeight / cols;
-      const sx = col * sw;
-      const sy = row * sh;
-
-      ctx.clearRect(0, 0, cw, ch);
-      ctx.drawImage(this.spriteImg, sx, sy, sw, sh, 0, 0, cw, ch);
-    }
+    // Completely disabled and removed brain rendering per user instruction
+    return;
   }
 
     drawGreen(t){
@@ -6485,11 +6346,15 @@ if (document.readyState === 'loading') {
 // MASTER CONTROLLER: LOGO FLIGHT & DYNAMIC CONTRAST, S2 4-PHASE, S7 REVIEWS
 // =========================================================================
 (function() {
+  var flightInited = false;
+
   // 1. Centered Hero Logo -> Animated Navbar Transition & Intelligent Dynamic Contrast (Single Logo - NO Copies)
   function initHeroLogoFlight() {
+    if (flightInited) return true;
     var chromeNav = document.querySelector('.spec-landing-chrome');
     var navLogo = document.querySelector('.spec-chrome-nav-logo');
-    if (!chromeNav || !navLogo) return;
+    if (!chromeNav || !navLogo) return false;
+    flightInited = true;
 
     // Remove any legacy flight logo if present
     var oldFlight = document.getElementById('spec-flight-logo');
@@ -6601,7 +6466,13 @@ if (document.readyState === 'loading') {
     var cachedTargetW = null;
     var cachedTargetH = null;
 
+    function getLiveNavLogo() {
+      return document.querySelector('.spec-chrome-nav-logo');
+    }
+
     function measureNaturalNavbarLogo() {
+      var navLogo = getLiveNavLogo();
+      if (!navLogo) return;
       // Temporarily clear inline transform to get natural layout coordinates
       var prevT = navLogo.style.transform;
       navLogo.style.transform = 'none';
@@ -6624,29 +6495,41 @@ if (document.readyState === 'loading') {
         '  100% { opacity: 1; filter: blur(0px) drop-shadow(0 0 16px rgba(180, 1, 25, 0.25)); }\n' +
         '}\n' +
         '@keyframes specHeroLogoAmbient {\n' +
-        '  0%, 100% { filter: drop-shadow(0 0 12px rgba(180, 1, 25, 0.20)); }\n' +
-        '  50% { filter: drop-shadow(0 0 28px rgba(180, 1, 25, 0.60)); }\n' +
+        '  0%, 100% { opacity: 1 !important; filter: drop-shadow(0 0 14px rgba(180, 1, 25, 0.35)) drop-shadow(0 0 35px rgba(180, 1, 25, 0.20)); }\n' +
+        '  50% { opacity: 1 !important; filter: drop-shadow(0 0 28px rgba(180, 1, 25, 0.70)) drop-shadow(0 0 60px rgba(180, 1, 25, 0.40)); }\n' +
         '}\n' +
         '.spec-chrome-nav-logo.spec-logo-intro {\n' +
+        '  opacity: 1 !important;\n' +
         '  animation: specHeroLogoIntro 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;\n' +
         '}\n' +
         '.spec-chrome-nav-logo.spec-logo-ambient {\n' +
+        '  opacity: 1 !important;\n' +
         '  animation: specHeroLogoAmbient 4s ease-in-out infinite;\n' +
         '}\n';
       document.head.appendChild(motionStyle);
-      navLogo.classList.add('spec-logo-intro');
-      setTimeout(function() {
-        navLogo.classList.remove('spec-logo-intro');
-        if ((window.pageYOffset || document.documentElement.scrollTop || 0) < 30) {
-          navLogo.classList.add('spec-logo-ambient');
-        }
-      }, 1250);
+      var initLogo = getLiveNavLogo();
+      if (initLogo) {
+        initLogo.classList.add('spec-logo-intro');
+        setTimeout(function() {
+          var el = getLiveNavLogo();
+          if (el) {
+            el.classList.remove('spec-logo-intro');
+            el.classList.add('spec-logo-ambient');
+            el.style.opacity = '1';
+          }
+        }, 1250);
+      }
     }
 
     window.addEventListener('resize', measureNaturalNavbarLogo);
     measureNaturalNavbarLogo();
 
     function updateFlight() {
+      var navLogo = getLiveNavLogo();
+      if (!navLogo) return;
+      var chromeNav = document.querySelector('.spec-landing-chrome');
+      var actions = chromeNav ? chromeNav.querySelector('.spec-chrome-actions') : null;
+
       var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
       var vh = window.innerHeight;
       var vw = window.innerWidth;
@@ -6684,6 +6567,8 @@ if (document.readyState === 'loading') {
       } else {
         navLogo.style.transform = 'translate(' + curX.toFixed(1) + 'px, ' + curY.toFixed(1) + 'px) scale(' + curScale.toFixed(4) + ')';
       }
+      navLogo.style.opacity = '1';
+      navLogo.style.visibility = 'visible';
 
       // Ambient breathing effect when resting at the top
       if (p < 0.05) {
@@ -6735,11 +6620,13 @@ if (document.readyState === 'loading') {
       var isLight = lastIsLight ? (avgLum > 0.44) : (avgLum > 0.52);
       lastIsLight = isLight;
 
-      var targetColor = isLight ? '#000000' : '#FFFFFF';
+      var targetColor = (p < 0.25) ? '#FFFFFF' : (isLight ? '#000000' : '#FFFFFF');
       document.documentElement.style.setProperty('--spec-nav-logo-color', targetColor);
       navLogo.style.color = targetColor;
+      return { scrollY: scrollY, p: p, ease: ease, curX: curX, curY: curY, curScale: curScale, transform: navLogo.style.transform };
     }
 
+    window.__specUpdateFlight = updateFlight;
     window.addEventListener('scroll', updateFlight, { passive: true });
     function attachFlightLenis() {
       if (window.lenis && typeof window.lenis.on === 'function') {
@@ -6750,39 +6637,85 @@ if (document.readyState === 'loading') {
     setTimeout(attachFlightLenis, 300);
     setTimeout(attachFlightLenis, 1000);
     updateFlight();
+    return true;
   }
 
-  // 2. Section 02: Responsive Image Slicing & Progressive Reveal -> Reconstructed Hold -> Seamless Video Autoplay
+  var sec2Inited = false;
+  // 2. Section 02 Controller: 6-Cube Cinematic Image Assembly -> Pristine Hold -> Seamless Video
   function initSection2Controller() {
+    if (sec2Inited) return true;
     var sec = document.getElementById('spec-scene2-section');
     var stage = document.getElementById('spec-scene2-stage');
     var slicesCont = document.getElementById('spec-slices-container') || document.getElementById('spec-tiles-container');
     var masterImg = document.getElementById('spec-master-image');
     var masterImgEl = document.getElementById('spec-master-img-el');
     var video = document.getElementById('spec-scene2-video');
-    if (!sec || !stage || !slicesCont || !masterImg || !video) return;
+    if (!sec || !stage || !slicesCont || !masterImg || !video) return false;
+    sec2Inited = true;
 
     video._customSec2Controller = true;
 
-    var currentMode = null;
-    var slices = [];
-    var cols = 4;
-    var rows = 3;
-    var cx = 1.5;
-    var cy = 1.0;
-    var maxD = 1.0;
+    // Enable 3D perspective context for realistic floating depth
+    slicesCont.style.perspective = '1200px';
+    slicesCont.style.transformStyle = 'preserve-3d';
+    slicesCont.style.overflow = 'visible';
 
-    function buildSlices() {
+    var currentMode = null;
+    var COLS = 3;
+    var ROWS = 2;
+
+    // --- 6-Cube Cinematic Spatial Displacement Vectors ---
+    // Desktop: 3 cols x 2 rows = 6 large square cube tiles
+    // Each cube has an intentional, creative 3D floating trajectory:
+    // [col, row, driftX, driftY, driftZ, rotateX, rotateY, rotateZ]
+    var CUBE_DEFS_DESKTOP = [
+      // Top-Left: floats up & left, deep 3D perspective tilt
+      { c: 0, r: 0, dx: -380, dy: -260, dz: -240, rx:  14, ry: -18, rz: -12 },
+      // Top-Center: floats high above center with subtle pitch
+      { c: 1, r: 0, dx:   35, dy: -330, dz: -170, rx: -15, ry:   8, rz:   8 },
+      // Top-Right: floats up & right with clockwise tilt
+      { c: 2, r: 0, dx:  380, dy: -250, dz: -250, rx:  12, ry:  18, rz:  14 },
+      // Bottom-Left: floats down & left with counter-clockwise tilt
+      { c: 0, r: 1, dx: -360, dy:  270, dz: -220, rx: -12, ry: -16, rz:  10 },
+      // Bottom-Center: floats deep beneath center
+      { c: 1, r: 1, dx:  -30, dy:  330, dz: -180, rx:  15, ry:  -8, rz:  -6 },
+      // Bottom-Right: floats down & right
+      { c: 2, r: 1, dx:  370, dy:  260, dz: -240, rx: -14, ry:  16, rz: -14 }
+    ];
+
+    // Mobile: 2 cols x 3 rows = 6 large square cube tiles for vertical 9:16 screen
+    var CUBE_DEFS_MOBILE = [
+      // Top-Left
+      { c: 0, r: 0, dx: -180, dy: -190, dz: -160, rx:  12, ry: -14, rz: -10 },
+      // Top-Right
+      { c: 1, r: 0, dx:  180, dy: -180, dz: -170, rx:  12, ry:  14, rz:  12 },
+      // Mid-Left
+      { c: 0, r: 1, dx: -210, dy:   10, dz: -190, rx: -10, ry: -15, rz:   8 },
+      // Mid-Right
+      { c: 1, r: 1, dx:  210, dy:  -10, dz: -180, rx:  10, ry:  15, rz:  -9 },
+      // Bottom-Left
+      { c: 0, r: 2, dx: -170, dy:  200, dz: -160, rx: -12, ry: -12, rz: -11 },
+      // Bottom-Right
+      { c: 1, r: 2, dx:  170, dy:  210, dz: -170, rx: -12, ry:  14, rz:  10 }
+    ];
+
+    var activeDefs = CUBE_DEFS_DESKTOP;
+
+    function build6Cubes() {
       var isMobile = window.innerWidth <= 768;
       var targetMode = isMobile ? 'mobile' : 'desktop';
-      if (currentMode === targetMode && slicesCont.children.length > 0) return;
+      if (currentMode === targetMode && slicesCont.children.length === 6) return;
       currentMode = targetMode;
 
-      cols = isMobile ? 3 : 4;
-      rows = isMobile ? 4 : 3;
-      cx = (cols - 1) / 2;
-      cy = (rows - 1) / 2;
-      maxD = Math.sqrt(cx * cx + cy * cy) || 1;
+      if (isMobile) {
+        COLS = 2;
+        ROWS = 3;
+        activeDefs = CUBE_DEFS_MOBILE;
+      } else {
+        COLS = 3;
+        ROWS = 2;
+        activeDefs = CUBE_DEFS_DESKTOP;
+      }
 
       var imgSrc = isMobile
         ? '/static/SPEC_video-poster_vertical.jpg'
@@ -6791,7 +6724,7 @@ if (document.readyState === 'loading') {
         ? '/static/Main%20-%20vir%20-%20f.mp4'
         : '/static/Main%20-%20hir%20-%20f.mp4';
 
-      // Update stage sizing & aspect ratio
+      // Stage sizing
       if (isMobile) {
         stage.style.aspectRatio = '9 / 16';
         stage.style.width = 'min(88vw, 420px)';
@@ -6804,69 +6737,90 @@ if (document.readyState === 'loading') {
         stage.style.borderRadius = '18px';
       }
 
-      // Update master image
-      if (!masterImgEl) {
-        masterImgEl = masterImg.querySelector('img');
-      }
-      if (masterImgEl && masterImgEl.src !== imgSrc) {
-        masterImgEl.src = imgSrc;
-      }
+      // Update master image src
+      var mi = masterImg.querySelector('img') || masterImgEl;
+      if (mi) mi.src = imgSrc;
 
       // Update video source
       var currentVidSrc = video.currentSrc || video.src || '';
-      var expectedKeyword = isMobile ? 'vir' : 'hir';
-      if (!currentVidSrc.includes(expectedKeyword)) {
+      if (!currentVidSrc.includes(isMobile ? 'vir' : 'hir')) {
         video.src = vidSrc;
         try { video.load(); } catch(_) {}
       }
 
-      // Generate slices
+      // Build exactly 6 cubes
       slicesCont.innerHTML = '';
+      slicesCont.style.overflow = 'visible';
       var frag = document.createDocumentFragment();
 
-      for (var r = 0; r < rows; r++) {
-        for (var c = 0; c < cols; c++) {
-          var slice = document.createElement('div');
-          slice.className = 'spec-slice';
-          slice.setAttribute('data-col', c);
-          slice.setAttribute('data-row', r);
+      for (var i = 0; i < activeDefs.length; i++) {
+        var def = activeDefs[i];
+        var c = def.c, r = def.r;
+        var cube = document.createElement('div');
+        cube.className = 'spec-slice';
+        cube.setAttribute('data-col', c);
+        cube.setAttribute('data-row', r);
+        cube.setAttribute('data-idx', i);
 
-          var distCenter = Math.sqrt((c - cx) * (c - cx) + (r - cy) * (r - cy)) / maxD;
-          slice.setAttribute('data-dist', distCenter.toFixed(3));
+        // Final resting position (seamlessly tiling grid)
+        var leftPct   = (c / COLS * 100).toFixed(6) + '%';
+        var topPct    = (r / ROWS * 100).toFixed(6) + '%';
+        var widthPct  = (100 / COLS).toFixed(6) + '%';
+        var heightPct = (100 / ROWS).toFixed(6) + '%';
 
-          slice.style.position = 'absolute';
-          slice.style.left = (c / cols * 100).toFixed(4) + '%';
-          slice.style.top = (r / rows * 100).toFixed(4) + '%';
-          slice.style.width = (100 / cols).toFixed(4) + '%';
-          slice.style.height = (100 / rows).toFixed(4) + '%';
-          slice.style.overflow = 'hidden';
-          slice.style.opacity = '1';
-          slice.style.filter = 'blur(18px)';
-          slice.style.willChange = 'transform, filter, opacity';
+        cube.style.cssText = [
+          'position:absolute',
+          'left:' + leftPct,
+          'top:' + topPct,
+          'width:' + widthPct,
+          'height:' + heightPct,
+          'overflow:hidden',
+          'opacity:1',
+          'will-change:transform,filter',
+          'transform-style:preserve-3d',
+          'backface-visibility:hidden',
+          'outline:1px solid transparent'
+        ].join(';');
 
-          var img = document.createElement('img');
-          img.src = imgSrc;
-          img.alt = 'slice ' + r + '-' + c;
-          img.style.position = 'absolute';
-          img.style.left = (-c * 100).toFixed(4) + '%';
-          img.style.top = (-r * 100).toFixed(4) + '%';
-          img.style.width = (cols * 100).toFixed(4) + '%';
-          img.style.height = (rows * 100).toFixed(4) + '%';
-          img.style.objectFit = 'cover';
-          img.style.display = 'block';
-          img.style.pointerEvents = 'none';
+        // Image placed so only this 1/6th tile portion is visible
+        var img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = 'spec-cube-' + i;
+        img.style.cssText = [
+          'position:absolute',
+          'left:' + (-c * 100).toFixed(4) + '%',
+          'top:' + (-r * 100).toFixed(4) + '%',
+          'width:' + (COLS * 100).toFixed(4) + '%',
+          'height:' + (ROWS * 100).toFixed(4) + '%',
+          'object-fit:fill',
+          'max-width:none',
+          'max-height:none',
+          'display:block',
+          'pointer-events:none'
+        ].join(';');
 
-          slice.appendChild(img);
-          frag.appendChild(slice);
-        }
+        cube.appendChild(img);
+        frag.appendChild(cube);
       }
       slicesCont.appendChild(frag);
-      slices = slicesCont.querySelectorAll('.spec-slice');
     }
+    var buildSlices = build6Cubes;
 
-    buildSlices();
+    build6Cubes();
 
     function updateSection2() {
+      var sec = document.getElementById('spec-scene2-section');
+      var slicesCont = document.getElementById('spec-slices-container') || document.getElementById('spec-tiles-container');
+      var masterImg = document.getElementById('spec-master-image');
+      var video = document.getElementById('spec-scene2-video');
+      if (!sec || !slicesCont || !masterImg || !video) return;
+
+      var slices = slicesCont.querySelectorAll('.spec-slice');
+      if (slices.length !== 6) {
+        build6Cubes();
+        slices = slicesCont.querySelectorAll('.spec-slice');
+      }
+
       var rect = sec.getBoundingClientRect();
       var vh = window.innerHeight;
       var maxScroll = Math.max(1, sec.offsetHeight - vh);
@@ -6875,10 +6829,10 @@ if (document.readyState === 'loading') {
 
       var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) {
-        slicesCont.style.opacity = p < 0.40 ? '1' : '0';
-        masterImg.style.opacity = (p >= 0.40 && p < 0.52) ? '1' : '0';
-        video.style.opacity = p >= 0.52 ? '1' : '0';
-        if (p >= 0.52) {
+        slicesCont.style.opacity = p < 0.48 ? '1' : '0';
+        masterImg.style.opacity = (p >= 0.48 && p < 0.64) ? '1' : '0';
+        video.style.opacity = p >= 0.64 ? '1' : '0';
+        if (p >= 0.64) {
           if (video.paused) { video.play().catch(function() {}); }
         } else {
           if (!video.paused) { video.pause(); video.currentTime = 0; }
@@ -6886,86 +6840,113 @@ if (document.readyState === 'loading') {
         return;
       }
 
-      var isMobile = currentMode === 'mobile';
+      // Allow cubes to float outside stage boundaries without clipping during assembly
+      stage.style.overflow = p < 0.46 ? 'visible' : 'hidden';
 
-      // Phase 1 (0.00 -> 0.46): Slices visible with mysterious blur -> collecting smoothly to reconstruct original image
-      if (p < 0.46) {
+      // =========================================================================
+      // PHASE 1 (0.00 -> 0.48): 6 Cubes Separated + Blur -> Assemble into Image
+      // =========================================================================
+      if (p < 0.48) {
         slicesCont.style.opacity = '1';
+        masterImg.style.opacity = '0';
+        video.style.opacity = '0';
+        video.style.pointerEvents = 'none';
 
-        // Assembly progress curve
-        var a = Math.max(0, Math.min(1, p / 0.38));
-        var ease = 1 - Math.pow(1 - a, 3); // Smooth cubic ease out
+        var assembleEnd = 0.45;
+        var rawA = Math.max(0, Math.min(1, p / assembleEnd));
+
+        // Smooth cubic-out easing curve for natural, cinematic glide
+        var ease = 1 - Math.pow(1 - rawA, 3);
         var dist = 1 - ease;
 
-        slices.forEach(function(slice) {
-          var c = parseInt(slice.getAttribute('data-col'), 10);
-          var r = parseInt(slice.getAttribute('data-row'), 10);
-          var distCenter = parseFloat(slice.getAttribute('data-dist')) || 0;
+        slices.forEach(function(slice, i) {
+          var def = activeDefs[i] || activeDefs[0];
 
-          // Slices are fully visible from the start
+          var driftX = def.dx * dist;
+          var driftY = def.dy * dist;
+          var driftZ = def.dz * dist;
+
+          // Slight scale change: starts at 0.84, reaches 1.0 on assembly
+          var scale = (0.84 + 0.16 * ease).toFixed(4);
+
+          // Subtle 3D rotations in X, Y, Z
+          var rx = ((def.rx || 0) * dist).toFixed(2);
+          var ry = ((def.ry || 0) * dist).toFixed(2);
+          var rz = ((def.rz || 0) * dist).toFixed(2);
+
+          // Strong cinematic blur: starts at 26px, smoothly clears to 0px
+          var blurPx = (26 * dist).toFixed(1);
+
+          // Deep shadow while floating, removed completely upon assembly
+          var shadowAlpha = (0.65 * dist).toFixed(2);
+          var spreadPx = Math.round(36 * dist);
+          var br = Math.round(8 * dist);
+
           slice.style.opacity = '1';
-
-          // Dispersed separation: slices start floating apart with blur, then smoothly converge
-          var driftX = (c - cx) * (isMobile ? 38 : 58) * dist;
-          var driftY = (r - cy) * (isMobile ? 34 : 46) * dist;
-          var rotZ = ((c + r) % 2 === 0 ? 1 : -1) * (3.0 + distCenter * 3.5) * dist;
-          var scale = 0.86 + 0.14 * ease;
-          var blurPx = (18 * dist).toFixed(1);
-
-          slice.style.transform = 'translate3d(' + driftX.toFixed(1) + 'px, ' + driftY.toFixed(1) + 'px, 0) scale(' + scale.toFixed(4) + ') rotate(' + rotZ.toFixed(2) + 'deg)';
-          slice.style.filter = blurPx > 0.15 ? 'blur(' + blurPx + 'px)' : 'none';
+          slice.style.transform = 'translate3d(' + driftX.toFixed(1) + 'px,' + driftY.toFixed(1) + 'px,' + driftZ.toFixed(1) + 'px)' +
+            ' rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) rotateZ(' + rz + 'deg)' +
+            ' scale(' + scale + ')';
+          slice.style.filter = parseFloat(blurPx) > 0.15 ? 'blur(' + blurPx + 'px)' : 'none';
+          slice.style.boxShadow = dist > 0.04
+            ? '0 10px ' + spreadPx + 'px rgba(0,0,0,' + shadowAlpha + ')'
+            : 'none';
+          slice.style.borderRadius = br > 0 ? br + 'px' : '0';
         });
       } else {
         slicesCont.style.opacity = '0';
+        slices.forEach(function(s) {
+          s.style.transform = 'none';
+          s.style.filter = 'none';
+          s.style.opacity = '1';
+          s.style.borderRadius = '0';
+          s.style.boxShadow = 'none';
+        });
       }
 
-      // Phase 2 (0.38 -> 0.52): Hold Reconstructed Pristine Complete Image
-      if (p >= 0.38 && p < 0.52) {
+      // =========================================================================
+      // PHASE 2 (0.48 -> 0.64): Pristine Master Image Hold & Crossfade
+      // =========================================================================
+      if (p >= 0.48 && p < 0.64) {
         masterImg.style.opacity = '1';
         slicesCont.style.opacity = '0';
-      } else if (p >= 0.52 && p < 0.60) {
-        // Smooth cross-fade transition into video
-        var fadeOut = Math.max(0, 1 - (p - 0.52) / 0.08);
+        video.style.opacity = '0';
+        video.style.pointerEvents = 'none';
+      } else if (p >= 0.64 && p < 0.74) {
+        var fadeOut = Math.max(0, 1 - (p - 0.64) / 0.10);
         masterImg.style.opacity = fadeOut.toFixed(3);
         slicesCont.style.opacity = '0';
-      } else if (p < 0.38) {
-        masterImg.style.opacity = '0';
-        slicesCont.style.opacity = '1';
-      } else {
+      } else if (p >= 0.74) {
         masterImg.style.opacity = '0';
         slicesCont.style.opacity = '0';
       }
 
-      // Phase 3 (0.52 -> 0.96): Seamless Video Transition & Automatic Playback
-      if (p >= 0.52) {
-        var vidAlpha = Math.min(1, (p - 0.52) / 0.08);
+      // =========================================================================
+      // PHASE 3 (0.64 -> 1.00): Video Seamless Transition & Automatic Playback
+      // =========================================================================
+      if (p >= 0.64) {
+        var vidAlpha = Math.min(1, (p - 0.64) / 0.10);
         video.style.opacity = vidAlpha.toFixed(3);
         video.style.pointerEvents = 'auto';
 
-        // Play video automatically when visible
         if (video.paused) {
           video.muted = true;
           video.playsInline = true;
           var playP = video.play();
-          if (playP !== undefined) {
-            playP.catch(function() {});
-          }
+          if (playP !== undefined) { playP.catch(function() {}); }
         }
       } else {
         video.style.opacity = '0';
         video.style.pointerEvents = 'none';
-        if (!video.paused) {
-          video.pause();
-        }
+        if (!video.paused) { video.pause(); }
         if (video.currentTime > 0) {
           try { video.currentTime = 0; } catch(_) {}
         }
       }
     }
-
+    window.__specUpdateSection2 = updateSection2;
     window.addEventListener('scroll', updateSection2, { passive: true });
     window.addEventListener('resize', function() {
-      buildSlices();
+      build6Cubes();
       updateSection2();
     }, { passive: true });
     function attachSection2Lenis() {
@@ -6977,13 +6958,17 @@ if (document.readyState === 'loading') {
     setTimeout(attachSection2Lenis, 300);
     setTimeout(attachSection2Lenis, 1000);
     updateSection2();
+    return true;
   }
 
+  var revInited = false;
   // 3. Section 07 Reviews: Pinned Scroll-Only Interaction
   function initReviewsScrollOnly() {
+    if (revInited) return true;
     var sec = document.getElementById('spec-reviews-section');
     var row = sec ? sec.querySelector('[data-rvrow]') : document.querySelector('[data-rvrow]');
-    if (!sec || !row) return;
+    if (!sec || !row) return false;
+    revInited = true;
 
     // Prevent any drag or mouse interaction
     row.style.cursor = 'default';
@@ -7003,20 +6988,41 @@ if (document.readyState === 'loading') {
     window.addEventListener('scroll', updateReviews, { passive: true });
     window.addEventListener('resize', updateReviews, { passive: true });
     updateReviews();
+    return true;
   }
 
-  // Initialize all controllers on DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      initHeroLogoFlight();
-      initSection2Controller();
-      initReviewsScrollOnly();
-    });
-  } else {
-    initHeroLogoFlight();
-    initSection2Controller();
-    initReviewsScrollOnly();
+  // Robust boot loop with polling & MutationObserver for async dc-runtime mounting
+  function bootAllControllers() {
+    var f = initHeroLogoFlight();
+    var s = initSection2Controller();
+    var r = initReviewsScrollOnly();
+    return f && s && r;
   }
+
+  var retryPollCount = 0;
+  var retryPollTimer = setInterval(function() {
+    retryPollCount++;
+    if (bootAllControllers() || retryPollCount > 150) {
+      clearInterval(retryPollTimer);
+    }
+  }, 35);
+
+  if (window.MutationObserver) {
+    var retryObs = new MutationObserver(function(mutations, obs) {
+      if (bootAllControllers()) {
+        obs.disconnect();
+        clearInterval(retryPollTimer);
+      }
+    });
+    retryObs.observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootAllControllers);
+  } else {
+    bootAllControllers();
+  }
+  window.addEventListener('load', bootAllControllers);
 })();
 </script>
 </body></html>
