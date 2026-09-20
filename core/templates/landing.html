@@ -274,13 +274,13 @@
   }
 
 
-/* Single Master Logo Dual-Layer Architecture with Cursor Flashlight Lens */
+/* Single Master Logo Architecture - Clean, Solid, NO Hover Effects */
 .spec-chrome-nav-logo {
   position: relative;
   display: inline-flex !important;
   align-items: center;
   text-decoration: none;
-  cursor: pointer;
+  cursor: default;
   will-change: transform;
   transform-origin: 0 0;
   opacity: 1 !important;
@@ -289,21 +289,7 @@
 }
 
 .spec-nav-logo-back {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  pointer-events: none !important;
-  z-index: 1 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  color: #b40119 !important;
-}
-
-.spec-nav-logo-back .spec-logo-char-img,
-.spec-nav-logo-back .spec-logo-char-img path {
-  fill: #b40119 !important;
-  color: #b40119 !important;
+  display: none !important;
 }
 
 .spec-nav-logo-front {
@@ -312,9 +298,8 @@
   display: inline-flex !important;
   align-items: center !important;
   color: var(--spec-nav-logo-color, #FFFFFF) !important;
-  -webkit-mask-image: radial-gradient(circle var(--nav-spot-r, 0px) at var(--nav-spot-x, -999px) var(--nav-spot-y, -999px), transparent 0%, transparent calc(100% - 0.5px), #000 100%);
-  mask-image: radial-gradient(circle var(--nav-spot-r, 0px) at var(--nav-spot-x, -999px) var(--nav-spot-y, -999px), transparent 0%, transparent calc(100% - 0.5px), #000 100%);
-  will-change: mask-image, -webkit-mask-image;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
 }
 
 .spec-nav-logo-front .spec-logo-char-img,
@@ -1385,27 +1370,14 @@ canvas,
   color: #b40119 !important;
 }
 
-/* Navbar Logo Dual Layer */
+/* Navbar Logo */
 .spec-chrome-nav-logo {
   position: relative;
   display: inline-flex;
   align-items: center;
 }
 .spec-nav-logo-back {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  pointer-events: none !important;
-  z-index: 1 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  color: #b40119 !important;
-}
-.spec-nav-logo-back .spec-logo-char-img,
-.spec-nav-logo-back .spec-logo-char-img path {
-  fill: #b40119 !important;
-  color: #b40119 !important;
+  display: none !important;
 }
 
 .spec-nav-logo-front {
@@ -1414,9 +1386,8 @@ canvas,
   display: inline-flex !important;
   align-items: center !important;
   color: #f5ead8 !important;
-  -webkit-mask-image: radial-gradient(circle var(--nav-spot-r, 0px) at var(--nav-spot-x, -999px) var(--nav-spot-y, -999px), transparent 0%, transparent calc(100% - 0.5px), #000 100%);
-  mask-image: radial-gradient(circle var(--nav-spot-r, 0px) at var(--nav-spot-x, -999px) var(--nav-spot-y, -999px), transparent 0%, transparent calc(100% - 0.5px), #000 100%);
-  will-change: mask-image, -webkit-mask-image;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
 }
 /* Intelligent Dynamic Logo Color System: Pure White (#FFFFFF) on dark, Pure Black (#000000) on light */
 :root {
@@ -1513,12 +1484,18 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   width: clamp(10px, 1.4vw, 22px);
 }
 
-/* Hover lift & ambient crimson glow */
-.spec-kinetic-logo:hover {
-  filter: none !important;
-}
+/* Clean Logo: strictly NO hover effects */
+.spec-chrome-nav-logo:hover,
+.spec-nav-logo-front:hover,
+.spec-nav-logo-front .spec-logo-char-img:hover,
+.spec-logo-char-img:hover,
+.spec-kinetic-logo:hover,
 .spec-kinetic-logo:hover .spec-logo-char-img {
   transform: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  outline: none !important;
 }
 
 /* Responsive Breakpoints */
@@ -1984,17 +1961,17 @@ footer#contact div[style*="font-family:ui-monospace"] {
         <!-- Ref placeholder for DCLogic stability (brain canvas removed per request) -->
         <div ref="{{ canvasScrubRef }}" style="display:none !important;width:0;height:0;position:absolute;pointer-events:none;" aria-hidden="true"></div>
 
+                <!-- Phase 2: Completed Master Reference Image (behind slices, above stage background) -->
+        <div id="spec-master-image" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;opacity:0;pointer-events:none;">
+          <img id="spec-master-img-el" src="/static/SPEC_video-poster_horizontal.jpg" alt="Spec Media Master" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+
         <!-- Phase 1: 6-Cube Assembly Container (JS-generated) -->
         <div id="spec-slices-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;">
         </div>
 
-        <!-- Phase 2: Completed Master Reference Image -->
-        <div id="spec-master-image" style="position:absolute;inset:0;width:100%;height:100%;z-index:4;opacity:0;pointer-events:none;transition:opacity 0.25s ease;">
-          <img id="spec-master-img-el" src="/static/SPEC_video-poster_horizontal.jpg" alt="Spec Media Master" style="width:100%;height:100%;object-fit:cover;display:block;" />
-        </div>
-
         <!-- Phase 3: Seamless Autoplay Video -->
-        <video id="spec-scene2-video" src="/static/Main%20-%20hir%20-%20f.mp4" playsinline muted loop preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:5;opacity:0;pointer-events:none;background:#000000;">
+        <video id="spec-scene2-video" src="/static/Main%20-%20hir%20-%20f.mp4" playsinline muted loop preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;opacity:0;pointer-events:none;background:#000000;">
           <source id="spec-scene2-video-src" src="/static/Main%20-%20hir%20-%20f.mp4" type="video/mp4">
         </video>
 
@@ -3413,19 +3390,23 @@ class Component extends DCLogic {
           box.style.transform = 'none';
         }
 
-        const isMobile = window.innerWidth <= 768;
-        if (isMobile) {
-          box.style.aspectRatio = '9 / 16';
-          box.style.width = 'min(88vw, 420px)';
-          box.style.maxHeight = '75vh';
-          box.style.height = 'auto';
-          box.style.borderRadius = '14px';
+        if (box._customFullscreenController) {
+          // Managed dynamically by Section 2 controller for smooth fullscreen expansion and shrink
         } else {
-          box.style.aspectRatio = '16 / 9';
-          box.style.width = 'min(90vw, 1120px)';
-          box.style.maxHeight = '80vh';
-          box.style.height = 'auto';
-          box.style.borderRadius = '18px';
+          const isMobile = window.innerWidth <= 768;
+          if (isMobile) {
+            box.style.aspectRatio = '9 / 16';
+            box.style.width = 'min(88vw, 420px)';
+            box.style.maxHeight = '75vh';
+            box.style.height = 'auto';
+            box.style.borderRadius = '14px';
+          } else {
+            box.style.aspectRatio = '16 / 9';
+            box.style.width = 'min(90vw, 1120px)';
+            box.style.maxHeight = '80vh';
+            box.style.height = 'auto';
+            box.style.borderRadius = '18px';
+          }
         }
       }
     }
@@ -4130,21 +4111,22 @@ class Component extends DCLogic {
 </script>
 
 <style id="spec-interactive-enhancements">
-  /* Section 02 Responsive Stage & Media */
+  /* Section 02 Responsive Stage & Media with Dynamic Fullscreen Expansion Variables */
+  #spec-scene2-stage {
+    width: var(--s2-stage-width, min(90vw, 1120px)) !important;
+    aspect-ratio: var(--s2-stage-aspect, 16 / 9) !important;
+    max-height: var(--s2-stage-max-h, 80vh) !important;
+    height: var(--s2-stage-height, auto) !important;
+    border-radius: var(--s2-stage-br, 18px) !important;
+    box-shadow: var(--s2-stage-shadow, 0 24px 60px rgba(0,0,0,0.8)) !important;
+    transition: none !important;
+  }
   @media (max-width: 768px) {
     #spec-scene2-stage {
-      width: min(88vw, 420px) !important;
-      aspect-ratio: 9 / 16 !important;
-      max-height: 75vh !important;
-      border-radius: 14px !important;
-    }
-  }
-  @media (min-width: 769px) {
-    #spec-scene2-stage {
-      width: min(90vw, 1120px) !important;
-      aspect-ratio: 16 / 9 !important;
-      max-height: 80vh !important;
-      border-radius: 18px !important;
+      width: var(--s2-stage-width, min(88vw, 420px)) !important;
+      aspect-ratio: var(--s2-stage-aspect, 9 / 16) !important;
+      max-height: var(--s2-stage-max-h, 75vh) !important;
+      border-radius: var(--s2-stage-br, 14px) !important;
     }
   }
   .spec-slice {
@@ -5880,33 +5862,11 @@ function initSpecCustomCursor() {
     var card = target ? target.closest('[data-card], .work-card') : null;
     var heroLogo = target ? target.closest('.spec-hero-logo-row') : null;
     var navLogo = target ? target.closest('.spec-chrome-nav-logo') : null;
-    var interactive = target ? target.closest('a, button, [role="button"], input, select, textarea, .spec-orbit-logo-item, .tag, .tab-btn') : null;
+    var interactive = (target && !navLogo) ? target.closest('a, button, [role="button"], input, select, textarea, .spec-orbit-logo-item, .tag, .tab-btn') : null;
 
-    // 1. Hero Logo hover lens targets removed (clean solid logo, no cutout hole)
+    // 1. Logo hover effects completely removed (clean solid logo, no spotlight hole or cursor morph)
     targetSpotR = 0;
-
-    // 2. Single Master Logo hover lens targets
-    var navLogoEl = document.querySelector('.spec-chrome-nav-logo');
-    if (navLogoEl) {
-      var nRect = navLogoEl.getBoundingClientRect();
-      if (
-        mouseX >= nRect.left - 30 &&
-        mouseX <= nRect.right + 30 &&
-        mouseY >= nRect.top - 30 &&
-        mouseY <= nRect.bottom + 30
-      ) {
-        var curScale = window.__specLogoCurrentScale || 1.0;
-        targetNavSpotX = (mouseX - nRect.left) / curScale;
-        targetNavSpotY = (mouseY - nRect.top) / curScale;
-        targetNavSpotR = 26;
-        cursorRing.classList.add('is-logo-interacting');
-        cursorDot.classList.add('is-logo-interacting');
-      } else {
-        targetNavSpotR = 0;
-        cursorRing.classList.remove('is-logo-interacting');
-        cursorDot.classList.remove('is-logo-interacting');
-      }
-    }
+    targetNavSpotR = 0;
 
     if (card) {
       if (activeCard !== card) {
@@ -5948,19 +5908,15 @@ function initSpecCustomCursor() {
         cursorDot.classList.remove('is-card-hover');
       }
 
-      if (navLogo) {
-        cursorRing.classList.add('is-logo-interacting');
-        cursorDot.classList.add('is-logo-interacting');
-        cursorRing.classList.remove('is-hovering');
-        cursorDot.classList.remove('is-hovering');
-      } else if (interactive) {
-        cursorRing.classList.remove('is-logo-interacting');
-        cursorDot.classList.remove('is-logo-interacting');
+      cursorRing.classList.remove('is-logo-interacting');
+      cursorDot.classList.remove('is-logo-interacting');
+
+      if (interactive) {
         cursorRing.classList.add('is-hovering');
         cursorDot.classList.add('is-hovering');
       } else {
-        cursorRing.classList.remove('is-logo-interacting', 'is-hovering');
-        cursorDot.classList.remove('is-logo-interacting', 'is-hovering');
+        cursorRing.classList.remove('is-hovering');
+        cursorDot.classList.remove('is-hovering');
       }
     }
   }, { passive: true });
@@ -6022,20 +5978,12 @@ function initSpecCustomCursor() {
       }
     }
 
-    // Smooth spotlight easing for Navbar Logo
-    currentNavSpotR += (targetNavSpotR - currentNavSpotR) * 0.16;
-    currentNavSpotX += (targetNavSpotX - currentNavSpotX) * 0.22;
-    currentNavSpotY += (targetNavSpotY - currentNavSpotY) * 0.22;
+    // Navbar Logo: no spotlight effect
+    currentNavSpotR = 0;
+    targetNavSpotR = 0;
     var navRowEl = document.querySelector('.spec-chrome-nav-logo');
     if (navRowEl) {
-      if (currentNavSpotR < 0.1) {
-        currentNavSpotR = 0;
-        navRowEl.style.setProperty('--nav-spot-r', '0px');
-      } else {
-        navRowEl.style.setProperty('--nav-spot-r', currentNavSpotR.toFixed(1) + 'px');
-        navRowEl.style.setProperty('--nav-spot-x', currentNavSpotX.toFixed(1) + 'px');
-        navRowEl.style.setProperty('--nav-spot-y', currentNavSpotY.toFixed(1) + 'px');
-      }
+      navRowEl.style.setProperty('--nav-spot-r', '0px');
     }
 
     requestAnimationFrame(renderCursor);
@@ -6641,7 +6589,7 @@ if (document.readyState === 'loading') {
   }
 
   var sec2Inited = false;
-  // 2. Section 02 Controller: 6-Cube Cinematic Image Assembly -> Pristine Hold -> Seamless Video
+  // 2. Section 02 Controller: 6-Cube Cinematic Slicing -> Hold -> Fullscreen Video -> Small Screen Exit
   function initSection2Controller() {
     if (sec2Inited) return true;
     var sec = document.getElementById('spec-scene2-section');
@@ -6654,49 +6602,56 @@ if (document.readyState === 'loading') {
     sec2Inited = true;
 
     video._customSec2Controller = true;
+    stage._customFullscreenController = true;
 
     // Enable 3D perspective context for realistic floating depth
     slicesCont.style.perspective = '1200px';
     slicesCont.style.transformStyle = 'preserve-3d';
     slicesCont.style.overflow = 'visible';
 
+    // Ensure all stage containers never trap mousewheel/touch scroll
+    stage.style.pointerEvents = 'none';
+    slicesCont.style.pointerEvents = 'none';
+    masterImg.style.pointerEvents = 'none';
+    video.style.pointerEvents = 'none';
+
     var currentMode = null;
     var COLS = 3;
     var ROWS = 2;
 
     // --- 6-Cube Cinematic Spatial Displacement Vectors ---
+    // Wide, prominent 3D dispersal so cubes clearly float independently in space with noticeable spacing
     // Desktop: 3 cols x 2 rows = 6 large square cube tiles
-    // Each cube has an intentional, creative 3D floating trajectory:
     // [col, row, driftX, driftY, driftZ, rotateX, rotateY, rotateZ]
     var CUBE_DEFS_DESKTOP = [
-      // Top-Left: floats up & left, deep 3D perspective tilt
-      { c: 0, r: 0, dx: -380, dy: -260, dz: -240, rx:  14, ry: -18, rz: -12 },
+      // Top-Left: floats far up & left, deep 3D perspective tilt
+      { c: 0, r: 0, dx: -460, dy: -300, dz: -280, rx:  16, ry: -20, rz: -16 },
       // Top-Center: floats high above center with subtle pitch
-      { c: 1, r: 0, dx:   35, dy: -330, dz: -170, rx: -15, ry:   8, rz:   8 },
-      // Top-Right: floats up & right with clockwise tilt
-      { c: 2, r: 0, dx:  380, dy: -250, dz: -250, rx:  12, ry:  18, rz:  14 },
-      // Bottom-Left: floats down & left with counter-clockwise tilt
-      { c: 0, r: 1, dx: -360, dy:  270, dz: -220, rx: -12, ry: -16, rz:  10 },
+      { c: 1, r: 0, dx:   40, dy: -380, dz: -220, rx: -18, ry:  10, rz:  10 },
+      // Top-Right: floats far up & right with clockwise tilt
+      { c: 2, r: 0, dx:  460, dy: -290, dz: -290, rx:  14, ry:  20, rz:  18 },
+      // Bottom-Left: sweeps far down & left with counter-clockwise tilt
+      { c: 0, r: 1, dx: -440, dy:  310, dz: -260, rx: -14, ry: -18, rz:  14 },
       // Bottom-Center: floats deep beneath center
-      { c: 1, r: 1, dx:  -30, dy:  330, dz: -180, rx:  15, ry:  -8, rz:  -6 },
-      // Bottom-Right: floats down & right
-      { c: 2, r: 1, dx:  370, dy:  260, dz: -240, rx: -14, ry:  16, rz: -14 }
+      { c: 1, r: 1, dx:  -35, dy:  380, dz: -240, rx:  18, ry: -10, rz:  -8 },
+      // Bottom-Right: sweeps far down & right
+      { c: 2, r: 1, dx:  450, dy:  300, dz: -280, rx: -16, ry:  18, rz: -16 }
     ];
 
     // Mobile: 2 cols x 3 rows = 6 large square cube tiles for vertical 9:16 screen
     var CUBE_DEFS_MOBILE = [
       // Top-Left
-      { c: 0, r: 0, dx: -180, dy: -190, dz: -160, rx:  12, ry: -14, rz: -10 },
+      { c: 0, r: 0, dx: -220, dy: -230, dz: -200, rx:  14, ry: -16, rz: -12 },
       // Top-Right
-      { c: 1, r: 0, dx:  180, dy: -180, dz: -170, rx:  12, ry:  14, rz:  12 },
+      { c: 1, r: 0, dx:  220, dy: -220, dz: -210, rx:  14, ry:  16, rz:  14 },
       // Mid-Left
-      { c: 0, r: 1, dx: -210, dy:   10, dz: -190, rx: -10, ry: -15, rz:   8 },
+      { c: 0, r: 1, dx: -260, dy:   15, dz: -230, rx: -12, ry: -18, rz:  10 },
       // Mid-Right
-      { c: 1, r: 1, dx:  210, dy:  -10, dz: -180, rx:  10, ry:  15, rz:  -9 },
+      { c: 1, r: 1, dx:  260, dy:  -15, dz: -220, rx:  12, ry:  18, rz: -10 },
       // Bottom-Left
-      { c: 0, r: 2, dx: -170, dy:  200, dz: -160, rx: -12, ry: -12, rz: -11 },
+      { c: 0, r: 2, dx: -210, dy:  240, dz: -200, rx: -14, ry: -14, rz: -12 },
       // Bottom-Right
-      { c: 1, r: 2, dx:  170, dy:  210, dz: -170, rx: -12, ry:  14, rz:  10 }
+      { c: 1, r: 2, dx:  210, dy:  250, dz: -210, rx: -14, ry:  16, rz:  12 }
     ];
 
     var activeDefs = CUBE_DEFS_DESKTOP;
@@ -6724,19 +6679,6 @@ if (document.readyState === 'loading') {
         ? '/static/Main%20-%20vir%20-%20f.mp4'
         : '/static/Main%20-%20hir%20-%20f.mp4';
 
-      // Stage sizing
-      if (isMobile) {
-        stage.style.aspectRatio = '9 / 16';
-        stage.style.width = 'min(88vw, 420px)';
-        stage.style.maxHeight = '75vh';
-        stage.style.borderRadius = '14px';
-      } else {
-        stage.style.aspectRatio = '16 / 9';
-        stage.style.width = 'min(90vw, 1120px)';
-        stage.style.maxHeight = '80vh';
-        stage.style.borderRadius = '18px';
-      }
-
       // Update master image src
       var mi = masterImg.querySelector('img') || masterImgEl;
       if (mi) mi.src = imgSrc;
@@ -6748,7 +6690,7 @@ if (document.readyState === 'loading') {
         try { video.load(); } catch(_) {}
       }
 
-      // Build exactly 6 cubes
+      // Build exactly 6 cubes with subpixel 1.5px overlap to guarantee zero seams
       slicesCont.innerHTML = '';
       slicesCont.style.overflow = 'visible';
       var frag = document.createDocumentFragment();
@@ -6762,27 +6704,25 @@ if (document.readyState === 'loading') {
         cube.setAttribute('data-row', r);
         cube.setAttribute('data-idx', i);
 
-        // Final resting position (seamlessly tiling grid)
+        // Position with subpixel 1.5px overlap to prevent any subpixel crack
         var leftPct   = (c / COLS * 100).toFixed(6) + '%';
         var topPct    = (r / ROWS * 100).toFixed(6) + '%';
-        var widthPct  = (100 / COLS).toFixed(6) + '%';
-        var heightPct = (100 / ROWS).toFixed(6) + '%';
 
         cube.style.cssText = [
           'position:absolute',
           'left:' + leftPct,
           'top:' + topPct,
-          'width:' + widthPct,
-          'height:' + heightPct,
+          'width:calc(100% / ' + COLS + ' + 1.5px)',
+          'height:calc(100% / ' + ROWS + ' + 1.5px)',
           'overflow:hidden',
           'opacity:1',
           'will-change:transform,filter',
           'transform-style:preserve-3d',
           'backface-visibility:hidden',
-          'outline:1px solid transparent'
+          'outline:1px solid transparent',
+          'pointer-events:none'
         ].join(';');
 
-        // Image placed so only this 1/6th tile portion is visible
         var img = document.createElement('img');
         img.src = imgSrc;
         img.alt = 'spec-cube-' + i;
@@ -6810,10 +6750,11 @@ if (document.readyState === 'loading') {
 
     function updateSection2() {
       var sec = document.getElementById('spec-scene2-section');
+      var stage = document.getElementById('spec-scene2-stage');
       var slicesCont = document.getElementById('spec-slices-container') || document.getElementById('spec-tiles-container');
       var masterImg = document.getElementById('spec-master-image');
       var video = document.getElementById('spec-scene2-video');
-      if (!sec || !slicesCont || !masterImg || !video) return;
+      if (!sec || !stage || !slicesCont || !masterImg || !video) return;
 
       var slices = slicesCont.querySelectorAll('.spec-slice');
       if (slices.length !== 6) {
@@ -6829,10 +6770,10 @@ if (document.readyState === 'loading') {
 
       var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) {
-        slicesCont.style.opacity = p < 0.48 ? '1' : '0';
-        masterImg.style.opacity = (p >= 0.48 && p < 0.64) ? '1' : '0';
-        video.style.opacity = p >= 0.64 ? '1' : '0';
-        if (p >= 0.64) {
+        slicesCont.style.opacity = p < 0.40 ? '1' : '0';
+        masterImg.style.opacity = (p >= 0.40 && p < 0.60) ? '1' : '0';
+        video.style.opacity = p >= 0.60 ? '1' : '0';
+        if (p >= 0.60) {
           if (video.paused) { video.play().catch(function() {}); }
         } else {
           if (!video.paused) { video.pause(); video.currentTime = 0; }
@@ -6840,24 +6781,94 @@ if (document.readyState === 'loading') {
         return;
       }
 
-      // Allow cubes to float outside stage boundaries without clipping during assembly
-      stage.style.overflow = p < 0.46 ? 'visible' : 'hidden';
+      var isMobile = currentMode === 'mobile';
 
       // =========================================================================
-      // PHASE 1 (0.00 -> 0.48): 6 Cubes Separated + Blur -> Assemble into Image
+      // DYNAMIC SCREEN SIZING: Small Screen -> Fullscreen Video -> Small Screen Exit
       // =========================================================================
-      if (p < 0.48) {
+      if (p < 0.55) {
+        // Small screen / card mode during 6-cube assembly and hold
+        if (isMobile) {
+          stage.style.setProperty('--s2-stage-width', 'min(88vw, 420px)');
+          stage.style.setProperty('--s2-stage-aspect', '9 / 16');
+          stage.style.setProperty('--s2-stage-max-h', '75vh');
+          stage.style.setProperty('--s2-stage-height', 'auto');
+          stage.style.setProperty('--s2-stage-br', '14px');
+          stage.style.setProperty('--s2-stage-shadow', '0 16px 40px rgba(0,0,0,0.8)');
+        } else {
+          stage.style.setProperty('--s2-stage-width', 'min(90vw, 1120px)');
+          stage.style.setProperty('--s2-stage-aspect', '16 / 9');
+          stage.style.setProperty('--s2-stage-max-h', '80vh');
+          stage.style.setProperty('--s2-stage-height', 'auto');
+          stage.style.setProperty('--s2-stage-br', '18px');
+          stage.style.setProperty('--s2-stage-shadow', '0 24px 60px rgba(0,0,0,0.8)');
+        }
+      } else if (p >= 0.55 && p < 0.70) {
+        // Expanding to Fullscreen as video starts
+        var exp = (p - 0.55) / 0.15;
+        var t = exp * exp * (3 - 2 * exp);
+        if (isMobile) {
+          stage.style.setProperty('--s2-stage-width', 'calc(min(88vw, 420px) + (100vw - min(88vw, 420px)) * ' + t.toFixed(4) + ')');
+          stage.style.setProperty('--s2-stage-max-h', (75 + 25 * t).toFixed(1) + 'vh');
+          stage.style.setProperty('--s2-stage-height', (75 + 25 * t).toFixed(1) + 'vh');
+          stage.style.setProperty('--s2-stage-aspect', 'auto');
+          stage.style.setProperty('--s2-stage-br', Math.round(14 * (1 - t)) + 'px');
+          stage.style.setProperty('--s2-stage-shadow', '0 ' + Math.round(16 * (1 - t)) + 'px ' + Math.round(40 * (1 - t)) + 'px rgba(0,0,0,' + (0.8 * (1 - t)).toFixed(2) + ')');
+        } else {
+          stage.style.setProperty('--s2-stage-width', 'calc(min(90vw, 1120px) + (100vw - min(90vw, 1120px)) * ' + t.toFixed(4) + ')');
+          stage.style.setProperty('--s2-stage-max-h', (80 + 20 * t).toFixed(1) + 'vh');
+          stage.style.setProperty('--s2-stage-height', (80 + 20 * t).toFixed(1) + 'vh');
+          stage.style.setProperty('--s2-stage-aspect', 'auto');
+          stage.style.setProperty('--s2-stage-br', Math.round(18 * (1 - t)) + 'px');
+          stage.style.setProperty('--s2-stage-shadow', '0 ' + Math.round(24 * (1 - t)) + 'px ' + Math.round(60 * (1 - t)) + 'px rgba(0,0,0,' + (0.8 * (1 - t)).toFixed(2) + ')');
+        }
+      } else if (p >= 0.70 && p < 0.85) {
+        // Pure Immersive Fullscreen
+        stage.style.setProperty('--s2-stage-width', '100vw');
+        stage.style.setProperty('--s2-stage-height', '100vh');
+        stage.style.setProperty('--s2-stage-max-h', '100vh');
+        stage.style.setProperty('--s2-stage-aspect', 'auto');
+        stage.style.setProperty('--s2-stage-br', '0px');
+        stage.style.setProperty('--s2-stage-shadow', 'none');
+      } else {
+        // Shrinking back to Small Screen as video begins to finish (p: 0.85 -> 1.00)
+        var shrink = (p - 0.85) / 0.15;
+        var s = shrink * shrink * (3 - 2 * shrink);
+        if (isMobile) {
+          stage.style.setProperty('--s2-stage-width', 'calc(100vw - (100vw - min(88vw, 420px)) * ' + s.toFixed(4) + ')');
+          stage.style.setProperty('--s2-stage-max-h', (100 - 25 * s).toFixed(1) + 'vh');
+          stage.style.setProperty('--s2-stage-height', (100 - 25 * s).toFixed(1) + 'vh');
+          stage.style.setProperty('--s2-stage-aspect', 'auto');
+          stage.style.setProperty('--s2-stage-br', Math.round(14 * s) + 'px');
+          stage.style.setProperty('--s2-stage-shadow', '0 ' + Math.round(16 * s) + 'px ' + Math.round(40 * s) + 'px rgba(0,0,0,' + (0.8 * s).toFixed(2) + ')');
+        } else {
+          stage.style.setProperty('--s2-stage-width', 'calc(100vw - (100vw - min(90vw, 1120px)) * ' + s.toFixed(4) + ')');
+          stage.style.setProperty('--s2-stage-max-h', (100 - 20 * s).toFixed(1) + 'vh');
+          stage.style.setProperty('--s2-stage-height', (100 - 20 * s).toFixed(1) + 'vh');
+          stage.style.setProperty('--s2-stage-aspect', 'auto');
+          stage.style.setProperty('--s2-stage-br', Math.round(18 * s) + 'px');
+          stage.style.setProperty('--s2-stage-shadow', '0 ' + Math.round(24 * s) + 'px ' + Math.round(60 * s) + 'px rgba(0,0,0,' + (0.8 * s).toFixed(2) + ')');
+        }
+      }
+
+      // Allow cubes to float outside stage boundaries without clipping during assembly
+      stage.style.overflow = p < 0.44 ? 'visible' : 'hidden';
+
+      // Always ensure pointer-events: none on media to NEVER block mousewheel / touch scrolling
+      video.style.pointerEvents = 'none';
+
+      // =========================================================================
+      // PHASE 1: 6 Cubes Dispersal -> Smooth Proportional Convergence (0.00 -> 0.45)
+      // =========================================================================
+      var assembleEnd = 0.45;
+      var rawA = Math.max(0, Math.min(1, p / assembleEnd));
+      // Proportional ease curve ensures continuous, clearly visible movement across the entire scroll
+      var ease = 1 - Math.pow(1 - rawA, 1.6);
+      var dist = 1 - ease;
+
+      if (p < 0.44) {
         slicesCont.style.opacity = '1';
         masterImg.style.opacity = '0';
-        video.style.opacity = '0';
-        video.style.pointerEvents = 'none';
-
-        var assembleEnd = 0.45;
-        var rawA = Math.max(0, Math.min(1, p / assembleEnd));
-
-        // Smooth cubic-out easing curve for natural, cinematic glide
-        var ease = 1 - Math.pow(1 - rawA, 3);
-        var dist = 1 - ease;
 
         slices.forEach(function(slice, i) {
           var def = activeDefs[i] || activeDefs[0];
@@ -6866,20 +6877,13 @@ if (document.readyState === 'loading') {
           var driftY = def.dy * dist;
           var driftZ = def.dz * dist;
 
-          // Slight scale change: starts at 0.84, reaches 1.0 on assembly
-          var scale = (0.84 + 0.16 * ease).toFixed(4);
-
-          // Subtle 3D rotations in X, Y, Z
+          var scale = (0.82 + 0.18 * ease).toFixed(4);
           var rx = ((def.rx || 0) * dist).toFixed(2);
           var ry = ((def.ry || 0) * dist).toFixed(2);
           var rz = ((def.rz || 0) * dist).toFixed(2);
-
-          // Strong cinematic blur: starts at 26px, smoothly clears to 0px
-          var blurPx = (26 * dist).toFixed(1);
-
-          // Deep shadow while floating, removed completely upon assembly
-          var shadowAlpha = (0.65 * dist).toFixed(2);
-          var spreadPx = Math.round(36 * dist);
+          var blurPx = (28 * dist).toFixed(1);
+          var shadowAlpha = (0.70 * dist).toFixed(2);
+          var spreadPx = Math.round(40 * dist);
           var br = Math.round(8 * dist);
 
           slice.style.opacity = '1';
@@ -6893,40 +6897,35 @@ if (document.readyState === 'loading') {
           slice.style.borderRadius = br > 0 ? br + 'px' : '0';
         });
       } else {
+        // Assembled: instantly switch to pristine master image with 0 seams
         slicesCont.style.opacity = '0';
         slices.forEach(function(s) {
           s.style.transform = 'none';
           s.style.filter = 'none';
-          s.style.opacity = '1';
           s.style.borderRadius = '0';
           s.style.boxShadow = 'none';
         });
       }
 
       // =========================================================================
-      // PHASE 2 (0.48 -> 0.64): Pristine Master Image Hold & Crossfade
+      // PHASE 2 (0.44 -> 0.60): Pristine Master Image Hold & Expansion Crossfade
       // =========================================================================
-      if (p >= 0.48 && p < 0.64) {
+      if (p >= 0.44 && p < 0.60) {
         masterImg.style.opacity = '1';
-        slicesCont.style.opacity = '0';
-        video.style.opacity = '0';
-        video.style.pointerEvents = 'none';
-      } else if (p >= 0.64 && p < 0.74) {
-        var fadeOut = Math.max(0, 1 - (p - 0.64) / 0.10);
+      } else if (p >= 0.60 && p < 0.70) {
+        // Crossfade as screen expands into fullscreen video
+        var fadeOut = Math.max(0, 1 - (p - 0.60) / 0.10);
         masterImg.style.opacity = fadeOut.toFixed(3);
-        slicesCont.style.opacity = '0';
-      } else if (p >= 0.74) {
+      } else if (p >= 0.70) {
         masterImg.style.opacity = '0';
-        slicesCont.style.opacity = '0';
       }
 
       // =========================================================================
-      // PHASE 3 (0.64 -> 1.00): Video Seamless Transition & Automatic Playback
+      // PHASE 3 (0.58 -> 1.00): Video Seamless Transition & Automatic Playback
       // =========================================================================
-      if (p >= 0.64) {
-        var vidAlpha = Math.min(1, (p - 0.64) / 0.10);
+      if (p >= 0.58) {
+        var vidAlpha = Math.min(1, (p - 0.58) / 0.10);
         video.style.opacity = vidAlpha.toFixed(3);
-        video.style.pointerEvents = 'auto';
 
         if (video.paused) {
           video.muted = true;
@@ -6936,7 +6935,6 @@ if (document.readyState === 'loading') {
         }
       } else {
         video.style.opacity = '0';
-        video.style.pointerEvents = 'none';
         if (!video.paused) { video.pause(); }
         if (video.currentTime > 0) {
           try { video.currentTime = 0; } catch(_) {}
