@@ -1971,7 +1971,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
         </div>
 
         <!-- Phase 3: Seamless Autoplay Video -->
-        <video id="spec-scene2-video" src="/static/Main%20-%20hir%20-%20f.mp4" playsinline muted loop preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;opacity:0;pointer-events:none;background:#000000;">
+        <video id="spec-scene2-video" src="/static/Main%20-%20hir%20-%20f.mp4" playsinline muted preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;opacity:0;pointer-events:none;background:#000000;">
           <source id="spec-scene2-video-src" src="/static/Main%20-%20hir%20-%20f.mp4" type="video/mp4">
         </video>
 
@@ -6770,13 +6770,13 @@ if (document.readyState === 'loading') {
 
       var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) {
-        slicesCont.style.opacity = p < 0.40 ? '1' : '0';
-        masterImg.style.opacity = (p >= 0.40 && p < 0.60) ? '1' : '0';
-        video.style.opacity = p >= 0.60 ? '1' : '0';
-        if (p >= 0.60) {
+        slicesCont.style.opacity = p < 0.36 ? '1' : '0';
+        masterImg.style.opacity = (p >= 0.36 && p < 0.48) ? '1' : '0';
+        video.style.opacity = p >= 0.48 ? '1' : '0';
+        if (p >= 0.48) {
           if (video.paused) { video.play().catch(function() {}); }
         } else {
-          if (!video.paused) { video.pause(); video.currentTime = 0; }
+          if (!video.paused) { video.pause(); }
         }
         return;
       }
@@ -6784,10 +6784,35 @@ if (document.readyState === 'loading') {
       var isMobile = currentMode === 'mobile';
 
       // =========================================================================
-      // DYNAMIC SCREEN SIZING: Small Screen -> Fullscreen Video -> Small Screen Exit
+      // 1. VIDEO ENDING & TIMELINE DETECTION (Exit fullscreen near end of video)
       // =========================================================================
-      if (p < 0.55) {
-        // Small screen / card mode during 6-cube assembly and hold
+      var timeShrink = 0;
+      if (video.duration && video.duration > 3 && video.currentTime > 0) {
+        var timeLeft = video.duration - video.currentTime;
+        // Detect approximately the final 1–2 seconds of playback
+        if (timeLeft <= 2.0 && timeLeft >= 0) {
+          var tp = Math.max(0, Math.min(1, (2.0 - timeLeft) / 1.8));
+          timeShrink = tp * tp * (3 - 2 * tp);
+        } else if (video.ended) {
+          timeShrink = 1;
+        }
+      }
+
+      // Scroll-based shrink as user approaches end of Section 02 runway
+      var scrollShrink = 0;
+      if (p >= 0.82) {
+        var sp = Math.max(0, Math.min(1, (p - 0.82) / 0.18));
+        scrollShrink = sp * sp * (3 - 2 * sp);
+      }
+
+      // Combined exit shrink factor
+      var shrink = Math.max(scrollShrink, timeShrink);
+
+      // =========================================================================
+      // 2. DYNAMIC SCREEN SIZING: Section 2 Container -> Fullscreen -> Exit Fullscreen
+      // =========================================================================
+      if (p < 0.46) {
+        // Original Section 2 container during slicing assembly & complete image hold
         if (isMobile) {
           stage.style.setProperty('--s2-stage-width', 'min(88vw, 420px)');
           stage.style.setProperty('--s2-stage-aspect', '9 / 16');
@@ -6803,9 +6828,9 @@ if (document.readyState === 'loading') {
           stage.style.setProperty('--s2-stage-br', '18px');
           stage.style.setProperty('--s2-stage-shadow', '0 24px 60px rgba(0,0,0,0.8)');
         }
-      } else if (p >= 0.55 && p < 0.70) {
-        // Expanding to Fullscreen as video starts
-        var exp = (p - 0.55) / 0.15;
+      } else if (p >= 0.46 && p < 0.66 && shrink === 0) {
+        // Smoothly expand into fullscreen as video starts
+        var exp = (p - 0.46) / 0.20;
         var t = exp * exp * (3 - 2 * exp);
         if (isMobile) {
           stage.style.setProperty('--s2-stage-width', 'calc(min(88vw, 420px) + (100vw - min(88vw, 420px)) * ' + t.toFixed(4) + ')');
@@ -6822,8 +6847,8 @@ if (document.readyState === 'loading') {
           stage.style.setProperty('--s2-stage-br', Math.round(18 * (1 - t)) + 'px');
           stage.style.setProperty('--s2-stage-shadow', '0 ' + Math.round(24 * (1 - t)) + 'px ' + Math.round(60 * (1 - t)) + 'px rgba(0,0,0,' + (0.8 * (1 - t)).toFixed(2) + ')');
         }
-      } else if (p >= 0.70 && p < 0.85) {
-        // Pure Immersive Fullscreen
+      } else if (shrink === 0) {
+        // Pure Immersive Fullscreen (covering entire viewport)
         stage.style.setProperty('--s2-stage-width', '100vw');
         stage.style.setProperty('--s2-stage-height', '100vh');
         stage.style.setProperty('--s2-stage-max-h', '100vh');
@@ -6831,9 +6856,8 @@ if (document.readyState === 'loading') {
         stage.style.setProperty('--s2-stage-br', '0px');
         stage.style.setProperty('--s2-stage-shadow', 'none');
       } else {
-        // Shrinking back to Small Screen as video begins to finish (p: 0.85 -> 1.00)
-        var shrink = (p - 0.85) / 0.15;
-        var s = shrink * shrink * (3 - 2 * shrink);
+        // Exit Fullscreen: Smoothly shrink video back into original Section 2 container
+        var s = shrink;
         if (isMobile) {
           stage.style.setProperty('--s2-stage-width', 'calc(100vw - (100vw - min(88vw, 420px)) * ' + s.toFixed(4) + ')');
           stage.style.setProperty('--s2-stage-max-h', (100 - 25 * s).toFixed(1) + 'vh');
@@ -6851,53 +6875,61 @@ if (document.readyState === 'loading') {
         }
       }
 
-      // Allow cubes to float outside stage boundaries without clipping during assembly
-      stage.style.overflow = p < 0.44 ? 'visible' : 'hidden';
+      // Allow slices to float outside stage boundaries without clipping during assembly
+      stage.style.overflow = p < 0.38 ? 'visible' : 'hidden';
 
       // Always ensure pointer-events: none on media to NEVER block mousewheel / touch scrolling
       video.style.pointerEvents = 'none';
 
       // =========================================================================
-      // PHASE 1: 6 Cubes Dispersal -> Smooth Proportional Convergence (0.00 -> 0.45)
+      // 3. PHASE 1: Interactive Slicing Animation & Soft Blur Assembly (0.00 -> 0.36)
       // =========================================================================
-      var assembleEnd = 0.45;
-      var rawA = Math.max(0, Math.min(1, p / assembleEnd));
-      // Proportional ease curve ensures continuous, clearly visible movement across the entire scroll
-      var ease = 1 - Math.pow(1 - rawA, 1.6);
-      var dist = 1 - ease;
+      var assembleEnd = 0.36;
 
-      if (p < 0.44) {
+      if (p < assembleEnd) {
         slicesCont.style.opacity = '1';
         masterImg.style.opacity = '0';
 
         slices.forEach(function(slice, i) {
           var def = activeDefs[i] || activeDefs[0];
 
-          var driftX = def.dx * dist;
-          var driftY = def.dy * dist;
-          var driftZ = def.dz * dist;
+          // Staggered individual slice progression
+          var st = i * 0.022; // individual staggered delay
+          var dur = assembleEnd - st;
+          var p_i = Math.max(0, Math.min(1, (p - st) / Math.max(0.12, dur)));
+          var ease_i = 1 - Math.pow(1 - p_i, 1.6);
+          var dist_i = 1 - ease_i;
 
-          var scale = (0.82 + 0.18 * ease).toFixed(4);
-          var rx = ((def.rx || 0) * dist).toFixed(2);
-          var ry = ((def.ry || 0) * dist).toFixed(2);
-          var rz = ((def.rz || 0) * dist).toFixed(2);
-          var blurPx = (28 * dist).toFixed(1);
-          var shadowAlpha = (0.70 * dist).toFixed(2);
-          var spreadPx = Math.round(40 * dist);
-          var br = Math.round(8 * dist);
+          var driftX = (def.dx * dist_i).toFixed(1);
+          var driftY = (def.dy * dist_i).toFixed(1);
+          var driftZ = (def.dz * dist_i).toFixed(1);
 
-          slice.style.opacity = '1';
-          slice.style.transform = 'translate3d(' + driftX.toFixed(1) + 'px,' + driftY.toFixed(1) + 'px,' + driftZ.toFixed(1) + 'px)' +
+          var scale = (0.84 + 0.16 * ease_i).toFixed(4);
+          var rx = ((def.rx || 0) * dist_i).toFixed(2);
+          var ry = ((def.ry || 0) * dist_i).toFixed(2);
+          var rz = ((def.rz || 0) * dist_i).toFixed(2);
+
+          // Gradually reduce soft blur until perfectly clear (0px)
+          var blurPx = (24 * dist_i).toFixed(1);
+          var shadowAlpha = (0.65 * dist_i).toFixed(2);
+          var spreadPx = Math.round(40 * dist_i);
+          var br = Math.round(8 * dist_i);
+
+          // Slices appear individually as Section 2 enters
+          var sliceAlpha = Math.min(1, Math.max(0, (p - (st * 0.4)) / 0.05 + 0.20));
+
+          slice.style.opacity = sliceAlpha.toFixed(3);
+          slice.style.transform = 'translate3d(' + driftX + 'px,' + driftY + 'px,' + driftZ + 'px)' +
             ' rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) rotateZ(' + rz + 'deg)' +
             ' scale(' + scale + ')';
           slice.style.filter = parseFloat(blurPx) > 0.15 ? 'blur(' + blurPx + 'px)' : 'none';
-          slice.style.boxShadow = dist > 0.04
+          slice.style.boxShadow = dist_i > 0.04
             ? '0 10px ' + spreadPx + 'px rgba(0,0,0,' + shadowAlpha + ')'
             : 'none';
           slice.style.borderRadius = br > 0 ? br + 'px' : '0';
         });
       } else {
-        // Assembled: instantly switch to pristine master image with 0 seams
+        // Assembled: instantly switch to pristine complete master image with 0 seams and 0 blur
         slicesCont.style.opacity = '0';
         slices.forEach(function(s) {
           s.style.transform = 'none';
@@ -6908,26 +6940,26 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // PHASE 2 (0.44 -> 0.60): Pristine Master Image Hold & Expansion Crossfade
+      // 4. PHASE 2: Display Complete Image Briefly Before Starting Video (0.36 -> 0.46)
       // =========================================================================
-      if (p >= 0.44 && p < 0.60) {
+      if (p >= assembleEnd && p < 0.46) {
         masterImg.style.opacity = '1';
-      } else if (p >= 0.60 && p < 0.70) {
-        // Crossfade as screen expands into fullscreen video
-        var fadeOut = Math.max(0, 1 - (p - 0.60) / 0.10);
+      } else if (p >= 0.46 && p < 0.58) {
+        // Seamless crossfade into playing video as stage expands
+        var fadeOut = Math.max(0, 1 - (p - 0.46) / 0.12);
         masterImg.style.opacity = fadeOut.toFixed(3);
-      } else if (p >= 0.70) {
+      } else if (p >= 0.58) {
         masterImg.style.opacity = '0';
       }
 
       // =========================================================================
-      // PHASE 3 (0.58 -> 1.00): Video Seamless Transition & Automatic Playback
+      // 5. PHASE 3: Video Autoplay & Smooth Playback (0.46 -> 1.00)
       // =========================================================================
-      if (p >= 0.58) {
-        var vidAlpha = Math.min(1, (p - 0.58) / 0.10);
+      if (p >= 0.46) {
+        var vidAlpha = Math.min(1, (p - 0.46) / 0.12);
         video.style.opacity = vidAlpha.toFixed(3);
 
-        if (video.paused) {
+        if (video.paused && !video.ended) {
           video.muted = true;
           video.playsInline = true;
           var playP = video.play();
@@ -6936,7 +6968,7 @@ if (document.readyState === 'loading') {
       } else {
         video.style.opacity = '0';
         if (!video.paused) { video.pause(); }
-        if (video.currentTime > 0) {
+        if (video.currentTime > 0 && p < 0.10) {
           try { video.currentTime = 0; } catch(_) {}
         }
       }
@@ -6947,6 +6979,11 @@ if (document.readyState === 'loading') {
       build6Cubes();
       updateSection2();
     }, { passive: true });
+
+    // Video event listeners for accurate timeline detection
+    video.addEventListener('timeupdate', updateSection2, { passive: true });
+    video.addEventListener('ended', updateSection2, { passive: true });
+
     function attachSection2Lenis() {
       if (window.lenis && typeof window.lenis.on === 'function') {
         window.lenis.on('scroll', updateSection2);
