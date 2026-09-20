@@ -824,35 +824,12 @@ def landing_page(request):
         if site_settings.hero_badge and site_settings.hero_badge != "01 / HERO":
             html = html.replace('01 / HERO', escape(site_settings.hero_badge))
 
-        # Dynamic Scene 02 Scrub Controls (Video URL, Badge, Hint)
-        if hasattr(site_settings, 'scene2_video_url') and site_settings.scene2_video_url:
-            html = re.sub(
-                r'(<source src=")/static/scene2_brain\.mp4(" type="video/mp4">)',
-                rf'\g<1>{escape(site_settings.scene2_video_url, quote=True)}\g<2>',
-                html
-            )
-            html = re.sub(
-                r'(<video id="spec-scene2-video"[^>]*>[\s\S]*?<source src=")[^"]+(")',
-                rf'\g<1>{escape(site_settings.scene2_video_url, quote=True)}\g<2>',
-                html
-            )
+        # Dynamic Scene 02 Badge & Hint
         if hasattr(site_settings, 'scene2_badge') and site_settings.scene2_badge:
             html = html.replace('<span>scene 02</span>', f'<span>{escape(site_settings.scene2_badge)}</span>')
         if hasattr(site_settings, 'scene2_hint') and site_settings.scene2_hint:
             default_hint = "keep scrolling or drag mouse to play · frame pauses instantly"
             html = html.replace(default_hint, escape(site_settings.scene2_hint))
-
-        # Dynamic Scene 02 60 FPS Sprite Sheet Config
-        scene2_sprite = getattr(site_settings, 'scene2_sprite_url', '') or "https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/sprites/scene2_sprite.jpg"
-        scene2_video = getattr(site_settings, 'scene2_video_url', '') or "https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/videos/scene2_brain.mp4"
-        scene2_cfg = f"""<script id="spec-scene2-config">
-  window.__SPEC_SCENE2_SPRITE_URL = "{escape(scene2_sprite, quote=True)}";
-  window.__SPEC_SCENE2_VIDEO_URL = "{escape(scene2_video, quote=True)}";
-</script>"""
-        if '</head>' in html:
-            html = html.replace('</head>', f'{scene2_cfg}\n</head>')
-        elif '</helmet>' in html:
-            html = html.replace('</helmet>', f'{scene2_cfg}\n</helmet>')
 
         # Dynamic The Reel Video URL
         if hasattr(site_settings, 'reel_video_url') and site_settings.reel_video_url:

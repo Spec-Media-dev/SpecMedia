@@ -932,7 +932,7 @@
         </div>
         <div class="stat-card">
           <div class="label">Primary Asset</div>
-          <div class="value" style="font-size:16px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ site_settings.scene2_video_url|default:'/static/scene2_brain.mp4' }}</div>
+          <div class="value" style="font-size:16px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ site_settings.scene2_video_url|default:'/static/Main - hir - f.mp4' }}</div>
           <div class="sub">Dual-buffered WebGL shader texture loop</div>
         </div>
       </div>
@@ -987,13 +987,13 @@
               <!-- Direct Link Input -->
               <div class="form-group">
                 <label>Direct Video URL or Static Media Path</label>
-                <input type="text" class="form-input" id="scene2-video-url" value="{{ site_settings.scene2_video_url|default:'/static/scene2_brain.mp4' }}" placeholder="/static/scene2_brain.mp4 or https://..." oninput="updateVideoPreview('scene2-video-url', 'scene2-video-preview')">
+                <input type="text" class="form-input" id="scene2-video-url" value="{{ site_settings.scene2_video_url|default:'/static/Main - hir - f.mp4' }}" placeholder="/static/Main - hir - f.mp4 or https://..." oninput="updateVideoPreview('scene2-video-url', 'scene2-video-preview')">
               </div>
 
               <!-- 60 FPS Synchronous Frame Sprite Sheet CDN URL -->
               <div class="form-group">
                 <label>60 FPS Frame Sprite Sheet URL (Zero-Lag Synchronous Scrub)</label>
-                <input type="text" class="form-input" id="scene2-sprite-url" value="{{ site_settings.scene2_sprite_url|default:'https://afbvxvknlgsyinqdcend.supabase.co/storage/v1/object/public/media/sprites/scene2_sprite.jpg' }}" placeholder="https://.../sprites/..._sprite.jpg">
+                <input type="text" class="form-input" id="scene2-sprite-url" value="{{ site_settings.scene2_sprite_url|default:'' }}" placeholder="https://.../sprites/..._sprite.jpg">
                 <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
                   ⚡ Automatically generated and uploaded on video upload for instant 60fps frame-by-frame scrubbing without mouse release.
                 </div>
@@ -1001,7 +1001,7 @@
 
               <!-- Video Preview Box -->
               <div style="background:#11100f; border:1px solid rgba(255,255,255,0.08); border-radius:8px; overflow:hidden; height:180px; position:relative; display:flex; align-items:center; justify-content:center;">
-                <video id="scene2-video-preview" src="{{ site_settings.scene2_video_url|default:'/static/scene2_brain.mp4' }}" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                <video id="scene2-video-preview" src="{{ site_settings.scene2_video_url|default:'/static/Main - hir - f.mp4' }}" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
                 <div style="position:absolute; bottom:8px; left:8px; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); padding:3px 8px; border-radius:4px; font-family:var(--font-mono); font-size:10px; color:#fff;">
                   LIVE PREVIEW
                 </div>
