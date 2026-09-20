@@ -38,3 +38,8 @@ build_*.py
 unbundler.js
 clean_landing.html
 standalone_test.html
+
+# Editor / tool scratch directories
+.kilo/
+.vscode/
+
