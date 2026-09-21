@@ -4258,20 +4258,20 @@ class Component extends DCLogic {
 
   /* Section 02 Responsive Stage & Media with Dynamic Fullscreen Expansion Variables */
   #spec-scene2-stage {
-    width: var(--s2-stage-width, min(90vw, 1120px)) !important;
-    aspect-ratio: var(--s2-stage-aspect, 16 / 9) !important;
-    max-height: var(--s2-stage-max-h, 80vh) !important;
-    height: var(--s2-stage-height, auto) !important;
-    border-radius: var(--s2-stage-br, 18px) !important;
-    box-shadow: var(--s2-stage-shadow, 0 24px 60px rgba(0,0,0,0.8)) !important;
+    width: var(--s2-stage-width, min(90vw, 1120px));
+    aspect-ratio: var(--s2-stage-aspect, 16 / 9);
+    max-height: var(--s2-stage-max-h, 80vh);
+    height: var(--s2-stage-height, auto);
+    border-radius: var(--s2-stage-br, 18px);
+    box-shadow: var(--s2-stage-shadow, 0 24px 60px rgba(0,0,0,0.8));
     transition: none !important;
   }
   @media (max-width: 768px) {
     #spec-scene2-stage {
-      width: var(--s2-stage-width, min(88vw, 420px)) !important;
-      aspect-ratio: var(--s2-stage-aspect, 9 / 16) !important;
-      max-height: var(--s2-stage-max-h, 75vh) !important;
-      border-radius: var(--s2-stage-br, 14px) !important;
+      width: var(--s2-stage-width, min(88vw, 420px));
+      aspect-ratio: var(--s2-stage-aspect, 9 / 16);
+      max-height: var(--s2-stage-max-h, 75vh);
+      border-radius: var(--s2-stage-br, 14px);
     }
   }
   .spec-slice {
@@ -6960,11 +6960,38 @@ if (document.readyState === 'loading') {
     //   p = 0.00:          Completely empty Scene 02 frame (zero visible image)
     //   0.00 < p < 0.44:   Staggered 3D square collection animation
     //   0.44 <= p < 0.52:  100% seamless reconstructed image hold (brief pause)
-    //   0.52 <= p < 0.66:  Video starts and smoothly expands stage to fullscreen
-    //   0.66 <= p < 0.85:  Fullscreen cinematic video playback
-    //   0.85 <= p < 0.96:  Smooth shrink back to original Scene 02 container
+    //   0.52 <= p < 0.62:  Seamless same-size image-to-video crossfade (1120px, zero scale jump)
+    //   0.62 <= p < 0.76:  Smooth stage expansion from 1120px to 100vw x 100vh
+    //   0.76 <= p < 0.88:  Fullscreen cinematic video playback
+    //   0.88 <= p < 0.96:  Smooth shrink back to original Scene 02 container
     //   p >= 0.96:         Video docks and normal scrolling restores into Scene 03
     // =========================================================================
+
+    function getStageSmallDims(isMobile) {
+      var vw = window.innerWidth || document.documentElement.clientWidth;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      if (isMobile) {
+        var maxW = Math.min(vw * 0.88, 420);
+        var maxH = vh * 0.75;
+        var w = maxW;
+        var h = w * (16 / 9);
+        if (h > maxH) {
+          h = maxH;
+          w = h * (9 / 16);
+        }
+        return { w: w, h: h, r: 14, sY: 16, sB: 40 };
+      } else {
+        var maxW = Math.min(vw * 0.90, 1120);
+        var maxH = vh * 0.80;
+        var w = maxW;
+        var h = w * (9 / 16);
+        if (h > maxH) {
+          h = maxH;
+          w = h * (16 / 9);
+        }
+        return { w: w, h: h, r: 18, sY: 24, sB: 60 };
+      }
+    }
 
     function setStageSmall(stage, isMobile) {
       if (isMobile) {
@@ -6975,6 +7002,12 @@ if (document.readyState === 'loading') {
         stage.style.setProperty('height', 'auto', 'important');
         stage.style.setProperty('border-radius', '14px', 'important');
         stage.style.setProperty('box-shadow', '0 16px 40px rgba(0,0,0,0.8)', 'important');
+        stage.style.setProperty('--s2-stage-width', 'min(88vw, 420px)');
+        stage.style.setProperty('--s2-stage-aspect', '9 / 16');
+        stage.style.setProperty('--s2-stage-max-h', '75vh');
+        stage.style.setProperty('--s2-stage-height', 'auto');
+        stage.style.setProperty('--s2-stage-br', '14px');
+        stage.style.setProperty('--s2-stage-shadow', '0 16px 40px rgba(0,0,0,0.8)');
       } else {
         stage.style.setProperty('width', 'min(90vw, 1120px)', 'important');
         stage.style.setProperty('aspect-ratio', '16 / 9', 'important');
@@ -6983,6 +7016,12 @@ if (document.readyState === 'loading') {
         stage.style.setProperty('height', 'auto', 'important');
         stage.style.setProperty('border-radius', '18px', 'important');
         stage.style.setProperty('box-shadow', '0 24px 60px rgba(0,0,0,0.8)', 'important');
+        stage.style.setProperty('--s2-stage-width', 'min(90vw, 1120px)');
+        stage.style.setProperty('--s2-stage-aspect', '16 / 9');
+        stage.style.setProperty('--s2-stage-max-h', '80vh');
+        stage.style.setProperty('--s2-stage-height', 'auto');
+        stage.style.setProperty('--s2-stage-br', '18px');
+        stage.style.setProperty('--s2-stage-shadow', '0 24px 60px rgba(0,0,0,0.8)');
       }
     }
 
@@ -7000,25 +7039,42 @@ if (document.readyState === 'loading') {
         stage.style.setProperty('aspect-ratio', 'auto', 'important');
         stage.style.setProperty('border-radius', '0px', 'important');
         stage.style.setProperty('box-shadow', 'none', 'important');
+        stage.style.setProperty('--s2-stage-width', '100vw');
+        stage.style.setProperty('--s2-stage-height', '100vh');
+        stage.style.setProperty('--s2-stage-aspect', 'auto');
+        stage.style.setProperty('--s2-stage-max-h', '100vh');
+        stage.style.setProperty('--s2-stage-br', '0px');
+        stage.style.setProperty('--s2-stage-shadow', 'none');
         return;
       }
-      if (isMobile) {
-        stage.style.setProperty('width', 'calc(min(88vw, 420px) + (100vw - min(88vw, 420px)) * ' + exp.toFixed(4) + ')', 'important');
-        stage.style.setProperty('max-height', (75 + 25 * exp).toFixed(1) + 'vh', 'important');
-        stage.style.setProperty('max-width', '100vw', 'important');
-        stage.style.setProperty('height', (75 + 25 * exp).toFixed(1) + 'vh', 'important');
-        stage.style.setProperty('aspect-ratio', 'auto', 'important');
-        stage.style.setProperty('border-radius', Math.round(14 * (1 - exp)) + 'px', 'important');
-        stage.style.setProperty('box-shadow', '0 ' + Math.round(16 * (1 - exp)) + 'px ' + Math.round(40 * (1 - exp)) + 'px rgba(0,0,0,' + (0.8 * (1 - exp)).toFixed(2) + ')', 'important');
-      } else {
-        stage.style.setProperty('width', 'calc(min(90vw, 1120px) + (100vw - min(90vw, 1120px)) * ' + exp.toFixed(4) + ')', 'important');
-        stage.style.setProperty('max-height', (80 + 20 * exp).toFixed(1) + 'vh', 'important');
-        stage.style.setProperty('max-width', '100vw', 'important');
-        stage.style.setProperty('height', (80 + 20 * exp).toFixed(1) + 'vh', 'important');
-        stage.style.setProperty('aspect-ratio', 'auto', 'important');
-        stage.style.setProperty('border-radius', Math.round(18 * (1 - exp)) + 'px', 'important');
-        stage.style.setProperty('box-shadow', '0 ' + Math.round(24 * (1 - exp)) + 'px ' + Math.round(60 * (1 - exp)) + 'px rgba(0,0,0,' + (0.8 * (1 - exp)).toFixed(2) + ')', 'important');
-      }
+
+      var vw = window.innerWidth || document.documentElement.clientWidth;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var dims = getStageSmallDims(isMobile);
+
+      var curW = dims.w + (vw - dims.w) * exp;
+      var curH = dims.h + (vh - dims.h) * exp;
+      var curR = Math.round(dims.r * (1 - exp));
+      var curShadowY = Math.round(dims.sY * (1 - exp));
+      var curShadowBlur = Math.round(dims.sB * (1 - exp));
+      var curShadowAlpha = (0.8 * (1 - exp)).toFixed(2);
+      var shadowStr = (curR > 0 && curShadowBlur > 0)
+        ? ('0 ' + curShadowY + 'px ' + curShadowBlur + 'px rgba(0,0,0,' + curShadowAlpha + ')')
+        : 'none';
+
+      stage.style.setProperty('width', curW.toFixed(1) + 'px', 'important');
+      stage.style.setProperty('height', curH.toFixed(1) + 'px', 'important');
+      stage.style.setProperty('max-width', '100vw', 'important');
+      stage.style.setProperty('max-height', '100vh', 'important');
+      stage.style.setProperty('aspect-ratio', 'auto', 'important');
+      stage.style.setProperty('border-radius', curR + 'px', 'important');
+      stage.style.setProperty('box-shadow', shadowStr, 'important');
+      stage.style.setProperty('--s2-stage-width', curW.toFixed(1) + 'px');
+      stage.style.setProperty('--s2-stage-height', curH.toFixed(1) + 'px');
+      stage.style.setProperty('--s2-stage-aspect', 'auto');
+      stage.style.setProperty('--s2-stage-max-h', '100vh');
+      stage.style.setProperty('--s2-stage-br', curR + 'px');
+      stage.style.setProperty('--s2-stage-shadow', shadowStr);
     }
 
     var sec2VideoWasPlaying = false;
@@ -7194,16 +7250,17 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 4. VIDEO TRANSITION & FULLSCREEN EXPANSION (0.52 <= p < 0.66)
-      // Video starts playing; container expands from 1120px to 100vw x 100vh
+      // 4. SAME-SIZE IMAGE TO VIDEO CROSSFADE (0.52 <= p < 0.62)
+      // Video starts playing; crossfades seamlessly at identical container size
+      // Zero scale jump, zero crop change, zero aspect ratio change.
       // =========================================================================
-      if (p >= 0.52 && p < 0.66) {
+      if (p >= 0.52 && p < 0.62) {
         slicesCont.style.opacity = '0';
-        var p4 = (p - 0.52) / 0.14;
-        var e4 = p4 * p4 * (3 - 2 * p4); // Smooth cubic ease-in-out
+        var pCross = (p - 0.52) / 0.10;
+        var eCross = pCross * pCross * (3 - 2 * pCross); // Smooth cubic ease-in-out
 
-        masterImg.style.opacity = (1 - e4).toFixed(3);
-        video.style.opacity = e4.toFixed(3);
+        masterImg.style.opacity = (1 - eCross).toFixed(3);
+        video.style.opacity = eCross.toFixed(3);
 
         if (video.paused && !video.ended) {
           video.muted = true;
@@ -7223,15 +7280,47 @@ if (document.readyState === 'loading') {
           masterImg.style.opacity = Math.max(parseFloat(masterImg.style.opacity || '0'), 0.75).toFixed(3);
         }
 
-        applyStageExpansion(stage, isMobile, e4);
+        setStageSmall(stage, isMobile);
         return;
       }
 
       // =========================================================================
-      // 5. FULLSCREEN VIDEO PLAYBACK (0.66 <= p < 0.85)
+      // 5. SMOOTH FULLSCREEN EXPANSION (0.62 <= p < 0.76)
+      // With video playing inside, smoothly expand stage from 1120px to 100vw x 100vh
+      // =========================================================================
+      if (p >= 0.62 && p < 0.76) {
+        slicesCont.style.opacity = '0';
+        masterImg.style.opacity = '0';
+        video.style.opacity = '1';
+
+        var pExp = (p - 0.62) / 0.14;
+        var eExp = pExp * pExp * (3 - 2 * pExp); // Smooth cubic ease-in-out
+
+        if (video.paused && !video.ended) {
+          video.muted = true;
+          video.defaultMuted = true;
+          video.playsInline = true;
+          video.setAttribute('muted', '');
+          video.setAttribute('playsinline', '');
+          video.setAttribute('autoplay', '');
+          var pPlay = video.play();
+          if (pPlay !== undefined) pPlay.catch(function() {});
+          sec2VideoWasPlaying = true;
+        }
+
+        if (video.paused && !video.ended) {
+          masterImg.style.opacity = '0.8';
+        }
+
+        applyStageExpansion(stage, isMobile, eExp);
+        return;
+      }
+
+      // =========================================================================
+      // 6. FULLSCREEN VIDEO PLAYBACK (0.76 <= p < 0.88)
       // Viewport-filling cinematic presentation
       // =========================================================================
-      if (p >= 0.66 && p < 0.85) {
+      if (p >= 0.76 && p < 0.88) {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '0';
         video.style.opacity = '1';
@@ -7257,16 +7346,16 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 6. VIDEO SHRINK BACK TO CONTAINER (0.85 <= p < 0.96)
+      // 7. VIDEO SHRINK BACK TO CONTAINER (0.88 <= p < 0.96)
       // Smoothly shrink from 100vw back to original Scene 02 container
       // =========================================================================
-      if (p >= 0.85 && p < 0.96) {
+      if (p >= 0.88 && p < 0.96) {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '0';
         video.style.opacity = '1';
 
-        var p6 = (p - 0.85) / 0.11;
-        var e6 = p6 * p6 * (3 - 2 * p6);
+        var pShrink = (p - 0.88) / 0.08;
+        var eShrink = pShrink * pShrink * (3 - 2 * pShrink);
 
         if (video.paused && !video.ended) {
           video.play().catch(function() {});
@@ -7274,15 +7363,15 @@ if (document.readyState === 'loading') {
         }
 
         if (video.paused && !video.ended) {
-          masterImg.style.opacity = (0.8 * e6).toFixed(3);
+          masterImg.style.opacity = (0.8 * eShrink).toFixed(3);
         }
 
-        applyStageExpansion(stage, isMobile, 1.0 - e6);
+        applyStageExpansion(stage, isMobile, 1.0 - eShrink);
         return;
       }
 
       // =========================================================================
-      // 7. VIDEO END / NORMAL SCROLL RESTORATION (p >= 0.96)
+      // 8. VIDEO END / NORMAL SCROLL RESTORATION (p >= 0.96)
       // Dock back into container; unpin to scroll into Section 03
       // =========================================================================
       if (p >= 0.96) {
