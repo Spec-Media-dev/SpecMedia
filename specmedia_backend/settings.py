@@ -185,3 +185,29 @@ SUPABASE_URL = os.getenv("SUPABASE_URL", "https://afbvxvknlgsyinqdcend.supabase.
 SUPABASE_PUBLISHABLE_KEY = os.getenv("SUPABASE_PUBLISHABLE_KEY", _DEFAULT_SUB_PUB)
 SUPABASE_SECRET_KEY = os.getenv("SUPABASE_SECRET_KEY", _DEFAULT_SUB_SECRET)
 SUPABASE_JWKS_URL = os.getenv("SUPABASE_JWKS_URL", "https://afbvxvknlgsyinqdcend.supabase.co/auth/v1/.well-known/jwks.json")
+
+# Logging Configuration: clean console output and suppress harmless client video stream drops
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'suppress_broken_pipe': {
+            '()': 'core.middleware.SuppressBrokenPipeFilter',
+        },
+    },
+    'handlers': {
+        'django_server': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'filters': ['suppress_broken_pipe'],
+        },
+    },
+    'loggers': {
+        'django.server': {
+            'handlers': ['django_server'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
+

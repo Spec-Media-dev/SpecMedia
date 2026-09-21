@@ -1,3 +1,28 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+class SuppressBrokenPipeFilter(logging.Filter):
+    """
+    Logging filter to suppress harmless 'Broken pipe' and connection reset messages
+    from the development server when clients (browsers) cancel video stream or range requests.
+    """
+    def filter(self, record):
+        msg = record.getMessage()
+        if any(term in msg for term in (
+            "Broken pipe",
+            "ConnectionResetError",
+            "ConnectionAbortedError",
+            "10054",
+            "10053",
+            "WinError 10054",
+            "WinError 10053",
+        )):
+            return False
+        return True
+
+
 class VercelProxyMiddleware:
     """
     Middleware to safely normalize host headers when deployed behind
@@ -22,3 +47,4 @@ class VercelProxyMiddleware:
                 request.META["HTTP_HOST"] = first_host
 
         return self.get_response(request)
+

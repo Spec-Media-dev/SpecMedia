@@ -1176,8 +1176,6 @@ html.spec-scrolled .spec-landing-chrome.is-hidden,
   opacity: 1 !important;
   pointer-events: auto !important;
   visibility: visible !important;
-  transform: translateY(0);
-  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   color: #FFFFFF;
@@ -1188,7 +1186,6 @@ html.spec-scrolled .spec-chrome-nav-logo,
 html.spec-dark-mode.spec-scrolled .spec-chrome-nav-logo {
   opacity: 1 !important;
   pointer-events: auto !important;
-  transform: translateY(0);
 }
 .spec-nav-chars-wrap .spec-logo-char-img {
   height: clamp(16px, 2.2vh, 22px) !important;
@@ -1495,15 +1492,15 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   width: clamp(10px, 1.4vw, 22px);
 }
 
-/* Clean Logo: strictly NO hover effects */
+/* Clean Logo: strictly NO hover effects or jump/hide */
 .spec-chrome-nav-logo:hover,
 .spec-nav-logo-front:hover,
 .spec-nav-logo-front .spec-logo-char-img:hover,
 .spec-logo-char-img:hover,
 .spec-kinetic-logo:hover,
 .spec-kinetic-logo:hover .spec-logo-char-img {
-  transform: none !important;
-  filter: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
   box-shadow: none !important;
   text-shadow: none !important;
   outline: none !important;
@@ -2194,7 +2191,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
         <!-- Card 2: Collapsed -->
         <div class="spec-accordion-card" data-accordion-card="1">
-          <video class="spec-accordion-video" playsinline muted loop preload="metadata">
+          <video class="spec-accordion-video" playsinline muted loop preload="none">
             <source src="/static/reference_video.mp4" type="video/mp4">
           </video>
           <div class="spec-accordion-overlay"></div>
@@ -2207,7 +2204,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
         <!-- Card 3: Collapsed -->
         <div class="spec-accordion-card" data-accordion-card="2">
-          <video class="spec-accordion-video" playsinline muted loop preload="metadata">
+          <video class="spec-accordion-video" playsinline muted loop preload="none">
             <source src="/static/reference_video.mp4" type="video/mp4">
           </video>
           <div class="spec-accordion-overlay"></div>
@@ -2220,7 +2217,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
         <!-- Card 4: Collapsed -->
         <div class="spec-accordion-card" data-accordion-card="3">
-          <video class="spec-accordion-video" playsinline muted loop preload="metadata">
+          <video class="spec-accordion-video" playsinline muted loop preload="none">
             <source src="/static/reference_video.mp4" type="video/mp4">
           </video>
           <div class="spec-accordion-overlay"></div>
