@@ -1074,7 +1074,8 @@ a:hover{color:#f5ead8}
 /* Vector logo & theme transition */
 .spec-kinetic-logo {
   color: #141211;
-  transition: color 0.4s ease, filter 0.4s ease;
+  transition: color 0.4s ease, filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: filter;
 }
 
 /* Logo turns white when scrolling into dark sections */
@@ -1118,20 +1119,6 @@ html.spec-dark-mode [ref="logoRef"] img {
 
 /* Top Chrome Navigation: cleanly split with compact logo on left and actions on right in a modern floating pill */
 .spec-landing-chrome {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, background 0.35s ease, border 0.35s ease, backdrop-filter 0.35s ease;
-  will-change: transform, opacity;
-}
-/* Scroll-down hide state & scroll-up reveal */
-html.spec-scrolled .spec-landing-chrome.is-hidden,
-.spec-landing-chrome.is-hidden {
-  transform: translateY(calc(-100% - 30px)) !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-.spec-landing-chrome > * {
-  pointer-events: auto;
-}
-.spec-landing-chrome {
   direction: ltr !important;
   display: flex !important;
   justify-content: space-between !important;
@@ -1156,12 +1143,14 @@ html.spec-scrolled .spec-landing-chrome.is-hidden,
   opacity: 1 !important;
   pointer-events: auto !important;
   transform: translateY(0);
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               background 0.35s ease,
               border-color 0.35s ease,
-              box-shadow 0.35s ease;
+              box-shadow 0.35s ease !important;
 }
+
+/* Navbar persistent visibility */
 .spec-landing-chrome > * {
   pointer-events: auto;
 }
@@ -1176,6 +1165,8 @@ html.spec-scrolled .spec-landing-chrome.is-hidden,
   opacity: 1 !important;
   pointer-events: auto !important;
   visibility: visible !important;
+  transform: translateY(0);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   color: #FFFFFF;
@@ -1186,6 +1177,7 @@ html.spec-scrolled .spec-chrome-nav-logo,
 html.spec-dark-mode.spec-scrolled .spec-chrome-nav-logo {
   opacity: 1 !important;
   pointer-events: auto !important;
+  transform: translateY(0);
 }
 .spec-nav-chars-wrap .spec-logo-char-img {
   height: clamp(16px, 2.2vh, 22px) !important;
@@ -1492,15 +1484,15 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   width: clamp(10px, 1.4vw, 22px);
 }
 
-/* Clean Logo: strictly NO hover effects or jump/hide */
+/* Clean Logo: strictly NO hover effects */
 .spec-chrome-nav-logo:hover,
 .spec-nav-logo-front:hover,
 .spec-nav-logo-front .spec-logo-char-img:hover,
 .spec-logo-char-img:hover,
 .spec-kinetic-logo:hover,
 .spec-kinetic-logo:hover .spec-logo-char-img {
-  opacity: 1 !important;
-  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
   box-shadow: none !important;
   text-shadow: none !important;
   outline: none !important;
@@ -1688,20 +1680,38 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   box-shadow: none !important;
 }
 
-/* Continuous Unified Background System: Section 04 (The Reel) through 07 share one seamless wine background */
-[data-screen-label="04 The Reel"],
-[data-screen-label="05 Capabilities"],
-[data-screen-label="06 Green pass"],
-[data-screen-label="07 Reviews"] {
-  background-color: var(--color-reel-wine-bg, #2d0406) !important;
-  background-image: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  margin-top: 0 !important;
-  outline: none !important;
+/* Global Section Transition Bridge Continuity — deactivates hard artificial boundary bands */
+.spec-section-bridge {
+  display: none !important;
+  height: 0 !important;
+  pointer-events: none !important;
 }
 
-/* Remove all text shadows from text in Partners section */
+/* Horizontally scrolling testimonial / review section with edge-fade gradient mask */
+.spec-reviews-bleed,
+.testimonial-scroll-wrapper {
+  position: relative !important;
+  width: 100vw !important;
+  overflow: hidden !important;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%) !important;
+  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%) !important;
+}
+
+.testimonial-scroll-container,
+[data-rvrow="1"] {
+  display: flex !important;
+  overflow-x: auto !important;
+  scroll-behavior: smooth !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE & Edge */
+}
+
+.testimonial-scroll-container::-webkit-scrollbar,
+[data-rvrow="1"]::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+}
+
+/* Partners Section (The Reel): Remove all text shadow from all text inside */
 #spec-reel-section,
 #spec-reel-section *,
 [data-screen-label="04 The Reel"],
@@ -1710,11 +1720,9 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 #spec-manifesto-wrap,
 #spec-manifesto-wrap * {
   text-shadow: none !important;
-  filter: none !important;
 }
 
-/* Section 04: The Reel - Seamless Stage */
-/* Section 04: The Reel - Starts Black (#000000), converts to Red Theme (#2d0406) in Middle */
+/* Section 04: The Reel - Starts Black (#000000), smoothly converts to Red Theme (#2d0406) in Middle of Animation */
 #spec-reel-section,
 #spec-constellation-stage {
   background-color: #000000;
@@ -1723,7 +1731,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   outline: none !important;
 }
 
-/* Continuous Unified Red Wine Theme (#2d0406) from Partners through End Section */
+/* Continuous Unified Background System: Section 05 through Section 08 Footer share the Red Theme (#2d0406) with Zero Cutoffs */
 [data-screen-label="05 Capabilities"],
 [data-screen-label="06 Green pass"],
 [data-screen-label="07 Reviews"] {
@@ -1757,111 +1765,14 @@ footer#contact {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Section 08 Footer: Continuous Unified Red Theme (#2d0406) */
-[data-screen-label="08 Footer"],
-footer#contact {
-  --color-footer-bg: #2d0406 !important;
-  background: #2d0406 !important;
-  background-color: #2d0406 !important;
-}
-#spec-footer-ambient-glow {
-  background: #2d0406 !important;
-  opacity: 0 !important;
-  display: none !important;
-}
-
-/* Section 05 Capabilities: Luxury Filament Dividers & Smooth Interactivity */
-[data-screen-label="05 Capabilities"] [data-svc] {
-  border-bottom: 1px solid rgba(223, 22, 55, 0.18) !important;
-  border-bottom-width: 0.5px !important;
-  transition: color 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              padding-left 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              border-bottom-color 0.3s ease !important;
-}
-
-[data-screen-label="05 Capabilities"] [data-svc]:hover {
-  border-bottom-color: rgba(223, 22, 55, 0.55) !important;
-  color: #ffffff !important;
-}
-
-/* --- CREATIVE SECTION ENTRANCE & MOTION DYNAMICS --- */
-.spec-section-reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  filter: blur(5px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform, filter;
-}
-
-.spec-section-reveal.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
-
-/* Staggered cascades for capability rows */
-[data-screen-label="05 Capabilities"] [data-svc] {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--svc-delay, 0s),
-              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--svc-delay, 0s),
-              padding-left 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              color 0.3s ease,
-              border-bottom-color 0.3s ease !important;
-}
-
-[data-screen-label="05 Capabilities"].is-revealed [data-svc] {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Deactivate artificial divider blooms and bridge bands for seamless continuity */
-.spec-ambient-divider {
-  display: none !important;
-  height: 0 !important;
-}
-
-.spec-section-bridge {
-  display: none !important;
-  height: 0 !important;
-  pointer-events: none !important;
-}
-
-
-/* Horizontally scrolling testimonial / review section with edge-fade gradient mask */
-.spec-reviews-bleed,
-.testimonial-scroll-wrapper {
-  position: relative !important;
-  width: 100vw !important;
-  overflow: hidden !important;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%) !important;
-  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%) !important;
-}
-
-.testimonial-scroll-container,
-[data-rvrow="1"] {
-  display: flex !important;
-  overflow-x: auto !important;
-  scroll-behavior: smooth !important;
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE & Edge */
-}
-
-.testimonial-scroll-container::-webkit-scrollbar,
-[data-rvrow="1"]::-webkit-scrollbar {
-  display: none !important; /* Chrome, Safari, Opera */
-}
-
-/* Section 07 (Reviews) & Section 08 (Footer): Continues the deep wine color (#2d0406) - NO WHITE COLOR */
-[data-screen-label="07 Reviews"] {
-  border-top: none !important;
-  border-bottom: none !important;
+/* Section 08 Footer: Smooth Transition to Black (#000000) */
+[data-screen-label="08 Footer"] {
+  --color-footer-bg: #000000 !important;
+  background-color: #000000 !important;
+  background: linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;
+  border: none !important;
   box-shadow: none !important;
-  color: #d49b9e !important;
-  will-change: background-color, color;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  outline: none !important;
 }
 
 [data-screen-label="07 Reviews"] h2 {
@@ -1892,11 +1803,12 @@ footer#contact {
 }
 
 .ig-card {
-  background: rgba(18, 16, 15, 0.82) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(22, 2, 4, 0.84) !important;
+  border: 1px solid rgba(223, 22, 55, 0.25) !important;
+  box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45), 0 3px 10px -2px rgba(0, 0, 0, 0.28) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  color: #f5ead8 !important;
+  color: #d49b9e !important;
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease !important;
 }
 
@@ -1908,22 +1820,22 @@ footer#contact {
 .ig-card span,
 .ig-card div,
 .ig-card p {
-  color: #f5ead8 !important;
+  color: #d49b9e !important;
 }
 .ig-card span[style*="font-weight:700"] {
-  color: #ffffff !important;
+  color: #e26b72 !important;
 }
 .ig-card div[style*="font-family:ui-monospace"] {
-  color: #9c9489 !important;
+  color: #df1637 !important;
 }
 
-/* Footer: Deep wine tone with rich crimson typography - NO WHITE COLOR */
+/* Footer: Smooth Transition to Black (#000000) */
 footer#contact {
-  background-color: var(--color-reel-wine-bg, #2d0406) !important;
-  background-image: none !important;
-  color: #d49b9e !important;
-  will-change: background-color, color;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  background: linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;
+  background-color: #000000 !important;
+  color: #f5ead8 !important;
+  will-change: background, background-color, color;
+  transition: background 0.4s ease, background-color 0.4s ease, color 0.4s ease;
   position: fixed !important;
   left: 0 !important;
   right: 0 !important;
@@ -1941,7 +1853,7 @@ footer#contact {
   z-index: 0 !important;
 }
 footer#contact a {
-  color: #c97b82 !important;
+  color: #f5ead8 !important;
   transition: color 0.2s ease, opacity 0.2s ease;
 }
 footer#contact a:hover {
@@ -1958,7 +1870,7 @@ footer#contact a[href="#contact"]:hover {
   filter: drop-shadow(0 0 18px rgba(223, 22, 55, 0.75));
 }
 footer#contact span {
-  color: #b37d82 !important;
+  color: rgba(245, 234, 216, 0.65) !important;
 }
 footer#contact div[style*="font-family:ui-monospace"] {
   color: #df1637 !important;
@@ -2191,7 +2103,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
         <!-- Card 2: Collapsed -->
         <div class="spec-accordion-card" data-accordion-card="1">
-          <video class="spec-accordion-video" playsinline muted loop preload="none">
+          <video class="spec-accordion-video" playsinline muted loop preload="metadata">
             <source src="/static/reference_video.mp4" type="video/mp4">
           </video>
           <div class="spec-accordion-overlay"></div>
@@ -2204,7 +2116,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
         <!-- Card 3: Collapsed -->
         <div class="spec-accordion-card" data-accordion-card="2">
-          <video class="spec-accordion-video" playsinline muted loop preload="none">
+          <video class="spec-accordion-video" playsinline muted loop preload="metadata">
             <source src="/static/reference_video.mp4" type="video/mp4">
           </video>
           <div class="spec-accordion-overlay"></div>
@@ -2217,7 +2129,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
         <!-- Card 4: Collapsed -->
         <div class="spec-accordion-card" data-accordion-card="3">
-          <video class="spec-accordion-video" playsinline muted loop preload="none">
+          <video class="spec-accordion-video" playsinline muted loop preload="metadata">
             <source src="/static/reference_video.mp4" type="video/mp4">
           </video>
           <div class="spec-accordion-overlay"></div>
@@ -2232,14 +2144,11 @@ footer#contact div[style*="font-family:ui-monospace"] {
     </div>
   </section>
 
-  <!-- Ambient Transition Divider between Section 03c and Section 04 -->
-  <div class="spec-ambient-divider"></div>
-
   <section id="spec-reel-section" data-screen-label="04 The Reel" style="background:#000000;position:relative;z-index:10;min-height:700vh;box-sizing:border-box;">
     <!-- Sticky Full-Viewport Stage -->
     <div id="spec-constellation-stage" style="position:sticky;top:0;height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;background-color:#000000;perspective:1600px;">
       
-      <!-- Dynamic Background Transition: smooth feathered dissolve starts when entering Partners section -->
+      <!-- Dynamic Background Transition: smooth velvety gradient into #2d0406 -->
       <div id="spec-partners-dynamic-bg" style="position:absolute;inset:0;background:radial-gradient(ellipse 120% 85% at 50% 35%, rgba(223, 22, 55, 0.16) 0%, rgba(110, 12, 27, 0.28) 45%, rgba(45, 4, 6, 0.75) 75%, #2d0406 100%);pointer-events:none;z-index:1;opacity:0;will-change:opacity;transition:opacity 0.08s linear;"></div>
 
       <!-- Ambient Red Atmosphere Mix in Middle of Orbit Animation -->
@@ -2329,7 +2238,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
       <!-- Center Typography Manifesto with Progressive Blur Reveal -->
       <div id="spec-manifesto-wrap" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:30;padding:0 20px;pointer-events:none;user-select:none;will-change:opacity,filter,transform;">
         
-        <!-- Shadow vignette removed for continuous seamless visual styling -->
+        <!-- Ambient Dark Radial Vignette removed to eliminate text shadow effect -->
 
         <!-- Header Badge -->
         <!-- <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;">
@@ -2366,6 +2275,9 @@ footer#contact div[style*="font-family:ui-monospace"] {
           <div id="spec-reel-progress-fill" style="height:100%;width:100%;transform-origin:top;background:rgba(255,255,255,0.6);transform:scaleY(0);"></div>
         </div>
       </div>
+
+      <!-- Atmospheric transition bridge deactivated for seamless continuity -->
+      <div id="spec-s04-atmospheric-bridge" class="spec-section-bridge" style="display:none;height:0;"></div>
     </div>
   </section>
 
@@ -2466,8 +2378,8 @@ footer#contact div[style*="font-family:ui-monospace"] {
         </div>
       </div>
     </div>
-    <!-- Ambient Transition Divider between Section 05 and Section 06 -->
-    <div class="spec-ambient-divider"></div>
+    <!-- Atmospheric transition bridge deactivated for seamless continuity -->
+    <div id="spec-s05-atmospheric-bridge" class="spec-section-bridge" style="display:none;height:0;"></div>
   </section>
 
         <section data-screen-label="06 Green pass" style="background:#2d0406;position:relative;z-index:1;height:280vh">
@@ -3057,8 +2969,6 @@ footer#contact div[style*="font-family:ui-monospace"] {
       </article>
       </div>
     </div>
-    <!-- Seamless atmospheric dissolve deactivated for continuous background continuity -->
-    <div class="spec-section-bridge" style="display:none;height:0;"></div>
       </div>
   </section>
 
@@ -4495,6 +4405,7 @@ function initConstellationController() {
   const words = stage.querySelectorAll('.orbit-word');
   const manifestoWrap = document.getElementById('spec-manifesto-wrap');
   const progressFill = document.getElementById('spec-reel-progress-fill');
+  const scrollIndicator = document.getElementById('spec-reel-scroll-indicator');
 
   window.__specConstellationActive = true;
 
@@ -4786,21 +4697,20 @@ function initConstellationController() {
     // 4. Sleek Vertical Scroll Progress Fill with early seamless fade-out to prevent any section cutoffs
     if (progressFill) {
       progressFill.style.transform = 'scaleY(' + f.toFixed(3) + ')';
-      var indWrap = document.getElementById('spec-reel-scroll-indicator') || (progressFill.parentElement && progressFill.parentElement.parentElement);
-      if (indWrap) {
-        if (f > 0.65) {
-          const indProg = Math.max(0, Math.min(1, (f - 0.65) / 0.13));
-          const indOp = Math.max(0, 1 - indProg);
-          indWrap.style.opacity = indOp.toFixed(2);
-          if (indOp <= 0.02) {
-            indWrap.style.visibility = 'hidden';
-          } else {
-            indWrap.style.visibility = 'visible';
-          }
+    }
+    if (scrollIndicator) {
+      if (f > 0.65) {
+        const indProg = Math.max(0, Math.min(1, (f - 0.65) / 0.13));
+        const indOp = Math.max(0, 1 - indProg);
+        scrollIndicator.style.opacity = indOp.toFixed(2);
+        if (indOp <= 0.02) {
+          scrollIndicator.style.visibility = 'hidden';
         } else {
-          indWrap.style.opacity = '1';
-          indWrap.style.visibility = 'visible';
+          scrollIndicator.style.visibility = 'visible';
         }
+      } else {
+        scrollIndicator.style.opacity = '1';
+        scrollIndicator.style.visibility = 'visible';
       }
     }
 
@@ -6282,61 +6192,6 @@ function initReviewsScrollAnimation() {
   return true;
 }
 
-// ============================================================
-// CREATIVE SECTION ENTRANCE TRANSITIONS & MOTION DYNAMICS
-// ============================================================
-function initCreativeSectionTransitions() {
-  if (window.__specSectionTransitionsInit) return true;
-  window.__specSectionTransitionsInit = true;
-
-  // Stagger delays for capability rows in Section 05
-  var svcItems = document.querySelectorAll('[data-screen-label="05 Capabilities"] [data-svc]');
-  svcItems.forEach(function(item, idx) {
-    item.style.setProperty('--svc-delay', (idx * 0.10).toFixed(2) + 's');
-  });
-
-  var revealTargets = [
-    '[data-screen-label="03b Statement"] > div',
-    '#spec-accordion-section > div',
-    '[data-screen-label="05 Capabilities"] > div',
-    '[data-screen-label="06 Green pass"] > div',
-    '[data-screen-label="07 Reviews"] [data-blurable="1"]'
-  ];
-
-  var revealElements = document.querySelectorAll(revealTargets.join(', '));
-  revealElements.forEach(function(el) {
-    el.classList.add('spec-section-reveal');
-  });
-
-  if (!window.IntersectionObserver) {
-    revealElements.forEach(function(el) { el.classList.add('is-revealed'); });
-    var capSec = document.querySelector('[data-screen-label="05 Capabilities"]');
-    if (capSec) capSec.classList.add('is-revealed');
-    return true;
-  }
-
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-revealed');
-        var parentSec = entry.target.closest('section');
-        if (parentSec) parentSec.classList.add('is-revealed');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.08,
-    rootMargin: '0px 0px -30px 0px'
-  });
-
-  revealElements.forEach(function(el) {
-    if (!el.classList.contains('is-revealed')) {
-      observer.observe(el);
-    }
-  });
-  return true;
-}
-
 function initNavbarScrollBehavior() {
   if (window.__specNavbarScrollInit) return;
   window.__specNavbarScrollInit = true;
@@ -6397,10 +6252,9 @@ function bootSpecApp() {
   initWorksScrollAnimation();
   initAccordionGallery();
   initReviewsScrollAnimation();
-  initCreativeSectionTransitions();
   initSpecCustomCursor();
 
-  // Retry reel, reviews, accordion, works, and transitions controllers if components mount asynchronously via dc-runtime
+  // Retry reel, reviews, accordion, and works controllers if components mount asynchronously via dc-runtime
   var pollCount = 0;
   var pollTimer = setInterval(function() {
     pollCount++;
@@ -6409,8 +6263,7 @@ function bootSpecApp() {
     var worksOk = initWorksScrollAnimation();
     var accOk = initAccordionGallery();
     var revScrollOk = initReviewsScrollAnimation();
-    var transOk = initCreativeSectionTransitions();
-    if ((reelOk && revOk && worksOk && accOk && revScrollOk && transOk) || pollCount > 120) {
+    if ((reelOk && revOk && worksOk && accOk && revScrollOk) || pollCount > 120) {
       clearInterval(pollTimer);
     }
   }, 40);
@@ -6421,8 +6274,7 @@ function bootSpecApp() {
       var revOk = initReviewsController();
       var accOk = initAccordionGallery();
       var revScrollOk = initReviewsScrollAnimation();
-      var transOk = initCreativeSectionTransitions();
-      if (reelOk && revOk && accOk && revScrollOk && transOk) {
+      if (reelOk && revOk && accOk && revScrollOk) {
         obs.disconnect();
         clearInterval(pollTimer);
       }
@@ -6442,11 +6294,15 @@ if (document.readyState === 'loading') {
 // MASTER CONTROLLER: LOGO FLIGHT & DYNAMIC CONTRAST, S2 4-PHASE, S7 REVIEWS
 // =========================================================================
 (function() {
+  var flightInited = false;
+
   // 1. Centered Hero Logo -> Animated Navbar Transition & Intelligent Dynamic Contrast (Single Logo - NO Copies)
   function initHeroLogoFlight() {
+    if (flightInited) return true;
     var chromeNav = document.querySelector('.spec-landing-chrome');
     var navLogo = document.querySelector('.spec-chrome-nav-logo');
-    if (!chromeNav || !navLogo) return;
+    if (!chromeNav || !navLogo) return false;
+    flightInited = true;
 
     // Remove any legacy flight logo if present
     var oldFlight = document.getElementById('spec-flight-logo');
@@ -6619,6 +6475,9 @@ if (document.readyState === 'loading') {
     function updateFlight() {
       var navLogo = getLiveNavLogo();
       if (!navLogo) return;
+      var chromeNav = document.querySelector('.spec-landing-chrome');
+      var actions = chromeNav ? chromeNav.querySelector('.spec-chrome-actions') : null;
+
       var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
       var vh = window.innerHeight;
       var vw = window.innerWidth;
@@ -6712,8 +6571,10 @@ if (document.readyState === 'loading') {
       var targetColor = (p < 0.25) ? '#FFFFFF' : (isLight ? '#000000' : '#FFFFFF');
       document.documentElement.style.setProperty('--spec-nav-logo-color', targetColor);
       navLogo.style.color = targetColor;
+      return { scrollY: scrollY, p: p, ease: ease, curX: curX, curY: curY, curScale: curScale, transform: navLogo.style.transform };
     }
 
+    window.__specUpdateFlight = updateFlight;
     window.addEventListener('scroll', updateFlight, { passive: true });
     function attachFlightLenis() {
       if (window.lenis && typeof window.lenis.on === 'function') {
@@ -6980,19 +6841,16 @@ if (document.readyState === 'loading') {
 
         slicesCont.style.opacity = Math.min(1, t / 0.35 + 0.35).toFixed(3);
         slicesCont.style.transform = 'translate3d(0, 0, ' + zoomZ.toFixed(1) + 'px) scale(' + zoomScale.toFixed(4) + ')';
+        slicesCont.style.filter = 'blur(' + zoomBlur.toFixed(1) + 'px)';
         masterImg.style.opacity = '0';
         video.style.opacity = '0';
         if (!video.paused) { video.pause(); }
 
-        slices.forEach(function(slice, i) {
-          var def = activeDefs[i] || activeDefs[0];
-          // Slices are kept compactly together as a distant, slightly blurred image zooming in
-          var subtleX = (def.dx * 0.08 * (1 - e1)).toFixed(1);
-          var subtleY = (def.dy * 0.08 * (1 - e1)).toFixed(1);
-          slice.style.transform = 'translate3d(' + subtleX + 'px,' + subtleY + 'px, 0px)';
-          slice.style.filter = 'blur(' + zoomBlur.toFixed(1) + 'px)';
-          slice.style.borderRadius = '6px';
-          slice.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+        slices.forEach(function(slice) {
+          slice.style.transform = 'none';
+          slice.style.filter = 'none';
+          slice.style.borderRadius = '0';
+          slice.style.boxShadow = 'none';
         });
 
         setStageSmall(stage, isMobile);
@@ -7009,6 +6867,7 @@ if (document.readyState === 'loading') {
 
         slicesCont.style.opacity = '1';
         slicesCont.style.transform = 'translate3d(0, 0, ' + zoomZ.toFixed(1) + 'px) scale(' + zoomScale.toFixed(4) + ')';
+        slicesCont.style.filter = 'none';
         masterImg.style.opacity = '0';
         video.style.opacity = '0';
         if (!video.paused) { video.pause(); }
@@ -7047,6 +6906,7 @@ if (document.readyState === 'loading') {
 
         slicesCont.style.opacity = '1';
         slicesCont.style.transform = 'none';
+        slicesCont.style.filter = 'none';
         masterImg.style.opacity = '0';
         video.style.opacity = '0';
 
@@ -7167,12 +7027,12 @@ if (document.readyState === 'loading') {
 
         // Pre-position slices at distant zoom state for zero-jump loop entry
         slicesCont.style.transform = 'translate3d(0, 0, -700px) scale(0.28)';
-        slices.forEach(function(slice, i) {
-          var def = activeDefs[i] || activeDefs[0];
-          slice.style.transform = 'translate3d(' + (def.dx * 0.08).toFixed(1) + 'px,' + (def.dy * 0.08).toFixed(1) + 'px, 0px)';
-          slice.style.filter = 'blur(22px)';
-          slice.style.borderRadius = '6px';
-          slice.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+        slicesCont.style.filter = 'blur(22px)';
+        slices.forEach(function(slice) {
+          slice.style.transform = 'none';
+          slice.style.filter = 'none';
+          slice.style.borderRadius = '0';
+          slice.style.boxShadow = 'none';
         });
 
         setStageSmall(stage, isMobile);

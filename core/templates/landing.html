@@ -1165,6 +1165,8 @@ html.spec-dark-mode [ref="logoRef"] img {
   opacity: 1 !important;
   pointer-events: auto !important;
   visibility: visible !important;
+  transform: translateY(0);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   color: #FFFFFF;
@@ -1175,6 +1177,7 @@ html.spec-scrolled .spec-chrome-nav-logo,
 html.spec-dark-mode.spec-scrolled .spec-chrome-nav-logo {
   opacity: 1 !important;
   pointer-events: auto !important;
+  transform: translateY(0);
 }
 .spec-nav-chars-wrap .spec-logo-char-img {
   height: clamp(16px, 2.2vh, 22px) !important;
@@ -1481,15 +1484,15 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   width: clamp(10px, 1.4vw, 22px);
 }
 
-/* Clean Logo: strictly NO hover effects or jump/hide */
+/* Clean Logo: strictly NO hover effects */
 .spec-chrome-nav-logo:hover,
 .spec-nav-logo-front:hover,
 .spec-nav-logo-front .spec-logo-char-img:hover,
 .spec-logo-char-img:hover,
 .spec-kinetic-logo:hover,
 .spec-kinetic-logo:hover .spec-logo-char-img {
-  opacity: 1 !important;
-  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
   box-shadow: none !important;
   text-shadow: none !important;
   outline: none !important;
@@ -2100,7 +2103,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
         <!-- Card 2: Collapsed -->
         <div class="spec-accordion-card" data-accordion-card="1">
-          <video class="spec-accordion-video" playsinline muted loop preload="none">
+          <video class="spec-accordion-video" playsinline muted loop preload="metadata">
             <source src="/static/reference_video.mp4" type="video/mp4">
           </video>
           <div class="spec-accordion-overlay"></div>
@@ -2113,7 +2116,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
         <!-- Card 3: Collapsed -->
         <div class="spec-accordion-card" data-accordion-card="2">
-          <video class="spec-accordion-video" playsinline muted loop preload="none">
+          <video class="spec-accordion-video" playsinline muted loop preload="metadata">
             <source src="/static/reference_video.mp4" type="video/mp4">
           </video>
           <div class="spec-accordion-overlay"></div>
@@ -2126,7 +2129,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
         <!-- Card 4: Collapsed -->
         <div class="spec-accordion-card" data-accordion-card="3">
-          <video class="spec-accordion-video" playsinline muted loop preload="none">
+          <video class="spec-accordion-video" playsinline muted loop preload="metadata">
             <source src="/static/reference_video.mp4" type="video/mp4">
           </video>
           <div class="spec-accordion-overlay"></div>
@@ -6838,19 +6841,16 @@ if (document.readyState === 'loading') {
 
         slicesCont.style.opacity = Math.min(1, t / 0.35 + 0.35).toFixed(3);
         slicesCont.style.transform = 'translate3d(0, 0, ' + zoomZ.toFixed(1) + 'px) scale(' + zoomScale.toFixed(4) + ')';
+        slicesCont.style.filter = 'blur(' + zoomBlur.toFixed(1) + 'px)';
         masterImg.style.opacity = '0';
         video.style.opacity = '0';
         if (!video.paused) { video.pause(); }
 
-        slices.forEach(function(slice, i) {
-          var def = activeDefs[i] || activeDefs[0];
-          // Slices are kept compactly together as a distant, slightly blurred image zooming in
-          var subtleX = (def.dx * 0.08 * (1 - e1)).toFixed(1);
-          var subtleY = (def.dy * 0.08 * (1 - e1)).toFixed(1);
-          slice.style.transform = 'translate3d(' + subtleX + 'px,' + subtleY + 'px, 0px)';
-          slice.style.filter = 'blur(' + zoomBlur.toFixed(1) + 'px)';
-          slice.style.borderRadius = '6px';
-          slice.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+        slices.forEach(function(slice) {
+          slice.style.transform = 'none';
+          slice.style.filter = 'none';
+          slice.style.borderRadius = '0';
+          slice.style.boxShadow = 'none';
         });
 
         setStageSmall(stage, isMobile);
@@ -6867,6 +6867,7 @@ if (document.readyState === 'loading') {
 
         slicesCont.style.opacity = '1';
         slicesCont.style.transform = 'translate3d(0, 0, ' + zoomZ.toFixed(1) + 'px) scale(' + zoomScale.toFixed(4) + ')';
+        slicesCont.style.filter = 'none';
         masterImg.style.opacity = '0';
         video.style.opacity = '0';
         if (!video.paused) { video.pause(); }
@@ -6905,6 +6906,7 @@ if (document.readyState === 'loading') {
 
         slicesCont.style.opacity = '1';
         slicesCont.style.transform = 'none';
+        slicesCont.style.filter = 'none';
         masterImg.style.opacity = '0';
         video.style.opacity = '0';
 
@@ -7025,12 +7027,12 @@ if (document.readyState === 'loading') {
 
         // Pre-position slices at distant zoom state for zero-jump loop entry
         slicesCont.style.transform = 'translate3d(0, 0, -700px) scale(0.28)';
-        slices.forEach(function(slice, i) {
-          var def = activeDefs[i] || activeDefs[0];
-          slice.style.transform = 'translate3d(' + (def.dx * 0.08).toFixed(1) + 'px,' + (def.dy * 0.08).toFixed(1) + 'px, 0px)';
-          slice.style.filter = 'blur(22px)';
-          slice.style.borderRadius = '6px';
-          slice.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+        slicesCont.style.filter = 'blur(22px)';
+        slices.forEach(function(slice) {
+          slice.style.transform = 'none';
+          slice.style.filter = 'none';
+          slice.style.borderRadius = '0';
+          slice.style.boxShadow = 'none';
         });
 
         setStageSmall(stage, isMobile);
