@@ -1956,7 +1956,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
   <section id="spec-scene2-section" data-screen-label="02 Frame scrub" style="background:#000000;position:relative;z-index:10;height:380vh">
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#000000">
-      <div ref="{{ scrubBoxRef }}" id="spec-scene2-stage" class="spec-scrub-box" style="position:relative;width:min(90vw, 1120px);aspect-ratio:16/9;max-height:80vh;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.8);background:#000000;will-change:transform,opacity;opacity:1;transform:none;">
+      <div ref="{{ scrubBoxRef }}" id="spec-scene2-stage" class="spec-scrub-box" style="position:relative;width:min(90vw, 1120px);aspect-ratio:16/9;max-height:80vh;border-radius:18px;overflow:visible;box-shadow:0 24px 60px rgba(0,0,0,0.8);background:#000000;will-change:transform,opacity;opacity:1;transform:none;perspective:1200px;transform-style:preserve-3d;">
         
         <!-- Ref placeholder for DCLogic stability (brain canvas removed per request) -->
         <div ref="{{ canvasScrubRef }}" style="display:none !important;width:0;height:0;position:absolute;pointer-events:none;" aria-hidden="true"></div>
@@ -6604,8 +6604,9 @@ if (document.readyState === 'loading') {
     video._customSec2Controller = true;
     stage._customFullscreenController = true;
 
-    // Enable 3D perspective context for realistic floating depth
-    slicesCont.style.perspective = '1200px';
+    // Enable 3D perspective context on STAGE (parent) so container z-translate works
+    stage.style.perspective = '1200px';
+    stage.style.transformStyle = 'preserve-3d';
     slicesCont.style.transformStyle = 'preserve-3d';
     slicesCont.style.overflow = 'visible';
 
@@ -6750,19 +6751,19 @@ if (document.readyState === 'loading') {
 
     function setStageSmall(stage, isMobile) {
       if (isMobile) {
-        stage.style.setProperty('--s2-stage-width', 'min(88vw, 420px)');
-        stage.style.setProperty('--s2-stage-aspect', '9 / 16');
-        stage.style.setProperty('--s2-stage-max-h', '75vh');
-        stage.style.setProperty('--s2-stage-height', 'auto');
-        stage.style.setProperty('--s2-stage-br', '14px');
-        stage.style.setProperty('--s2-stage-shadow', '0 16px 40px rgba(0,0,0,0.8)');
+        stage.style.width = 'min(88vw, 420px)';
+        stage.style.aspectRatio = '9 / 16';
+        stage.style.maxHeight = '75vh';
+        stage.style.height = 'auto';
+        stage.style.borderRadius = '14px';
+        stage.style.boxShadow = '0 16px 40px rgba(0,0,0,0.8)';
       } else {
-        stage.style.setProperty('--s2-stage-width', 'min(90vw, 1120px)');
-        stage.style.setProperty('--s2-stage-aspect', '16 / 9');
-        stage.style.setProperty('--s2-stage-max-h', '80vh');
-        stage.style.setProperty('--s2-stage-height', 'auto');
-        stage.style.setProperty('--s2-stage-br', '18px');
-        stage.style.setProperty('--s2-stage-shadow', '0 24px 60px rgba(0,0,0,0.8)');
+        stage.style.width = 'min(90vw, 1120px)';
+        stage.style.aspectRatio = '16 / 9';
+        stage.style.maxHeight = '80vh';
+        stage.style.height = 'auto';
+        stage.style.borderRadius = '18px';
+        stage.style.boxShadow = '0 24px 60px rgba(0,0,0,0.8)';
       }
     }
 
@@ -6773,28 +6774,28 @@ if (document.readyState === 'loading') {
         return;
       }
       if (exp >= 0.999) {
-        stage.style.setProperty('--s2-stage-width', '100vw');
-        stage.style.setProperty('--s2-stage-height', '100vh');
-        stage.style.setProperty('--s2-stage-max-h', '100vh');
-        stage.style.setProperty('--s2-stage-aspect', 'auto');
-        stage.style.setProperty('--s2-stage-br', '0px');
-        stage.style.setProperty('--s2-stage-shadow', 'none');
+        stage.style.width = '100vw';
+        stage.style.height = '100vh';
+        stage.style.maxHeight = '100vh';
+        stage.style.aspectRatio = 'auto';
+        stage.style.borderRadius = '0px';
+        stage.style.boxShadow = 'none';
         return;
       }
       if (isMobile) {
-        stage.style.setProperty('--s2-stage-width', 'calc(min(88vw, 420px) + (100vw - min(88vw, 420px)) * ' + exp.toFixed(4) + ')');
-        stage.style.setProperty('--s2-stage-max-h', (75 + 25 * exp).toFixed(1) + 'vh');
-        stage.style.setProperty('--s2-stage-height', (75 + 25 * exp).toFixed(1) + 'vh');
-        stage.style.setProperty('--s2-stage-aspect', 'auto');
-        stage.style.setProperty('--s2-stage-br', Math.round(14 * (1 - exp)) + 'px');
-        stage.style.setProperty('--s2-stage-shadow', '0 ' + Math.round(16 * (1 - exp)) + 'px ' + Math.round(40 * (1 - exp)) + 'px rgba(0,0,0,' + (0.8 * (1 - exp)).toFixed(2) + ')');
+        stage.style.width = 'calc(min(88vw, 420px) + (100vw - min(88vw, 420px)) * ' + exp.toFixed(4) + ')';
+        stage.style.maxHeight = (75 + 25 * exp).toFixed(1) + 'vh';
+        stage.style.height = (75 + 25 * exp).toFixed(1) + 'vh';
+        stage.style.aspectRatio = 'auto';
+        stage.style.borderRadius = Math.round(14 * (1 - exp)) + 'px';
+        stage.style.boxShadow = '0 ' + Math.round(16 * (1 - exp)) + 'px ' + Math.round(40 * (1 - exp)) + 'px rgba(0,0,0,' + (0.8 * (1 - exp)).toFixed(2) + ')';
       } else {
-        stage.style.setProperty('--s2-stage-width', 'calc(min(90vw, 1120px) + (100vw - min(90vw, 1120px)) * ' + exp.toFixed(4) + ')');
-        stage.style.setProperty('--s2-stage-max-h', (80 + 20 * exp).toFixed(1) + 'vh');
-        stage.style.setProperty('--s2-stage-height', (80 + 20 * exp).toFixed(1) + 'vh');
-        stage.style.setProperty('--s2-stage-aspect', 'auto');
-        stage.style.setProperty('--s2-stage-br', Math.round(18 * (1 - exp)) + 'px');
-        stage.style.setProperty('--s2-stage-shadow', '0 ' + Math.round(24 * (1 - exp)) + 'px ' + Math.round(60 * (1 - exp)) + 'px rgba(0,0,0,' + (0.8 * (1 - exp)).toFixed(2) + ')');
+        stage.style.width = 'calc(min(90vw, 1120px) + (100vw - min(90vw, 1120px)) * ' + exp.toFixed(4) + ')';
+        stage.style.maxHeight = (80 + 20 * exp).toFixed(1) + 'vh';
+        stage.style.height = (80 + 20 * exp).toFixed(1) + 'vh';
+        stage.style.aspectRatio = 'auto';
+        stage.style.borderRadius = Math.round(18 * (1 - exp)) + 'px';
+        stage.style.boxShadow = '0 ' + Math.round(24 * (1 - exp)) + 'px ' + Math.round(60 * (1 - exp)) + 'px rgba(0,0,0,' + (0.8 * (1 - exp)).toFixed(2) + ')';
       }
     }
 
