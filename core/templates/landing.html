@@ -1991,22 +1991,22 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
   <section id="spec-scene2-section" data-screen-label="02 Frame scrub" style="background:#000000;position:relative;z-index:10;height:380vh">
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#000000">
-      <div ref="{{ scrubBoxRef }}" id="spec-scene2-stage" class="spec-scrub-box" style="position:relative;width:min(90vw, 1120px);aspect-ratio:16/9;max-height:80vh;border-radius:18px;overflow:visible;box-shadow:0 24px 60px rgba(0,0,0,0.8);background:#000000;will-change:transform,opacity;opacity:1;transform:none;perspective:1200px;transform-style:preserve-3d;">
+      <div ref="{{ scrubBoxRef }}" id="spec-scene2-stage" class="spec-scrub-box" style="position:relative;width:min(90vw, 1120px);aspect-ratio:16/9;max-height:80vh;border-radius:0px !important;overflow:visible;box-shadow:0 24px 60px rgba(0,0,0,0.8);background:#000000;will-change:transform,opacity;opacity:1;transform:none;perspective:1200px;transform-style:preserve-3d;">
         
         <!-- Ref placeholder for DCLogic stability (brain canvas removed per request) -->
         <div ref="{{ canvasScrubRef }}" style="display:none !important;width:0;height:0;position:absolute;pointer-events:none;" aria-hidden="true"></div>
 
                 <!-- Phase 2: Completed Master Reference Image (behind slices, above stage background) -->
-        <div id="spec-master-image" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;opacity:0;pointer-events:none;">
-          <img id="spec-master-img-el" src="/static/SPEC_video-poster_horizontal.jpg" alt="Spec Media Master" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        <div id="spec-master-image" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;opacity:0;pointer-events:none;border-radius:0px !important;">
+          <img id="spec-master-img-el" src="/static/SPEC_video-poster_horizontal.jpg" alt="Spec Media Master" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0px !important;" />
         </div>
 
         <!-- Phase 1: 15-Square Tile Assembly Container (JS-generated) -->
-        <div id="spec-slices-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;perspective:1200px;transform-style:preserve-3d;">
+        <div id="spec-slices-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;perspective:1200px;transform-style:preserve-3d;border-radius:0px !important;">
         </div>
 
         <!-- Phase 3: Seamless Autoplay Video -->
-        <video id="spec-scene2-video" src="/static/Main%20-%20hir%20-%20f.mp4" playsinline muted preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;opacity:0;pointer-events:none;background:#000000;">
+        <video id="spec-scene2-video" src="/static/Main%20-%20hir%20-%20f.mp4" playsinline muted preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;opacity:0;pointer-events:none;background:#000000;border-radius:0px !important;">
           <source id="spec-scene2-video-src" src="/static/Main%20-%20hir%20-%20f.mp4" type="video/mp4">
         </video>
 
@@ -4262,16 +4262,23 @@ class Component extends DCLogic {
     aspect-ratio: var(--s2-stage-aspect, 16 / 9);
     max-height: var(--s2-stage-max-h, 80vh);
     height: var(--s2-stage-height, auto);
-    border-radius: var(--s2-stage-br, 18px);
+    border-radius: 0px !important;
     box-shadow: var(--s2-stage-shadow, 0 24px 60px rgba(0,0,0,0.8));
     transition: none !important;
+  }
+  #spec-scene2-stage video,
+  #spec-scene2-stage img,
+  #spec-scene2-video,
+  #spec-master-image,
+  #spec-slices-container {
+    border-radius: 0px !important;
   }
   @media (max-width: 768px) {
     #spec-scene2-stage {
       width: var(--s2-stage-width, min(88vw, 420px));
       aspect-ratio: var(--s2-stage-aspect, 9 / 16);
       max-height: var(--s2-stage-max-h, 75vh);
-      border-radius: var(--s2-stage-br, 14px);
+      border-radius: 0px !important;
     }
   }
   .spec-slice {
@@ -6909,13 +6916,13 @@ if (document.readyState === 'loading') {
         var leftPct = (c / COLS * 100).toFixed(6) + '%';
         var topPct  = (r / ROWS * 100).toFixed(6) + '%';
 
-        // Subpixel 1.5px overlap prevents any subpixel crack on high-DPI displays
+        // Exact 1:1 grid sizing ensures the assembled image precisely matches master image and video
         tile.style.cssText = [
           'position:absolute',
           'left:' + leftPct,
           'top:' + topPct,
-          'width:calc(100% / ' + COLS + ' + 1.5px)',
-          'height:calc(100% / ' + ROWS + ' + 1.5px)',
+          'width:calc(100% / ' + COLS + ')',
+          'height:calc(100% / ' + ROWS + ')',
           'overflow:hidden',
           'opacity:0', // Initially 0% opacity - completely invisible at 0% scroll
           'will-change:transform,filter,opacity',
@@ -6924,6 +6931,7 @@ if (document.readyState === 'loading') {
           '-webkit-backface-visibility:hidden',
           'backface-visibility:hidden',
           'outline:1px solid transparent',
+          'border-radius:0px',
           'pointer-events:none'
         ].join(';');
 
@@ -6941,6 +6949,7 @@ if (document.readyState === 'loading') {
           'object-fit:fill',
           'display:block',
           'pointer-events:none',
+          'border-radius:0px',
           'max-width:none',
           'max-height:none'
         ].join(';');
@@ -6979,7 +6988,7 @@ if (document.readyState === 'loading') {
           h = maxH;
           w = h * (9 / 16);
         }
-        return { w: w, h: h, r: 14, sY: 16, sB: 40 };
+        return { w: w, h: h, r: 0, sY: 16, sB: 40 };
       } else {
         var maxW = Math.min(vw * 0.90, 1120);
         var maxH = vh * 0.80;
@@ -6989,7 +6998,7 @@ if (document.readyState === 'loading') {
           h = maxH;
           w = h * (16 / 9);
         }
-        return { w: w, h: h, r: 18, sY: 24, sB: 60 };
+        return { w: w, h: h, r: 0, sY: 24, sB: 60 };
       }
     }
 
@@ -7000,13 +7009,13 @@ if (document.readyState === 'loading') {
         stage.style.setProperty('max-height', '75vh', 'important');
         stage.style.setProperty('max-width', '420px', 'important');
         stage.style.setProperty('height', 'auto', 'important');
-        stage.style.setProperty('border-radius', '14px', 'important');
+        stage.style.setProperty('border-radius', '0px', 'important');
         stage.style.setProperty('box-shadow', '0 16px 40px rgba(0,0,0,0.8)', 'important');
         stage.style.setProperty('--s2-stage-width', 'min(88vw, 420px)');
         stage.style.setProperty('--s2-stage-aspect', '9 / 16');
         stage.style.setProperty('--s2-stage-max-h', '75vh');
         stage.style.setProperty('--s2-stage-height', 'auto');
-        stage.style.setProperty('--s2-stage-br', '14px');
+        stage.style.setProperty('--s2-stage-br', '0px');
         stage.style.setProperty('--s2-stage-shadow', '0 16px 40px rgba(0,0,0,0.8)');
       } else {
         stage.style.setProperty('width', 'min(90vw, 1120px)', 'important');
@@ -7014,13 +7023,13 @@ if (document.readyState === 'loading') {
         stage.style.setProperty('max-height', '80vh', 'important');
         stage.style.setProperty('max-width', '1120px', 'important');
         stage.style.setProperty('height', 'auto', 'important');
-        stage.style.setProperty('border-radius', '18px', 'important');
+        stage.style.setProperty('border-radius', '0px', 'important');
         stage.style.setProperty('box-shadow', '0 24px 60px rgba(0,0,0,0.8)', 'important');
         stage.style.setProperty('--s2-stage-width', 'min(90vw, 1120px)');
         stage.style.setProperty('--s2-stage-aspect', '16 / 9');
         stage.style.setProperty('--s2-stage-max-h', '80vh');
         stage.style.setProperty('--s2-stage-height', 'auto');
-        stage.style.setProperty('--s2-stage-br', '18px');
+        stage.style.setProperty('--s2-stage-br', '0px');
         stage.style.setProperty('--s2-stage-shadow', '0 24px 60px rgba(0,0,0,0.8)');
       }
     }
@@ -7054,11 +7063,10 @@ if (document.readyState === 'loading') {
 
       var curW = dims.w + (vw - dims.w) * exp;
       var curH = dims.h + (vh - dims.h) * exp;
-      var curR = Math.round(dims.r * (1 - exp));
       var curShadowY = Math.round(dims.sY * (1 - exp));
       var curShadowBlur = Math.round(dims.sB * (1 - exp));
       var curShadowAlpha = (0.8 * (1 - exp)).toFixed(2);
-      var shadowStr = (curR > 0 && curShadowBlur > 0)
+      var shadowStr = curShadowBlur > 0
         ? ('0 ' + curShadowY + 'px ' + curShadowBlur + 'px rgba(0,0,0,' + curShadowAlpha + ')')
         : 'none';
 
@@ -7067,13 +7075,13 @@ if (document.readyState === 'loading') {
       stage.style.setProperty('max-width', '100vw', 'important');
       stage.style.setProperty('max-height', '100vh', 'important');
       stage.style.setProperty('aspect-ratio', 'auto', 'important');
-      stage.style.setProperty('border-radius', curR + 'px', 'important');
+      stage.style.setProperty('border-radius', '0px', 'important');
       stage.style.setProperty('box-shadow', shadowStr, 'important');
       stage.style.setProperty('--s2-stage-width', curW.toFixed(1) + 'px');
       stage.style.setProperty('--s2-stage-height', curH.toFixed(1) + 'px');
       stage.style.setProperty('--s2-stage-aspect', 'auto');
       stage.style.setProperty('--s2-stage-max-h', '100vh');
-      stage.style.setProperty('--s2-stage-br', curR + 'px');
+      stage.style.setProperty('--s2-stage-br', '0px');
       stage.style.setProperty('--s2-stage-shadow', shadowStr);
     }
 
@@ -7205,7 +7213,7 @@ if (document.readyState === 'loading') {
             s.style.transform = t3d;
             s.style.webkitFilter = blurStr;
             s.style.filter = blurStr;
-            s.style.borderRadius = curBr + 'px';
+            s.style.borderRadius = '0';
             s.style.boxShadow = rem > 0.05 ? '0 16px 48px rgba(0,0,0,' + shadowA + ')' : 'none';
           }
         }
