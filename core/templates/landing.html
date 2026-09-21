@@ -3378,21 +3378,20 @@ class Component extends DCLogic {
 
       const box = this.scrubBoxRef.current;
       if (box) {
-        // Section 1 -> Section 2: Video gradually and smoothly reveals during scroll
-        if (r.top > 0) {
-          const scrollDist = Math.max(0, vh - r.top);
-          const revealProgress = Math.max(0, Math.min(1, scrollDist / (vh * 0.72)));
-          const revealEase = revealProgress * revealProgress * (3 - 2 * revealProgress);
-          box.style.opacity = revealEase.toFixed(3);
-          box.style.transform = 'scale(' + (0.95 + 0.05 * revealEase).toFixed(4) + ')';
+        if (box.id === 'spec-scene2-stage') {
+          // Managed exclusively by Section 2 controller (image slicing, 3D zoom, and fullscreen video)
         } else {
-          box.style.opacity = '1';
-          box.style.transform = 'none';
-        }
+          if (r.top > 0) {
+            const scrollDist = Math.max(0, vh - r.top);
+            const revealProgress = Math.max(0, Math.min(1, scrollDist / (vh * 0.72)));
+            const revealEase = revealProgress * revealProgress * (3 - 2 * revealProgress);
+            box.style.opacity = revealEase.toFixed(3);
+            box.style.transform = 'scale(' + (0.95 + 0.05 * revealEase).toFixed(4) + ')';
+          } else {
+            box.style.opacity = '1';
+            box.style.transform = 'none';
+          }
 
-        if (box._customFullscreenController) {
-          // Managed dynamically by Section 2 controller for smooth fullscreen expansion and shrink
-        } else {
           const isMobile = window.innerWidth <= 768;
           if (isMobile) {
             box.style.aspectRatio = '9 / 16';
@@ -6409,27 +6408,21 @@ if (document.readyState === 'loading') {
     }
 
     var lastIsLight = false;
-    var cachedTargetX = null;
-    var cachedTargetY = null;
-    var cachedTargetW = null;
-    var cachedTargetH = null;
 
     function getLiveNavLogo() {
       return document.querySelector('.spec-chrome-nav-logo');
     }
 
-    function measureNaturalNavbarLogo() {
+    function getNaturalLogoMetrics() {
       var navLogo = getLiveNavLogo();
-      if (!navLogo) return;
-      // Temporarily clear inline transform to get natural layout coordinates
+      if (!navLogo) return null;
       var prevT = navLogo.style.transform;
+      var prevO = navLogo.style.transformOrigin;
       navLogo.style.transform = 'none';
       var rect = navLogo.getBoundingClientRect();
-      cachedTargetX = rect.left;
-      cachedTargetY = rect.top;
-      cachedTargetW = rect.width || 150;
-      cachedTargetH = rect.height || 22;
       navLogo.style.transform = prevT;
+      navLogo.style.transformOrigin = prevO;
+      return rect;
     }
 
     // Inject dynamic logo animation styles if not already present
@@ -6469,9 +6462,6 @@ if (document.readyState === 'loading') {
       }
     }
 
-    window.addEventListener('resize', measureNaturalNavbarLogo);
-    measureNaturalNavbarLogo();
-
     function updateFlight() {
       var navLogo = getLiveNavLogo();
       if (!navLogo) return;
@@ -6486,23 +6476,20 @@ if (document.readyState === 'loading') {
       var p = Math.max(0, Math.min(1, scrollY / flightDist));
       var ease = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
 
-      if (cachedTargetX === null || cachedTargetW === 0) {
-        measureNaturalNavbarLogo();
-      }
+      var natRect = getNaturalLogoMetrics();
+      var natW = (natRect && natRect.width > 20) ? natRect.width : 199;
+      var natH = (natRect && natRect.height > 10) ? natRect.height : 25;
+      var natX = (natRect && natRect.left > 0) ? natRect.left : 80;
+      var natY = (natRect && natRect.top > 0) ? natRect.top : 38;
 
-      var targetX = cachedTargetX || 48;
-      var targetY = cachedTargetY || 20;
-      var targetW = cachedTargetW || 150;
-      var targetH = cachedTargetH || 22;
+      // Hero Logo: Perfectly centered horizontally and vertically in the monitor
+      var maxHeroW = Math.min(vw * 0.72, 680);
+      var scaleHero = Math.max(1.4, Math.min(3.6, maxHeroW / natW));
+      var heroW = natW * scaleHero;
+      var heroH = natH * scaleHero;
 
-      // Hero Logo: Centered horizontally in the UPPER area of the monitor per user request
-      var screenCenterX = vw / 2;
-      var screenCenterY = Math.max(80, Math.min(210, vh * 0.20));
-      var heroLogoW = Math.min(vw * 0.85, 780);
-      var scaleHero = Math.max(1.8, Math.min(5.2, heroLogoW / targetW));
-
-      var startX = screenCenterX - targetX - (targetW * scaleHero) / 2;
-      var startY = screenCenterY - targetY - (targetH * scaleHero) / 2;
+      var startX = (vw - heroW) / 2 - natX;
+      var startY = (vh - heroH) / 2 - natY;
 
       var curX = startX * (1 - ease);
       var curY = startY * (1 - ease);
@@ -6748,22 +6735,25 @@ if (document.readyState === 'loading') {
     var lastRafTime = null;
     var wasInSec2 = false;
     var lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    var videoFinished = false;
 
     function setStageSmall(stage, isMobile) {
       if (isMobile) {
-        stage.style.width = 'min(88vw, 420px)';
-        stage.style.aspectRatio = '9 / 16';
-        stage.style.maxHeight = '75vh';
-        stage.style.height = 'auto';
-        stage.style.borderRadius = '14px';
-        stage.style.boxShadow = '0 16px 40px rgba(0,0,0,0.8)';
+        stage.style.setProperty('width', 'min(88vw, 420px)', 'important');
+        stage.style.setProperty('aspect-ratio', '9 / 16', 'important');
+        stage.style.setProperty('max-height', '75vh', 'important');
+        stage.style.setProperty('max-width', '420px', 'important');
+        stage.style.setProperty('height', 'auto', 'important');
+        stage.style.setProperty('border-radius', '14px', 'important');
+        stage.style.setProperty('box-shadow', '0 16px 40px rgba(0,0,0,0.8)', 'important');
       } else {
-        stage.style.width = 'min(90vw, 1120px)';
-        stage.style.aspectRatio = '16 / 9';
-        stage.style.maxHeight = '80vh';
-        stage.style.height = 'auto';
-        stage.style.borderRadius = '18px';
-        stage.style.boxShadow = '0 24px 60px rgba(0,0,0,0.8)';
+        stage.style.setProperty('width', 'min(90vw, 1120px)', 'important');
+        stage.style.setProperty('aspect-ratio', '16 / 9', 'important');
+        stage.style.setProperty('max-height', '80vh', 'important');
+        stage.style.setProperty('max-width', '1120px', 'important');
+        stage.style.setProperty('height', 'auto', 'important');
+        stage.style.setProperty('border-radius', '18px', 'important');
+        stage.style.setProperty('box-shadow', '0 24px 60px rgba(0,0,0,0.8)', 'important');
       }
     }
 
@@ -6774,28 +6764,31 @@ if (document.readyState === 'loading') {
         return;
       }
       if (exp >= 0.999) {
-        stage.style.width = '100vw';
-        stage.style.height = '100vh';
-        stage.style.maxHeight = '100vh';
-        stage.style.aspectRatio = 'auto';
-        stage.style.borderRadius = '0px';
-        stage.style.boxShadow = 'none';
+        stage.style.setProperty('width', '100vw', 'important');
+        stage.style.setProperty('height', '100vh', 'important');
+        stage.style.setProperty('max-height', '100vh', 'important');
+        stage.style.setProperty('max-width', '100vw', 'important');
+        stage.style.setProperty('aspect-ratio', 'auto', 'important');
+        stage.style.setProperty('border-radius', '0px', 'important');
+        stage.style.setProperty('box-shadow', 'none', 'important');
         return;
       }
       if (isMobile) {
-        stage.style.width = 'calc(min(88vw, 420px) + (100vw - min(88vw, 420px)) * ' + exp.toFixed(4) + ')';
-        stage.style.maxHeight = (75 + 25 * exp).toFixed(1) + 'vh';
-        stage.style.height = (75 + 25 * exp).toFixed(1) + 'vh';
-        stage.style.aspectRatio = 'auto';
-        stage.style.borderRadius = Math.round(14 * (1 - exp)) + 'px';
-        stage.style.boxShadow = '0 ' + Math.round(16 * (1 - exp)) + 'px ' + Math.round(40 * (1 - exp)) + 'px rgba(0,0,0,' + (0.8 * (1 - exp)).toFixed(2) + ')';
+        stage.style.setProperty('width', 'calc(min(88vw, 420px) + (100vw - min(88vw, 420px)) * ' + exp.toFixed(4) + ')', 'important');
+        stage.style.setProperty('max-height', (75 + 25 * exp).toFixed(1) + 'vh', 'important');
+        stage.style.setProperty('max-width', '100vw', 'important');
+        stage.style.setProperty('height', (75 + 25 * exp).toFixed(1) + 'vh', 'important');
+        stage.style.setProperty('aspect-ratio', 'auto', 'important');
+        stage.style.setProperty('border-radius', Math.round(14 * (1 - exp)) + 'px', 'important');
+        stage.style.setProperty('box-shadow', '0 ' + Math.round(16 * (1 - exp)) + 'px ' + Math.round(40 * (1 - exp)) + 'px rgba(0,0,0,' + (0.8 * (1 - exp)).toFixed(2) + ')', 'important');
       } else {
-        stage.style.width = 'calc(min(90vw, 1120px) + (100vw - min(90vw, 1120px)) * ' + exp.toFixed(4) + ')';
-        stage.style.maxHeight = (80 + 20 * exp).toFixed(1) + 'vh';
-        stage.style.height = (80 + 20 * exp).toFixed(1) + 'vh';
-        stage.style.aspectRatio = 'auto';
-        stage.style.borderRadius = Math.round(18 * (1 - exp)) + 'px';
-        stage.style.boxShadow = '0 ' + Math.round(24 * (1 - exp)) + 'px ' + Math.round(60 * (1 - exp)) + 'px rgba(0,0,0,' + (0.8 * (1 - exp)).toFixed(2) + ')';
+        stage.style.setProperty('width', 'calc(min(90vw, 1120px) + (100vw - min(90vw, 1120px)) * ' + exp.toFixed(4) + ')', 'important');
+        stage.style.setProperty('max-height', (80 + 20 * exp).toFixed(1) + 'vh', 'important');
+        stage.style.setProperty('max-width', '100vw', 'important');
+        stage.style.setProperty('height', (80 + 20 * exp).toFixed(1) + 'vh', 'important');
+        stage.style.setProperty('aspect-ratio', 'auto', 'important');
+        stage.style.setProperty('border-radius', Math.round(18 * (1 - exp)) + 'px', 'important');
+        stage.style.setProperty('box-shadow', '0 ' + Math.round(24 * (1 - exp)) + 'px ' + Math.round(60 * (1 - exp)) + 'px rgba(0,0,0,' + (0.8 * (1 - exp)).toFixed(2) + ')', 'important');
       }
     }
 
@@ -7016,19 +7009,14 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 8. PHASE 8: Seamless Loop Transition & Reset (15.4 -> 16.0s)
+      // 8. PHASE 8: Video Finished -> Static Master Image (t >= 15.4s)
       // =========================================================================
       else if (t >= 15.4) {
-        var p8 = (t - 15.4) / 0.6;
-
-        // Seamless crossfade: video fades out, distant small blurred image fades in
-        video.style.opacity = (1 - p8).toFixed(3);
-        masterImg.style.opacity = '0';
-        slicesCont.style.opacity = p8.toFixed(3);
-
-        // Pre-position slices at distant zoom state for zero-jump loop entry
-        slicesCont.style.transform = 'translate3d(0, 0, -700px) scale(0.28)';
-        slicesCont.style.filter = 'blur(22px)';
+        // Video finished: pause video, hide slices & video, hold sharp static master image
+        video.style.opacity = '0';
+        if (!video.paused) { video.pause(); }
+        masterImg.style.opacity = '1';
+        slicesCont.style.opacity = '0';
         slices.forEach(function(slice) {
           slice.style.transform = 'none';
           slice.style.filter = 'none';
@@ -7037,15 +7025,44 @@ if (document.readyState === 'loading') {
         });
 
         setStageSmall(stage, isMobile);
+        stage.style.overflow = 'hidden';
       }
     }
 
     function onSec2Scroll() {
       var sec = document.getElementById('spec-scene2-section');
       if (!sec) return;
-      var rect = sec.getBoundingClientRect();
       var vh = window.innerHeight;
       var maxScroll = Math.max(1, sec.offsetHeight - vh);
+      var maxPageScroll = sec.offsetTop + maxScroll;
+      var currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+      // Hard boundary: cannot scroll past Section 2
+      if (currentY > maxPageScroll) {
+        window.scrollTo(0, maxPageScroll);
+        if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+          window.lenis.scrollTo(maxPageScroll, { immediate: true });
+        }
+        currentY = maxPageScroll;
+      }
+
+      // Hard clamp when video finished
+      if (videoFinished && currentY >= sec.offsetTop) {
+        if (!window.__lockedSec2ScrollY) {
+          window.__lockedSec2ScrollY = currentY;
+        }
+        if (currentY > window.__lockedSec2ScrollY) {
+          window.scrollTo(0, window.__lockedSec2ScrollY);
+          if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+            window.lenis.scrollTo(window.__lockedSec2ScrollY, { immediate: true });
+          }
+          currentY = window.__lockedSec2ScrollY;
+        }
+      } else if (!videoFinished) {
+        window.__lockedSec2ScrollY = null;
+      }
+
+      var rect = sec.getBoundingClientRect();
       var currentScroll = -rect.top;
       var pScroll = Math.max(0, Math.min(1, currentScroll / maxScroll));
 
@@ -7055,14 +7072,19 @@ if (document.readyState === 'loading') {
         scrollShrink = sp * sp * (3 - 2 * sp);
       }
 
-      var currentY = window.pageYOffset || document.documentElement.scrollTop;
       var dY = currentY - lastScrollY;
       lastScrollY = currentY;
 
-      // Gentle interactive scrub: scrolling down forward-advances the animation
-      if (rect.bottom > 0 && rect.top < vh && Math.abs(dY) > 2) {
-        animTime = (animTime + (dY * 0.003)) % CYCLE_DURATION;
-        if (animTime < 0) animTime += CYCLE_DURATION;
+      // Gentle interactive scrub: forward-advance animation only if not finished
+      if (!videoFinished && rect.bottom > 0 && rect.top < vh && Math.abs(dY) > 2) {
+        animTime = Math.min(15.4, animTime + (dY * 0.003));
+        if (animTime < 0) animTime = 0;
+        if (animTime >= 15.4) {
+          videoFinished = true;
+          animTime = 15.4;
+          var video = document.getElementById('spec-scene2-video');
+          if (video) { video.pause(); }
+        }
       }
 
       renderSec2Frame(animTime, scrollShrink);
@@ -7087,17 +7109,24 @@ if (document.readyState === 'loading') {
           // When entering Section 2 from above, start right from Step 1 (distant arrival)
           if (!wasInSec2 && rect.top <= vh * 0.70) {
             wasInSec2 = true;
-            animTime = 0.0;
-            var video = document.getElementById('spec-scene2-video');
-            if (video) { video.pause(); try { video.currentTime = 0; } catch(_) {} }
+            if (!videoFinished) {
+              animTime = 0.0;
+              var video = document.getElementById('spec-scene2-video');
+              if (video) { video.pause(); try { video.currentTime = 0; } catch(_) {} }
+            }
           }
 
           var prevTime = animTime;
-          animTime += dt;
-          if (animTime >= CYCLE_DURATION) {
-            animTime = animTime % CYCLE_DURATION;
-            var video = document.getElementById('spec-scene2-video');
-            if (video) { video.pause(); try { video.currentTime = 0; } catch(_) {} }
+          if (!videoFinished) {
+            animTime += dt;
+            if (animTime >= 15.4) {
+              animTime = 15.4;
+              videoFinished = true;
+              var video = document.getElementById('spec-scene2-video');
+              if (video) { video.pause(); }
+            }
+          } else {
+            animTime = 15.4;
           }
 
           var maxScroll = Math.max(1, sec.offsetHeight - vh);
@@ -7125,11 +7154,92 @@ if (document.readyState === 'loading') {
     window.__specUpdateSection2 = onSec2Scroll;
     window.__specRenderSec2Frame = renderSec2Frame;
     window.__specGetAnimTime = function() { return animTime; };
+    window.__specSetAnimTime = function(t) { animTime = t; };
+    window.__specIsVideoFinished = function() { return videoFinished; };
     window.addEventListener('scroll', onSec2Scroll, { passive: true });
     window.addEventListener('resize', function() {
       build6Cubes();
       onSec2Scroll();
     }, { passive: true });
+
+    var s2Video = document.getElementById('spec-scene2-video');
+    if (s2Video) {
+      s2Video.addEventListener('ended', function() {
+        videoFinished = true;
+        animTime = 15.4;
+        renderSec2Frame(15.4, 0);
+      });
+    }
+
+    // Lock scrolling: cannot scroll past Section 2, and cannot scroll down once video finishes
+    function handleWheelLock(e) {
+      var sec = document.getElementById('spec-scene2-section');
+      if (!sec) return;
+      var rect = sec.getBoundingClientRect();
+      var maxScroll = sec.offsetTop + Math.max(0, sec.offsetHeight - window.innerHeight);
+      var currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+      if (currentY >= maxScroll - 2 && e.deltaY > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      if (videoFinished && rect.top <= 50 && e.deltaY > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    }
+
+    var lastTouchY = null;
+    function handleTouchStart(e) {
+      if (e.touches && e.touches[0]) {
+        lastTouchY = e.touches[0].clientY;
+      }
+    }
+
+    function handleTouchMove(e) {
+      if (lastTouchY === null || !e.touches || !e.touches[0]) return;
+      var currentTouchY = e.touches[0].clientY;
+      var deltaY = lastTouchY - currentTouchY;
+      lastTouchY = currentTouchY;
+
+      var sec = document.getElementById('spec-scene2-section');
+      if (!sec) return;
+      var rect = sec.getBoundingClientRect();
+      var maxScroll = sec.offsetTop + Math.max(0, sec.offsetHeight - window.innerHeight);
+      var currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+      if ((currentY >= maxScroll - 2 || (videoFinished && rect.top <= 50)) && deltaY > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    }
+
+    function handleKeyLock(e) {
+      var downKeys = ['ArrowDown', 'PageDown', 'End', ' '];
+      var isDownKey = downKeys.indexOf(e.key) !== -1 || [40, 34, 35, 32].indexOf(e.keyCode) !== -1;
+      if (!isDownKey) return;
+      if (e.key === ' ' && e.shiftKey) return;
+
+      var sec = document.getElementById('spec-scene2-section');
+      if (!sec) return;
+      var rect = sec.getBoundingClientRect();
+      var maxScroll = sec.offsetTop + Math.max(0, sec.offsetHeight - window.innerHeight);
+      var currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+      if (currentY >= maxScroll - 2 || (videoFinished && rect.top <= 50)) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    }
+
+    window.addEventListener('wheel', handleWheelLock, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('keydown', handleKeyLock, { passive: false });
 
     function attachSection2Lenis() {
       if (window.lenis && typeof window.lenis.on === 'function') {
