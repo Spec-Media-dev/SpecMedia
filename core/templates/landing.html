@@ -48,6 +48,13 @@
   .lenis.lenis-smooth iframe {
     pointer-events: none;
   }
+  #spec-video-skip-btn:hover {
+    background: rgba(35, 5, 8, 0.94) !important;
+    border-color: rgba(201, 123, 130, 0.85) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.8) !important;
+  }
   #spec-video-play-pill:hover {
     background: rgba(35, 5, 8, 0.96) !important;
     border-color: rgba(201, 123, 130, 0.9) !important;
@@ -2023,6 +2030,13 @@ footer#contact div[style*="font-family:ui-monospace"] {
             <span>PLAY VIDEO</span>
           </div>
         </div>
+
+        <!-- Video Skip Control Button -->
+        <button id="spec-video-skip-btn" onclick="if(window.__specUnlockVideo){window.__specUnlockVideo();}" type="button" aria-label="Skip Video" style="position:absolute;bottom:32px;right:32px;z-index:15;display:none;opacity:0;align-items:center;gap:8px;padding:10px 18px;background:rgba(20,2,3,0.80);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(201,123,130,0.45);border-radius:2px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.9);cursor:pointer;transition:opacity 0.4s ease, transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;box-shadow:0 8px 24px rgba(0,0,0,0.6);pointer-events:none;outline:none;">
+          <span>SKIP VIDEO</span>
+          <span style="color:#b40119;font-weight:700;">→</span>
+          <span style="opacity:0.65;font-size:9px;margin-left:4px;border-left:1px solid rgba(201,123,130,0.4);padding-left:8px;color:#f5ead8;">OR SCROLL ↓</span>
+        </button>
 
         <!-- Legacy ref tags preserved invisibly for DCLogic stability -->
         <div style="display:none !important;" aria-hidden="true">
@@ -7294,7 +7308,7 @@ if (document.readyState === 'loading') {
         masterImg.style.opacity = (1 - eCross).toFixed(3);
         video.style.opacity = eCross.toFixed(3);
 
-        syncSec2VideoToScroll(p);
+        safePlaySec2Video();
 
         setStageSmall(stage, isMobile);
         return;
@@ -7308,11 +7322,14 @@ if (document.readyState === 'loading') {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '0';
         video.style.opacity = '1';
+        stage.style.pointerEvents = 'auto';
+        video.style.pointerEvents = 'auto';
+        video.style.cursor = 'pointer';
 
         var pExp = (p - 0.62) / 0.14;
         var eExp = pExp * pExp * (3 - 2 * pExp);
 
-        syncSec2VideoToScroll(p);
+        safePlaySec2Video();
 
         applyStageExpansion(stage, isMobile, eExp);
         return;
@@ -7326,8 +7343,11 @@ if (document.readyState === 'loading') {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '0';
         video.style.opacity = '1';
+        stage.style.pointerEvents = 'auto';
+        video.style.pointerEvents = 'auto';
+        video.style.cursor = 'pointer';
 
-        syncSec2VideoToScroll(p);
+        safePlaySec2Video();
 
         applyStageExpansion(stage, isMobile, 1.0);
         return;
@@ -7345,7 +7365,7 @@ if (document.readyState === 'loading') {
         var pShrink = (p - 0.88) / 0.08;
         var eShrink = pShrink * pShrink * (3 - 2 * pShrink);
 
-        syncSec2VideoToScroll(p);
+        safePlaySec2Video();
 
         applyStageExpansion(stage, isMobile, 1.0 - eShrink);
         return;
@@ -7353,14 +7373,13 @@ if (document.readyState === 'loading') {
 
       // =========================================================================
       // 8. VIDEO END / NORMAL SCROLL RESTORATION (p >= 0.96)
-      // Dock back into container showing completed video end; unpin to scroll into Section 03
+      // Dock back into container; unpin to scroll into Section 03
       // =========================================================================
       if (p >= 0.96) {
         slicesCont.style.opacity = '0';
-        masterImg.style.opacity = '0';
-        video.style.opacity = '1';
-
-        syncSec2VideoToScroll(p);
+        masterImg.style.opacity = '1';
+        video.style.opacity = '0';
+        if (!video.paused) { video.pause(); sec2VideoWasPlaying = false; }
 
         setStageSmall(stage, isMobile);
         stage.style.overflow = 'hidden';
@@ -7368,47 +7387,9 @@ if (document.readyState === 'loading') {
     }
 
     // =========================================================================
-    // SECTION 2 VIDEO SCROLL ENGINE (Original Speed & Exit-to-End Display)
+    // PURE SCROLL-DRIVEN CONTROLLER
+    // Maps scroll position within Section 2 directly to progress p (0.0 -> 1.0)
     // =========================================================================
-    var sec2LastScrollP = 0;
-    var sec2LastScrollTime = performance.now();
-    var sec2ScrollVelocity = 0;
-
-    function syncSec2VideoToScroll(p) {
-      var video = document.getElementById('spec-scene2-video');
-      if (!video) return;
-
-      var D = (video.duration && !isNaN(video.duration) && video.duration > 0) ? video.duration : 50.0;
-      var endTime = Math.max(0, D - 0.15);
-
-      // 1. Maintain original playback speed at all times
-      if (video.playbackRate !== 1.0) {
-        try { video.playbackRate = 1.0; } catch(e){}
-      }
-
-      // 2. When beginning to go to next section (p >= 0.88): show the end of the video
-      if (p >= 0.88) {
-        if (video.currentTime < endTime) {
-          try { video.currentTime = endTime; } catch(e){}
-        }
-        if (!video.paused) {
-          try { video.pause(); } catch(e){}
-          sec2VideoWasPlaying = false;
-        }
-        return;
-      }
-
-      // 3. Active video playback zone (0.52 <= p < 0.88):
-      // Keep the video working continuously at original speed as user continues scrolling
-      if (p >= 0.52) {
-        // If user scrolled back up from exit, rewind so it plays forward again
-        if (video.currentTime >= endTime - 0.2) {
-          try { video.currentTime = 0; } catch(e){}
-        }
-        safePlaySec2Video();
-      }
-    }
-
     // Robust Video Player with Autoplay & Gesture Fallback
     var sec2VideoPlayPending = false;
     function safePlaySec2Video() {
@@ -7452,7 +7433,7 @@ if (document.readyState === 'loading') {
           sec2VideoPlayPending = false;
           console.warn('[SpecMedia] Video play waiting for user click:', err.name);
           var ov = document.getElementById('spec-video-play-overlay');
-          if (ov) {
+          if (ov && !sec2VideoFinished) {
             ov.style.display = 'flex';
             ov.style.pointerEvents = 'auto';
             ov.offsetHeight;
@@ -7465,9 +7446,31 @@ if (document.readyState === 'loading') {
     }
     window.__specPlayVideo = safePlaySec2Video;
 
+    // Safety watchdog: auto-unlock if video stalls or fails to play after 6s in fullscreen lock
+    var sec2LockWatchdogTimer = null;
+    function checkSec2LockSafety(p) {
+      if (p >= 0.76 && !sec2VideoFinished) {
+        if (!sec2LockWatchdogTimer) {
+          sec2LockWatchdogTimer = setTimeout(function() {
+            var v = document.getElementById('spec-scene2-video');
+            if (v && v.paused && !sec2VideoFinished) {
+              console.warn('[SpecMedia] Video autoplay was blocked or stalled. Unlocking scroll fallback.');
+              unlockSec2Video();
+            }
+          }, 6000);
+        }
+      } else {
+        if (sec2LockWatchdogTimer) {
+          clearTimeout(sec2LockWatchdogTimer);
+          sec2LockWatchdogTimer = null;
+        }
+      }
+    }
+
     // Direct click-to-play on the video stage
     if (stage) {
       stage.addEventListener('click', function(e) {
+        if (e.target.closest('#spec-video-skip-btn')) return;
         safePlaySec2Video();
       });
     }
@@ -7479,7 +7482,7 @@ if (document.readyState === 'loading') {
       var rect = sec.getBoundingClientRect();
       var maxScroll = Math.max(1, sec.offsetHeight - window.innerHeight);
       var p = -rect.top / maxScroll;
-      if (p >= 0.50) {
+      if (p >= 0.50 && !sec2VideoFinished) {
         safePlaySec2Video();
       }
     }
@@ -7487,8 +7490,43 @@ if (document.readyState === 'loading') {
     window.addEventListener('keydown', onUserGestureTryPlay, { passive: true });
 
     // =========================================================================
-    // PURE SCROLL-DRIVEN CONTROLLER (No Locks, No Traps, Natural Progression)
+    // PURE SCROLL-DRIVEN CONTROLLER (SCROLL-TO-SKIP ENABLED)
+    // Maps scroll position within Section 2 directly to progress p (0.0 -> 1.0)
     // =========================================================================
+    var sec2VideoFinished = false;
+
+    function unlockSec2Video() {
+      if (sec2VideoFinished) return;
+      sec2VideoFinished = true;
+      if (sec2LockWatchdogTimer) {
+        clearTimeout(sec2LockWatchdogTimer);
+        sec2LockWatchdogTimer = null;
+      }
+      var playOv = document.getElementById('spec-video-play-overlay');
+      if (playOv) {
+        playOv.style.opacity = '0';
+        playOv.style.pointerEvents = 'none';
+        setTimeout(function() { playOv.style.display = 'none'; }, 300);
+      }
+      var skipBtn = document.getElementById('spec-video-skip-btn');
+      if (skipBtn) {
+        skipBtn.style.opacity = '0';
+        skipBtn.style.pointerEvents = 'none';
+        setTimeout(function() { skipBtn.style.display = 'none'; }, 400);
+      }
+      var s2Vid = document.getElementById('spec-scene2-video');
+      if (s2Vid) {
+        var D = (s2Vid.duration && !isNaN(s2Vid.duration) && s2Vid.duration > 0) ? s2Vid.duration : 50.0;
+        var endTime = Math.max(0, D - 0.15);
+        try { s2Vid.currentTime = endTime; } catch(e){}
+        if (!s2Vid.paused) {
+          try { s2Vid.pause(); } catch(e){}
+          sec2VideoWasPlaying = false;
+        }
+      }
+      onSec2Scroll();
+    }
+
     function onSec2Scroll() {
       var sec = document.getElementById('spec-scene2-section');
       if (!sec) return;
@@ -7497,22 +7535,153 @@ if (document.readyState === 'loading') {
 
       var rect = sec.getBoundingClientRect();
       var currentScroll = -rect.top;
-      var pScroll = Math.max(0, Math.min(1, currentScroll / maxScroll));
+      var rawPScroll = Math.max(0, Math.min(1, currentScroll / maxScroll));
 
-      var now = performance.now();
-      var dt = Math.max(10, now - sec2LastScrollTime);
-      var dp = pScroll - sec2LastScrollP;
-      sec2ScrollVelocity = dp / (dt / 1000); // delta p per second
-      sec2LastScrollTime = now;
-      sec2LastScrollP = pScroll;
+      var pScroll = rawPScroll;
+
+      // When user scrolls down past fullscreen into exit zone (p >= 0.85), unlock video automatically
+      if (!sec2VideoFinished && rawPScroll >= 0.85) {
+        unlockSec2Video();
+      }
+
+      // If user scrolls back up into earlier phases, re-enable Section 2
+      if (rawPScroll < 0.40 && sec2VideoFinished) {
+        sec2VideoFinished = false;
+      }
 
       renderSec2Frame(pScroll);
+      checkSec2LockSafety(pScroll);
+
+      // Skip button visibility management
+      var skipBtn = document.getElementById('spec-video-skip-btn');
+      if (skipBtn) {
+        if (!sec2VideoFinished && pScroll >= 0.72 && pScroll < 0.88) {
+          skipBtn.style.display = 'inline-flex';
+          skipBtn.style.opacity = '1';
+          skipBtn.style.pointerEvents = 'auto';
+        } else {
+          skipBtn.style.opacity = '0';
+          skipBtn.style.pointerEvents = 'none';
+          if (pScroll < 0.60 || pScroll >= 0.88 || sec2VideoFinished) {
+            skipBtn.style.display = 'none';
+          }
+        }
+      }
     }
+
+    // Skip Video handler - can be triggered by button click OR by downward scrolling
+    var sec2IsSkipping = false;
+    function handleSkipVideo(e) {
+      if (e && e.preventDefault) {
+        try { e.preventDefault(); e.stopPropagation(); } catch(err){}
+      }
+      if (sec2IsSkipping) return;
+      sec2IsSkipping = true;
+      setTimeout(function() { sec2IsSkipping = false; }, 1200);
+
+      unlockSec2Video();
+      var sec = document.getElementById('spec-scene2-section');
+      if (sec) {
+        var vh = window.innerHeight;
+        var maxScroll = Math.max(1, sec.offsetHeight - vh);
+        var rect = sec.getBoundingClientRect();
+        var docScrollY = (window.lenis && typeof window.lenis.scroll === 'number')
+          ? window.lenis.scroll
+          : (window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0);
+        var secTop = rect.top + docScrollY;
+        var targetY = secTop + (0.96 * maxScroll);
+        if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+          window.lenis.scrollTo(targetY, { duration: 0.9 });
+        } else {
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }
+      }
+    }
+
+    // Allow skipping the video with downward wheel scrolling
+    var sec2WheelSkipAccum = 0;
+    var sec2WheelSkipTimer = null;
+    function onSec2WheelSkip(e) {
+      if (sec2VideoFinished) return;
+      var sec = document.getElementById('spec-scene2-section');
+      if (!sec) return;
+      var vh = window.innerHeight;
+      var maxScroll = Math.max(1, sec.offsetHeight - vh);
+      var rect = sec.getBoundingClientRect();
+      var currentScroll = -rect.top;
+      var pScroll = currentScroll / maxScroll;
+
+      // If user is within video playback zone (0.70 <= pScroll <= 0.88) and scrolls DOWN:
+      if (pScroll >= 0.70 && pScroll <= 0.88) {
+        if (e.deltaY > 0) {
+          sec2WheelSkipAccum += e.deltaY;
+          if (sec2WheelSkipTimer) clearTimeout(sec2WheelSkipTimer);
+          sec2WheelSkipTimer = setTimeout(function() { sec2WheelSkipAccum = 0; }, 400);
+
+          if (sec2WheelSkipAccum >= 25) {
+            sec2WheelSkipAccum = 0;
+            handleSkipVideo();
+          }
+        } else if (e.deltaY < 0) {
+          sec2WheelSkipAccum = 0;
+        }
+      }
+    }
+    window.addEventListener('wheel', onSec2WheelSkip, { passive: true });
+
+    // Touch gesture: swipe up (scrolling down) while watching video skips it
+    var sec2TouchStartY = 0;
+    window.addEventListener('touchstart', function(e) {
+      if (e.touches && e.touches.length) {
+        sec2TouchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', function(e) {
+      if (sec2VideoFinished) return;
+      if (!e.touches || !e.touches.length) return;
+      var dy = sec2TouchStartY - e.touches[0].clientY;
+      if (dy > 30) {
+        var sec = document.getElementById('spec-scene2-section');
+        if (!sec) return;
+        var vh = window.innerHeight;
+        var maxScroll = Math.max(1, sec.offsetHeight - vh);
+        var rect = sec.getBoundingClientRect();
+        var currentScroll = -rect.top;
+        var pScroll = currentScroll / maxScroll;
+
+        if (pScroll >= 0.70 && pScroll <= 0.88) {
+          handleSkipVideo();
+        }
+      }
+    }, { passive: true });
+
+    // Keyboard keys (Down, PageDown, Space) trigger skip
+    window.addEventListener('keydown', function(e) {
+      if (sec2VideoFinished) return;
+      var downKeys = ['ArrowDown', 'PageDown', 'Space', ' ', 'End'];
+      if (downKeys.indexOf(e.key) !== -1) {
+        var sec = document.getElementById('spec-scene2-section');
+        if (!sec) return;
+        var vh = window.innerHeight;
+        var maxScroll = Math.max(1, sec.offsetHeight - vh);
+        var rect = sec.getBoundingClientRect();
+        var currentScroll = -rect.top;
+        var pScroll = currentScroll / maxScroll;
+        if (pScroll >= 0.70 && pScroll <= 0.88) {
+          handleSkipVideo();
+        }
+      }
+    }, { passive: true });
 
     // Handle video completion & playback events
     var s2Video = document.getElementById('spec-scene2-video');
     if (s2Video) {
       s2Video.addEventListener('playing', function() {
+        if (sec2LockWatchdogTimer) {
+          clearTimeout(sec2LockWatchdogTimer);
+          sec2LockWatchdogTimer = null;
+        }
         var ov = document.getElementById('spec-video-play-overlay');
         if (ov) {
           ov.style.opacity = '0';
@@ -7524,8 +7693,26 @@ if (document.readyState === 'loading') {
         s2Video.style.opacity = '1';
       });
       s2Video.addEventListener('ended', function() {
-        if (!s2Video.paused) s2Video.pause();
+        unlockSec2Video();
       });
+      s2Video.addEventListener('timeupdate', function() {
+        if (s2Video.duration && s2Video.currentTime >= s2Video.duration - 0.25) {
+          unlockSec2Video();
+        }
+      });
+    }
+
+    // Delegated and direct skip click listener
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('#spec-video-skip-btn');
+      if (btn) {
+        handleSkipVideo(e);
+      }
+    }, true);
+
+    var skipBtn = document.getElementById('spec-video-skip-btn');
+    if (skipBtn) {
+      skipBtn.addEventListener('click', handleSkipVideo);
     }
 
     window.__specUpdateSection2 = onSec2Scroll;
@@ -7544,9 +7731,11 @@ if (document.readyState === 'loading') {
       return pScroll * 16.0;
     };
     window.__specIsVideoFinished = function() {
-      return true;
+      return sec2VideoFinished;
     };
-    window.__specUnlockVideo = function() {};
+    window.__specUnlockVideo = function() {
+      handleSkipVideo();
+    };
 
     window.addEventListener('scroll', onSec2Scroll, { passive: true });
     window.addEventListener('wheel', function() {
@@ -7572,28 +7761,10 @@ if (document.readyState === 'loading') {
       }
     }
 
-    // Continuous RAF loop for visibility checks, velocity decay, and scroll synchronization
+    // Continuous RAF loop for visibility checks AND scroll synchronization across all browsers
     var lastObservedScrollY = -999999;
     function sec2ContinuousTick() {
       sec2VisibilityCheck();
-
-      var now = performance.now();
-      if (now - sec2LastScrollTime > 120) {
-        sec2ScrollVelocity = 0;
-        var vid = document.getElementById('spec-scene2-video');
-        if (vid && vid.playbackRate !== 1.0) {
-          try { vid.playbackRate = 1.0; } catch(e){}
-        }
-        var sec = document.getElementById('spec-scene2-section');
-        if (sec) {
-          var maxScroll = Math.max(1, sec.offsetHeight - window.innerHeight);
-          var rect = sec.getBoundingClientRect();
-          var p = Math.max(0, Math.min(1, -rect.top / maxScroll));
-          if (p >= 0.52 && p < 0.88 && vid && vid.paused && !vid.ended) {
-            safePlaySec2Video();
-          }
-        }
-      }
 
       var currentY = (window.lenis && typeof window.lenis.scroll === 'number')
         ? window.lenis.scroll
