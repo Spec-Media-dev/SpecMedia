@@ -7353,13 +7353,14 @@ if (document.readyState === 'loading') {
 
       // =========================================================================
       // 8. VIDEO END / NORMAL SCROLL RESTORATION (p >= 0.96)
-      // Dock back into container; unpin to scroll into Section 03
+      // Dock back into container showing completed video end; unpin to scroll into Section 03
       // =========================================================================
       if (p >= 0.96) {
         slicesCont.style.opacity = '0';
-        masterImg.style.opacity = '1';
-        video.style.opacity = '0';
-        if (!video.paused) { video.pause(); sec2VideoWasPlaying = false; }
+        masterImg.style.opacity = '0';
+        video.style.opacity = '1';
+
+        syncSec2VideoToScroll(p);
 
         setStageSmall(stage, isMobile);
         stage.style.overflow = 'hidden';
@@ -7367,50 +7368,42 @@ if (document.readyState === 'loading') {
     }
 
     // =========================================================================
-    // SECTION 2 VIDEO SCROLL ENGINE (Dynamic Fast-Forward & Scrubbing)
+    // SECTION 2 VIDEO SCROLL ENGINE (Original Speed & Exit-to-End Display)
     // =========================================================================
     var sec2LastScrollP = 0;
     var sec2LastScrollTime = performance.now();
     var sec2ScrollVelocity = 0;
-    var sec2LastSeekTime = 0;
 
     function syncSec2VideoToScroll(p) {
       var video = document.getElementById('spec-scene2-video');
       if (!video) return;
 
       var D = (video.duration && !isNaN(video.duration) && video.duration > 0) ? video.duration : 50.0;
-      // Map p from 0.52 (video appears) to 0.92 (video completes before exit) -> 0.0 to 1.0
-      var pVid = Math.max(0, Math.min(1, (p - 0.52) / 0.40));
-      var targetTime = pVid * D;
+      var endTime = Math.max(0, D - 0.15);
 
-      var now = performance.now();
-      var absVel = Math.abs(sec2ScrollVelocity);
-
-      // 1. User scrolling fast forward: fast-forward video speed and scrub currentTime
-      if (sec2ScrollVelocity > 0.08 || (targetTime > video.currentTime + 0.35 && absVel > 0.02)) {
-        var speedRate = Math.min(4.0, Math.max(1.5, absVel * 2.5));
-        try { video.playbackRate = speedRate; } catch(e){}
-
-        if (Math.abs(video.currentTime - targetTime) > 0.08 && (now - sec2LastSeekTime > 25)) {
-          video.currentTime = targetTime;
-          sec2LastSeekTime = now;
-        }
-        safePlaySec2Video();
-      }
-      // 2. User scrolling backward: scrub currentTime backward in sync
-      else if (sec2ScrollVelocity < -0.06 || (targetTime < video.currentTime - 0.35 && absVel > 0.02)) {
+      // 1. Maintain original playback speed at all times
+      if (video.playbackRate !== 1.0) {
         try { video.playbackRate = 1.0; } catch(e){}
-        if (Math.abs(video.currentTime - targetTime) > 0.08 && (now - sec2LastSeekTime > 25)) {
-          video.currentTime = targetTime;
-          sec2LastSeekTime = now;
-        }
       }
-      // 3. User stopped or scrolling slowly forward: normal playback with gentle sync
-      else {
-        try { video.playbackRate = 1.0; } catch(e){}
-        if (targetTime > video.currentTime + 0.35 && (now - sec2LastSeekTime > 35)) {
-          video.currentTime = targetTime;
-          sec2LastSeekTime = now;
+
+      // 2. When beginning to go to next section (p >= 0.88): show the end of the video
+      if (p >= 0.88) {
+        if (video.currentTime < endTime) {
+          try { video.currentTime = endTime; } catch(e){}
+        }
+        if (!video.paused) {
+          try { video.pause(); } catch(e){}
+          sec2VideoWasPlaying = false;
+        }
+        return;
+      }
+
+      // 3. Active video playback zone (0.52 <= p < 0.88):
+      // Keep the video working continuously at original speed as user continues scrolling
+      if (p >= 0.52) {
+        // If user scrolled back up from exit, rewind so it plays forward again
+        if (video.currentTime >= endTime - 0.2) {
+          try { video.currentTime = 0; } catch(e){}
         }
         safePlaySec2Video();
       }
@@ -7596,7 +7589,7 @@ if (document.readyState === 'loading') {
           var maxScroll = Math.max(1, sec.offsetHeight - window.innerHeight);
           var rect = sec.getBoundingClientRect();
           var p = Math.max(0, Math.min(1, -rect.top / maxScroll));
-          if (p >= 0.52 && p < 0.96 && vid && vid.paused && !vid.ended) {
+          if (p >= 0.52 && p < 0.88 && vid && vid.paused && !vid.ended) {
             safePlaySec2Video();
           }
         }
