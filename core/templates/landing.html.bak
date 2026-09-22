@@ -1650,378 +1650,6 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 }
 
 
-
-/* ========================================================================== */
-/* ULTRA-CREATIVE EDITORIAL REVIEW CARDS DESIGN (Spec Media 2026 Master)     */
-/* ========================================================================== */
-.spec-reviews-bleed {
-  position: relative;
-  overflow: hidden;
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  padding: 24px 0 42px;
-}
-
-[data-rvrow="1"] {
-  display: flex !important;
-  gap: clamp(24px, 2.8vw, 42px) !important;
-  overflow-x: hidden !important;
-  padding: 20px max(40px, calc((100vw - 1440px) / 2 + 32px)) 36px !important;
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-  cursor: default !important;
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  will-change: transform !important;
-  transform-style: preserve-3d !important;
-}
-
-[data-rvrow="1"]::-webkit-scrollbar {
-  display: none !important;
-}
-
-/* Individual Review Card - Editorial Monolith Design */
-.spec-review-card {
-  flex: none !important;
-  width: clamp(340px, 28vw, 420px) !important;
-  position: relative !important;
-  border-radius: 20px !important;
-  overflow: hidden !important;
-  display: flex !important;
-  flex-direction: column !important;
-  background: rgba(18, 3, 5, 0.82) !important;
-  border: 1px solid rgba(245, 234, 216, 0.12) !important;
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(223, 22, 55, 0.15) !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
-  color: #f5ead8 !important;
-  transform: translateY(0) translateZ(0) !important;
-  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), 
-              border-color 0.4s ease, 
-              box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  box-sizing: border-box !important;
-  cursor: default !important;
-  will-change: transform, box-shadow !important;
-}
-
-.spec-review-card:hover {
-  border-color: rgba(223, 22, 55, 0.58) !important;
-  box-shadow: 0 28px 64px -14px rgba(0, 0, 0, 0.90), 
-              0 0 28px rgba(223, 22, 55, 0.30),
-              0 0 0 1px rgba(223, 22, 55, 0.45) !important;
-}
-
-/* Ambient Inner Glass Specular Sheen */
-.spec-rc-glass-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at 80% 0%, rgba(223, 22, 55, 0.12) 0%, transparent 60%),
-              linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0.4) 100%);
-  z-index: 0;
-}
-
-/* Top Strip: Telemetry & Status Badge */
-.spec-rc-topbar {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px 12px;
-  border-bottom: 1px solid rgba(245, 234, 216, 0.08);
-}
-
-.spec-rc-meta-left {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.spec-rc-index {
-  color: #df1637;
-  font-weight: 700;
-}
-
-.spec-rc-sep {
-  color: rgba(245, 234, 216, 0.3);
-}
-
-.spec-rc-disc {
-  color: #e5d8c5;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-}
-
-.spec-rc-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(223, 22, 55, 0.12);
-  border: 1px solid rgba(223, 22, 55, 0.35);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #f7a8b3;
-}
-
-.spec-rc-badge-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #df1637;
-  box-shadow: 0 0 6px #df1637;
-  animation: specPulseDot 2.4s infinite ease-in-out;
-}
-
-@keyframes specPulseDot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.8); }
-}
-
-/* Media Showcase with Aspect Ratio & Cinematic Shade */
-.spec-rc-media-wrapper {
-  position: relative;
-  z-index: 1;
-  aspect-ratio: 16 / 10;
-  width: 100%;
-  overflow: hidden;
-  background: #0d0102;
-  cursor: pointer;
-}
-
-.spec-rc-media-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: contrast(1.04) brightness(0.92);
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.spec-review-card:hover .spec-rc-media-img {
-  transform: scale(1.06);
-  filter: contrast(1.08) brightness(1.0);
-}
-
-.spec-rc-media-shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, transparent 40%, rgba(18, 3, 5, 0.85) 100%);
-  pointer-events: none;
-}
-
-.spec-rc-loc-tag {
-  position: absolute;
-  left: 14px;
-  bottom: 12px;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.72);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(245, 234, 216, 0.16);
-  color: #f5ead8;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-/* KPI Impact Highlight Block */
-.spec-rc-kpi-block {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 14px 20px 4px;
-  padding: 10px 16px;
-  border-radius: 12px;
-  background: linear-gradient(90deg, rgba(223, 22, 55, 0.15) 0%, rgba(223, 22, 55, 0.04) 100%);
-  border: 1px solid rgba(223, 22, 55, 0.3);
-}
-
-.spec-rc-kpi-val {
-  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
-  font-size: clamp(22px, 2.2vw, 28px);
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  text-shadow: 0 0 16px rgba(223, 22, 55, 0.6);
-}
-
-.spec-rc-kpi-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.spec-rc-kpi-lbl {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #df1637;
-}
-
-.spec-rc-kpi-sub {
-  font-family: var(--font-body, 'Space Grotesk', sans-serif);
-  font-size: 11px;
-  color: #cbbbae;
-}
-
-/* Editorial Client Quote */
-.spec-rc-quote-block {
-  position: relative;
-  z-index: 2;
-  padding: 12px 20px;
-  flex: 1 0 auto;
-}
-
-.spec-rc-quote-glyph {
-  color: rgba(223, 22, 55, 0.35);
-  margin-bottom: 6px;
-  display: block;
-}
-
-.spec-rc-quote-text {
-  font-family: var(--font-body, 'Space Grotesk', sans-serif);
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: #f5ead8;
-  font-weight: 400;
-  margin: 0;
-  letter-spacing: 0.01em;
-}
-
-/* Star Rating & Tags Strip */
-.spec-rc-stars-row {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 20px 14px;
-}
-
-.spec-rc-stars {
-  display: flex;
-  gap: 3px;
-  color: #ffaa00;
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-
-.spec-rc-star {
-  filter: drop-shadow(0 0 4px rgba(255, 170, 0, 0.5));
-}
-
-.spec-rc-tags {
-  display: flex;
-  gap: 8px;
-}
-
-.spec-rc-tag {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  color: #df1637;
-  opacity: 0.85;
-}
-
-/* Footer: Author details */
-.spec-rc-footer {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-  border-top: 1px solid rgba(245, 234, 216, 0.08);
-  background: rgba(0, 0, 0, 0.35);
-}
-
-.spec-rc-author {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.spec-rc-avatar-wrap {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  padding: 2px;
-  background: linear-gradient(135deg, #df1637 0%, #b40119 50%, rgba(245, 234, 216, 0.4) 100%);
-  flex-shrink: 0;
-}
-
-.spec-rc-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-  border: 1px solid #000000;
-}
-
-.spec-rc-author-details {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.spec-rc-author-name-row {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.spec-rc-author-name {
-  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-.spec-rc-verified-icon {
-  flex-shrink: 0;
-}
-
-.spec-rc-author-meta {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 10px;
-  color: #a89f91;
-  letter-spacing: 0.02em;
-}
-
-.spec-rc-date {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #a89f91;
-}
-
 /* --- INSTAGRAM LUXURY REVIEW CARDS (Dark-to-Light scroll transition) --- */
 .ig-card {
   flex: none;
@@ -2423,7 +2051,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
   <section ref="{{ cardsRef }}" data-screen-label="03 Work grid" style="background:var(--color-surface, var(--color-text));position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:var(--space-8) 0">
     <div style="max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);">
-    <div data-blurable="1" style="display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:clamp(10px, 1.8vh, 18px)">
+    <div data-blurable="1" style="display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:var(--space-6)">
       <h2 style="margin:0;font-family:var(--font-heading);font-size:clamp(30px,4.4vw,64px);color:var(--color-bg)">Selected work</h2>
       <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-neutral-500)">2024 — 2026 · placeholder projects</span>
     </div>
@@ -2863,8 +2491,8 @@ footer#contact div[style*="font-family:ui-monospace"] {
       <div class="spec-obj-err mono" id="spec-obj-err">object failed to load</div>
     </div>
   </section>
-  <section ref="{{ reviewsRef }}" id="spec-reviews-section" data-screen-label="07 Reviews" style="background:#2d0406;position:relative;z-index:10;height:380vh;box-sizing:border-box;">
-    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;box-sizing:border-box;padding:clamp(76px, 11vh, 108px) 0 20px;">
+  <section ref="{{ reviewsRef }}" id="spec-reviews-section" data-screen-label="07 Reviews" style="background:#000000;position:relative;z-index:10;height:300vh;box-sizing:border-box;">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:var(--space-8) 0;">
     <!-- Ambient Radial Glow overlay: fades out on scroll as dark mode transitions to light mode -->
     <div id="spec-reviews-ambient-glow" style="display:none;pointer-events:none;opacity:0;" aria-hidden="true"></div>
     <div data-blurable="1" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:var(--space-6)">
@@ -2875,7 +2503,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
       <div style="display:flex;align-items:center;gap:12px">
         <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid var(--color-neutral-800);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;font-size:10px;color:var(--color-accent)">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="#3897f0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
-          VERIFIED CLIENT REVIEWS · SCROLL DRIVEN
+          INSTAGRAM FEED · DOUBLE-TAP TO HEART
         </span>
       </div>
     </div>
@@ -2883,496 +2511,556 @@ footer#contact div[style*="font-family:ui-monospace"] {
     <!-- Edge-to-edge full-bleed carousel wrapper spanning 100vw from left to right -->
     <div class="spec-reviews-bleed" style="position:relative;z-index:1;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;overflow:hidden;padding:12px 0 28px">
       <div data-rvrow="1" style="display:flex;gap:clamp(20px,2.4vw,34px);overflow-x:hidden;padding:16px max(32px, calc((100vw - 1440px)/2 + 24px)) 28px;scrollbar-width:none;-ms-overflow-style:none;cursor:default;user-select:none;-webkit-user-select:none;will-change:transform">
-            <!-- Card 01: Faisal Al-Marri (@faisal.almarri) -->
-      <article data-rv="1" class="spec-review-card ig-card">
-        <!-- Card Glass Background Layer -->
-        <div class="spec-rc-glass-bg"></div>
-
-        <!-- Top Header Strip: Coordinate Telemetry & Badge -->
-        <div class="spec-rc-topbar">
-          <div class="spec-rc-meta-left">
-            <span class="spec-rc-index">01</span>
-            <span class="spec-rc-sep">/</span>
-            <span class="spec-rc-disc">BRAND ARCHITECTURE</span>
-          </div>
-          <div class="spec-rc-badge">
-            <span class="spec-rc-badge-dot"></span>
-            <span>VERIFIED PARTNER</span>
-          </div>
-        </div>
-
-        <!-- Cinematic Hero Media with Location Pill & Ambient Gradient -->
-        <div class="spec-rc-media-wrapper" ondblclick="handleIGCardDblClick(this)">
-          <img data-media="1" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" alt="Faisal Al-Marri Showcase" draggable="false" class="spec-rc-media-img" loading="lazy">
-          <div class="spec-rc-media-shade"></div>
-          
-          <!-- Heart Animation Pulse on Double Click -->
-          <div class="ig-heart-pulse">
-            <svg width="68" height="68" viewBox="0 0 24 24" fill="#df1637"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </div>
-
-          <!-- Glass Location Tag -->
-          <div class="spec-rc-loc-tag">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span>Dubai, UAE</span>
-          </div>
-        </div>
-
-        <!-- KPI Impact Highlight Block -->
-        <div class="spec-rc-kpi-block">
-          <div class="spec-rc-kpi-val">+340%</div>
-          <div class="spec-rc-kpi-info">
-            <div class="spec-rc-kpi-lbl">ENGAGEMENT VELOCITY</div>
-            <div class="spec-rc-kpi-sub">60 days post-flagship launch</div>
-          </div>
-        </div>
-
-        <!-- Editorial Client Quote -->
-        <div class="spec-rc-quote-block">
-          <svg class="spec-rc-quote-glyph" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1zm11 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1z" fill="currentColor"/></svg>
-          <p class="spec-rc-quote-text">“Spec Media transformed our digital presence into an international benchmark. The architectural precision, lighting, and kinetic identity redefined our industry standing across EMEA.”</p>
-        </div>
-
-        <!-- Star Rating & Tags Strip -->
-        <div class="spec-rc-stars-row">
-          <div class="spec-rc-stars" aria-label="5 out of 5 stars">
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-          </div>
-          <div class="spec-rc-tags">
-            <span class="spec-rc-tag">#BrandIdentity</span>
-            <span class="spec-rc-tag">#SpatialDesign</span>
-          </div>
-        </div>
-
-        <!-- Client Identity Strip (Footer of Card) -->
-        <div class="spec-rc-footer">
-          <div class="spec-rc-author">
-            <div class="spec-rc-avatar-wrap">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" alt="Faisal Al-Marri" class="spec-rc-avatar" loading="lazy">
-            </div>
-            <div class="spec-rc-author-details">
-              <div class="spec-rc-author-name-row">
-                <span class="spec-rc-author-name">Faisal Al-Marri</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="#df1637" class="spec-rc-verified-icon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+      <!-- Card: @faisal.almarri -->
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;will-change:transform">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">
+              <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" alt="@faisal.almarri" style="width:100%;height:100%;object-fit:cover;display:block">
               </div>
-              <div class="spec-rc-author-meta">Founding Principal · Dubai Design District</div>
+            </div>
+            <div style="line-height:1.25">
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg)">@faisal.almarri</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+              </div>
+              <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">Founding Principal · Dubai Design District</div>
             </div>
           </div>
-          <div class="spec-rc-date">2 DAYS AGO</div>
+          <div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px">
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+          </div>
+        </div>
+        <!-- Media -->
+        <div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">
+          <img data-media="1" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" alt="@faisal.almarri Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">
+            <svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">Dubai, UAE</div>
+        </div>
+        <!-- Actions -->
+        <div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:14px">
+            <button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">
+              <svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+          <button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">
+            <svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </button>
+        </div>
+        <!-- Likes -->
+        <div style="padding:0 14px 4px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;color:var(--color-bg);font-weight:600">
+          Liked by <span style="font-weight:700">specmedia</span> and <span class="like-number" data-count="3420">3,420</span> others
+        </div>
+        <!-- Caption -->
+        <div style="padding:2px 14px 8px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;line-height:1.55;color:var(--color-bg)">
+          <span style="font-weight:700;margin-right:6px">@faisal.almarri</span>
+          <span style="color:var(--color-neutral-300);font-weight:400">Spec Media transformed our digital brand into an international benchmark. Engagement spiked 340% in 60 days.</span>
+        </div>
+        <!-- Rating & Tags -->
+        <div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="color:#f59e0b;font-size:12px;letter-spacing:2px">★★★★★</div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-accent)">#SpecMedia #DubaiLuxury #SpatialDesign</div>
+        </div>
+        <!-- Meta -->
+        <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer">View comments</span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">2 DAYS AGO · VERIFIED</span>
         </div>
       </article>
-      <!-- Card 02: Tariq Mansoori (@tariq.mansoori) -->
-      <article data-rv="1" class="spec-review-card ig-card">
-        <!-- Card Glass Background Layer -->
-        <div class="spec-rc-glass-bg"></div>
-
-        <!-- Top Header Strip: Coordinate Telemetry & Badge -->
-        <div class="spec-rc-topbar">
-          <div class="spec-rc-meta-left">
-            <span class="spec-rc-index">02</span>
-            <span class="spec-rc-sep">/</span>
-            <span class="spec-rc-disc">PERFORMANCE KINETICS</span>
-          </div>
-          <div class="spec-rc-badge">
-            <span class="spec-rc-badge-dot"></span>
-            <span>SOVEREIGN PORTFOLIO</span>
-          </div>
-        </div>
-
-        <!-- Cinematic Hero Media with Location Pill & Ambient Gradient -->
-        <div class="spec-rc-media-wrapper" ondblclick="handleIGCardDblClick(this)">
-          <img data-media="1" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop" alt="Tariq Mansoori Showcase" draggable="false" class="spec-rc-media-img" loading="lazy">
-          <div class="spec-rc-media-shade"></div>
-          
-          <!-- Heart Animation Pulse on Double Click -->
-          <div class="ig-heart-pulse">
-            <svg width="68" height="68" viewBox="0 0 24 24" fill="#df1637"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </div>
-
-          <!-- Glass Location Tag -->
-          <div class="spec-rc-loc-tag">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span>DIFC, Dubai</span>
-          </div>
-        </div>
-
-        <!-- KPI Impact Highlight Block -->
-        <div class="spec-rc-kpi-block">
-          <div class="spec-rc-kpi-val">4.8x</div>
-          <div class="spec-rc-kpi-info">
-            <div class="spec-rc-kpi-lbl">ROAS PERFORMANCE</div>
-            <div class="spec-rc-kpi-sub">verified pipeline conversion</div>
-          </div>
-        </div>
-
-        <!-- Editorial Client Quote -->
-        <div class="spec-rc-quote-block">
-          <svg class="spec-rc-quote-glyph" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1zm11 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1z" fill="currentColor"/></svg>
-          <p class="spec-rc-quote-text">“Their kinetic typography and cinematic visual pacing captivated our sovereign wealth partners. Flawless technical execution with zero lag across every viewport.”</p>
-        </div>
-
-        <!-- Star Rating & Tags Strip -->
-        <div class="spec-rc-stars-row">
-          <div class="spec-rc-stars" aria-label="5 out of 5 stars">
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-          </div>
-          <div class="spec-rc-tags">
-            <span class="spec-rc-tag">#EnterpriseScale</span>
-            <span class="spec-rc-tag">#KineticMotion</span>
-          </div>
-        </div>
-
-        <!-- Client Identity Strip (Footer of Card) -->
-        <div class="spec-rc-footer">
-          <div class="spec-rc-author">
-            <div class="spec-rc-avatar-wrap">
-              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop" alt="Tariq Mansoori" class="spec-rc-avatar" loading="lazy">
-            </div>
-            <div class="spec-rc-author-details">
-              <div class="spec-rc-author-name-row">
-                <span class="spec-rc-author-name">Tariq Mansoori</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="#df1637" class="spec-rc-verified-icon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+      <!-- Card: @tariq.mansoori -->
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;will-change:transform">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">
+              <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop" alt="@tariq.mansoori" style="width:100%;height:100%;object-fit:cover;display:block">
               </div>
-              <div class="spec-rc-author-meta">Managing Director · Hyperion Holdings</div>
+            </div>
+            <div style="line-height:1.25">
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg)">@tariq.mansoori</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+              </div>
+              <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">Managing Director · Hyperion Holdings</div>
             </div>
           </div>
-          <div class="spec-rc-date">4 DAYS AGO</div>
+          <div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px">
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+          </div>
+        </div>
+        <!-- Media -->
+        <div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">
+          <img data-media="1" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop" alt="@tariq.mansoori Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">
+            <svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">DIFC, Dubai</div>
+        </div>
+        <!-- Actions -->
+        <div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:14px">
+            <button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">
+              <svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+          <button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">
+            <svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </button>
+        </div>
+        <!-- Likes -->
+        <div style="padding:0 14px 4px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;color:var(--color-bg);font-weight:600">
+          Liked by <span style="font-weight:700">specmedia</span> and <span class="like-number" data-count="5890">5,890</span> others
+        </div>
+        <!-- Caption -->
+        <div style="padding:2px 14px 8px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;line-height:1.55;color:var(--color-bg)">
+          <span style="font-weight:700;margin-right:6px">@tariq.mansoori</span>
+          <span style="color:var(--color-neutral-300);font-weight:400">Their kinetic typography and cinematic visual pacing captivated our sovereign wealth partners. Flawless execution.</span>
+        </div>
+        <!-- Rating & Tags -->
+        <div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="color:#f59e0b;font-size:12px;letter-spacing:2px">★★★★★</div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-accent)">#EnterpriseDesign #KineticWeb #UAE</div>
+        </div>
+        <!-- Meta -->
+        <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer">View comments</span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">4 DAYS AGO · VERIFIED</span>
         </div>
       </article>
-      <!-- Card 03: Elena Rostova (@elena.rostova) -->
-      <article data-rv="1" class="spec-review-card ig-card">
-        <!-- Card Glass Background Layer -->
-        <div class="spec-rc-glass-bg"></div>
-
-        <!-- Top Header Strip: Coordinate Telemetry & Badge -->
-        <div class="spec-rc-topbar">
-          <div class="spec-rc-meta-left">
-            <span class="spec-rc-index">03</span>
-            <span class="spec-rc-sep">/</span>
-            <span class="spec-rc-disc">CREATIVE DIRECTION</span>
-          </div>
-          <div class="spec-rc-badge">
-            <span class="spec-rc-badge-dot"></span>
-            <span>GLOBAL BENCHMARK</span>
-          </div>
-        </div>
-
-        <!-- Cinematic Hero Media with Location Pill & Ambient Gradient -->
-        <div class="spec-rc-media-wrapper" ondblclick="handleIGCardDblClick(this)">
-          <img data-media="1" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800&auto=format&fit=crop" alt="Elena Rostova Showcase" draggable="false" class="spec-rc-media-img" loading="lazy">
-          <div class="spec-rc-media-shade"></div>
-          
-          <!-- Heart Animation Pulse on Double Click -->
-          <div class="ig-heart-pulse">
-            <svg width="68" height="68" viewBox="0 0 24 24" fill="#df1637"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </div>
-
-          <!-- Glass Location Tag -->
-          <div class="spec-rc-loc-tag">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span>Zurich & Dubai</span>
-          </div>
-        </div>
-
-        <!-- KPI Impact Highlight Block -->
-        <div class="spec-rc-kpi-block">
-          <div class="spec-rc-kpi-val">3.2x</div>
-          <div class="spec-rc-kpi-info">
-            <div class="spec-rc-kpi-lbl">CONVERSION SURGE</div>
-            <div class="spec-rc-kpi-sub">ultra-luxury buyer inquiries</div>
-          </div>
-        </div>
-
-        <!-- Editorial Client Quote -->
-        <div class="spec-rc-quote-block">
-          <svg class="spec-rc-quote-glyph" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1zm11 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1z" fill="currentColor"/></svg>
-          <p class="spec-rc-quote-text">“The transition between editorial high-fashion aesthetics and deep obsidian dark mode is pure poetry. Our prospective ultra-high-net-worth buyers stay immersed 4x longer.”</p>
-        </div>
-
-        <!-- Star Rating & Tags Strip -->
-        <div class="spec-rc-stars-row">
-          <div class="spec-rc-stars" aria-label="5 out of 5 stars">
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-          </div>
-          <div class="spec-rc-tags">
-            <span class="spec-rc-tag">#CreativeDirection</span>
-            <span class="spec-rc-tag">#HighFashion</span>
-          </div>
-        </div>
-
-        <!-- Client Identity Strip (Footer of Card) -->
-        <div class="spec-rc-footer">
-          <div class="spec-rc-author">
-            <div class="spec-rc-avatar-wrap">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" alt="Elena Rostova" class="spec-rc-avatar" loading="lazy">
-            </div>
-            <div class="spec-rc-author-details">
-              <div class="spec-rc-author-name-row">
-                <span class="spec-rc-author-name">Elena Rostova</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="#df1637" class="spec-rc-verified-icon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+      <!-- Card: @elena.rostova -->
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;will-change:transform">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">
+              <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" alt="@elena.rostova" style="width:100%;height:100%;object-fit:cover;display:block">
               </div>
-              <div class="spec-rc-author-meta">Chief Marketing Officer · Nolana Spatial</div>
+            </div>
+            <div style="line-height:1.25">
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg)">@elena.rostova</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+              </div>
+              <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">Chief Marketing Officer · Nolana Spatial</div>
             </div>
           </div>
-          <div class="spec-rc-date">1 WEEK AGO</div>
+          <div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px">
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+          </div>
+        </div>
+        <!-- Media -->
+        <div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">
+          <img data-media="1" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800&auto=format&fit=crop" alt="@elena.rostova Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">
+            <svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">Zurich & Dubai</div>
+        </div>
+        <!-- Actions -->
+        <div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:14px">
+            <button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">
+              <svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+          <button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">
+            <svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </button>
+        </div>
+        <!-- Likes -->
+        <div style="padding:0 14px 4px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;color:var(--color-bg);font-weight:600">
+          Liked by <span style="font-weight:700">specmedia</span> and <span class="like-number" data-count="4120">4,120</span> others
+        </div>
+        <!-- Caption -->
+        <div style="padding:2px 14px 8px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;line-height:1.55;color:var(--color-bg)">
+          <span style="font-weight:700;margin-right:6px">@elena.rostova</span>
+          <span style="color:var(--color-neutral-300);font-weight:400">The transition between light editorial and deep obsidian dark mode is pure poetry. Our conversion rate tripled.</span>
+        </div>
+        <!-- Rating & Tags -->
+        <div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="color:#f59e0b;font-size:12px;letter-spacing:2px">★★★★★</div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-accent)">#CreativeDirection #BrandArchitecture</div>
+        </div>
+        <!-- Meta -->
+        <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer">View comments</span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">1 WEEK AGO · VERIFIED</span>
         </div>
       </article>
-      <!-- Card 04: Khalid Al-Zahra (@khalid.alzahra) -->
-      <article data-rv="1" class="spec-review-card ig-card">
-        <!-- Card Glass Background Layer -->
-        <div class="spec-rc-glass-bg"></div>
-
-        <!-- Top Header Strip: Coordinate Telemetry & Badge -->
-        <div class="spec-rc-topbar">
-          <div class="spec-rc-meta-left">
-            <span class="spec-rc-index">04</span>
-            <span class="spec-rc-sep">/</span>
-            <span class="spec-rc-disc">TECHNICAL SEO & SYSTEMS</span>
-          </div>
-          <div class="spec-rc-badge">
-            <span class="spec-rc-badge-dot"></span>
-            <span>AI STRATEGY</span>
-          </div>
-        </div>
-
-        <!-- Cinematic Hero Media with Location Pill & Ambient Gradient -->
-        <div class="spec-rc-media-wrapper" ondblclick="handleIGCardDblClick(this)">
-          <img data-media="1" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" alt="Khalid Al-Zahra Showcase" draggable="false" class="spec-rc-media-img" loading="lazy">
-          <div class="spec-rc-media-shade"></div>
-          
-          <!-- Heart Animation Pulse on Double Click -->
-          <div class="ig-heart-pulse">
-            <svg width="68" height="68" viewBox="0 0 24 24" fill="#df1637"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </div>
-
-          <!-- Glass Location Tag -->
-          <div class="spec-rc-loc-tag">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span>Abu Dhabi Global Market</span>
-          </div>
-        </div>
-
-        <!-- KPI Impact Highlight Block -->
-        <div class="spec-rc-kpi-block">
-          <div class="spec-rc-kpi-val">+280%</div>
-          <div class="spec-rc-kpi-info">
-            <div class="spec-rc-kpi-lbl">ORGANIC SHARE</div>
-            <div class="spec-rc-kpi-sub">market-leading search capture</div>
-          </div>
-        </div>
-
-        <!-- Editorial Client Quote -->
-        <div class="spec-rc-quote-block">
-          <svg class="spec-rc-quote-glyph" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1zm11 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1z" fill="currentColor"/></svg>
-          <p class="spec-rc-quote-text">“No other agency in MENA combines mathematical technical SEO performance and headless infrastructure with this level of high-fashion aesthetics. Pure mastery.”</p>
-        </div>
-
-        <!-- Star Rating & Tags Strip -->
-        <div class="spec-rc-stars-row">
-          <div class="spec-rc-stars" aria-label="5 out of 5 stars">
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-          </div>
-          <div class="spec-rc-tags">
-            <span class="spec-rc-tag">#SearchInfrastructure</span>
-            <span class="spec-rc-tag">#MENAInnovation</span>
-          </div>
-        </div>
-
-        <!-- Client Identity Strip (Footer of Card) -->
-        <div class="spec-rc-footer">
-          <div class="spec-rc-author">
-            <div class="spec-rc-avatar-wrap">
-              <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop" alt="Khalid Al-Zahra" class="spec-rc-avatar" loading="lazy">
-            </div>
-            <div class="spec-rc-author-details">
-              <div class="spec-rc-author-name-row">
-                <span class="spec-rc-author-name">Khalid Al-Zahra</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="#df1637" class="spec-rc-verified-icon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+      <!-- Card: @khalid.alzahra -->
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;will-change:transform">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">
+              <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop" alt="@khalid.alzahra" style="width:100%;height:100%;object-fit:cover;display:block">
               </div>
-              <div class="spec-rc-author-meta">VP Digital Strategy · Gather Telco AI</div>
+            </div>
+            <div style="line-height:1.25">
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg)">@khalid.alzahra</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+              </div>
+              <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">VP Strategy · Gather Telco AI</div>
             </div>
           </div>
-          <div class="spec-rc-date">2 WEEKS AGO</div>
+          <div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px">
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+          </div>
+        </div>
+        <!-- Media -->
+        <div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">
+          <img data-media="1" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" alt="@khalid.alzahra Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">
+            <svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">Abu Dhabi Global Market</div>
+        </div>
+        <!-- Actions -->
+        <div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:14px">
+            <button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">
+              <svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+          <button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">
+            <svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </button>
+        </div>
+        <!-- Likes -->
+        <div style="padding:0 14px 4px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;color:var(--color-bg);font-weight:600">
+          Liked by <span style="font-weight:700">specmedia</span> and <span class="like-number" data-count="7350">7,350</span> others
+        </div>
+        <!-- Caption -->
+        <div style="padding:2px 14px 8px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;line-height:1.55;color:var(--color-bg)">
+          <span style="font-weight:700;margin-right:6px">@khalid.alzahra</span>
+          <span style="color:var(--color-neutral-300);font-weight:400">No other agency in MENA combines mathematical technical SEO performance with this level of high-fashion aesthetics.</span>
+        </div>
+        <!-- Rating & Tags -->
+        <div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="color:#f59e0b;font-size:12px;letter-spacing:2px">★★★★★</div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-accent)">#PerformanceMedia #AIStrategy #Dubai</div>
+        </div>
+        <!-- Meta -->
+        <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer">View comments</span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">2 WEEKS AGO · VERIFIED</span>
         </div>
       </article>
-      <!-- Card 05: Marcus Vance (@marcus.vance) -->
-      <article data-rv="1" class="spec-review-card ig-card">
-        <!-- Card Glass Background Layer -->
-        <div class="spec-rc-glass-bg"></div>
-
-        <!-- Top Header Strip: Coordinate Telemetry & Badge -->
-        <div class="spec-rc-topbar">
-          <div class="spec-rc-meta-left">
-            <span class="spec-rc-index">05</span>
-            <span class="spec-rc-sep">/</span>
-            <span class="spec-rc-disc">CINEMATOGRAPHY & CAMPAIGN</span>
-          </div>
-          <div class="spec-rc-badge">
-            <span class="spec-rc-badge-dot"></span>
-            <span>CINEMA REEL</span>
-          </div>
-        </div>
-
-        <!-- Cinematic Hero Media with Location Pill & Ambient Gradient -->
-        <div class="spec-rc-media-wrapper" ondblclick="handleIGCardDblClick(this)">
-          <img data-media="1" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop" alt="Marcus Vance Showcase" draggable="false" class="spec-rc-media-img" loading="lazy">
-          <div class="spec-rc-media-shade"></div>
-          
-          <!-- Heart Animation Pulse on Double Click -->
-          <div class="ig-heart-pulse">
-            <svg width="68" height="68" viewBox="0 0 24 24" fill="#df1637"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </div>
-
-          <!-- Glass Location Tag -->
-          <div class="spec-rc-loc-tag">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span>London, Mayfair</span>
-          </div>
-        </div>
-
-        <!-- KPI Impact Highlight Block -->
-        <div class="spec-rc-kpi-block">
-          <div class="spec-rc-kpi-val">98.4%</div>
-          <div class="spec-rc-kpi-info">
-            <div class="spec-rc-kpi-lbl">AUDIENCE RETENTION</div>
-            <div class="spec-rc-kpi-sub">full commercial completion rate</div>
-          </div>
-        </div>
-
-        <!-- Editorial Client Quote -->
-        <div class="spec-rc-quote-block">
-          <svg class="spec-rc-quote-glyph" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1zm11 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1z" fill="currentColor"/></svg>
-          <p class="spec-rc-quote-text">“Spec Media produced a master commercial campaign that set our global launch on fire. The Arri LogC colour pass and custom audio architecture are unmatched.”</p>
-        </div>
-
-        <!-- Star Rating & Tags Strip -->
-        <div class="spec-rc-stars-row">
-          <div class="spec-rc-stars" aria-label="5 out of 5 stars">
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-          </div>
-          <div class="spec-rc-tags">
-            <span class="spec-rc-tag">#CinematicFilm</span>
-            <span class="spec-rc-tag">#GlobalProduction</span>
-          </div>
-        </div>
-
-        <!-- Client Identity Strip (Footer of Card) -->
-        <div class="spec-rc-footer">
-          <div class="spec-rc-author">
-            <div class="spec-rc-avatar-wrap">
-              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop" alt="Marcus Vance" class="spec-rc-avatar" loading="lazy">
-            </div>
-            <div class="spec-rc-author-details">
-              <div class="spec-rc-author-name-row">
-                <span class="spec-rc-author-name">Marcus Vance</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="#df1637" class="spec-rc-verified-icon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+      <!-- Card: @faisal.almarri -->
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;will-change:transform">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">
+              <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" alt="@faisal.almarri" style="width:100%;height:100%;object-fit:cover;display:block">
               </div>
-              <div class="spec-rc-author-meta">Executive Producer · Aethelgard Luxury Group</div>
+            </div>
+            <div style="line-height:1.25">
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg)">@faisal.almarri</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+              </div>
+              <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">Founding Principal · Dubai Design District</div>
             </div>
           </div>
-          <div class="spec-rc-date">2 WEEKS AGO</div>
+          <div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px">
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+          </div>
+        </div>
+        <!-- Media -->
+        <div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">
+          <img data-media="1" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" alt="@faisal.almarri Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">
+            <svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">Dubai, UAE</div>
+        </div>
+        <!-- Actions -->
+        <div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:14px">
+            <button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">
+              <svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+          <button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">
+            <svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </button>
+        </div>
+        <!-- Likes -->
+        <div style="padding:0 14px 4px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;color:var(--color-bg);font-weight:600">
+          Liked by <span style="font-weight:700">specmedia</span> and <span class="like-number" data-count="3420">3,420</span> others
+        </div>
+        <!-- Caption -->
+        <div style="padding:2px 14px 8px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;line-height:1.55;color:var(--color-bg)">
+          <span style="font-weight:700;margin-right:6px">@faisal.almarri</span>
+          <span style="color:var(--color-neutral-300);font-weight:400">Spec Media transformed our digital brand into an international benchmark. Engagement spiked 340% in 60 days.</span>
+        </div>
+        <!-- Rating & Tags -->
+        <div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="color:#f59e0b;font-size:12px;letter-spacing:2px">★★★★★</div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-accent)">#SpecMedia #DubaiLuxury #SpatialDesign</div>
+        </div>
+        <!-- Meta -->
+        <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer">View comments</span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">2 DAYS AGO · VERIFIED</span>
         </div>
       </article>
-      <!-- Card 06: Soraya Al-Kindi (@soraya.alkindi) -->
-      <article data-rv="1" class="spec-review-card ig-card">
-        <!-- Card Glass Background Layer -->
-        <div class="spec-rc-glass-bg"></div>
-
-        <!-- Top Header Strip: Coordinate Telemetry & Badge -->
-        <div class="spec-rc-topbar">
-          <div class="spec-rc-meta-left">
-            <span class="spec-rc-index">06</span>
-            <span class="spec-rc-sep">/</span>
-            <span class="spec-rc-disc">IMMERSIVE 3D & KINETICS</span>
-          </div>
-          <div class="spec-rc-badge">
-            <span class="spec-rc-badge-dot"></span>
-            <span>DIGITAL EXCELLENCE</span>
-          </div>
-        </div>
-
-        <!-- Cinematic Hero Media with Location Pill & Ambient Gradient -->
-        <div class="spec-rc-media-wrapper" ondblclick="handleIGCardDblClick(this)">
-          <img data-media="1" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Soraya Al-Kindi Showcase" draggable="false" class="spec-rc-media-img" loading="lazy">
-          <div class="spec-rc-media-shade"></div>
-          
-          <!-- Heart Animation Pulse on Double Click -->
-          <div class="ig-heart-pulse">
-            <svg width="68" height="68" viewBox="0 0 24 24" fill="#df1637"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </div>
-
-          <!-- Glass Location Tag -->
-          <div class="spec-rc-loc-tag">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span>Riyadh, KSA</span>
-          </div>
-        </div>
-
-        <!-- KPI Impact Highlight Block -->
-        <div class="spec-rc-kpi-block">
-          <div class="spec-rc-kpi-val">60 FPS</div>
-          <div class="spec-rc-kpi-info">
-            <div class="spec-rc-kpi-lbl">BUTTERY PERFORMANCE</div>
-            <div class="spec-rc-kpi-sub">zero frame drops across mobile & 4K</div>
-          </div>
-        </div>
-
-        <!-- Editorial Client Quote -->
-        <div class="spec-rc-quote-block">
-          <svg class="spec-rc-quote-glyph" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1zm11 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2h4c0 4-2 6-5 7v1z" fill="currentColor"/></svg>
-          <p class="spec-rc-quote-text">“The real-time interactive 3D capabilities and scroll-scrubbed kinematics delivered an experience our VIP clients have never seen anywhere else in the Gulf.”</p>
-        </div>
-
-        <!-- Star Rating & Tags Strip -->
-        <div class="spec-rc-stars-row">
-          <div class="spec-rc-stars" aria-label="5 out of 5 stars">
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-            <span class="spec-rc-star">★</span>
-          </div>
-          <div class="spec-rc-tags">
-            <span class="spec-rc-tag">#WebGLMotion</span>
-            <span class="spec-rc-tag">#SaudiVision2030</span>
-          </div>
-        </div>
-
-        <!-- Client Identity Strip (Footer of Card) -->
-        <div class="spec-rc-footer">
-          <div class="spec-rc-author">
-            <div class="spec-rc-avatar-wrap">
-              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" alt="Soraya Al-Kindi" class="spec-rc-avatar" loading="lazy">
-            </div>
-            <div class="spec-rc-author-details">
-              <div class="spec-rc-author-name-row">
-                <span class="spec-rc-author-name">Soraya Al-Kindi</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="#df1637" class="spec-rc-verified-icon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+      <!-- Card: @tariq.mansoori -->
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;will-change:transform">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">
+              <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop" alt="@tariq.mansoori" style="width:100%;height:100%;object-fit:cover;display:block">
               </div>
-              <div class="spec-rc-author-meta">Head of Brand Experience · Riyadh Neo-Horizon</div>
+            </div>
+            <div style="line-height:1.25">
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg)">@tariq.mansoori</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+              </div>
+              <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">Managing Director · Hyperion Holdings</div>
             </div>
           </div>
-          <div class="spec-rc-date">3 WEEKS AGO</div>
+          <div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px">
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+          </div>
+        </div>
+        <!-- Media -->
+        <div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">
+          <img data-media="1" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop" alt="@tariq.mansoori Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">
+            <svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">DIFC, Dubai</div>
+        </div>
+        <!-- Actions -->
+        <div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:14px">
+            <button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">
+              <svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+          <button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">
+            <svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </button>
+        </div>
+        <!-- Likes -->
+        <div style="padding:0 14px 4px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;color:var(--color-bg);font-weight:600">
+          Liked by <span style="font-weight:700">specmedia</span> and <span class="like-number" data-count="5890">5,890</span> others
+        </div>
+        <!-- Caption -->
+        <div style="padding:2px 14px 8px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;line-height:1.55;color:var(--color-bg)">
+          <span style="font-weight:700;margin-right:6px">@tariq.mansoori</span>
+          <span style="color:var(--color-neutral-300);font-weight:400">Their kinetic typography and cinematic visual pacing captivated our sovereign wealth partners. Flawless execution.</span>
+        </div>
+        <!-- Rating & Tags -->
+        <div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="color:#f59e0b;font-size:12px;letter-spacing:2px">★★★★★</div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-accent)">#EnterpriseDesign #KineticWeb #UAE</div>
+        </div>
+        <!-- Meta -->
+        <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer">View comments</span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">4 DAYS AGO · VERIFIED</span>
+        </div>
+      </article>
+      <!-- Card: @elena.rostova -->
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;will-change:transform">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">
+              <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" alt="@elena.rostova" style="width:100%;height:100%;object-fit:cover;display:block">
+              </div>
+            </div>
+            <div style="line-height:1.25">
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg)">@elena.rostova</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+              </div>
+              <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">Chief Marketing Officer · Nolana Spatial</div>
+            </div>
+          </div>
+          <div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px">
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+          </div>
+        </div>
+        <!-- Media -->
+        <div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">
+          <img data-media="1" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800&auto=format&fit=crop" alt="@elena.rostova Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">
+            <svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">Zurich & Dubai</div>
+        </div>
+        <!-- Actions -->
+        <div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:14px">
+            <button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">
+              <svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+          <button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">
+            <svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </button>
+        </div>
+        <!-- Likes -->
+        <div style="padding:0 14px 4px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;color:var(--color-bg);font-weight:600">
+          Liked by <span style="font-weight:700">specmedia</span> and <span class="like-number" data-count="4120">4,120</span> others
+        </div>
+        <!-- Caption -->
+        <div style="padding:2px 14px 8px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;line-height:1.55;color:var(--color-bg)">
+          <span style="font-weight:700;margin-right:6px">@elena.rostova</span>
+          <span style="color:var(--color-neutral-300);font-weight:400">The transition between light editorial and deep obsidian dark mode is pure poetry. Our conversion rate tripled.</span>
+        </div>
+        <!-- Rating & Tags -->
+        <div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="color:#f59e0b;font-size:12px;letter-spacing:2px">★★★★★</div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-accent)">#CreativeDirection #BrandArchitecture</div>
+        </div>
+        <!-- Meta -->
+        <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer">View comments</span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">1 WEEK AGO · VERIFIED</span>
+        </div>
+      </article>
+      <!-- Card: @khalid.alzahra -->
+      <article data-rv="1" class="ig-card" style="flex:none;width:clamp(310px,26vw,380px);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;will-change:transform">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);display:grid;place-items:center;flex-shrink:0">
+              <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #1a1816;background:#2a2622">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop" alt="@khalid.alzahra" style="width:100%;height:100%;object-fit:cover;display:block">
+              </div>
+            </div>
+            <div style="line-height:1.25">
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;font-weight:700;color:var(--color-bg)">@khalid.alzahra</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#3897f0" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+              </div>
+              <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-neutral-400);letter-spacing:.02em">VP Strategy · Gather Telco AI</div>
+            </div>
+          </div>
+          <div style="color:var(--color-neutral-400);cursor:pointer;padding:4px;display:flex;gap:3px">
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+            <span style="width:3px;height:3px;border-radius:50%;background:currentColor"></span>
+          </div>
+        </div>
+        <!-- Media -->
+        <div style="position:relative;aspect-ratio:4/3;background:#151413;overflow:hidden;cursor:pointer" ondblclick="handleIGCardDblClick(this)">
+          <img data-media="1" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" alt="@khalid.alzahra Showcase" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <div class="ig-heart-pulse" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(0.3);transition:all .35s cubic-bezier(.175,.885,.32,1.275)">
+            <svg width="68" height="68" viewBox="0 0 24 24" fill="#ff3040"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <div style="position:absolute;left:10px;bottom:10px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,0.68);backdrop-filter:blur(6px);color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase">Abu Dhabi Global Market</div>
+        </div>
+        <!-- Actions -->
+        <div style="padding:10px 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:14px">
+            <button type="button" class="ig-btn-like" onclick="toggleIGLike(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center;transition:transform .2s ease" aria-label="Like">
+              <svg class="heart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Comment">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </button>
+            <button type="button" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Share">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+          <button type="button" class="ig-btn-save" onclick="toggleIGSave(this)" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-bg);display:flex;align-items:center" aria-label="Save">
+            <svg class="save-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </button>
+        </div>
+        <!-- Likes -->
+        <div style="padding:0 14px 4px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;color:var(--color-bg);font-weight:600">
+          Liked by <span style="font-weight:700">specmedia</span> and <span class="like-number" data-count="7350">7,350</span> others
+        </div>
+        <!-- Caption -->
+        <div style="padding:2px 14px 8px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;line-height:1.55;color:var(--color-bg)">
+          <span style="font-weight:700;margin-right:6px">@khalid.alzahra</span>
+          <span style="color:var(--color-neutral-300);font-weight:400">No other agency in MENA combines mathematical technical SEO performance with this level of high-fashion aesthetics.</span>
+        </div>
+        <!-- Rating & Tags -->
+        <div style="padding:0 14px 6px;display:flex;align-items:center;justify-content:space-between">
+          <div style="color:#f59e0b;font-size:12px;letter-spacing:2px">★★★★★</div>
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--color-accent)">#PerformanceMedia #AIStrategy #Dubai</div>
+        </div>
+        <!-- Meta -->
+        <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;color:var(--color-neutral-500);cursor:pointer">View comments</span>
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-600)">2 WEEKS AGO · VERIFIED</span>
         </div>
       </article>
       </div>
@@ -8112,9 +7800,11 @@ if (document.readyState === 'loading') {
   var revInited = false;
   // 3. Section 07 Reviews: Pinned Scroll-Only Interaction
   function initReviewsScrollOnly() {
+    if (revInited) return true;
     var sec = document.getElementById('spec-reviews-section');
     var row = sec ? sec.querySelector('[data-rvrow]') : document.querySelector('[data-rvrow]');
     if (!sec || !row) return false;
+    revInited = true;
 
     // Prevent any drag or mouse interaction
     row.style.cursor = 'default';
@@ -8123,19 +7813,15 @@ if (document.readyState === 'loading') {
     row.style.transition = 'none';
 
     function updateReviews() {
-      var liveSec = document.getElementById('spec-reviews-section') || sec;
-      var liveRow = liveSec ? liveSec.querySelector('[data-rvrow]') : (document.querySelector('[data-rvrow]') || row);
-      if (!liveSec || !liveRow) return;
-
-      var rect = liveSec.getBoundingClientRect();
+      var rect = sec.getBoundingClientRect();
       var vh = window.innerHeight;
       var vw = window.innerWidth;
-      var maxScroll = Math.max(1, liveSec.offsetHeight - vh);
+      var maxScroll = Math.max(1, sec.offsetHeight - vh);
       var currentScroll = -rect.top;
       var p = Math.max(0, Math.min(1, currentScroll / maxScroll));
 
       // Compute total travel distance to bring last card into full view with margin
-      var cards = liveRow.querySelectorAll('.ig-card');
+      var cards = row.querySelectorAll('.ig-card');
       var maxTravel = 0;
       if (cards.length > 0) {
         var firstCard = cards[0];
@@ -8143,12 +7829,12 @@ if (document.readyState === 'loading') {
         var totalSpan = (lastCard.offsetLeft + lastCard.offsetWidth) - firstCard.offsetLeft;
         maxTravel = Math.max(0, totalSpan - vw + Math.max(48, (vw - 1440) / 2 + 64));
       } else {
-        maxTravel = Math.max(0, liveRow.scrollWidth - vw + 64);
+        maxTravel = Math.max(0, row.scrollWidth - vw + 64);
       }
 
       var currentX = -p * maxTravel;
-      liveRow.style.setProperty('transform', 'translate3d(' + currentX.toFixed(1) + 'px, 0px, 0px)', 'important');
-      liveRow.scrollLeft = 0;
+      row.style.transform = 'translate3d(' + currentX.toFixed(1) + 'px, 0px, 0px)';
+      row.scrollLeft = 0;
     }
 
     window.addEventListener('scroll', updateReviews, { passive: true });
@@ -8179,7 +7865,7 @@ if (document.readyState === 'loading') {
         ? window.lenis.scroll
         : (window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0);
 
-      if (Math.abs(currentY - lastRevY) > 0.1) {
+      if (Math.abs(currentY - lastRevY) > 0.2) {
         lastRevY = currentY;
         updateReviews();
       }
