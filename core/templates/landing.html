@@ -1686,9 +1686,9 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 /* Individual Review Card - Editorial Monolith Design */
 .spec-review-card {
   flex: none !important;
-  width: clamp(340px, 28vw, 420px) !important;
+  width: clamp(280px, 22vw, 340px) !important;
   position: relative !important;
-  border-radius: 20px !important;
+  border-radius: 16px !important;
   overflow: hidden !important;
   display: flex !important;
   flex-direction: column !important;
@@ -1731,7 +1731,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px 12px;
+  padding: 10px 18px 8px;
   border-bottom: 1px solid rgba(245, 234, 216, 0.08);
 }
 
@@ -1741,7 +1741,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   gap: 6px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 10px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
@@ -1757,7 +1757,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 .spec-rc-disc {
   color: #e5d8c5;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
 }
 
 .spec-rc-badge {
@@ -1794,7 +1794,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 .spec-rc-media-wrapper {
   position: relative;
   z-index: 1;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9.5;
   width: 100%;
   overflow: hidden;
   background: #0d0102;
@@ -1810,8 +1810,9 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.spec-review-card:hover .spec-rc-media-img {
-  transform: scale(1.06);
+.spec-review-card:hover .spec-rc-media-img,
+.spec-review-card.is-card-hovered .spec-rc-media-img {
+  transform: scale(1.05);
   filter: contrast(1.08) brightness(1.0);
 }
 
@@ -1824,8 +1825,8 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 
 .spec-rc-loc-tag {
   position: absolute;
-  left: 14px;
-  bottom: 12px;
+  left: 12px;
+  bottom: 10px;
   z-index: 3;
   display: inline-flex;
   align-items: center;
@@ -1839,7 +1840,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   color: #f5ead8;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 9px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   font-weight: 500;
 }
@@ -1850,35 +1851,35 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   z-index: 2;
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin: 14px 20px 4px;
-  padding: 10px 16px;
-  border-radius: 12px;
+  gap: 12px;
+  margin: 8px 16px 3px;
+  padding: 5px 12px;
+  border-radius: 9px;
   background: linear-gradient(90deg, rgba(223, 22, 55, 0.15) 0%, rgba(223, 22, 55, 0.04) 100%);
   border: 1px solid rgba(223, 22, 55, 0.3);
 }
 
 .spec-rc-kpi-val {
   font-family: var(--font-heading, 'Space Grotesk', sans-serif);
-  font-size: clamp(22px, 2.2vw, 28px);
+  font-size: clamp(18px, 1.7vw, 22px);
   font-weight: 800;
   color: #ffffff;
   line-height: 1;
   letter-spacing: -0.02em;
-  text-shadow: 0 0 16px rgba(223, 22, 55, 0.6);
+  text-shadow: 0 0 14px rgba(223, 22, 55, 0.6);
 }
 
 .spec-rc-kpi-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .spec-rc-kpi-lbl {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #df1637;
 }
@@ -1893,20 +1894,22 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 .spec-rc-quote-block {
   position: relative;
   z-index: 2;
-  padding: 12px 20px;
+  padding: 6px 16px 3px;
   flex: 1 0 auto;
 }
 
 .spec-rc-quote-glyph {
   color: rgba(223, 22, 55, 0.35);
-  margin-bottom: 6px;
+  margin-bottom: 3px;
   display: block;
+  width: 18px;
+  height: 18px;
 }
 
 .spec-rc-quote-text {
   font-family: var(--font-body, 'Space Grotesk', sans-serif);
-  font-size: 13.5px;
-  line-height: 1.55;
+  font-size: 12px;
+  line-height: 1.42;
   color: #f5ead8;
   font-weight: 400;
   margin: 0;
@@ -1920,19 +1923,19 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 20px 14px;
+  padding: 4px 16px 4px;
 }
 
 .spec-rc-stars {
   display: flex;
   gap: 3px;
   color: #ffaa00;
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 1px;
 }
 
 .spec-rc-star {
-  filter: drop-shadow(0 0 4px rgba(255, 170, 0, 0.5));
+  filter: drop-shadow(0 0 3px rgba(255, 170, 0, 0.5));
 }
 
 .spec-rc-tags {
@@ -1943,7 +1946,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 .spec-rc-tag {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 9px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   color: #df1637;
   opacity: 0.85;
 }
@@ -1955,7 +1958,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px;
+  padding: 7px 16px 9px;
   border-top: 1px solid rgba(245, 234, 216, 0.08);
   background: rgba(0, 0, 0, 0.35);
 }
@@ -1963,14 +1966,14 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 .spec-rc-author {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .spec-rc-avatar-wrap {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  padding: 2px;
+  padding: 1.5px;
   background: linear-gradient(135deg, #df1637 0%, #b40119 50%, rgba(245, 234, 216, 0.4) 100%);
   flex-shrink: 0;
 }
@@ -2107,28 +2110,224 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   pointer-events: none !important;
 }
 
+/* ========================================================================== */
+/* SECTION 07 REVIEWS: DESCENDING STAIRCASE, HOVER PROMINENCE & BLUR SYSTEM  */
+/* ========================================================================== */
+
+/* Reviews Section & Ambient Hover Overlay */
+#spec-reviews-section {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.spec-reviews-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(45, 4, 6, 0.25) 0%, rgba(20, 2, 4, 0.5) 100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#spec-reviews-section.has-card-hovered .spec-reviews-hover-overlay,
+#spec-reviews-section:has(.spec-review-card:hover) .spec-reviews-hover-overlay {
+  opacity: 1;
+}
+
+/* Header subtle soft defocus when any review card is hovered */
+#spec-reviews-section.has-card-hovered [data-blurable="1"],
+#spec-reviews-section:has(.spec-review-card:hover) [data-blurable="1"] {
+  filter: blur(2.5px) brightness(0.72) !important;
+  -webkit-filter: blur(2.5px) brightness(0.72) !important;
+  opacity: 0.65 !important;
+  transition: filter 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
 /* Horizontally scrolling testimonial / review section with edge-fade gradient mask */
 .spec-reviews-bleed,
 .testimonial-scroll-wrapper {
   position: relative !important;
   width: 100vw !important;
   overflow: hidden !important;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%) !important;
-  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%) !important;
+  padding-bottom: clamp(12px, 2vh, 24px) !important;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%) !important;
+  mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%) !important;
 }
 
 .testimonial-scroll-container,
 [data-rvrow="1"] {
   display: flex !important;
-  overflow-x: auto !important;
-  scroll-behavior: smooth !important;
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE & Edge */
+  align-items: flex-start !important;
+  gap: clamp(22px, 2.5vw, 40px) !important;
+  overflow-x: hidden !important;
+  padding: 12px max(36px, calc((100vw - 1440px) / 2 + 28px)) 24px !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  cursor: default !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  will-change: transform !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
 
 .testimonial-scroll-container::-webkit-scrollbar,
 [data-rvrow="1"]::-webkit-scrollbar {
-  display: none !important; /* Chrome, Safari, Opera */
+  display: none !important;
+}
+
+/* Individual Review Card - Base Resting State (Bigger, Luxury Editorial Presence) */
+.spec-review-card,
+[data-rvrow="1"] .ig-card {
+  flex: none !important;
+  width: clamp(330px, 25.5vw, 410px) !important;
+  position: relative !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: rgba(22, 3, 6, 0.90) !important;
+  border: 1px solid rgba(245, 234, 216, 0.12) !important;
+  box-shadow: 0 18px 44px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(223, 22, 55, 0.15) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  color: #f5ead8 !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  transform-origin: center center !important;
+  transform: scale(1) translateY(0) translateZ(0) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.35s ease, 
+              filter 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, box-shadow, filter, opacity !important;
+  z-index: 5 !important;
+}
+
+/* STAIRCASE CASCADING DESCENT: Each card sits at a smooth, distinct vertical down-stairs step */
+[data-rvrow="1"] .spec-review-card:nth-child(1),
+[data-rvrow="1"] .ig-card:nth-child(1) { 
+  margin-top: 0px !important; 
+}
+
+[data-rvrow="1"] .spec-review-card:nth-child(2),
+[data-rvrow="1"] .ig-card:nth-child(2) { 
+  margin-top: 12px !important; 
+}
+
+[data-rvrow="1"] .spec-review-card:nth-child(3),
+[data-rvrow="1"] .ig-card:nth-child(3) { 
+  margin-top: 24px !important; 
+}
+
+[data-rvrow="1"] .spec-review-card:nth-child(4),
+[data-rvrow="1"] .ig-card:nth-child(4) { 
+  margin-top: 36px !important; 
+}
+
+[data-rvrow="1"] .spec-review-card:nth-child(5),
+[data-rvrow="1"] .ig-card:nth-child(5) { 
+  margin-top: 48px !important; 
+}
+
+[data-rvrow="1"] .spec-review-card:nth-child(6),
+[data-rvrow="1"] .ig-card:nth-child(6) { 
+  margin-top: 60px !important; 
+}
+
+[data-rvrow="1"] .spec-review-card:nth-child(n+7),
+[data-rvrow="1"] .ig-card:nth-child(n+7) { 
+  margin-top: 72px !important; 
+}
+
+/* HOVER INTERACTION: Active card scales up smoothly, comes forward, gains luxury glow and remains 100% sharp */
+.spec-review-card:hover,
+.spec-review-card.is-card-hovered,
+[data-rvrow="1"] .ig-card:hover,
+[data-rvrow="1"] .ig-card.is-card-hovered {
+  z-index: 100 !important;
+  transform: scale(1.04) translateY(-10px) !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+  border-color: rgba(223, 22, 55, 0.75) !important;
+  box-shadow: 0 32px 80px -15px rgba(0, 0, 0, 0.92), 
+              0 0 35px rgba(223, 22, 55, 0.40), 
+              0 0 0 1.5px rgba(245, 234, 216, 0.35) !important;
+}
+
+/* Ensure ALL content inside the active review card remains 100% sharp and clear */
+.spec-review-card:hover *,
+.spec-review-card.is-card-hovered *,
+[data-rvrow="1"] .ig-card:hover *,
+[data-rvrow="1"] .ig-card.is-card-hovered * {
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* BACKGROUND BLUR EFFECT: Sibling review cards get an elegant soft depth-of-field defocus matching the burgundy theme */
+[data-rvrow="1"]:has(.spec-review-card:hover) .spec-review-card:not(:hover),
+[data-rvrow="1"]:has(.ig-card:hover) .ig-card:not(:hover),
+[data-rvrow="1"].has-card-hovered .spec-review-card.is-card-dimmed,
+[data-rvrow="1"].has-card-hovered .ig-card.is-card-dimmed,
+[data-rvrow="1"].has-card-hovered .spec-review-card:not(.is-card-hovered),
+[data-rvrow="1"].has-card-hovered .ig-card:not(.is-card-hovered) {
+  filter: blur(3.5px) brightness(0.72) !important;
+  -webkit-filter: blur(3.5px) brightness(0.72) !important;
+  opacity: 0.58 !important;
+  transform: scale(0.98) !important;
+}
+
+/* Tablet Responsive Staircase */
+@media (max-width: 1024px) {
+  [data-rvrow="1"] .spec-review-card,
+  [data-rvrow="1"] .ig-card {
+    width: clamp(260px, 32vw, 300px) !important;
+  }
+  [data-rvrow="1"] .spec-review-card:nth-child(1),
+  [data-rvrow="1"] .ig-card:nth-child(1) { margin-top: 0px !important; }
+  [data-rvrow="1"] .spec-review-card:nth-child(2),
+  [data-rvrow="1"] .ig-card:nth-child(2) { margin-top: 10px !important; }
+  [data-rvrow="1"] .spec-review-card:nth-child(3),
+  [data-rvrow="1"] .ig-card:nth-child(3) { margin-top: 20px !important; }
+  [data-rvrow="1"] .spec-review-card:nth-child(4),
+  [data-rvrow="1"] .ig-card:nth-child(4) { margin-top: 30px !important; }
+  [data-rvrow="1"] .spec-review-card:nth-child(5),
+  [data-rvrow="1"] .ig-card:nth-child(5) { margin-top: 40px !important; }
+  [data-rvrow="1"] .spec-review-card:nth-child(6),
+  [data-rvrow="1"] .ig-card:nth-child(6) { margin-top: 50px !important; }
+
+  .spec-review-card:hover,
+  .spec-review-card.is-card-hovered,
+  [data-rvrow="1"] .ig-card:hover,
+  [data-rvrow="1"] .ig-card.is-card-hovered {
+    transform: scale(1.05) translateY(-6px) !important;
+  }
+}
+
+/* Mobile Responsive Stacking / Smooth Horizontal Track */
+@media (max-width: 768px) {
+  [data-rvrow="1"] {
+    gap: 16px !important;
+    padding: 12px 20px 20px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  [data-rvrow="1"] .spec-review-card,
+  [data-rvrow="1"] .ig-card {
+    width: min(84vw, 300px) !important;
+    margin-top: 0px !important;
+  }
+  .spec-review-card:hover,
+  .spec-review-card.is-card-hovered,
+  [data-rvrow="1"] .ig-card:hover,
+  [data-rvrow="1"] .ig-card.is-card-hovered {
+    transform: scale(1.02) !important;
+  }
 }
 
 /* Partners Section (The Reel): Remove all text shadow from all text inside */
@@ -2840,40 +3039,27 @@ footer#contact div[style*="font-family:ui-monospace"] {
       <div class="spec-obj-vign"></div>
       <div class="spec-obj-grain"></div>
 
-      <!-- Precision Telemetry HUD -->
-      <div class="spec-obj-ui mono">
-        <div class="spec-obj-tl">
-          <span class="spec-obj-dot"></span>
-          <span>scene 07 — the object</span>
-        </div>
-        <div class="spec-obj-tr">07&nbsp;/&nbsp;08</div>
-        <div class="spec-obj-bl">spec media · object study</div>
-        <div class="spec-obj-br">
-          <span id="spec-obj-readout">rotation 000°</span><br>
-          <span id="spec-obj-frame-readout" style="opacity:.6">frame 00%</span>
-        </div>
-      </div>
+      <!-- Precision Telemetry HUD (All text removed per request) -->
+      <div class="spec-obj-ui mono" style="display:none !important;" aria-hidden="true"></div>
 
-      <!-- Dynamic Contextual Interaction Prompts -->
-      <div class="spec-obj-hint mono" id="spec-obj-hint">
-        <span>scroll</span>
-        <div class="spec-obj-bar"></div>
-      </div>
-      <div class="spec-obj-drag mono" id="spec-obj-drag">— drag to spin —</div>
-      <div class="spec-obj-err mono" id="spec-obj-err">object failed to load</div>
+      <!-- Dynamic Contextual Interaction Prompts (All text removed per request) -->
+      <div class="spec-obj-hint mono" id="spec-obj-hint" style="display:none !important;" aria-hidden="true"></div>
+      <div class="spec-obj-drag mono" id="spec-obj-drag" style="display:none !important;" aria-hidden="true"></div>
+      <div class="spec-obj-err mono" id="spec-obj-err" style="display:none !important;" aria-hidden="true"></div>
     </div>
   </section>
   <section ref="{{ reviewsRef }}" id="spec-reviews-section" data-screen-label="07 Reviews" style="background:#2d0406;position:relative;z-index:10;height:380vh;box-sizing:border-box;">
-    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;box-sizing:border-box;padding:clamp(76px, 11vh, 108px) 0 20px;">
-    <!-- Ambient Radial Glow overlay: fades out on scroll as dark mode transitions to light mode -->
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;box-sizing:border-box;padding:clamp(14px, 2vh, 24px) 0 8px;">
+    <!-- Ambient Radial Glow overlay & Hover Backdrop Blur Overlay -->
     <div id="spec-reviews-ambient-glow" style="display:none;pointer-events:none;opacity:0;" aria-hidden="true"></div>
-    <div data-blurable="1" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:var(--space-6)">
+    <div id="spec-reviews-hover-overlay" class="spec-reviews-hover-overlay" aria-hidden="true"></div>
+    <div data-blurable="1" class="spec-reviews-header" style="position:relative;z-index:2;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:baseline;justify-content:space-between;margin-bottom:clamp(4px, 0.8vh, 10px)">
       <div>
-        <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:var(--color-neutral-500);margin-bottom:4px">07 / REVIEWS — VERIFIED VOICES</div>
-        <h2 style="margin:0;font-family:var(--font-heading);font-size:clamp(30px,4.4vw,64px);line-height:1.02;color:var(--color-bg)">Beyond clients.<br>Trusted partners.</h2>
+        <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:var(--color-neutral-500);margin-bottom:2px">07 / REVIEWS — VERIFIED VOICES</div>
+        <h2 style="margin:0;font-family:var(--font-heading);font-size:clamp(22px,3.2vw,38px);line-height:1.02;color:var(--color-bg)">Beyond clients.<br>Trusted partners.</h2>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
-        <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid var(--color-neutral-800);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;font-size:10px;color:var(--color-accent)">
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid var(--color-neutral-800);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;font-size:10px;color:var(--color-accent)">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="#3897f0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
           VERIFIED CLIENT REVIEWS · SCROLL DRIVEN
         </span>
@@ -2881,8 +3067,8 @@ footer#contact div[style*="font-family:ui-monospace"] {
     </div>
 
     <!-- Edge-to-edge full-bleed carousel wrapper spanning 100vw from left to right -->
-    <div class="spec-reviews-bleed" style="position:relative;z-index:1;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;overflow:hidden;padding:12px 0 28px">
-      <div data-rvrow="1" style="display:flex;gap:clamp(20px,2.4vw,34px);overflow-x:hidden;padding:16px max(32px, calc((100vw - 1440px)/2 + 24px)) 28px;scrollbar-width:none;-ms-overflow-style:none;cursor:default;user-select:none;-webkit-user-select:none;will-change:transform">
+    <div class="spec-reviews-bleed" style="position:relative;z-index:10;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;overflow:hidden;padding:0;">
+      <div data-rvrow="1" style="display:flex;gap:clamp(20px,2.4vw,36px);overflow-x:hidden;padding:8px max(32px, calc((100vw - 1440px)/2 + 24px)) 16px;scrollbar-width:none;-ms-overflow-style:none;cursor:default;user-select:none;-webkit-user-select:none;will-change:transform">
             <!-- Card 01: Faisal Al-Marri (@faisal.almarri) -->
       <article data-rv="1" class="spec-review-card ig-card">
         <!-- Card Glass Background Layer -->
@@ -4461,6 +4647,15 @@ class Component extends DCLogic {
     opacity: 0.06;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  #spec-object-section .spec-obj-ui,
+  #spec-object-section .spec-obj-hint,
+  #spec-object-section .spec-obj-drag,
+  #spec-object-section .spec-obj-err {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
   #spec-object-section .spec-obj-ui {
     position: absolute;
@@ -6679,6 +6874,7 @@ function initReviewsScrollAnimation() {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('spec-card-entered');
+        entry.target.style.transitionDelay = '0s';
         observer.unobserve(entry.target);
       }
     });
@@ -6929,7 +7125,8 @@ if (document.readyState === 'loading') {
       return rect;
     }
 
-    // Inject dynamic logo animation styles if not already present
+    // Inject dynamic logo animation styles if not already present:
+    // Left-to-right staggered character reveal with blur & scale bloom
     if (!document.getElementById('spec-hero-logo-motion')) {
       var motionStyle = document.createElement('style');
       motionStyle.id = 'spec-hero-logo-motion';
@@ -6938,9 +7135,30 @@ if (document.readyState === 'loading') {
         '  0% { opacity: 0; }\n' +
         '  100% { opacity: 1; }\n' +
         '}\n' +
+        '@keyframes specCharRevealLeftToRight {\n' +
+        '  0% {\n' +
+        '    opacity: 0;\n' +
+        '    transform: translateX(-45px) scale(0.82);\n' +
+        '    filter: blur(14px);\n' +
+        '  }\n' +
+        '  60% {\n' +
+        '    opacity: 0.95;\n' +
+        '    filter: blur(2px);\n' +
+        '  }\n' +
+        '  100% {\n' +
+        '    opacity: 1;\n' +
+        '    transform: translateX(0) scale(1);\n' +
+        '    filter: blur(0px);\n' +
+        '  }\n' +
+        '}\n' +
         '.spec-chrome-nav-logo.spec-logo-intro {\n' +
         '  opacity: 1 !important;\n' +
-        '  animation: specHeroLogoIntro 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;\n' +
+        '  animation: specHeroLogoIntro 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;\n' +
+        '}\n' +
+        '.spec-chrome-nav-logo.spec-logo-intro .spec-char {\n' +
+        '  display: inline-block;\n' +
+        '  animation: specCharRevealLeftToRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;\n' +
+        '  animation-delay: calc(0.12s + var(--char-i, 0) * 0.085s);\n' +
         '}\n' +
         '.spec-chrome-nav-logo.spec-logo-ambient {\n' +
         '  opacity: 1 !important;\n' +
@@ -6956,7 +7174,7 @@ if (document.readyState === 'loading') {
             el.classList.add('spec-logo-ambient');
             el.style.opacity = '1';
           }
-        }, 850);
+        }, 1600);
       }
     }
 
@@ -6980,15 +7198,15 @@ if (document.readyState === 'loading') {
       var natX = (natRect && natRect.left > 0) ? natRect.left : 80;
       var natY = (natRect && natRect.top > 0) ? natRect.top : 38;
 
-      // Hero Logo: Centered horizontally, positioned upper in the screen with high quality
-      var maxHeroW = Math.min(vw * 0.72, 680);
-      var scaleHero = Math.max(1.4, Math.min(3.6, maxHeroW / natW));
+      // Hero Logo: Grand scale spanning widely from left to right across the hero
+      var maxHeroW = Math.min(vw * 0.90, 1340);
+      var scaleHero = Math.max(2.4, Math.min(6.2, maxHeroW / natW));
       var heroW = natW * scaleHero;
       var heroH = natH * scaleHero;
 
       var startX = (vw - heroW) / 2 - natX;
-      // Position upper in the screen: center at ~27% of viewport height (comfortably above hero headline)
-      var targetCenterY = Math.max(heroH * 0.5 + 44, vh * 0.27);
+      // Position upper in the screen: center comfortably in upper hero above headline
+      var targetCenterY = Math.max(heroH * 0.5 + 44, vh * 0.24);
       var startY = (targetCenterY - heroH / 2) - natY;
 
       var curX = startX * (1 - ease);
@@ -7157,57 +7375,59 @@ if (document.readyState === 'loading') {
     //   pEnd:   scroll progress where tile docks into its exact 0px grid position (0 blur, 0 radius)
     //   dx, dy, dz: initial 3D displacement vector (px)
     //   rx, ry, rz: initial 3D rotation angles (deg)
-    //   scale:  initial scale (0.35..0.68 for distant depth, 1.30..1.32 for foreground float)
-    //   blur:   initial cinematic blur in px
+    // --- 15-Square True Tile Dispersion & Flight Vectors ---
+    // Desktop: 5 cols x 3 rows = 15 tiles
+    // ALL squares come from the 3D depth BACK (dz: -550px..-950px, scale: 0.22..0.44, blur: 24..36px)
+    // and converge forward into place as they collect seamlessly
     var TILE_DEFS_DESKTOP = [
       // Row 0 (Top)
-      { c: 0, r: 0, pStart: 0.03, pEnd: 0.18, dx: -540, dy: -380, dz: -460, rx:  24, ry: -30, rz: -18, scale: 0.50, blur: 24 }, // Top-Left
-      { c: 1, r: 0, pStart: 0.19, pEnd: 0.34, dx: -180, dy: -460, dz: -320, rx: -30, ry: -15, rz:  12, scale: 0.60, blur: 20 }, // Top-Mid-Left
-      { c: 2, r: 0, pStart: 0.15, pEnd: 0.30, dx:   30, dy: -520, dz: -380, rx: -35, ry:  10, rz: -10, scale: 0.55, blur: 22 }, // Top-Center
-      { c: 3, r: 0, pStart: 0.21, pEnd: 0.36, dx:  220, dy: -450, dz: -340, rx: -28, ry:  20, rz: -14, scale: 0.58, blur: 20 }, // Top-Mid-Right
-      { c: 4, r: 0, pStart: 0.07, pEnd: 0.22, dx:  560, dy: -390, dz: -480, rx:  22, ry:  32, rz:  20, scale: 0.48, blur: 26 }, // Top-Right
+      { c: 0, r: 0, pStart: 0.03, pEnd: 0.18, dx: -480, dy: -360, dz: -780, rx:  24, ry: -26, rz: -16, scale: 0.35, blur: 30 }, // Top-Left
+      { c: 1, r: 0, pStart: 0.19, pEnd: 0.34, dx: -160, dy: -420, dz: -680, rx: -24, ry: -14, rz:  10, scale: 0.40, blur: 26 }, // Top-Mid-Left
+      { c: 2, r: 0, pStart: 0.15, pEnd: 0.30, dx:   20, dy: -460, dz: -720, rx: -28, ry:  10, rz:  -8, scale: 0.38, blur: 28 }, // Top-Center
+      { c: 3, r: 0, pStart: 0.21, pEnd: 0.36, dx:  200, dy: -410, dz: -660, rx: -22, ry:  18, rz: -12, scale: 0.42, blur: 26 }, // Top-Mid-Right
+      { c: 4, r: 0, pStart: 0.07, pEnd: 0.22, dx:  500, dy: -350, dz: -820, rx:  20, ry:  28, rz:  16, scale: 0.32, blur: 32 }, // Top-Right
 
       // Row 1 (Center Row)
-      { c: 0, r: 1, pStart: 0.27, pEnd: 0.42, dx: -620, dy:  -20, dz: -280, rx:  12, ry: -38, rz: -14, scale: 0.65, blur: 22 }, // Mid-Left-Edge
-      { c: 1, r: 1, pStart: 0.11, pEnd: 0.26, dx: -260, dy:   80, dz:  240, rx: -16, ry: -22, rz:  16, scale: 1.30, blur: 26 }, // Mid-Left-Inner (foreground float)
-      { c: 2, r: 1, pStart: 0.01, pEnd: 0.16, dx:  -40, dy:   50, dz: -820, rx:  18, ry: -16, rz:  10, scale: 0.35, blur: 30 }, // Center-Core (earliest emergence)
-      { c: 3, r: 1, pStart: 0.13, pEnd: 0.28, dx:  280, dy:  -70, dz:  260, rx:  16, ry:  24, rz: -18, scale: 1.32, blur: 25 }, // Mid-Right-Inner (foreground float)
-      { c: 4, r: 1, pStart: 0.29, pEnd: 0.44, dx:  640, dy:   30, dz: -300, rx: -14, ry:  36, rz:  16, scale: 0.68, blur: 22 }, // Mid-Right-Edge (latest arrival)
+      { c: 0, r: 1, pStart: 0.27, pEnd: 0.42, dx: -540, dy:  -20, dz: -740, rx:  12, ry: -32, rz: -12, scale: 0.36, blur: 28 }, // Mid-Left-Edge
+      { c: 1, r: 1, pStart: 0.11, pEnd: 0.26, dx: -220, dy:   60, dz: -600, rx: -14, ry: -18, rz:  12, scale: 0.44, blur: 24 }, // Mid-Left-Inner
+      { c: 2, r: 1, pStart: 0.01, pEnd: 0.16, dx:  -30, dy:   40, dz: -950, rx:  16, ry: -12, rz:   8, scale: 0.24, blur: 36 }, // Center-Core (deep back)
+      { c: 3, r: 1, pStart: 0.13, pEnd: 0.28, dx:  240, dy:  -50, dz: -620, rx:  14, ry:  20, rz: -14, scale: 0.42, blur: 24 }, // Mid-Right-Inner
+      { c: 4, r: 1, pStart: 0.29, pEnd: 0.44, dx:  560, dy:   20, dz: -760, rx: -12, ry:  30, rz:  14, scale: 0.34, blur: 30 }, // Mid-Right-Edge
 
       // Row 2 (Bottom Row)
-      { c: 0, r: 2, pStart: 0.09, pEnd: 0.24, dx: -520, dy:  420, dz: -420, rx: -26, ry: -28, rz:  20, scale: 0.52, blur: 24 }, // Bottom-Left
-      { c: 1, r: 2, pStart: 0.23, pEnd: 0.38, dx: -200, dy:  480, dz: -340, rx:  32, ry: -16, rz: -14, scale: 0.62, blur: 20 }, // Bottom-Mid-Left
-      { c: 2, r: 2, pStart: 0.17, pEnd: 0.32, dx:   40, dy:  510, dz: -400, rx:  34, ry: -12, rz:  12, scale: 0.54, blur: 22 }, // Bottom-Center
-      { c: 3, r: 2, pStart: 0.25, pEnd: 0.40, dx:  240, dy:  470, dz: -360, rx:  28, ry:  18, rz:  15, scale: 0.60, blur: 20 }, // Bottom-Mid-Right
-      { c: 4, r: 2, pStart: 0.05, pEnd: 0.20, dx:  540, dy:  410, dz: -460, rx: -24, ry:  30, rz: -22, scale: 0.50, blur: 25 }  // Bottom-Right
+      { c: 0, r: 2, pStart: 0.09, pEnd: 0.24, dx: -460, dy:  380, dz: -760, rx: -22, ry: -24, rz:  18, scale: 0.36, blur: 28 }, // Bottom-Left
+      { c: 1, r: 2, pStart: 0.23, pEnd: 0.38, dx: -180, dy:  440, dz: -640, rx:  26, ry: -14, rz: -12, scale: 0.42, blur: 26 }, // Bottom-Mid-Left
+      { c: 2, r: 2, pStart: 0.17, pEnd: 0.32, dx:   30, dy:  470, dz: -700, rx:  28, ry: -10, rz:  10, scale: 0.38, blur: 28 }, // Bottom-Center
+      { c: 3, r: 2, pStart: 0.25, pEnd: 0.40, dx:  210, dy:  430, dz: -660, rx:  24, ry:  16, rz:  12, scale: 0.40, blur: 26 }, // Bottom-Mid-Right
+      { c: 4, r: 2, pStart: 0.05, pEnd: 0.20, dx:  480, dy:  370, dz: -800, rx: -20, ry:  26, rz: -18, scale: 0.34, blur: 30 }  // Bottom-Right
     ];
 
-    // Mobile: 3 cols x 5 rows = 15 tiles (aspect ratio 0.938, virtually 1:1 true squares for 9:16 screen)
+    // Mobile: 3 cols x 5 rows = 15 tiles (all from deep 3D back with blur)
     var TILE_DEFS_MOBILE = [
       // Row 0
-      { c: 0, r: 0, pStart: 0.03, pEnd: 0.18, dx: -280, dy: -320, dz: -300, rx:  20, ry: -24, rz: -16, scale: 0.52, blur: 22 },
-      { c: 1, r: 0, pStart: 0.15, pEnd: 0.30, dx:   20, dy: -360, dz: -260, rx: -24, ry:  12, rz:  10, scale: 0.58, blur: 20 },
-      { c: 2, r: 0, pStart: 0.07, pEnd: 0.22, dx:  280, dy: -310, dz: -320, rx:  22, ry:  26, rz:  18, scale: 0.50, blur: 24 },
+      { c: 0, r: 0, pStart: 0.03, pEnd: 0.18, dx: -260, dy: -300, dz: -680, rx:  20, ry: -22, rz: -14, scale: 0.38, blur: 28 },
+      { c: 1, r: 0, pStart: 0.15, pEnd: 0.30, dx:   20, dy: -340, dz: -640, rx: -22, ry:  12, rz:  10, scale: 0.42, blur: 26 },
+      { c: 2, r: 0, pStart: 0.07, pEnd: 0.22, dx:  260, dy: -290, dz: -700, rx:  20, ry:  24, rz:  16, scale: 0.36, blur: 28 },
 
       // Row 1
-      { c: 0, r: 1, pStart: 0.19, pEnd: 0.34, dx: -300, dy: -140, dz: -220, rx:  16, ry: -28, rz:  12, scale: 0.62, blur: 20 },
-      { c: 1, r: 1, pStart: 0.01, pEnd: 0.16, dx:  -30, dy:  -80, dz: -540, rx:  14, ry: -14, rz:  -8, scale: 0.38, blur: 28 },
-      { c: 2, r: 1, pStart: 0.21, pEnd: 0.36, dx:  310, dy: -130, dz: -240, rx: -16, ry:  28, rz: -14, scale: 0.60, blur: 20 },
+      { c: 0, r: 1, pStart: 0.19, pEnd: 0.34, dx: -280, dy: -130, dz: -620, rx:  16, ry: -24, rz:  12, scale: 0.44, blur: 24 },
+      { c: 1, r: 1, pStart: 0.01, pEnd: 0.16, dx:  -20, dy:  -70, dz: -850, rx:  14, ry: -14, rz:  -8, scale: 0.28, blur: 32 },
+      { c: 2, r: 1, pStart: 0.21, pEnd: 0.36, dx:  290, dy: -120, dz: -640, rx: -16, ry:  24, rz: -14, scale: 0.42, blur: 24 },
 
       // Row 2 (Middle)
-      { c: 0, r: 2, pStart: 0.27, pEnd: 0.42, dx: -340, dy:   20, dz:  180, rx: -12, ry: -22, rz:  14, scale: 1.25, blur: 24 },
-      { c: 1, r: 2, pStart: 0.11, pEnd: 0.26, dx:   10, dy:   10, dz: -480, rx:  18, ry:   8, rz:  10, scale: 0.42, blur: 26 },
-      { c: 2, r: 2, pStart: 0.29, pEnd: 0.44, dx:  350, dy:  -10, dz:  190, rx:  14, ry:  22, rz: -14, scale: 1.28, blur: 24 },
+      { c: 0, r: 2, pStart: 0.27, pEnd: 0.42, dx: -300, dy:   20, dz: -580, rx: -12, ry: -20, rz:  14, scale: 0.46, blur: 24 },
+      { c: 1, r: 2, pStart: 0.11, pEnd: 0.26, dx:   10, dy:   10, dz: -780, rx:  18, ry:   8, rz:  10, scale: 0.32, blur: 30 },
+      { c: 2, r: 2, pStart: 0.29, pEnd: 0.44, dx:  310, dy:  -10, dz: -600, rx:  14, ry:  20, rz: -14, scale: 0.44, blur: 24 },
 
       // Row 3
-      { c: 0, r: 3, pStart: 0.23, pEnd: 0.38, dx: -290, dy:  150, dz: -240, rx: -18, ry: -24, rz: -12, scale: 0.60, blur: 20 },
-      { c: 1, r: 3, pStart: 0.13, pEnd: 0.28, dx:  -20, dy:  160, dz: -320, rx:  22, ry: -10, rz:  12, scale: 0.55, blur: 22 },
-      { c: 2, r: 3, pStart: 0.25, pEnd: 0.40, dx:  300, dy:  160, dz: -250, rx:  20, ry:  24, rz:  14, scale: 0.58, blur: 20 },
+      { c: 0, r: 3, pStart: 0.23, pEnd: 0.38, dx: -270, dy:  140, dz: -620, rx: -18, ry: -22, rz: -12, scale: 0.42, blur: 24 },
+      { c: 1, r: 3, pStart: 0.13, pEnd: 0.28, dx:  -20, dy:  150, dz: -700, rx:  20, ry: -10, rz:  12, scale: 0.38, blur: 26 },
+      { c: 2, r: 3, pStart: 0.25, pEnd: 0.40, dx:  280, dy:  150, dz: -640, rx:  20, ry:  22, rz:  14, scale: 0.40, blur: 24 },
 
       // Row 4
-      { c: 0, r: 4, pStart: 0.09, pEnd: 0.24, dx: -270, dy:  330, dz: -280, rx: -22, ry: -22, rz:  18, scale: 0.54, blur: 22 },
-      { c: 1, r: 4, pStart: 0.17, pEnd: 0.32, dx:   30, dy:  370, dz: -290, rx:  26, ry: -12, rz: -10, scale: 0.52, blur: 22 },
-      { c: 2, r: 4, pStart: 0.05, pEnd: 0.20, dx:  280, dy:  340, dz: -310, rx: -24, ry:  24, rz: -20, scale: 0.48, blur: 24 }
+      { c: 0, r: 4, pStart: 0.09, pEnd: 0.24, dx: -250, dy:  310, dz: -680, rx: -20, ry: -20, rz:  16, scale: 0.38, blur: 28 },
+      { c: 1, r: 4, pStart: 0.17, pEnd: 0.32, dx:   20, dy:  350, dz: -660, rx:  24, ry: -12, rz: -10, scale: 0.40, blur: 26 },
+      { c: 2, r: 4, pStart: 0.05, pEnd: 0.20, dx:  260, dy:  320, dz: -720, rx: -22, ry:  22, rz: -18, scale: 0.34, blur: 30 }
     ];
 
     var activeDefs = TILE_DEFS_DESKTOP;
@@ -7459,7 +7679,7 @@ if (document.readyState === 'loading') {
       video.style.pointerEvents = 'none';
 
       // Keep stage overflow visible during 3D square assembly so squares can float outside
-      stage.style.overflow = (p < 0.52) ? 'visible' : 'hidden';
+      stage.style.overflow = (p < 0.46) ? 'visible' : 'hidden';
 
       // =========================================================================
       // 1. INITIAL STATE: Completely Empty (p <= 0.005)
@@ -7494,10 +7714,10 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 2. SCROLL-DRIVEN SQUARE COLLECTION ANIMATION (0.005 < p < 0.44)
-      // Squares progressively appear and travel from 3D space to reconstruct image
+      // 2. SCROLL-DRIVEN SQUARE COLLECTION ANIMATION (0.005 < p < 0.42)
+      // Squares progressively appear and travel from deep 3D space with blur to reconstruct image
       // =========================================================================
-      if (p < 0.44) {
+      if (p < 0.42) {
         slicesCont.style.opacity = '1';
         slicesCont.style.transform = 'none';
         slicesCont.style.filter = 'none';
@@ -7513,7 +7733,7 @@ if (document.readyState === 'loading') {
           var pe = def.pEnd;
 
           if (p <= ps) {
-            // Not started yet: completely invisible and positioned far out
+            // Not started yet: completely invisible and positioned far out in deep back
             var t3dInit = 'translate3d(' + def.dx + 'px,' + def.dy + 'px,' + def.dz + 'px) ' +
                           'rotateX(' + def.rx + 'deg) rotateY(' + def.ry + 'deg) rotateZ(' + def.rz + 'deg) ' +
                           'scale(' + def.scale + ')';
@@ -7534,13 +7754,11 @@ if (document.readyState === 'loading') {
             s.style.borderRadius = '0';
             s.style.boxShadow = 'none';
           } else {
-            // In-flight interpolation
+            // In-flight interpolation coming from back
             var localP = (p - ps) / (pe - ps);
-            // Smooth cinematic ease-out curve
             var ease = 1 - Math.pow(1 - localP, 2.5);
             var rem = 1 - ease;
 
-            // Opacity: quickly fades in during first 35% of flight
             var op = Math.min(1, localP * 2.85).toFixed(3);
 
             var curX = (def.dx * rem).toFixed(1);
@@ -7551,7 +7769,6 @@ if (document.readyState === 'loading') {
             var curRz = (def.rz * rem).toFixed(2);
             var curScale = (1.0 + (def.scale - 1.0) * rem).toFixed(3);
             var curBlur = (def.blur * rem).toFixed(1);
-            var curBr = Math.round(10 * rem);
             var shadowA = (0.55 * rem).toFixed(2);
 
             var t3d = 'translate3d(' + curX + 'px,' + curY + 'px,' + curZ + 'px) ' +
@@ -7574,16 +7791,14 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 3. COMPLETE RECONSTRUCTED IMAGE HOLD (0.44 <= p < 0.52)
-      // "Hold the fully reconstructed image briefly before starting the video.
-      // Do not start the video while even one square is still missing or moving."
+      // 3. COMPLETE RECONSTRUCTED IMAGE HOLD (0.42 <= p < 0.46)
+      // "Hold the fully reconstructed image briefly before starting the video."
       // =========================================================================
-      if (p >= 0.44 && p < 0.52) {
-        // Crossfade from assembled tiles to pristine master image for 100% seamless hold
-        var holdProg = (p - 0.44) / 0.08;
-        if (holdProg < 0.3) {
+      if (p >= 0.42 && p < 0.46) {
+        var holdProg = (p - 0.42) / 0.04;
+        if (holdProg < 0.4) {
           slicesCont.style.opacity = '1';
-          masterImg.style.opacity = (holdProg / 0.3).toFixed(3);
+          masterImg.style.opacity = (holdProg / 0.4).toFixed(3);
         } else {
           slicesCont.style.opacity = '0';
           masterImg.style.opacity = '1';
@@ -7609,37 +7824,19 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 4. SAME-SIZE IMAGE TO VIDEO CROSSFADE (0.52 <= p < 0.62)
-      // Video starts playing; crossfades seamlessly at identical container size
+      // 4. VIDEO STARTS & EXPANDS TO FULLSCREEN (0.46 <= p < 0.58)
+      // "start the video when the video start make the fullscreen"
       // =========================================================================
-      if (p >= 0.52 && p < 0.62) {
+      if (p >= 0.46 && p < 0.58) {
         slicesCont.style.opacity = '0';
-        var pCross = (p - 0.52) / 0.10;
-        var eCross = pCross * pCross * (3 - 2 * pCross);
+        var pExp = (p - 0.46) / 0.12;
+        var eExp = pExp * pExp * (3 - 2 * pExp);
 
-        masterImg.style.opacity = (1 - eCross).toFixed(3);
-        video.style.opacity = eCross.toFixed(3);
-
-        safePlaySec2Video();
-
-        setStageSmall(stage, isMobile);
-        return;
-      }
-
-      // =========================================================================
-      // 5. SMOOTH FULLSCREEN EXPANSION (0.62 <= p < 0.76)
-      // With video playing inside, smoothly expand stage from 1120px to 100vw x 100vh
-      // =========================================================================
-      if (p >= 0.62 && p < 0.76) {
-        slicesCont.style.opacity = '0';
-        masterImg.style.opacity = '0';
-        video.style.opacity = '1';
+        masterImg.style.opacity = (1 - Math.min(1, pExp * 2)).toFixed(3);
+        video.style.opacity = Math.min(1, pExp * 2).toFixed(3);
         stage.style.pointerEvents = 'auto';
         video.style.pointerEvents = 'auto';
         video.style.cursor = 'pointer';
-
-        var pExp = (p - 0.62) / 0.14;
-        var eExp = pExp * pExp * (3 - 2 * pExp);
 
         safePlaySec2Video();
 
@@ -7648,10 +7845,10 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 6. FULLSCREEN VIDEO PLAYBACK (0.76 <= p < 0.88)
+      // 5. FULLSCREEN VIDEO PLAYBACK (0.58 <= p < 0.80)
       // Viewport-filling cinematic presentation
       // =========================================================================
-      if (p >= 0.76 && p < 0.88) {
+      if (p >= 0.58 && p < 0.80) {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '0';
         video.style.opacity = '1';
@@ -7666,15 +7863,15 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 7. VIDEO SHRINK BACK TO CONTAINER (0.88 <= p < 0.96)
-      // Smoothly shrink from 100vw back to original Scene 02 container
+      // 6. VIDEO SHRINK / GO OUT BEFORE FINISH (0.80 <= p < 0.94)
+      // "and gout before the video finsh"
       // =========================================================================
-      if (p >= 0.88 && p < 0.96) {
+      if (p >= 0.80 && p < 0.94) {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '0';
         video.style.opacity = '1';
 
-        var pShrink = (p - 0.88) / 0.08;
+        var pShrink = (p - 0.80) / 0.14;
         var eShrink = pShrink * pShrink * (3 - 2 * pShrink);
 
         safePlaySec2Video();
@@ -7684,10 +7881,10 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 8. VIDEO END / NORMAL SCROLL RESTORATION (p >= 0.96)
+      // 7. VIDEO END / NORMAL SCROLL RESTORATION (p >= 0.94)
       // Dock back into container; unpin to scroll into Section 03
       // =========================================================================
-      if (p >= 0.96) {
+      if (p >= 0.94) {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '1';
         video.style.opacity = '0';
@@ -8008,8 +8205,12 @@ if (document.readyState === 'loading') {
         unlockSec2Video();
       });
       s2Video.addEventListener('timeupdate', function() {
-        if (s2Video.duration && s2Video.currentTime >= s2Video.duration - 0.25) {
-          unlockSec2Video();
+        // "gout before the video finish": smoothly exit fullscreen before the video finishes
+        if (s2Video.duration && s2Video.duration > 2) {
+          var exitThreshold = Math.max(s2Video.duration * 0.84, s2Video.duration - 2.8);
+          if (s2Video.currentTime >= exitThreshold) {
+            handleSkipVideo();
+          }
         }
       });
     }
@@ -8147,9 +8348,55 @@ if (document.readyState === 'loading') {
       }
 
       var currentX = -p * maxTravel;
+      // Fixed vertical position so cascading staircase cards stay 100% visible and never clip at the bottom
       liveRow.style.setProperty('transform', 'translate3d(' + currentX.toFixed(1) + 'px, 0px, 0px)', 'important');
       liveRow.scrollLeft = 0;
     }
+
+    // Interactive Hover Blur System for Section 07 Review Cards
+    function initReviewsHoverBlur() {
+      var cards = row.querySelectorAll('.spec-review-card, .ig-card');
+      cards.forEach(function(card) {
+        card.addEventListener('mouseenter', function() {
+          sec.classList.add('has-card-hovered');
+          row.classList.add('has-card-hovered');
+          cards.forEach(function(c) {
+            if (c === card) {
+              c.classList.add('is-card-hovered');
+              c.classList.remove('is-card-dimmed');
+            } else {
+              c.classList.remove('is-card-hovered');
+              c.classList.add('is-card-dimmed');
+            }
+          });
+        });
+
+        card.addEventListener('mouseleave', function() {
+          card.classList.remove('is-card-hovered');
+          setTimeout(function() {
+            var anyHovered = row.querySelector('.is-card-hovered, .spec-review-card:hover, .ig-card:hover');
+            if (!anyHovered) {
+              sec.classList.remove('has-card-hovered');
+              row.classList.remove('has-card-hovered');
+              cards.forEach(function(c) {
+                c.classList.remove('is-card-dimmed');
+                c.classList.remove('is-card-hovered');
+              });
+            }
+          }, 40);
+        });
+      });
+
+      row.addEventListener('mouseleave', function() {
+        sec.classList.remove('has-card-hovered');
+        row.classList.remove('has-card-hovered');
+        cards.forEach(function(c) {
+          c.classList.remove('is-card-dimmed');
+          c.classList.remove('is-card-hovered');
+        });
+      });
+    }
+    initReviewsHoverBlur();
 
     window.addEventListener('scroll', updateReviews, { passive: true });
     window.addEventListener('resize', updateReviews, { passive: true });
@@ -8504,19 +8751,9 @@ async function initScene07Object() {
       camera.position.z = 3.5 - eased * 0.4;
       camera.lookAt(0, 0, 0);
 
-      const deg = Math.round(((group.rotation.y * 180 / Math.PI) % 360 + 360) % 360);
-      const liveReadout = document.getElementById('spec-obj-readout');
-      const liveFrameReadout = document.getElementById('spec-obj-frame-readout');
-      if (liveReadout) liveReadout.textContent = 'rotation ' + String(deg).padStart(3, '0') + '°';
-      if (liveFrameReadout) liveFrameReadout.textContent = 'frame ' + String(Math.round(shown * 100)).padStart(2, '0') + '%';
-
       atEnd = shown > 0.97;
       const liveStick = document.querySelector('#spec-object-section .spec-obj-stick');
-      const liveHint = document.getElementById('spec-obj-hint');
-      const liveDrag = document.getElementById('spec-obj-drag');
       if (liveStick && !dragging) liveStick.style.cursor = atEnd ? 'grab' : 'default';
-      if (liveHint) liveHint.style.opacity = shown > 0.04 ? '0' : '1';
-      if (liveDrag) liveDrag.style.opacity = atEnd ? '0.85' : '0';
     }
 
     (composer || renderer).render(scene, camera);
