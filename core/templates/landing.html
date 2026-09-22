@@ -55,6 +55,11 @@
     transform: translateY(-2px) !important;
     box-shadow: 0 12px 30px rgba(0,0,0,0.8) !important;
   }
+  #spec-video-play-pill:hover {
+    background: rgba(35, 5, 8, 0.96) !important;
+    border-color: rgba(201, 123, 130, 0.9) !important;
+    transform: scale(1.04) !important;
+  }
 
   /* =========================================================================
      Section 06: Cinematic 3D Interactive Object Study
@@ -2017,6 +2022,14 @@ footer#contact div[style*="font-family:ui-monospace"] {
         <video id="spec-scene2-video" src="/static/Main%20-%20hir%20-%20f.mp4" playsinline muted preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;opacity:0;pointer-events:none;background:#000000;border-radius:0px !important;">
           <source id="spec-scene2-video-src" src="/static/Main%20-%20hir%20-%20f.mp4" type="video/mp4">
         </video>
+
+        <!-- Video Play / Tap to Unpause Overlay (Appears if Autoplay is blocked or paused) -->
+        <div id="spec-video-play-overlay" onclick="if(window.__specPlayVideo){window.__specPlayVideo();}" style="position:absolute;inset:0;width:100%;height:100%;z-index:14;display:none;align-items:center;justify-content:center;cursor:pointer;background:rgba(0,0,0,0.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;transition:opacity 0.3s ease;">
+          <div id="spec-video-play-pill" style="display:flex;align-items:center;gap:12px;padding:14px 28px;background:rgba(20,2,3,0.88);backdrop-filter:blur(16px);border:1px solid rgba(201,123,130,0.6);border-radius:2px;box-shadow:0 12px 36px rgba(0,0,0,0.7);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#ffffff;cursor:pointer;transition:transform 0.2s ease, background 0.2s ease;">
+            <span style="color:#b40119;font-size:14px;">▶</span>
+            <span>PLAY VIDEO</span>
+          </div>
+        </div>
 
         <!-- Video Skip Control Button -->
         <button id="spec-video-skip-btn" onclick="if(window.__specUnlockVideo){window.__specUnlockVideo();}" type="button" aria-label="Skip Video" style="position:absolute;bottom:32px;right:32px;z-index:15;display:none;opacity:0;align-items:center;gap:8px;padding:10px 18px;background:rgba(20,2,3,0.80);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(201,123,130,0.45);border-radius:2px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.9);cursor:pointer;transition:opacity 0.4s ease, transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;box-shadow:0 8px 24px rgba(0,0,0,0.6);pointer-events:none;outline:none;">
@@ -7285,33 +7298,16 @@ if (document.readyState === 'loading') {
       // =========================================================================
       // 4. SAME-SIZE IMAGE TO VIDEO CROSSFADE (0.52 <= p < 0.62)
       // Video starts playing; crossfades seamlessly at identical container size
-      // Zero scale jump, zero crop change, zero aspect ratio change.
       // =========================================================================
       if (p >= 0.52 && p < 0.62) {
         slicesCont.style.opacity = '0';
         var pCross = (p - 0.52) / 0.10;
-        var eCross = pCross * pCross * (3 - 2 * pCross); // Smooth cubic ease-in-out
+        var eCross = pCross * pCross * (3 - 2 * pCross);
 
         masterImg.style.opacity = (1 - eCross).toFixed(3);
         video.style.opacity = eCross.toFixed(3);
 
-        if (video.paused && !video.ended) {
-          video.muted = true;
-          video.defaultMuted = true;
-          video.playsInline = true;
-          video.setAttribute('muted', '');
-          video.setAttribute('playsinline', '');
-          video.setAttribute('autoplay', '');
-          var pPlay = video.play();
-          if (pPlay !== undefined) pPlay.catch(function() {});
-          sec2VideoWasPlaying = true;
-        }
-
-        // Fallback for Brave aggressive autoplay blocker:
-        // If Brave blocks video.play(), ensure masterImg stays partially visible so stage is never black
-        if (video.paused && !video.ended) {
-          masterImg.style.opacity = Math.max(parseFloat(masterImg.style.opacity || '0'), 0.75).toFixed(3);
-        }
+        safePlaySec2Video();
 
         setStageSmall(stage, isMobile);
         return;
@@ -7325,25 +7321,14 @@ if (document.readyState === 'loading') {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '0';
         video.style.opacity = '1';
+        stage.style.pointerEvents = 'auto';
+        video.style.pointerEvents = 'auto';
+        video.style.cursor = 'pointer';
 
         var pExp = (p - 0.62) / 0.14;
-        var eExp = pExp * pExp * (3 - 2 * pExp); // Smooth cubic ease-in-out
+        var eExp = pExp * pExp * (3 - 2 * pExp);
 
-        if (video.paused && !video.ended) {
-          video.muted = true;
-          video.defaultMuted = true;
-          video.playsInline = true;
-          video.setAttribute('muted', '');
-          video.setAttribute('playsinline', '');
-          video.setAttribute('autoplay', '');
-          var pPlay = video.play();
-          if (pPlay !== undefined) pPlay.catch(function() {});
-          sec2VideoWasPlaying = true;
-        }
-
-        if (video.paused && !video.ended) {
-          masterImg.style.opacity = '0.8';
-        }
+        safePlaySec2Video();
 
         applyStageExpansion(stage, isMobile, eExp);
         return;
@@ -7357,22 +7342,11 @@ if (document.readyState === 'loading') {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '0';
         video.style.opacity = '1';
+        stage.style.pointerEvents = 'auto';
+        video.style.pointerEvents = 'auto';
+        video.style.cursor = 'pointer';
 
-        if (video.paused && !video.ended) {
-          video.muted = true;
-          video.defaultMuted = true;
-          video.playsInline = true;
-          video.setAttribute('muted', '');
-          video.setAttribute('playsinline', '');
-          video.setAttribute('autoplay', '');
-          var pPlay = video.play();
-          if (pPlay !== undefined) pPlay.catch(function() {});
-          sec2VideoWasPlaying = true;
-        }
-
-        if (video.paused && !video.ended) {
-          masterImg.style.opacity = '0.8';
-        }
+        safePlaySec2Video();
 
         applyStageExpansion(stage, isMobile, 1.0);
         return;
@@ -7390,14 +7364,7 @@ if (document.readyState === 'loading') {
         var pShrink = (p - 0.88) / 0.08;
         var eShrink = pShrink * pShrink * (3 - 2 * pShrink);
 
-        if (video.paused && !video.ended) {
-          video.play().catch(function() {});
-          sec2VideoWasPlaying = true;
-        }
-
-        if (video.paused && !video.ended) {
-          masterImg.style.opacity = (0.8 * eShrink).toFixed(3);
-        }
+        safePlaySec2Video();
 
         applyStageExpansion(stage, isMobile, 1.0 - eShrink);
         return;
@@ -7422,11 +7389,124 @@ if (document.readyState === 'loading') {
     // PURE SCROLL-DRIVEN CONTROLLER
     // Maps scroll position within Section 2 directly to progress p (0.0 -> 1.0)
     // =========================================================================
+    // Robust Video Player with Autoplay & Gesture Fallback
+    var sec2VideoPlayPending = false;
+    function safePlaySec2Video() {
+      var v = document.getElementById('spec-scene2-video');
+      if (!v || v.ended) return;
+      v.muted = true;
+      v.defaultMuted = true;
+      v.playsInline = true;
+      v.setAttribute('muted', '');
+      v.setAttribute('playsinline', '');
+      v.setAttribute('autoplay', '');
+
+      if (!v.paused) {
+        var ov = document.getElementById('spec-video-play-overlay');
+        if (ov) {
+          ov.style.opacity = '0';
+          ov.style.pointerEvents = 'none';
+          setTimeout(function() { ov.style.display = 'none'; }, 300);
+        }
+        return;
+      }
+
+      if (sec2VideoPlayPending) return;
+      sec2VideoPlayPending = true;
+
+      var pr = v.play();
+      if (pr !== undefined) {
+        pr.then(function() {
+          sec2VideoPlayPending = false;
+          sec2VideoWasPlaying = true;
+          var ov = document.getElementById('spec-video-play-overlay');
+          if (ov) {
+            ov.style.opacity = '0';
+            ov.style.pointerEvents = 'none';
+            setTimeout(function() { ov.style.display = 'none'; }, 300);
+          }
+          var m = document.getElementById('spec-master-image');
+          if (m) m.style.opacity = '0';
+          v.style.opacity = '1';
+        }).catch(function(err) {
+          sec2VideoPlayPending = false;
+          console.warn('[SpecMedia] Video play waiting for user click:', err.name);
+          var ov = document.getElementById('spec-video-play-overlay');
+          if (ov && !sec2VideoFinished) {
+            ov.style.display = 'flex';
+            ov.style.pointerEvents = 'auto';
+            ov.offsetHeight;
+            ov.style.opacity = '1';
+          }
+        });
+      } else {
+        sec2VideoPlayPending = false;
+      }
+    }
+    window.__specPlayVideo = safePlaySec2Video;
+
+    // Safety watchdog: auto-unlock if video stalls or fails to play after 6s in fullscreen lock
+    var sec2LockWatchdogTimer = null;
+    function checkSec2LockSafety(p) {
+      if (p >= 0.76 && !sec2VideoFinished) {
+        if (!sec2LockWatchdogTimer) {
+          sec2LockWatchdogTimer = setTimeout(function() {
+            var v = document.getElementById('spec-scene2-video');
+            if (v && v.paused && !sec2VideoFinished) {
+              console.warn('[SpecMedia] Video autoplay was blocked or stalled. Unlocking scroll fallback.');
+              unlockSec2Video();
+            }
+          }, 6000);
+        }
+      } else {
+        if (sec2LockWatchdogTimer) {
+          clearTimeout(sec2LockWatchdogTimer);
+          sec2LockWatchdogTimer = null;
+        }
+      }
+    }
+
+    // Direct click-to-play on the video stage
+    if (stage) {
+      stage.addEventListener('click', function(e) {
+        if (e.target.closest('#spec-video-skip-btn')) return;
+        safePlaySec2Video();
+      });
+    }
+
+    // Listen to first user gesture anywhere on window to prime playback
+    function onUserGestureTryPlay() {
+      var sec = document.getElementById('spec-scene2-section');
+      if (!sec) return;
+      var rect = sec.getBoundingClientRect();
+      var maxScroll = Math.max(1, sec.offsetHeight - window.innerHeight);
+      var p = -rect.top / maxScroll;
+      if (p >= 0.50 && !sec2VideoFinished) {
+        safePlaySec2Video();
+      }
+    }
+    window.addEventListener('pointerdown', onUserGestureTryPlay, { passive: true });
+    window.addEventListener('keydown', onUserGestureTryPlay, { passive: true });
+
+    // =========================================================================
+    // PURE SCROLL-DRIVEN CONTROLLER
+    // Maps scroll position within Section 2 directly to progress p (0.0 -> 1.0)
+    // =========================================================================
     var sec2VideoFinished = false;
 
     function unlockSec2Video() {
       if (sec2VideoFinished) return;
       sec2VideoFinished = true;
+      if (sec2LockWatchdogTimer) {
+        clearTimeout(sec2LockWatchdogTimer);
+        sec2LockWatchdogTimer = null;
+      }
+      var playOv = document.getElementById('spec-video-play-overlay');
+      if (playOv) {
+        playOv.style.opacity = '0';
+        playOv.style.pointerEvents = 'none';
+        setTimeout(function() { playOv.style.display = 'none'; }, 300);
+      }
       var skipBtn = document.getElementById('spec-video-skip-btn');
       if (skipBtn) {
         skipBtn.style.opacity = '0';
@@ -7467,6 +7547,7 @@ if (document.readyState === 'loading') {
       }
 
       renderSec2Frame(pScroll);
+      checkSec2LockSafety(pScroll);
 
       // Skip button visibility management
       var skipBtn = document.getElementById('spec-video-skip-btn');
@@ -7568,9 +7649,24 @@ if (document.readyState === 'loading') {
       }
     });
 
-    // Handle video completion
+    // Handle video completion & playback events
     var s2Video = document.getElementById('spec-scene2-video');
     if (s2Video) {
+      s2Video.addEventListener('playing', function() {
+        if (sec2LockWatchdogTimer) {
+          clearTimeout(sec2LockWatchdogTimer);
+          sec2LockWatchdogTimer = null;
+        }
+        var ov = document.getElementById('spec-video-play-overlay');
+        if (ov) {
+          ov.style.opacity = '0';
+          ov.style.pointerEvents = 'none';
+          setTimeout(function() { ov.style.display = 'none'; }, 300);
+        }
+        var m = document.getElementById('spec-master-image');
+        if (m) m.style.opacity = '0';
+        s2Video.style.opacity = '1';
+      });
       s2Video.addEventListener('ended', function() {
         unlockSec2Video();
       });

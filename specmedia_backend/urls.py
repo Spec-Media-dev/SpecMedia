@@ -35,10 +35,10 @@ urlpatterns += i18n_patterns(
     prefix_default_language=True,
 )
 
-# 3. Static & Media files
+# 3. Static & Media files with HTTP Range (206 Partial Content) support for video streaming
 urlpatterns += [
-    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATICFILES_DIRS[0]}),
-    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', core_views.ranged_serve, {'document_root': settings.STATICFILES_DIRS[0]}),
+    re_path(r'^media/(?P<path>.*)$', core_views.ranged_serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
 handler404 = 'core.views.custom_404_view'

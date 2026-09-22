@@ -1825,3 +1825,87 @@ class HealthCheckAPIView(APIView):
             "django": "ok",
             "supabase": health
         }, status=status.HTTP_200_OK)
+
+
+def ranged_serve(request, path, document_root=None, show_indexes=False):
+    """
+    Enhanced static/media file serve view that supports HTTP 206 Partial Content (Range requests)
+    for seamless, instantaneous video streaming and seeking in modern browsers (Chrome, Edge, Brave, Safari).
+    """
+    import mimetypes
+    import posixpath
+    from pathlib import Path
+    from django.http import HttpResponse, StreamingHttpResponse, Http404, HttpResponseNotModified
+    from django.utils.http import http_date
+    from django.views.static import was_modified_since
+
+    path = posixpath.normpath(path).lstrip('/')
+    fullpath = Path(document_root) / path
+    if not fullpath.exists() or fullpath.is_dir():
+        raise Http404(f"{path} does not exist")
+
+    statobj = fullpath.stat()
+    if not was_modified_since(request.META.get('HTTP_IF_MODIFIED_SINCE'), statobj.st_mtime):
+        return HttpResponseNotModified()
+
+    file_size = statobj.st_size
+    content_type, encoding = mimetypes.guess_type(str(fullpath))
+    content_type = content_type or "application/octet-stream"
+
+    http_range = request.META.get('HTTP_RANGE', '')
+    if http_range and http_range.startswith('bytes='):
+        try:
+            ranges = http_range[6:].split('-')
+            start = int(ranges[0]) if ranges[0] else 0
+            end = int(ranges[1]) if len(ranges) > 1 and ranges[1] else file_size - 1
+        except ValueError:
+            start = 0
+            end = file_size - 1
+
+        if start >= file_size or end >= file_size or start > end:
+            resp = HttpResponse(status=416)
+            resp['Content-Range'] = f'bytes */{file_size}'
+            resp['Accept-Ranges'] = 'bytes'
+            return resp
+
+        chunk_length = end - start + 1
+
+        def file_iterator(file_path, offset, length, block_size=65536):
+            with open(file_path, 'rb') as f:
+                f.seek(offset)
+                remaining = length
+                while remaining > 0:
+                    read_size = min(remaining, block_size)
+                    data = f.read(read_size)
+                    if not data:
+                        break
+                    remaining -= len(data)
+                    yield data
+
+        resp = StreamingHttpResponse(
+            file_iterator(fullpath, start, chunk_length),
+            status=206,
+            content_type=content_type
+        )
+        resp['Content-Range'] = f'bytes {start}-{end}/{file_size}'
+        resp['Content-Length'] = str(chunk_length)
+        resp['Accept-Ranges'] = 'bytes'
+        resp['Last-Modified'] = http_date(statobj.st_mtime)
+        return resp
+
+    def full_iterator(file_path, block_size=65536):
+        with open(file_path, 'rb') as f:
+            while True:
+                data = f.read(block_size)
+                if not data:
+                    break
+                yield data
+
+    resp = StreamingHttpResponse(full_iterator(fullpath), content_type=content_type)
+    resp['Content-Length'] = str(file_size)
+    resp['Accept-Ranges'] = 'bytes'
+    resp['Last-Modified'] = http_date(statobj.st_mtime)
+    if encoding:
+        resp['Content-Encoding'] = encoding
+    return resp
+
