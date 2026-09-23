@@ -2117,7 +2117,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 /* Reviews Section & Ambient Hover Overlay */
 #spec-reviews-section {
   position: relative !important;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
 .spec-reviews-hover-overlay {
@@ -2158,8 +2158,10 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 [data-rvrow="1"] {
   display: flex !important;
   align-items: flex-start !important;
+  width: max-content !important;
   gap: clamp(22px, 2.5vw, 40px) !important;
-  overflow-x: hidden !important;
+  overflow: visible !important;
+  overflow-x: visible !important;
   padding: 12px max(36px, calc((100vw - 1440px) / 2 + 28px)) 24px !important;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
@@ -3068,7 +3070,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
     <!-- Edge-to-edge full-bleed carousel wrapper spanning 100vw from left to right -->
     <div class="spec-reviews-bleed" style="position:relative;z-index:10;width:100vw;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;overflow:hidden;padding:0;">
-      <div data-rvrow="1" style="display:flex;gap:clamp(20px,2.4vw,36px);overflow-x:hidden;padding:8px max(32px, calc((100vw - 1440px)/2 + 24px)) 16px;scrollbar-width:none;-ms-overflow-style:none;cursor:default;user-select:none;-webkit-user-select:none;will-change:transform">
+      <div data-rvrow="1" style="display:flex;width:max-content;gap:clamp(20px,2.4vw,36px);overflow:visible;overflow-x:visible;padding:8px max(32px, calc((100vw - 1440px)/2 + 24px)) 16px;scrollbar-width:none;-ms-overflow-style:none;cursor:default;user-select:none;-webkit-user-select:none;will-change:transform">
             <!-- Card 01: Faisal Al-Marri (@faisal.almarri) -->
       <article data-rv="1" class="spec-review-card ig-card">
         <!-- Card Glass Background Layer -->
@@ -3566,7 +3568,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
       </div>
   </section>
 
-  <div style="height:100vh;pointer-events:none"></div>
+  <div style="height:120vh;pointer-events:none"></div>
 
   <footer ref="{{ footerRef }}" id="contact" data-screen-label="08 Footer" style="position:fixed;left:0;right:0;top:0;bottom:0;width:100%;height:100vh;min-height:100vh;max-height:100vh;overflow:hidden;box-sizing:border-box;padding:clamp(18px,3vh,44px) 0 clamp(12px,2vh,22px);background:linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;display:flex;flex-direction:column;justify-content:flex-end;gap:clamp(14px,2.4vh,34px);z-index:0">
     <!-- Ambient Radial Glow overlay: unified with #2d0406 background -->
@@ -4110,7 +4112,16 @@ class Component extends DCLogic {
     if (this.navSceneRef.current) {
       const secs = this.secs || (this.secs = Array.from(document.querySelectorAll('[data-screen-label]')));
       let cur = secs[0];
-      secs.forEach(s2 => { if (s2.getBoundingClientRect().top <= vh * 0.35) cur = s2; });
+      secs.forEach(s2 => {
+        if (s2.id === 'contact' || s2.tagName.toLowerCase() === 'footer') {
+          const revSec = document.getElementById('spec-reviews-section');
+          if (revSec && revSec.getBoundingClientRect().bottom <= vh * 0.5) {
+            cur = s2;
+          }
+        } else if (s2.getBoundingClientRect().top <= vh * 0.35) {
+          cur = s2;
+        }
+      });
       const lbl = (cur && cur.dataset.screenLabel) || '01 Hero';
       if (lbl !== this.lastLbl) {
         this.lastLbl = lbl;
@@ -8319,9 +8330,19 @@ if (document.readyState === 'loading') {
 
     // Prevent any drag or mouse interaction
     row.style.cursor = 'default';
-    row.style.overflowX = 'hidden';
+    row.style.width = 'max-content';
+    row.style.overflow = 'visible';
+    row.style.overflowX = 'visible';
     row.style.willChange = 'transform';
     row.style.transition = 'none';
+
+    // Ensure all review cards are entered, fully sharp and visible on load
+    var initCards = row.querySelectorAll('.ig-card, .spec-review-card');
+    initCards.forEach(function(c) {
+      c.classList.add('spec-card-entered');
+      c.style.setProperty('opacity', '1', 'important');
+      c.style.setProperty('filter', 'none', 'important');
+    });
 
     function updateReviews() {
       var liveSec = document.getElementById('spec-reviews-section') || sec;
@@ -8336,7 +8357,7 @@ if (document.readyState === 'loading') {
       var p = Math.max(0, Math.min(1, currentScroll / maxScroll));
 
       // Compute total travel distance to bring last card into full view with margin
-      var cards = liveRow.querySelectorAll('.ig-card');
+      var cards = liveRow.querySelectorAll('.ig-card, .spec-review-card');
       var maxTravel = 0;
       if (cards.length > 0) {
         var firstCard = cards[0];
@@ -8347,7 +8368,10 @@ if (document.readyState === 'loading') {
         maxTravel = Math.max(0, liveRow.scrollWidth - vw + 64);
       }
 
-      var currentX = -p * maxTravel;
+      // Map card horizontal progression across 0 <= p <= 0.80
+      // Leaving 0.80 <= p <= 1.0 as a comfortable reading/dwell zone before unpinning
+      var cardProgress = Math.min(1, p / 0.80);
+      var currentX = -cardProgress * maxTravel;
       // Fixed vertical position so cascading staircase cards stay 100% visible and never clip at the bottom
       liveRow.style.setProperty('transform', 'translate3d(' + currentX.toFixed(1) + 'px, 0px, 0px)', 'important');
       liveRow.scrollLeft = 0;
