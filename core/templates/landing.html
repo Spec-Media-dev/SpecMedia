@@ -2341,11 +2341,11 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   box-shadow: none !important;
 }
 
-/* Section 08 Footer: Smooth Transition to Black (#000000) */
+/* Section 08 Footer: Continuous Unified Red Theme (#2d0406) with Zero Cutoffs */
 [data-screen-label="08 Footer"],
 footer#contact {
-  background: linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;
-  background-color: #000000 !important;
+  background: #2d0406 !important;
+  background-color: #2d0406 !important;
   color: #f5ead8 !important;
   border: none !important;
   box-shadow: none !important;
@@ -2359,11 +2359,11 @@ footer#contact {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Section 08 Footer: Smooth Transition to Black (#000000) */
+/* Section 08 Footer: Continuous Unified Red Theme (#2d0406) with Zero Cutoffs */
 [data-screen-label="08 Footer"] {
-  --color-footer-bg: #000000 !important;
-  background-color: #000000 !important;
-  background: linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;
+  --color-footer-bg: #2d0406 !important;
+  background-color: #2d0406 !important;
+  background: #2d0406 !important;
   border: none !important;
   box-shadow: none !important;
   outline: none !important;
@@ -2423,10 +2423,10 @@ footer#contact {
   color: #df1637 !important;
 }
 
-/* Footer: Smooth Transition to Black (#000000) */
+/* Footer: Continuous Unified Red Theme (#2d0406) with Zero Cutoffs */
 footer#contact {
-  background: linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;
-  background-color: #000000 !important;
+  background: #2d0406 !important;
+  background-color: #2d0406 !important;
   color: #f5ead8 !important;
   will-change: background, background-color, color;
   transition: background 0.4s ease, background-color 0.4s ease, color 0.4s ease;
@@ -3539,7 +3539,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
   <div style="height:120vh;pointer-events:none"></div>
 
-  <footer ref="{{ footerRef }}" id="contact" data-screen-label="08 Footer" style="position:fixed;left:0;right:0;top:0;bottom:0;width:100%;height:100vh;min-height:100vh;max-height:100vh;overflow:hidden;box-sizing:border-box;padding:clamp(18px,3vh,44px) 0 clamp(12px,2vh,22px);background:linear-gradient(to bottom, #2d0406 0%, #150204 22%, #000000 60%, #000000 100%) !important;display:flex;flex-direction:column;justify-content:flex-end;gap:clamp(14px,2.4vh,34px);z-index:0">
+  <footer ref="{{ footerRef }}" id="contact" data-screen-label="08 Footer" style="position:fixed;left:0;right:0;top:0;bottom:0;width:100%;height:100vh;min-height:100vh;max-height:100vh;overflow:hidden;box-sizing:border-box;padding:clamp(18px,3vh,44px) 0 clamp(12px,2vh,22px);background:#2d0406 !important;background-color:#2d0406 !important;display:flex;flex-direction:column;justify-content:flex-end;gap:clamp(14px,2.4vh,34px);z-index:0">
     <!-- Ambient Radial Glow overlay: unified with #2d0406 background -->
     <div id="spec-footer-ambient-glow" style="position:absolute;inset:0;background:#000000;pointer-events:none;z-index:0;opacity:0;display:none;"></div>
     <div style="position:relative;z-index:1;max-width:1440px;margin:0 auto;width:100%;box-sizing:border-box;padding:0 clamp(20px, 4vw, 48px);display:flex;flex-direction:column;gap:clamp(16px,2.6vh,32px);width:100%;">
@@ -3905,14 +3905,8 @@ class Component extends DCLogic {
 
     const fEl = this.footerRef ? this.footerRef.current : null;
     if (fEl) {
-      const tF = footerReveal;
-      const sF = tF * tF * (3 - 2 * tF); // Hermite smoothstep
-      const fR = Math.round(45 * (1 - sF));
-      const fG = Math.round(4 * (1 - sF));
-      const fB = Math.round(6 * (1 - sF));
-      const midStop = Math.round(22 * (1 - sF));
-      const darkStop = Math.round(60 + 35 * sF);
-      fEl.style.background = 'linear-gradient(to bottom, rgb(' + fR + ',' + fG + ',' + fB + ') 0%, #150204 ' + midStop + '%, #000000 ' + darkStop + '%, #000000 100%)';
+      fEl.style.background = '#2d0406';
+      fEl.style.backgroundColor = '#2d0406';
     }
 
     // Section 04 (THE REEL) - Slim width transition when near end of section
@@ -4240,7 +4234,8 @@ class Component extends DCLogic {
 
     const footerEl = this.footerRef ? this.footerRef.current : null;
     if (footerEl) {
-      footerEl.style.setProperty('--color-footer-bg', '#000000');
+      footerEl.style.setProperty('--color-footer-bg', '#2d0406');
+      footerEl.style.backgroundColor = '#2d0406';
       footerEl.style.color = '#f5ead8';
     }
   }
@@ -8388,9 +8383,10 @@ async function initScene07Object() {
   const frameReadout = document.getElementById('spec-obj-frame-readout');
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   const OX = 0x2d0406;
+  const OX_LINEAR = new THREE.Color().setRGB(0.058, 0.008, 0.008);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-  renderer.setClearColor(OX, 1);
+  renderer.setClearColor(OX_LINEAR, 1);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 0.92;
@@ -8399,8 +8395,8 @@ async function initScene07Object() {
   host.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(OX);
-  scene.fog = new THREE.Fog(OX, 5.5, 11);
+  scene.background = OX_LINEAR;
+  scene.fog = new THREE.Fog(OX_LINEAR, 5.5, 11);
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
   camera.position.set(0, 0.06, 3.5);
   scene.add(camera);
