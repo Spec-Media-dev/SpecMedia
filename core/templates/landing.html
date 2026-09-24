@@ -105,10 +105,11 @@
   .ds-sec {
     position: relative;
     height: 560vh;
-    /* Seamless vertical gradient blending: blends from Section 05 (#141312) into oxblood (#2d0406) and back to #141312 */
-    background: linear-gradient(180deg, #141312 0%, #2d0406 14vh, #2d0406 calc(100% - 14vh), #141312 100%) !important;
+    background: #2d0406 !important;
     color: #f2eef0;
     overflow: visible;
+    margin: 0 !important;
+    border: none !important;
   }
   .ds-mono {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -124,8 +125,10 @@
     isolation: isolate;
     display: grid;
     place-items: center;
-    /* Soft ambient radial glow perfectly feathering to the blended edge */
-    background: radial-gradient(115% 90% at 50% 50%, #2d0406 0%, #1c0203 70%, #141312 100%);
+    background: #2d0406 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
   }
   .ds-scene {
     position: absolute;
@@ -138,47 +141,17 @@
     width: 100% !important;
     height: 100% !important;
   }
-  .ds-frame {
-    position: absolute;
-    inset: clamp(58px, 9vh, 96px) clamp(40px, 9vw, 140px);
-    z-index: 6;
-    pointer-events: none;
-    border: 1px solid rgba(201, 123, 130, .22);
-  }
-  .ds-frame::before, .ds-frame::after {
-    content: "";
-    position: absolute;
-    width: 9px;
-    height: 9px;
-    border: 1px solid rgba(201, 123, 130, .5);
-  }
-  .ds-frame::before {
-    top: -1px;
-    left: -1px;
-    border-right: 0;
-    border-bottom: 0;
-  }
+  .ds-frame,
+  .ds-frame::before,
   .ds-frame::after {
-    bottom: -1px;
-    right: -1px;
-    border-left: 0;
-    border-top: 0;
+    display: none !important;
+    border: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
   }
-  .ds-vign {
-    position: absolute;
-    inset: 0;
-    z-index: 4;
-    pointer-events: none;
-    background: radial-gradient(115% 90% at 50% 46%, rgba(0,0,0,0) 46%, rgba(10,1,2,.66) 100%);
-  }
+  .ds-vign,
   .ds-grain {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    pointer-events: none;
-    opacity: .06;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    display: none !important;
   }
   .ds-ui {
     position: absolute;
@@ -2592,7 +2565,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
         </div>
 
         <!-- Phase 3: Seamless Autoplay Video -->
-        <video id="spec-scene2-video" src="/static/Main%20-%20hir%20-%20f.mp4" playsinline muted preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;opacity:0;pointer-events:none;background:#000000;border-radius:0px !important;">
+        <video id="spec-scene2-video" src="/static/Main%20-%20hir%20-%20f.mp4" playsinline muted loop preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;opacity:0;pointer-events:none;background:#000000;border-radius:0px !important;">
           <source id="spec-scene2-video-src" src="/static/Main%20-%20hir%20-%20f.mp4" type="video/mp4">
         </video>
 
@@ -2604,11 +2577,9 @@ footer#contact div[style*="font-family:ui-monospace"] {
           </div>
         </div>
 
-        <!-- Video Skip Control Button -->
-        <button id="spec-video-skip-btn" onclick="if(window.__specUnlockVideo){window.__specUnlockVideo();}" type="button" aria-label="Skip Video" style="position:absolute;bottom:32px;right:32px;z-index:15;display:none;opacity:0;align-items:center;gap:8px;padding:10px 18px;background:rgba(20,2,3,0.80);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(201,123,130,0.45);border-radius:2px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.9);cursor:pointer;transition:opacity 0.4s ease, transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;box-shadow:0 8px 24px rgba(0,0,0,0.6);pointer-events:none;outline:none;">
+        <!-- Video Skip Control Button (Disabled for seamless video playback) -->
+        <button id="spec-video-skip-btn" onclick="if(window.__specUnlockVideo){window.__specUnlockVideo();}" type="button" aria-label="Skip Video" style="display:none !important;" aria-hidden="true">
           <span>SKIP VIDEO</span>
-          <span style="color:#b40119;font-weight:700;">→</span>
-          <span style="opacity:0.65;font-size:9px;margin-left:4px;border-left:1px solid rgba(201,123,130,0.4);padding-left:8px;color:#f5ead8;">OR SCROLL ↓</span>
         </button>
 
         <!-- Legacy ref tags preserved invisibly for DCLogic stability -->
@@ -3030,16 +3001,14 @@ footer#contact div[style*="font-family:ui-monospace"] {
       <div id="spec-s06-atmospheric-bridge"></div>
     </div>
 
-    <div class="spec-obj-stick" style="position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;display:grid;place-items:center;background:#2d0406;">
+    <div class="spec-obj-stick" style="position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;display:grid;place-items:center;background:#2d0406;margin:0;border:none;">
       <!-- Three.js Canvas Host -->
-      <div id="spec-obj-scene" class="spec-obj-scene" style="position:absolute;inset:0;z-index:3;"></div>
+      <div id="spec-obj-scene" class="spec-obj-scene" style="position:absolute;inset:0;z-index:3;background:#2d0406;"></div>
 
-      <!-- Framed Viewport (Precision 1px rose borders with corner registration marks) -->
-      <div class="spec-obj-frame"></div>
-
-      <!-- Vignette & SVG Film Grain Depth Overlays -->
-      <div class="spec-obj-vign"></div>
-      <div class="spec-obj-grain"></div>
+      <!-- Framed Viewport & Overlays hidden to eliminate frame lines and cutoffs -->
+      <div class="spec-obj-frame" style="display:none !important;" aria-hidden="true"></div>
+      <div class="spec-obj-vign" style="display:none !important;" aria-hidden="true"></div>
+      <div class="spec-obj-grain" style="display:none !important;" aria-hidden="true"></div>
 
       <!-- Precision Telemetry HUD (All text removed per request) -->
       <div class="spec-obj-ui mono" style="display:none !important;" aria-hidden="true"></div>
@@ -4592,8 +4561,11 @@ class Component extends DCLogic {
   #spec-object-section {
     position: relative;
     height: 560vh;
-    background: #2d0406;
+    background: #2d0406 !important;
     box-sizing: border-box;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
   }
   #spec-object-section .spec-obj-stick {
     position: sticky;
@@ -4604,60 +4576,38 @@ class Component extends DCLogic {
     isolation: isolate;
     display: grid;
     place-items: center;
-    background: #2d0406;
+    background: #2d0406 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
   }
   #spec-object-section .spec-obj-scene {
     position: absolute;
     inset: 0;
     z-index: 3;
+    background: #2d0406 !important;
   }
   #spec-object-section .spec-obj-scene canvas {
     display: block;
     width: 100% !important;
     height: 100% !important;
+    background: #2d0406 !important;
   }
-  #spec-object-section .spec-obj-frame {
-    position: absolute;
-    inset: clamp(58px, 9vh, 96px) clamp(40px, 9vw, 140px);
-    z-index: 6;
-    pointer-events: none;
-    border: 1px solid rgba(201, 123, 130, 0.22);
-  }
+  #spec-object-section .spec-obj-frame,
   #spec-object-section .spec-obj-frame::before,
   #spec-object-section .spec-obj-frame::after {
-    content: "";
-    position: absolute;
-    width: 9px;
-    height: 9px;
-    border: 1px solid rgba(201, 123, 130, 0.5);
-  }
-  #spec-object-section .spec-obj-frame::before {
-    top: -1px;
-    left: -1px;
-    border-right: 0;
-    border-bottom: 0;
-  }
-  #spec-object-section .spec-obj-frame::after {
-    bottom: -1px;
-    right: -1px;
-    border-left: 0;
-    border-top: 0;
+    display: none !important;
+    border: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
   }
   #spec-object-section .spec-obj-vign {
-    position: absolute;
-    inset: 0;
-    z-index: 4;
-    pointer-events: none;
-    background: radial-gradient(115% 90% at 50% 46%, rgba(0,0,0,0) 46%, rgba(10, 1, 2, 0.66) 100%);
+    display: none !important;
   }
   #spec-object-section .spec-obj-grain {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    pointer-events: none;
-    opacity: 0.06;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    display: none !important;
   }
   #spec-object-section .spec-obj-ui,
   #spec-object-section .spec-obj-hint,
@@ -7835,16 +7785,16 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 4. VIDEO STARTS & EXPANDS TO FULLSCREEN (0.46 <= p < 0.58)
-      // "start the video when the video start make the fullscreen"
+      // 4. VIDEO STARTS & EXPANDS TO FULLSCREEN (0.46 <= p < 0.56)
+      // Smoothly expands stage to 100vw x 100vh
       // =========================================================================
-      if (p >= 0.46 && p < 0.58) {
+      if (p >= 0.46 && p < 0.56) {
         slicesCont.style.opacity = '0';
-        var pExp = (p - 0.46) / 0.12;
+        var pExp = (p - 0.46) / 0.10;
         var eExp = pExp * pExp * (3 - 2 * pExp);
 
         masterImg.style.opacity = (1 - Math.min(1, pExp * 2)).toFixed(3);
-        video.style.opacity = Math.min(1, pExp * 2).toFixed(3);
+        video.style.opacity = '1';
         stage.style.pointerEvents = 'auto';
         video.style.pointerEvents = 'auto';
         video.style.cursor = 'pointer';
@@ -7856,10 +7806,10 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 5. FULLSCREEN VIDEO PLAYBACK (0.58 <= p < 0.80)
-      // Viewport-filling cinematic presentation
+      // 5. FULLSCREEN VIDEO PLAYBACK (0.56 <= p < 0.76)
+      // Viewport-filling cinematic presentation while video plays continuously
       // =========================================================================
-      if (p >= 0.58 && p < 0.80) {
+      if (p >= 0.56 && p < 0.76) {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '0';
         video.style.opacity = '1';
@@ -7874,15 +7824,17 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 6. VIDEO SHRINK / GO OUT BEFORE FINISH (0.80 <= p < 0.94)
-      // "and gout before the video finsh"
+      // 6. VIDEO SMOOTHLY GOES SMALL (0.76 <= p < 0.94)
+      // Screen shrinks back to smaller framed container smoothly while video continues playing
       // =========================================================================
-      if (p >= 0.80 && p < 0.94) {
+      if (p >= 0.76 && p < 0.94) {
         slicesCont.style.opacity = '0';
         masterImg.style.opacity = '0';
         video.style.opacity = '1';
+        stage.style.pointerEvents = 'auto';
+        video.style.pointerEvents = 'auto';
 
-        var pShrink = (p - 0.80) / 0.14;
+        var pShrink = (p - 0.76) / 0.18;
         var eShrink = pShrink * pShrink * (3 - 2 * pShrink);
 
         safePlaySec2Video();
@@ -7892,14 +7844,17 @@ if (document.readyState === 'loading') {
       }
 
       // =========================================================================
-      // 7. VIDEO END / NORMAL SCROLL RESTORATION (p >= 0.94)
-      // Dock back into container; unpin to scroll into Section 03
+      // 7. DOCKED SMALL STAGE / CONTINUOUS PLAYBACK (p >= 0.94)
+      // Video continues playing seamlessly as section unpins to scroll into Section 03
       // =========================================================================
       if (p >= 0.94) {
         slicesCont.style.opacity = '0';
-        masterImg.style.opacity = '1';
-        video.style.opacity = '0';
-        if (!video.paused) { video.pause(); sec2VideoWasPlaying = false; }
+        masterImg.style.opacity = '0';
+        video.style.opacity = '1';
+        stage.style.pointerEvents = 'auto';
+        video.style.pointerEvents = 'auto';
+
+        safePlaySec2Video();
 
         setStageSmall(stage, isMobile);
         stage.style.overflow = 'hidden';
@@ -8034,16 +7989,8 @@ if (document.readyState === 'loading') {
         skipBtn.style.pointerEvents = 'none';
         setTimeout(function() { skipBtn.style.display = 'none'; }, 400);
       }
-      var s2Vid = document.getElementById('spec-scene2-video');
-      if (s2Vid) {
-        var D = (s2Vid.duration && !isNaN(s2Vid.duration) && s2Vid.duration > 0) ? s2Vid.duration : 50.0;
-        var endTime = Math.max(0, D - 0.15);
-        try { s2Vid.currentTime = endTime; } catch(e){}
-        if (!s2Vid.paused) {
-          try { s2Vid.pause(); } catch(e){}
-          sec2VideoWasPlaying = false;
-        }
-      }
+      // Video continues playing uninterrupted
+      safePlaySec2Video();
       onSec2Scroll();
     }
 
@@ -8059,9 +8006,9 @@ if (document.readyState === 'loading') {
 
       var pScroll = rawPScroll;
 
-      // When user scrolls down past fullscreen into exit zone (p >= 0.85), unlock video automatically
-      if (!sec2VideoFinished && rawPScroll >= 0.85) {
-        unlockSec2Video();
+      // Video continuously plays as user scrolls through Section 02
+      if (rawPScroll >= 0.46) {
+        safePlaySec2Video();
       }
 
       // If user scrolls back up into earlier phases, re-enable Section 2
@@ -8118,85 +8065,12 @@ if (document.readyState === 'loading') {
       }
     }
 
-    // Allow skipping the video with downward wheel scrolling
-    var sec2WheelSkipAccum = 0;
-    var sec2WheelSkipTimer = null;
-    function onSec2WheelSkip(e) {
-      if (sec2VideoFinished) return;
-      var sec = document.getElementById('spec-scene2-section');
-      if (!sec) return;
-      var vh = window.innerHeight;
-      var maxScroll = Math.max(1, sec.offsetHeight - vh);
-      var rect = sec.getBoundingClientRect();
-      var currentScroll = -rect.top;
-      var pScroll = currentScroll / maxScroll;
-
-      // If user is within video playback zone (0.70 <= pScroll <= 0.88) and scrolls DOWN:
-      if (pScroll >= 0.70 && pScroll <= 0.88) {
-        if (e.deltaY > 0) {
-          sec2WheelSkipAccum += e.deltaY;
-          if (sec2WheelSkipTimer) clearTimeout(sec2WheelSkipTimer);
-          sec2WheelSkipTimer = setTimeout(function() { sec2WheelSkipAccum = 0; }, 400);
-
-          if (sec2WheelSkipAccum >= 25) {
-            sec2WheelSkipAccum = 0;
-            handleSkipVideo();
-          }
-        } else if (e.deltaY < 0) {
-          sec2WheelSkipAccum = 0;
-        }
-      }
-    }
-    window.addEventListener('wheel', onSec2WheelSkip, { passive: true });
-
-    // Touch gesture: swipe up (scrolling down) while watching video skips it
-    var sec2TouchStartY = 0;
-    window.addEventListener('touchstart', function(e) {
-      if (e.touches && e.touches.length) {
-        sec2TouchStartY = e.touches[0].clientY;
-      }
-    }, { passive: true });
-
-    window.addEventListener('touchmove', function(e) {
-      if (sec2VideoFinished) return;
-      if (!e.touches || !e.touches.length) return;
-      var dy = sec2TouchStartY - e.touches[0].clientY;
-      if (dy > 30) {
-        var sec = document.getElementById('spec-scene2-section');
-        if (!sec) return;
-        var vh = window.innerHeight;
-        var maxScroll = Math.max(1, sec.offsetHeight - vh);
-        var rect = sec.getBoundingClientRect();
-        var currentScroll = -rect.top;
-        var pScroll = currentScroll / maxScroll;
-
-        if (pScroll >= 0.70 && pScroll <= 0.88) {
-          handleSkipVideo();
-        }
-      }
-    }, { passive: true });
-
-    // Keyboard keys (Down, PageDown, Space) trigger skip
-    window.addEventListener('keydown', function(e) {
-      if (sec2VideoFinished) return;
-      var downKeys = ['ArrowDown', 'PageDown', 'Space', ' ', 'End'];
-      if (downKeys.indexOf(e.key) !== -1) {
-        var sec = document.getElementById('spec-scene2-section');
-        if (!sec) return;
-        var vh = window.innerHeight;
-        var maxScroll = Math.max(1, sec.offsetHeight - vh);
-        var rect = sec.getBoundingClientRect();
-        var currentScroll = -rect.top;
-        var pScroll = currentScroll / maxScroll;
-        if (pScroll >= 0.70 && pScroll <= 0.88) {
-          handleSkipVideo();
-        }
-      }
-    }, { passive: true });
+    // Smooth natural scroll controls - no disruptive video skips or scroll interruptions
 
     // Handle video completion & playback events
     var s2Video = document.getElementById('spec-scene2-video');
     if (s2Video) {
+      s2Video.loop = true;
       s2Video.addEventListener('playing', function() {
         if (sec2LockWatchdogTimer) {
           clearTimeout(sec2LockWatchdogTimer);
@@ -8211,18 +8085,6 @@ if (document.readyState === 'loading') {
         var m = document.getElementById('spec-master-image');
         if (m) m.style.opacity = '0';
         s2Video.style.opacity = '1';
-      });
-      s2Video.addEventListener('ended', function() {
-        unlockSec2Video();
-      });
-      s2Video.addEventListener('timeupdate', function() {
-        // "gout before the video finish": smoothly exit fullscreen before the video finishes
-        if (s2Video.duration && s2Video.duration > 2) {
-          var exitThreshold = Math.max(s2Video.duration * 0.84, s2Video.duration - 2.8);
-          if (s2Video.currentTime >= exitThreshold) {
-            handleSkipVideo();
-          }
-        }
       });
     }
 
