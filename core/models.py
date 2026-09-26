@@ -29,6 +29,8 @@ class SEOPage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    _cache = {}
+
     class Meta:
         verbose_name = "SEO Page"
         verbose_name_plural = "SEO Pages"
@@ -36,6 +38,27 @@ class SEOPage(models.Model):
 
     def __str__(self):
         return f"{self.route_path} — {self.meta_title}"
+
+    def save(self, *args, **kwargs):
+        SEOPage._cache.clear()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        SEOPage._cache.clear()
+        super().delete(*args, **kwargs)
+
+    @classmethod
+    def get_for_paths(cls, lookup_paths):
+        for p in lookup_paths:
+            if p in cls._cache:
+                return cls._cache[p]
+        try:
+            obj = cls.objects.filter(route_path__in=lookup_paths, is_indexable=True).first()
+            for p in lookup_paths:
+                cls._cache[p] = obj
+            return obj
+        except Exception:
+            return None
 
 
 class WorkProject(models.Model):
@@ -264,6 +287,8 @@ class SiteSettings(models.Model):
     
     updated_at = models.DateTimeField(auto_now=True)
 
+    _cached_settings = None
+
     class Meta:
         verbose_name = "Site Settings"
         verbose_name_plural = "Site Settings"
@@ -271,12 +296,23 @@ class SiteSettings(models.Model):
     def __str__(self):
         return f"Site Settings ({self.site_name})"
 
+    def save(self, *args, **kwargs):
+        SiteSettings._cached_settings = None
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        SiteSettings._cached_settings = None
+        super().delete(*args, **kwargs)
+
     @classmethod
     def get_settings(cls):
         """
-        Singleton getter to retrieve or initialize the active global site settings.
+        Singleton getter with in-memory caching to prevent redundant DB hits on every request.
         """
+        if cls._cached_settings is not None:
+            return cls._cached_settings
         settings_obj = cls.objects.first()
         if not settings_obj:
             settings_obj = cls.objects.create()
+        cls._cached_settings = settings_obj
         return settings_obj

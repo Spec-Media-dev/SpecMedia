@@ -95,7 +95,7 @@ def seo_context(request):
 
     seo_obj = None
     try:
-        seo_obj = SEOPage.objects.filter(route_path__in=lookup_paths, is_indexable=True).first()
+        seo_obj = SEOPage.get_for_paths(lookup_paths)
     except Exception:
         pass
 

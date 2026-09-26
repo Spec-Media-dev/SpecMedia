@@ -80,13 +80,27 @@ def landing_page(request):
     template_path = os.path.join(settings.BASE_DIR, 'core', 'templates', 'landing.html')
     if not os.path.exists(template_path):
         template_path = os.path.join(settings.BASE_DIR, 'index.html')
-    # Load landing page translations dynamically from disk
-    import json
+
     current_lang = getattr(request, 'LANGUAGE_CODE', 'en') or 'en'
     if request.path.startswith('/ar/') or request.path == '/ar':
         current_lang = 'ar'
     elif request.path.startswith('/en/') or request.path == '/en':
         current_lang = 'en'
+
+    site_settings = SiteSettings.get_settings()
+    settings_ver = getattr(site_settings, 'updated_at', None)
+    tmpl_mtime = os.path.getmtime(template_path) if os.path.exists(template_path) else 0
+    cache_key = (current_lang, str(settings_ver), tmpl_mtime)
+
+    global _LANDING_PAGE_CACHE
+    if '_LANDING_PAGE_CACHE' not in globals():
+        _LANDING_PAGE_CACHE = {}
+
+    if cache_key in _LANDING_PAGE_CACHE:
+        return HttpResponse(_LANDING_PAGE_CACHE[cache_key], content_type='text/html; charset=utf-8')
+
+    # Load landing page translations dynamically from disk
+    import json
     lang_map = {}
     json_path = os.path.join(settings.BASE_DIR, 'core', 'landing_translations.json')
     if os.path.exists(json_path):
@@ -699,6 +713,7 @@ def landing_page(request):
 
     # Final i18n translation pass to ensure all dynamic CMS injections are translated
     html = safe_translate_html(html, lang_map)
+    _LANDING_PAGE_CACHE[cache_key] = html
     return HttpResponse(html, content_type='text/html; charset=utf-8')
 
 
@@ -778,10 +793,10 @@ def work_page(request):
     q = request.GET.get('q', '').strip()
     category = request.GET.get('category', '').strip()
 
-    projects = WorkProject.objects.all().order_by('id')
+    projects = list(WorkProject.objects.all().order_by('id'))
 
-    # Calculate exact counts across the entire catalog for filter badges
-    total_count = projects.count()
+    # Calculate exact counts in Python memory (0ms, 0 extra SQL queries)
+    total_count = len(projects)
     disciplines_data = [
         {
             'slug': 'all',
@@ -793,25 +808,25 @@ def work_page(request):
             'slug': 'Brand Architecture & Design',
             'name': 'Brand Architecture & Design',
             'name_ar': 'هندسة وتصميم العلامات',
-            'count': projects.filter(discipline='Brand Architecture & Design').count(),
+            'count': sum(1 for p in projects if p.discipline == 'Brand Architecture & Design'),
         },
         {
             'slug': 'Content & Motion Production',
             'name': 'Content & Motion Production',
             'name_ar': 'إنتاج المحتوى والحركة',
-            'count': projects.filter(discipline='Content & Motion Production').count(),
+            'count': sum(1 for p in projects if p.discipline == 'Content & Motion Production'),
         },
         {
             'slug': 'AI Marketing & Automation',
             'name': 'AI Marketing & Automation',
             'name_ar': 'تسويق وأتمتة الذكاء الاصطناعي',
-            'count': projects.filter(discipline='AI Marketing & Automation').count(),
+            'count': sum(1 for p in projects if p.discipline == 'AI Marketing & Automation'),
         },
         {
             'slug': 'Web & Experience Systems',
             'name': 'Web & Experience Systems',
             'name_ar': 'الأنظمة والتجارب الرقمية',
-            'count': projects.filter(discipline='Web & Experience Systems').count(),
+            'count': sum(1 for p in projects if p.discipline == 'Web & Experience Systems'),
         }
     ]
 
