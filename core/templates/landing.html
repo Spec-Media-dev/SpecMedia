@@ -265,7 +265,7 @@
   }
 
 
-/* Single Master Logo Architecture - Clean, Solid, NO Hover Effects */
+/* Single Master Logo Architecture - Clean, Solid, Razor-Sharp Vector Quality */
 .spec-chrome-nav-logo {
   position: relative;
   display: inline-flex !important;
@@ -277,6 +277,9 @@
   opacity: 1 !important;
   pointer-events: auto !important;
   z-index: 75;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 .spec-nav-logo-back {
@@ -293,11 +296,38 @@
   mask-image: none !important;
 }
 
+.spec-nav-chars-wrap {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+  gap: 0 !important;
+}
+
+.spec-nav-chars-wrap .spec-char {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.spec-nav-chars-wrap .spec-char + .spec-char {
+  margin-left: clamp(1px, 0.15vw, 2.5px) !important;
+}
+
+.spec-nav-chars-wrap .spec-char-gap + .spec-char {
+  margin-left: 0 !important;
+}
+
 .spec-nav-logo-front .spec-logo-char-img,
 .spec-nav-logo-front .spec-logo-char-img path {
   fill: var(--spec-nav-logo-color, #FFFFFF) !important;
   color: var(--spec-nav-logo-color, #FFFFFF) !important;
-  transition: fill 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: fill 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .spec-chrome-actions {
@@ -1022,15 +1052,14 @@ a:hover{color:#f5ead8}
   transform-style: preserve-3d;
 }
 
-/* Base character container & kinetic entrance animation */
+/* Base character container */
 .spec-char {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(42px) scale(0.7) rotateX(55deg);
-  filter: blur(10px);
-  animation: specCharReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: calc(var(--char-i, 0) * 0.085s + 0.25s);
-  will-change: transform, opacity, filter;
+  opacity: 1;
+  transform: none;
+  filter: none;
+  animation: none !important;
+  will-change: transform, opacity;
 }
 
 /* Image character alignment & 3D pivot */
@@ -1087,10 +1116,10 @@ html.spec-dark-mode .spec-landing-logo {
   object-fit: contain;
   shape-rendering: geometricPrecision !important;
   text-rendering: geometricPrecision !important;
-  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: auto !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
-  transform: none !important;
+  transform: translateZ(0);
 }
 
 .spec-logo-char-img path {
@@ -1173,23 +1202,10 @@ html.spec-dark-mode.spec-scrolled .spec-chrome-nav-logo {
   pointer-events: auto !important;
 }
 
-/* Dynamic Content Interaction: Navbar logo dynamically inverts and interacts with underlying website content */
+/* Dynamic Content Interaction: Navbar logo dynamically switches between crisp solid black and white */
 html.spec-scrolled .spec-chrome-nav-logo,
 .spec-chrome-nav-logo.spec-docked-nav {
-  mix-blend-mode: difference !important;
   cursor: pointer !important;
-}
-
-html.spec-scrolled .spec-chrome-nav-logo,
-html.spec-scrolled .spec-chrome-nav-logo .spec-nav-logo-front,
-html.spec-scrolled .spec-chrome-nav-logo .spec-logo-char-img,
-html.spec-scrolled .spec-chrome-nav-logo .spec-logo-char-img path,
-.spec-chrome-nav-logo.spec-docked-nav,
-.spec-chrome-nav-logo.spec-docked-nav .spec-nav-logo-front,
-.spec-chrome-nav-logo.spec-docked-nav .spec-logo-char-img,
-.spec-chrome-nav-logo.spec-docked-nav .spec-logo-char-img path {
-  color: #FFFFFF !important;
-  fill: #FFFFFF !important;
 }
 
 .spec-nav-chars-wrap .spec-logo-char-img {
@@ -1491,10 +1507,12 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   }
 }
 
-/* Space gap between 'SPEC' and 'MEDIA' */
+/* Space gap between 'SPEC' and 'MEDIA' - precise, uniform, proportional across all viewports */
 .spec-char-gap {
-  display: inline-block;
-  width: clamp(10px, 1.4vw, 22px);
+  display: inline-block !important;
+  width: clamp(7px, 1.0vw, 15px) !important;
+  flex-shrink: 0 !important;
+  height: 1px;
 }
 
 /* Clean Logo: strictly NO hover position displacement or layout shift */
@@ -1534,7 +1552,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
     height: clamp(14px, 4vw, 22px);
   }
   .spec-char-gap, .spec-img-chars-wrap .spec-char-gap {
-    width: 8px !important;
+    width: 6px !important;
   }
 }
 
@@ -1868,7 +1886,10 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   position: relative;
   z-index: 2;
   padding: 6px 16px 3px;
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .spec-rc-quote-glyph {
@@ -1934,6 +1955,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   padding: 7px 16px 9px;
   border-top: 1px solid rgba(245, 234, 216, 0.08);
   background: rgba(0, 0, 0, 0.35);
+  margin-top: auto;
 }
 
 .spec-rc-author {
@@ -2107,13 +2129,13 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   opacity: 1;
 }
 
-/* Header subtle soft defocus when any review card is hovered */
+/* Header subtle focus shift when any review card is hovered */
 #spec-reviews-section.has-card-hovered [data-blurable="1"],
 #spec-reviews-section:has(.spec-review-card:hover) [data-blurable="1"] {
-  filter: blur(2.5px) brightness(0.72) !important;
-  -webkit-filter: blur(2.5px) brightness(0.72) !important;
-  opacity: 0.65 !important;
-  transition: filter 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  opacity: 0.75 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* Horizontally scrolling testimonial / review section with edge-fade gradient mask */
@@ -2151,7 +2173,7 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   display: none !important;
 }
 
-/* Individual Review Card - Base Resting State (Bigger, Luxury Editorial Presence) */
+/* Individual Review Card - Base Resting State (Luxury Frosted Glass & Editorial Presence) */
 .spec-review-card,
 [data-rvrow="1"] .ig-card {
   flex: none !important;
@@ -2161,11 +2183,13 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   overflow: hidden !important;
   display: flex !important;
   flex-direction: column !important;
-  background: rgba(22, 3, 6, 0.90) !important;
+  background: linear-gradient(145deg, rgba(38, 5, 10, 0.65) 0%, rgba(18, 2, 5, 0.78) 100%) !important;
   border: 1px solid rgba(245, 234, 216, 0.12) !important;
-  box-shadow: 0 18px 44px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(223, 22, 55, 0.15) !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.12),
+              0 20px 48px -12px rgba(0, 0, 0, 0.85),
+              0 0 0 1px rgba(223, 22, 55, 0.15) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
   color: #f5ead8 !important;
   box-sizing: border-box !important;
   cursor: pointer !important;
@@ -2174,49 +2198,59 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   opacity: 1 !important;
   filter: none !important;
   -webkit-filter: none !important;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
-              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
-              border-color 0.35s ease, 
-              filter 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
-              opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.4s ease, 
+              filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
   will-change: transform, box-shadow, filter, opacity !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   z-index: 5 !important;
 }
 
-/* STAIRCASE CASCADING DESCENT: Each card sits at a smooth, distinct vertical down-stairs step */
+/* STAIRCASE CASCADING DESCENT & VARYING PHYSICAL HEIGHTS:
+   Cards have distinct stair-step heights creating a polished, staggered architectural silhouette */
 [data-rvrow="1"] .spec-review-card:nth-child(1),
 [data-rvrow="1"] .ig-card:nth-child(1) { 
   margin-top: 0px !important; 
+  height: clamp(460px, 56vh, 490px) !important;
 }
 
 [data-rvrow="1"] .spec-review-card:nth-child(2),
 [data-rvrow="1"] .ig-card:nth-child(2) { 
-  margin-top: 12px !important; 
+  margin-top: 14px !important; 
+  height: clamp(490px, 60vh, 525px) !important;
 }
 
 [data-rvrow="1"] .spec-review-card:nth-child(3),
 [data-rvrow="1"] .ig-card:nth-child(3) { 
-  margin-top: 24px !important; 
+  margin-top: 28px !important; 
+  height: clamp(520px, 64vh, 560px) !important;
 }
 
 [data-rvrow="1"] .spec-review-card:nth-child(4),
 [data-rvrow="1"] .ig-card:nth-child(4) { 
-  margin-top: 36px !important; 
+  margin-top: 42px !important; 
+  height: clamp(550px, 68vh, 595px) !important;
 }
 
 [data-rvrow="1"] .spec-review-card:nth-child(5),
 [data-rvrow="1"] .ig-card:nth-child(5) { 
-  margin-top: 48px !important; 
+  margin-top: 56px !important; 
+  height: clamp(580px, 72vh, 630px) !important;
 }
 
 [data-rvrow="1"] .spec-review-card:nth-child(6),
 [data-rvrow="1"] .ig-card:nth-child(6) { 
-  margin-top: 60px !important; 
+  margin-top: 70px !important; 
+  height: clamp(610px, 76vh, 665px) !important;
 }
 
 [data-rvrow="1"] .spec-review-card:nth-child(n+7),
 [data-rvrow="1"] .ig-card:nth-child(n+7) { 
-  margin-top: 72px !important; 
+  margin-top: 84px !important; 
+  height: clamp(640px, 80vh, 700px) !important;
 }
 
 /* HOVER INTERACTION: Active card scales up smoothly, comes forward, gains luxury glow and remains 100% sharp */
@@ -2225,14 +2259,15 @@ html.spec-dark-mode .spec-nav-lang-switcher {
 [data-rvrow="1"] .ig-card:hover,
 [data-rvrow="1"] .ig-card.is-card-hovered {
   z-index: 100 !important;
-  transform: scale(1.04) translateY(-10px) !important;
-  filter: none !important;
-  -webkit-filter: none !important;
+  transform: scale(1.035) translateY(-8px) translateZ(0) !important;
+  filter: blur(0px) brightness(1.02) !important;
+  -webkit-filter: blur(0px) brightness(1.02) !important;
   opacity: 1 !important;
-  border-color: rgba(223, 22, 55, 0.75) !important;
-  box-shadow: 0 32px 80px -15px rgba(0, 0, 0, 0.92), 
-              0 0 35px rgba(223, 22, 55, 0.40), 
-              0 0 0 1.5px rgba(245, 234, 216, 0.35) !important;
+  border-color: rgba(223, 22, 55, 0.70) !important;
+  box-shadow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.22),
+              0 36px 90px -15px rgba(0, 0, 0, 0.95), 
+              0 0 45px rgba(223, 22, 55, 0.40), 
+              0 0 0 1.5px rgba(245, 234, 216, 0.30) !important;
 }
 
 /* Ensure ALL content inside the active review card remains 100% sharp and clear */
@@ -2244,17 +2279,17 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   -webkit-filter: none !important;
 }
 
-/* BACKGROUND BLUR EFFECT: Sibling review cards get an elegant soft depth-of-field defocus matching the burgundy theme */
+/* BACKGROUND BLUR EFFECT: Sibling review cards get an elegant cinematic depth-of-field bokeh defocus */
 [data-rvrow="1"]:has(.spec-review-card:hover) .spec-review-card:not(:hover),
 [data-rvrow="1"]:has(.ig-card:hover) .ig-card:not(:hover),
 [data-rvrow="1"].has-card-hovered .spec-review-card.is-card-dimmed,
 [data-rvrow="1"].has-card-hovered .ig-card.is-card-dimmed,
 [data-rvrow="1"].has-card-hovered .spec-review-card:not(.is-card-hovered),
 [data-rvrow="1"].has-card-hovered .ig-card:not(.is-card-hovered) {
-  filter: blur(3.5px) brightness(0.72) !important;
-  -webkit-filter: blur(3.5px) brightness(0.72) !important;
-  opacity: 0.58 !important;
-  transform: scale(0.98) !important;
+  filter: blur(8px) saturate(110%) brightness(0.60) !important;
+  -webkit-filter: blur(8px) saturate(110%) brightness(0.60) !important;
+  opacity: 0.42 !important;
+  transform: scale(0.96) translateZ(0) !important;
 }
 
 /* Tablet Responsive Staircase */
@@ -2264,17 +2299,17 @@ html.spec-dark-mode .spec-nav-lang-switcher {
     width: clamp(260px, 32vw, 300px) !important;
   }
   [data-rvrow="1"] .spec-review-card:nth-child(1),
-  [data-rvrow="1"] .ig-card:nth-child(1) { margin-top: 0px !important; }
+  [data-rvrow="1"] .ig-card:nth-child(1) { margin-top: 0px !important; height: clamp(430px, 52vh, 460px) !important; }
   [data-rvrow="1"] .spec-review-card:nth-child(2),
-  [data-rvrow="1"] .ig-card:nth-child(2) { margin-top: 10px !important; }
+  [data-rvrow="1"] .ig-card:nth-child(2) { margin-top: 10px !important; height: clamp(455px, 55vh, 485px) !important; }
   [data-rvrow="1"] .spec-review-card:nth-child(3),
-  [data-rvrow="1"] .ig-card:nth-child(3) { margin-top: 20px !important; }
+  [data-rvrow="1"] .ig-card:nth-child(3) { margin-top: 20px !important; height: clamp(480px, 58vh, 510px) !important; }
   [data-rvrow="1"] .spec-review-card:nth-child(4),
-  [data-rvrow="1"] .ig-card:nth-child(4) { margin-top: 30px !important; }
+  [data-rvrow="1"] .ig-card:nth-child(4) { margin-top: 30px !important; height: clamp(505px, 61vh, 535px) !important; }
   [data-rvrow="1"] .spec-review-card:nth-child(5),
-  [data-rvrow="1"] .ig-card:nth-child(5) { margin-top: 40px !important; }
+  [data-rvrow="1"] .ig-card:nth-child(5) { margin-top: 40px !important; height: clamp(530px, 64vh, 560px) !important; }
   [data-rvrow="1"] .spec-review-card:nth-child(6),
-  [data-rvrow="1"] .ig-card:nth-child(6) { margin-top: 50px !important; }
+  [data-rvrow="1"] .ig-card:nth-child(6) { margin-top: 50px !important; height: clamp(555px, 67vh, 585px) !important; }
 
   .spec-review-card:hover,
   .spec-review-card.is-card-hovered,
@@ -2296,6 +2331,8 @@ html.spec-dark-mode .spec-nav-lang-switcher {
   [data-rvrow="1"] .ig-card {
     width: min(84vw, 300px) !important;
     margin-top: 0px !important;
+    height: auto !important;
+    min-height: 440px !important;
   }
   .spec-review-card:hover,
   .spec-review-card.is-card-hovered,
@@ -2550,7 +2587,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
 
   <section id="spec-scene2-section" data-screen-label="02 Frame scrub" style="background:#000000;position:relative;z-index:10;height:380vh">
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#000000">
-      <div ref="{{ scrubBoxRef }}" id="spec-scene2-stage" class="spec-scrub-box" style="position:relative;width:min(90vw, 1120px);aspect-ratio:16/9;max-height:80vh;border-radius:0px !important;overflow:visible;box-shadow:0 24px 60px rgba(0,0,0,0.8);background:#000000;will-change:transform,opacity;opacity:1;transform:none;perspective:1200px;transform-style:preserve-3d;">
+      <div ref="{{ scrubBoxRef }}" id="spec-scene2-stage" class="spec-scrub-box" style="position:relative;width:min(90vw, 1120px);aspect-ratio:16/9;max-height:80vh;border-radius:0px !important;overflow:visible;box-shadow:0 24px 60px rgba(0,0,0,0.8);background:radial-gradient(ellipse at center, rgba(30, 4, 7, 0.65) 0%, #000000 80%);will-change:transform,opacity;opacity:1;transform:none;perspective:1200px;transform-style:preserve-3d;">
         
         <!-- Ref placeholder for DCLogic stability (brain canvas removed per request) -->
         <div ref="{{ canvasScrubRef }}" style="display:none !important;width:0;height:0;position:absolute;pointer-events:none;" aria-hidden="true"></div>
@@ -2560,7 +2597,7 @@ footer#contact div[style*="font-family:ui-monospace"] {
           <img id="spec-master-img-el" src="/static/SPEC_video-poster_horizontal.jpg" alt="Spec Media Master" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0px !important;" />
         </div>
 
-        <!-- Phase 1: 15-Square Tile Assembly Container (JS-generated) -->
+        <!-- Phase 1: 40-Square Tile Assembly Container (JS-generated) -->
         <div id="spec-slices-container" style="position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;perspective:1200px;transform-style:preserve-3d;border-radius:0px !important;">
         </div>
 
@@ -4607,7 +4644,10 @@ class Component extends DCLogic {
   #spec-object-section .spec-obj-ui,
   #spec-object-section .spec-obj-hint,
   #spec-object-section .spec-obj-drag,
-  #spec-object-section .spec-obj-err {
+  #spec-object-section .spec-obj-err,
+  #spec-object-section .spec-obj-readout,
+  #spec-object-section #spec-obj-readout,
+  #spec-object-section #spec-obj-frame-readout {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -7069,6 +7109,14 @@ if (document.readyState === 'loading') {
       return document.querySelector('.spec-chrome-nav-logo');
     }
 
+    var cachedNatW = 167.5;
+    var cachedNatH = 20;
+    var cachedNatX = 80;
+    var cachedNatY = 38;
+
+    var cachedHeroLeft = 48;
+    var cachedHeroWidth = 512.7;
+
     function getNaturalLogoMetrics() {
       var navLogo = getLiveNavLogo();
       if (!navLogo) return null;
@@ -7078,60 +7126,13 @@ if (document.readyState === 'loading') {
       var rect = navLogo.getBoundingClientRect();
       navLogo.style.transform = prevT;
       navLogo.style.transformOrigin = prevO;
-      return rect;
-    }
-
-    // Inject dynamic logo animation styles if not already present:
-    // Left-to-right staggered character reveal with blur & scale bloom
-    if (!document.getElementById('spec-hero-logo-motion')) {
-      var motionStyle = document.createElement('style');
-      motionStyle.id = 'spec-hero-logo-motion';
-      motionStyle.textContent = '\n' +
-        '@keyframes specHeroLogoIntro {\n' +
-        '  0% { opacity: 0; }\n' +
-        '  100% { opacity: 1; }\n' +
-        '}\n' +
-        '@keyframes specCharRevealLeftToRight {\n' +
-        '  0% {\n' +
-        '    opacity: 0;\n' +
-        '    transform: translateX(-45px) scale(0.82);\n' +
-        '    filter: blur(14px);\n' +
-        '  }\n' +
-        '  60% {\n' +
-        '    opacity: 0.95;\n' +
-        '    filter: blur(2px);\n' +
-        '  }\n' +
-        '  100% {\n' +
-        '    opacity: 1;\n' +
-        '    transform: translateX(0) scale(1);\n' +
-        '    filter: blur(0px);\n' +
-        '  }\n' +
-        '}\n' +
-        '.spec-chrome-nav-logo.spec-logo-intro {\n' +
-        '  opacity: 1 !important;\n' +
-        '  animation: specHeroLogoIntro 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;\n' +
-        '}\n' +
-        '.spec-chrome-nav-logo.spec-logo-intro .spec-char {\n' +
-        '  display: inline-block;\n' +
-        '  animation: specCharRevealLeftToRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;\n' +
-        '  animation-delay: calc(0.12s + var(--char-i, 0) * 0.085s);\n' +
-        '}\n' +
-        '.spec-chrome-nav-logo.spec-logo-ambient {\n' +
-        '  opacity: 1 !important;\n' +
-        '}\n';
-      document.head.appendChild(motionStyle);
-      var initLogo = getLiveNavLogo();
-      if (initLogo) {
-        initLogo.classList.add('spec-logo-intro');
-        setTimeout(function() {
-          var el = getLiveNavLogo();
-          if (el) {
-            el.classList.remove('spec-logo-intro');
-            el.classList.add('spec-logo-ambient');
-            el.style.opacity = '1';
-          }
-        }, 1600);
+      if (rect && rect.width > 30) {
+        cachedNatW = rect.width;
+        cachedNatH = rect.height;
+        cachedNatX = rect.left;
+        cachedNatY = rect.top;
       }
+      return rect;
     }
 
     function updateFlight() {
@@ -7149,21 +7150,53 @@ if (document.readyState === 'loading') {
       var ease = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
 
       var natRect = getNaturalLogoMetrics();
-      var natW = (natRect && natRect.width > 20) ? natRect.width : 199;
-      var natH = (natRect && natRect.height > 10) ? natRect.height : 25;
-      var natX = (natRect && natRect.left > 0) ? natRect.left : 80;
-      var natY = (natRect && natRect.top > 0) ? natRect.top : 38;
+      var natW = (natRect && natRect.width > 30) ? natRect.width : cachedNatW;
+      var natH = (natRect && natRect.height > 10) ? natRect.height : cachedNatH;
+      var natX = (natRect && natRect.left > 0) ? natRect.left : cachedNatX;
+      var natY = (natRect && natRect.top > 0) ? natRect.top : cachedNatY;
 
-      // Hero Logo: Grand scale spanning widely from left to right across the hero
-      var maxHeroW = Math.min(vw * 0.90, 1340);
-      var scaleHero = Math.max(2.4, Math.min(6.2, maxHeroW / natW));
+      // Hero Logo: Starts from 'Y' in "You feel..." and ends at 'identities' in "Spec Media builds brand identities..."
+      var title = document.querySelector('.spec-hero-title');
+      var desc = document.querySelector('.spec-hero-desc');
+
+      var startLeft = 48;
+      var identitiesRight = 1381.1;
+
+      if (title) {
+        var titleRect = title.getBoundingClientRect();
+        if (titleRect.left > 0) startLeft = titleRect.left;
+      }
+      if (desc) {
+        for (var nodeIdx = 0; nodeIdx < desc.childNodes.length; nodeIdx++) {
+          var node = desc.childNodes[nodeIdx];
+          if (node.nodeType === Node.TEXT_NODE && node.textContent.indexOf('identities') !== -1) {
+            try {
+              var range = document.createRange();
+              var idx = node.textContent.indexOf('identities');
+              range.setStart(node, idx);
+              range.setEnd(node, idx + 'identities'.length);
+              var r = range.getBoundingClientRect();
+              if (r && r.right > startLeft + 100) {
+                identitiesRight = r.right;
+              }
+            } catch(e) {}
+            break;
+          }
+        }
+      }
+
+      var targetHeroW = identitiesRight - startLeft;
+      if (vw <= 640) {
+        targetHeroW = Math.max(targetHeroW, vw - startLeft * 2);
+      }
+
+      var scaleHero = targetHeroW / natW;
       var heroW = natW * scaleHero;
       var heroH = natH * scaleHero;
 
-      var startX = (vw - heroW) / 2 - natX;
-      // Position upper in the screen: center comfortably in upper hero above headline
-      var targetCenterY = Math.max(heroH * 0.5 + 44, vh * 0.24);
-      var startY = (targetCenterY - heroH / 2) - natY;
+      var startX = startLeft - natX;
+      var topMargin = Math.max(16, Math.min(24, vh * 0.024));
+      var startY = topMargin - natY;
 
       var curX = startX * (1 - ease);
       var curY = startY * (1 - ease);
@@ -7176,7 +7209,7 @@ if (document.readyState === 'loading') {
         navLogo.classList.add('spec-docked-nav');
         document.documentElement.classList.add('spec-scrolled');
       } else {
-        navLogo.style.transform = 'translate(' + curX.toFixed(1) + 'px, ' + curY.toFixed(1) + 'px) scale(' + curScale.toFixed(4) + ')';
+        navLogo.style.transform = 'translate3d(' + curX.toFixed(2) + 'px, ' + curY.toFixed(2) + 'px, 0) scale(' + curScale.toFixed(4) + ')';
         navLogo.classList.remove('spec-docked-nav');
         if (scrollY < 80) {
           document.documentElement.classList.remove('spec-scrolled');
@@ -7195,15 +7228,6 @@ if (document.readyState === 'loading') {
       }
       navLogo.style.opacity = '1';
       navLogo.style.visibility = 'visible';
-
-      // Ambient breathing effect when resting at the top
-      if (p < 0.05) {
-        if (!navLogo.classList.contains('spec-logo-intro')) {
-          navLogo.classList.add('spec-logo-ambient');
-        }
-      } else {
-        navLogo.classList.remove('spec-logo-ambient');
-      }
 
       // Synchronize Navbar Actions: hidden at initial load, reveals smoothly as logo travels
       if (actions) {
@@ -7246,8 +7270,9 @@ if (document.readyState === 'loading') {
       var isLight = lastIsLight ? (avgLum > 0.44) : (avgLum > 0.52);
       lastIsLight = isLight;
 
-      var targetColor = (p < 0.25) ? '#FFFFFF' : (isLight ? '#000000' : '#FFFFFF');
+      var targetColor = (p < 0.25) ? (document.documentElement.classList.contains('spec-light-mode') ? '#000000' : '#FFFFFF') : (isLight ? '#000000' : '#FFFFFF');
       document.documentElement.style.setProperty('--spec-nav-logo-color', targetColor);
+      navLogo.style.setProperty('--spec-nav-logo-color', targetColor);
       navLogo.style.color = targetColor;
       return { scrollY: scrollY, p: p, ease: ease, curX: curX, curY: curY, curScale: curScale, transform: navLogo.style.transform };
     }
@@ -7257,6 +7282,32 @@ if (document.readyState === 'loading') {
     window.addEventListener('wheel', function() {
       requestAnimationFrame(updateFlight);
     }, { passive: true });
+    window.addEventListener('resize', function() {
+      updateFlight();
+    }, { passive: true });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function() {
+        updateFlight();
+      });
+    }
+
+    window.addEventListener('load', function() {
+      updateFlight();
+      setTimeout(updateFlight, 150);
+      setTimeout(updateFlight, 500);
+      setTimeout(updateFlight, 1200);
+    });
+
+    var flightInitFrames = 0;
+    function flightInitialSyncLoop() {
+      updateFlight();
+      flightInitFrames++;
+      if (flightInitFrames < 25) {
+        requestAnimationFrame(flightInitialSyncLoop);
+      }
+    }
+    requestAnimationFrame(flightInitialSyncLoop);
 
     // Robust Lenis scroll binder with retry loop for Brave & slow CDN loading
     function attachFlightLenis() {
@@ -7321,88 +7372,87 @@ if (document.readyState === 'loading') {
     video.style.pointerEvents = 'none';
 
     var currentMode = null;
-    var COLS = 5;
-    var ROWS = 3;
+    var COLS = 8;
+    var ROWS = 5;
 
-    // --- 15-Square True Tile Dispersion & Flight Vectors ---
-    // Desktop: 5 cols x 3 rows = 15 tiles (aspect ratio 1.067, virtually 1:1 true squares)
-    // Staggered arrival sequence across scroll progress p in [0.00, 0.44]:
-    //   pStart: scroll progress where tile emerges from nothingness (opacity fades in, starts 3D flight)
-    //   pEnd:   scroll progress where tile docks into its exact 0px grid position (0 blur, 0 radius)
-    //   dx, dy, dz: initial 3D displacement vector (px)
-    //   rx, ry, rz: initial 3D rotation angles (deg)
-    // --- 15-Square True Tile Dispersion & Flight Vectors ---
-    // Desktop: 5 cols x 3 rows = 15 tiles
-    // ALL squares come from the 3D depth BACK (dz: -550px..-950px, scale: 0.22..0.44, blur: 24..36px)
-    // and converge forward into place as they collect seamlessly
-    var TILE_DEFS_DESKTOP = [
-      // Row 0 (Top)
-      { c: 0, r: 0, pStart: 0.03, pEnd: 0.18, dx: -480, dy: -360, dz: -780, rx:  24, ry: -26, rz: -16, scale: 0.35, blur: 30 }, // Top-Left
-      { c: 1, r: 0, pStart: 0.19, pEnd: 0.34, dx: -160, dy: -420, dz: -680, rx: -24, ry: -14, rz:  10, scale: 0.40, blur: 26 }, // Top-Mid-Left
-      { c: 2, r: 0, pStart: 0.15, pEnd: 0.30, dx:   20, dy: -460, dz: -720, rx: -28, ry:  10, rz:  -8, scale: 0.38, blur: 28 }, // Top-Center
-      { c: 3, r: 0, pStart: 0.21, pEnd: 0.36, dx:  200, dy: -410, dz: -660, rx: -22, ry:  18, rz: -12, scale: 0.42, blur: 26 }, // Top-Mid-Right
-      { c: 4, r: 0, pStart: 0.07, pEnd: 0.22, dx:  500, dy: -350, dz: -820, rx:  20, ry:  28, rz:  16, scale: 0.32, blur: 32 }, // Top-Right
+    // --- 40-Square True Mosaic Tile Dispersion, Organic Randomization & Flight Vectors ---
+    // Desktop: 8 cols x 5 rows = 40 tiles
+    // Mobile:  5 cols x 8 rows = 40 tiles
+    // Pseudo-random deterministic generator for consistent, beautifully organic spatial dispersion
+    function generateTileDefs(cols, rows, seed, isMobile) {
+      var s = seed;
+      function rand() {
+        s = (s * 9301 + 49297) % 233280;
+        return s / 233280;
+      }
+      var n = cols * rows;
+      var indices = [];
+      for (var i = 0; i < n; i++) indices.push(i);
+      // Fisher-Yates shuffle for organic, non-uniform arrival order
+      for (var j = n - 1; j > 0; j--) {
+        var k = Math.floor(rand() * (j + 1));
+        var tmp = indices[j];
+        indices[j] = indices[k];
+        indices[k] = tmp;
+      }
 
-      // Row 1 (Center Row)
-      { c: 0, r: 1, pStart: 0.27, pEnd: 0.42, dx: -540, dy:  -20, dz: -740, rx:  12, ry: -32, rz: -12, scale: 0.36, blur: 28 }, // Mid-Left-Edge
-      { c: 1, r: 1, pStart: 0.11, pEnd: 0.26, dx: -220, dy:   60, dz: -600, rx: -14, ry: -18, rz:  12, scale: 0.44, blur: 24 }, // Mid-Left-Inner
-      { c: 2, r: 1, pStart: 0.01, pEnd: 0.16, dx:  -30, dy:   40, dz: -950, rx:  16, ry: -12, rz:   8, scale: 0.24, blur: 36 }, // Center-Core (deep back)
-      { c: 3, r: 1, pStart: 0.13, pEnd: 0.28, dx:  240, dy:  -50, dz: -620, rx:  14, ry:  20, rz: -14, scale: 0.42, blur: 24 }, // Mid-Right-Inner
-      { c: 4, r: 1, pStart: 0.29, pEnd: 0.44, dx:  560, dy:   20, dz: -760, rx: -12, ry:  30, rz:  14, scale: 0.34, blur: 30 }, // Mid-Right-Edge
+      var defs = new Array(n);
+      var maxDx = isMobile ? 480 : 720;
+      var maxDy = isMobile ? 660 : 540;
+      for (var rank = 0; rank < n; rank++) {
+        var idx = indices[rank];
+        var c = idx % cols;
+        var r = Math.floor(idx / cols);
+        var pStart = 0.01 + (rank / n) * 0.25;
+        var duration = 0.12 + rand() * 0.04;
+        var pEnd = Math.min(0.42, pStart + duration);
 
-      // Row 2 (Bottom Row)
-      { c: 0, r: 2, pStart: 0.09, pEnd: 0.24, dx: -460, dy:  380, dz: -760, rx: -22, ry: -24, rz:  18, scale: 0.36, blur: 28 }, // Bottom-Left
-      { c: 1, r: 2, pStart: 0.23, pEnd: 0.38, dx: -180, dy:  440, dz: -640, rx:  26, ry: -14, rz: -12, scale: 0.42, blur: 26 }, // Bottom-Mid-Left
-      { c: 2, r: 2, pStart: 0.17, pEnd: 0.32, dx:   30, dy:  470, dz: -700, rx:  28, ry: -10, rz:  10, scale: 0.38, blur: 28 }, // Bottom-Center
-      { c: 3, r: 2, pStart: 0.25, pEnd: 0.40, dx:  210, dy:  430, dz: -660, rx:  24, ry:  16, rz:  12, scale: 0.40, blur: 26 }, // Bottom-Mid-Right
-      { c: 4, r: 2, pStart: 0.05, pEnd: 0.20, dx:  480, dy:  370, dz: -800, rx: -20, ry:  26, rz: -18, scale: 0.34, blur: 30 }  // Bottom-Right
-    ];
+        var dx = (rand() - 0.5) * 2 * maxDx;
+        var dy = (rand() - 0.5) * 2 * maxDy;
+        var dz = -580 - rand() * 640;
+        var rx = (rand() - 0.5) * 64;
+        var ry = (rand() - 0.5) * 64;
+        var rz = (rand() - 0.5) * 44;
+        var scale = 0.18 + rand() * 0.22;
+        var blur = 32 + rand() * 24; // 32px to 56px dramatic blur
 
-    // Mobile: 3 cols x 5 rows = 15 tiles (all from deep 3D back with blur)
-    var TILE_DEFS_MOBILE = [
-      // Row 0
-      { c: 0, r: 0, pStart: 0.03, pEnd: 0.18, dx: -260, dy: -300, dz: -680, rx:  20, ry: -22, rz: -14, scale: 0.38, blur: 28 },
-      { c: 1, r: 0, pStart: 0.15, pEnd: 0.30, dx:   20, dy: -340, dz: -640, rx: -22, ry:  12, rz:  10, scale: 0.42, blur: 26 },
-      { c: 2, r: 0, pStart: 0.07, pEnd: 0.22, dx:  260, dy: -290, dz: -700, rx:  20, ry:  24, rz:  16, scale: 0.36, blur: 28 },
+        defs[idx] = {
+          c: c,
+          r: r,
+          pStart: pStart,
+          pEnd: pEnd,
+          dx: dx,
+          dy: dy,
+          dz: dz,
+          rx: rx,
+          ry: ry,
+          rz: rz,
+          scale: scale,
+          blur: blur
+        };
+      }
+      return defs;
+    }
 
-      // Row 1
-      { c: 0, r: 1, pStart: 0.19, pEnd: 0.34, dx: -280, dy: -130, dz: -620, rx:  16, ry: -24, rz:  12, scale: 0.44, blur: 24 },
-      { c: 1, r: 1, pStart: 0.01, pEnd: 0.16, dx:  -20, dy:  -70, dz: -850, rx:  14, ry: -14, rz:  -8, scale: 0.28, blur: 32 },
-      { c: 2, r: 1, pStart: 0.21, pEnd: 0.36, dx:  290, dy: -120, dz: -640, rx: -16, ry:  24, rz: -14, scale: 0.42, blur: 24 },
-
-      // Row 2 (Middle)
-      { c: 0, r: 2, pStart: 0.27, pEnd: 0.42, dx: -300, dy:   20, dz: -580, rx: -12, ry: -20, rz:  14, scale: 0.46, blur: 24 },
-      { c: 1, r: 2, pStart: 0.11, pEnd: 0.26, dx:   10, dy:   10, dz: -780, rx:  18, ry:   8, rz:  10, scale: 0.32, blur: 30 },
-      { c: 2, r: 2, pStart: 0.29, pEnd: 0.44, dx:  310, dy:  -10, dz: -600, rx:  14, ry:  20, rz: -14, scale: 0.44, blur: 24 },
-
-      // Row 3
-      { c: 0, r: 3, pStart: 0.23, pEnd: 0.38, dx: -270, dy:  140, dz: -620, rx: -18, ry: -22, rz: -12, scale: 0.42, blur: 24 },
-      { c: 1, r: 3, pStart: 0.13, pEnd: 0.28, dx:  -20, dy:  150, dz: -700, rx:  20, ry: -10, rz:  12, scale: 0.38, blur: 26 },
-      { c: 2, r: 3, pStart: 0.25, pEnd: 0.40, dx:  280, dy:  150, dz: -640, rx:  20, ry:  22, rz:  14, scale: 0.40, blur: 24 },
-
-      // Row 4
-      { c: 0, r: 4, pStart: 0.09, pEnd: 0.24, dx: -250, dy:  310, dz: -680, rx: -20, ry: -20, rz:  16, scale: 0.38, blur: 28 },
-      { c: 1, r: 4, pStart: 0.17, pEnd: 0.32, dx:   20, dy:  350, dz: -660, rx:  24, ry: -12, rz: -10, scale: 0.40, blur: 26 },
-      { c: 2, r: 4, pStart: 0.05, pEnd: 0.20, dx:  260, dy:  320, dz: -720, rx: -22, ry:  22, rz: -18, scale: 0.34, blur: 30 }
-    ];
+    var TILE_DEFS_DESKTOP = generateTileDefs(8, 5, 42, false);
+    var TILE_DEFS_MOBILE = generateTileDefs(5, 8, 88, true);
 
     var activeDefs = TILE_DEFS_DESKTOP;
 
     function buildSquareTiles() {
       var isMobile = window.innerWidth <= 768;
       var targetMode = isMobile ? 'mobile' : 'desktop';
-      if (currentMode === targetMode && slicesCont.children.length === 15) return;
-      currentMode = targetMode;
-
       if (isMobile) {
-        COLS = 3;
-        ROWS = 5;
+        COLS = 5;
+        ROWS = 8;
         activeDefs = TILE_DEFS_MOBILE;
       } else {
-        COLS = 5;
-        ROWS = 3;
+        COLS = 8;
+        ROWS = 5;
         activeDefs = TILE_DEFS_DESKTOP;
       }
+      if (currentMode === targetMode && slicesCont.children.length === activeDefs.length) return;
+      currentMode = targetMode;
 
       var imgSrc = isMobile
         ? '/static/SPEC_video-poster_vertical.jpg'
@@ -7626,7 +7676,7 @@ if (document.readyState === 'loading') {
       if (!sec || !stage || !slicesCont || !masterImg || !video) return;
 
       var slices = slicesCont.querySelectorAll('.spec-slice');
-      if (slices.length !== 15) {
+      if (slices.length !== activeDefs.length) {
         buildSquareTiles();
         slices = slicesCont.querySelectorAll('.spec-slice');
       }
@@ -7638,8 +7688,8 @@ if (document.readyState === 'loading') {
       stage.style.overflow = (p < 0.46) ? 'visible' : 'hidden';
 
       // =========================================================================
-      // 1. INITIAL STATE: Completely Empty (p <= 0.005)
-      // "The animation MUST start with absolutely no visible image... At 0% scroll progress, ZERO visible image."
+      // 1. INITIAL STATE: Atmospheric Field in Deep 3D Space (p <= 0.005)
+      // Prevents empty black screen: tiles softly hover in deep 3D space with blur
       // =========================================================================
       if (p <= 0.005) {
         slicesCont.style.opacity = '1';
@@ -7653,15 +7703,15 @@ if (document.readyState === 'loading') {
         for (var i = 0; i < slices.length; i++) {
           var s = slices[i];
           var def = activeDefs[i] || activeDefs[0];
-          var t3dInit = 'translate3d(' + def.dx + 'px,' + def.dy + 'px,' + def.dz + 'px) ' +
-                        'rotateX(' + def.rx + 'deg) rotateY(' + def.ry + 'deg) rotateZ(' + def.rz + 'deg) ' +
-                        'scale(' + def.scale + ')';
-          s.style.opacity = '0';
+          var t3dInit = 'translate3d(' + def.dx.toFixed(1) + 'px,' + def.dy.toFixed(1) + 'px,' + def.dz.toFixed(1) + 'px) ' +
+                        'rotateX(' + def.rx.toFixed(1) + 'deg) rotateY(' + def.ry.toFixed(1) + 'deg) rotateZ(' + def.rz.toFixed(1) + 'deg) ' +
+                        'scale(' + def.scale.toFixed(3) + ')';
+          s.style.opacity = '0.35';
           s.style.webkitTransform = t3dInit;
           s.style.transform = t3dInit;
-          s.style.webkitFilter = 'blur(' + def.blur + 'px)';
-          s.style.filter = 'blur(' + def.blur + 'px)';
-          s.style.borderRadius = '10px';
+          s.style.webkitFilter = 'blur(' + def.blur.toFixed(1) + 'px)';
+          s.style.filter = 'blur(' + def.blur.toFixed(1) + 'px)';
+          s.style.borderRadius = '6px';
           s.style.boxShadow = 'none';
         }
 
@@ -7671,7 +7721,8 @@ if (document.readyState === 'loading') {
 
       // =========================================================================
       // 2. SCROLL-DRIVEN SQUARE COLLECTION ANIMATION (0.005 < p < 0.42)
-      // Squares progressively appear and travel from deep 3D space with blur to reconstruct image
+      // Slices organically gather and pull together from scattered positions,
+      // blur gradually clears as each slice snaps into its exact position.
       // =========================================================================
       if (p < 0.42) {
         slicesCont.style.opacity = '1';
@@ -7689,19 +7740,19 @@ if (document.readyState === 'loading') {
           var pe = def.pEnd;
 
           if (p <= ps) {
-            // Not started yet: completely invisible and positioned far out in deep back
-            var t3dInit = 'translate3d(' + def.dx + 'px,' + def.dy + 'px,' + def.dz + 'px) ' +
-                          'rotateX(' + def.rx + 'deg) rotateY(' + def.ry + 'deg) rotateZ(' + def.rz + 'deg) ' +
-                          'scale(' + def.scale + ')';
-            s.style.opacity = '0';
+            // Floating in deep 3D space with soft visibility & strong atmospheric blur
+            var t3dInit = 'translate3d(' + def.dx.toFixed(1) + 'px,' + def.dy.toFixed(1) + 'px,' + def.dz.toFixed(1) + 'px) ' +
+                          'rotateX(' + def.rx.toFixed(1) + 'deg) rotateY(' + def.ry.toFixed(1) + 'deg) rotateZ(' + def.rz.toFixed(1) + 'deg) ' +
+                          'scale(' + def.scale.toFixed(3) + ')';
+            s.style.opacity = '0.35';
             s.style.webkitTransform = t3dInit;
             s.style.transform = t3dInit;
-            s.style.webkitFilter = 'blur(' + def.blur + 'px)';
-            s.style.filter = 'blur(' + def.blur + 'px)';
-            s.style.borderRadius = '10px';
+            s.style.webkitFilter = 'blur(' + def.blur.toFixed(1) + 'px)';
+            s.style.filter = 'blur(' + def.blur.toFixed(1) + 'px)';
+            s.style.borderRadius = '6px';
             s.style.boxShadow = 'none';
           } else if (p >= pe) {
-            // Arrived at exact final destination: locked, sharp, seamless
+            // Arrived at exact final destination: locked, razor-sharp, zero blur, seamless
             s.style.opacity = '1';
             s.style.webkitTransform = 'none';
             s.style.transform = 'none';
@@ -7710,12 +7761,13 @@ if (document.readyState === 'loading') {
             s.style.borderRadius = '0';
             s.style.boxShadow = 'none';
           } else {
-            // In-flight interpolation coming from back
+            // Dynamic organic collection: pulled together into place with clearing blur
             var localP = (p - ps) / (pe - ps);
-            var ease = 1 - Math.pow(1 - localP, 2.5);
+            // Organic magnetic gathering ease
+            var ease = 1 - Math.pow(1 - localP, 2.6);
             var rem = 1 - ease;
 
-            var op = Math.min(1, localP * 2.85).toFixed(3);
+            var op = (0.35 + 0.65 * Math.min(1, localP * 2.2)).toFixed(3);
 
             var curX = (def.dx * rem).toFixed(1);
             var curY = (def.dy * rem).toFixed(1);
@@ -7730,15 +7782,15 @@ if (document.readyState === 'loading') {
             var t3d = 'translate3d(' + curX + 'px,' + curY + 'px,' + curZ + 'px) ' +
                       'rotateX(' + curRx + 'deg) rotateY(' + curRy + 'deg) rotateZ(' + curRz + 'deg) ' +
                       'scale(' + curScale + ')';
-            var blurStr = parseFloat(curBlur) > 0.2 ? 'blur(' + curBlur + 'px)' : 'none';
+            var blurStr = parseFloat(curBlur) > 0.4 ? 'blur(' + curBlur + 'px)' : 'none';
 
             s.style.opacity = op;
             s.style.webkitTransform = t3d;
             s.style.transform = t3d;
             s.style.webkitFilter = blurStr;
             s.style.filter = blurStr;
-            s.style.borderRadius = '0';
-            s.style.boxShadow = rem > 0.05 ? '0 16px 48px rgba(0,0,0,' + shadowA + ')' : 'none';
+            s.style.borderRadius = rem > 0.1 ? Math.round(rem * 6) + 'px' : '0';
+            s.style.boxShadow = rem > 0.08 ? '0 16px 48px rgba(0,0,0,' + shadowA + ')' : 'none';
           }
         }
 
@@ -8619,14 +8671,18 @@ async function initScene07Object() {
     const eased = shown < 0.5 ? 2 * shown * shown : 1 - Math.pow(-2 * shown + 2, 2) / 2;
 
     if (ready && group) {
-      const entry = Math.min(1, shown / 0.14);
       spinVel *= 0.94;
       userSpin += spinVel;
       const spin = reduce ? 0.6 : eased * Math.PI * 2 * 1.25;
       group.rotation.y = BASE_ROT + spin + userSpin;
       group.rotation.x = Math.sin(t * 0.5) * 0.025 - 0.03;
       group.position.y = baseY + (reduce ? 0 : Math.sin(t * 0.8) * 0.016);
-      group.scale.setScalar(fitScale * (0.9 + 0.1 * entry));
+
+      // Dynamic scroll-driven scale: enters small and scales up smoothly and noticeably
+      const scaleProg = Math.max(0, Math.min(1, shown));
+      const scaleEase = scaleProg < 0.5 ? 2 * scaleProg * scaleProg : 1 - Math.pow(-2 * scaleProg + 2, 2) / 2;
+      const dynamicDuckScale = fitScale * (0.36 + 0.68 * scaleEase);
+      group.scale.setScalar(dynamicDuckScale);
 
       const ang = reduce ? 0 : eased * 0.44 - 0.22;
       camera.position.x = Math.sin(ang) * 0.5;
