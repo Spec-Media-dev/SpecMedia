@@ -7007,18 +7007,63 @@ if (document.readyState === 'loading') {
 
     var actions = chromeNav.querySelector('.spec-chrome-actions');
 
-    // Reusable 1x1 canvas for sampling real image, video, canvas pixels
-    var sampleCanvas = document.createElement('canvas');
-    sampleCanvas.width = 1;
-    sampleCanvas.height = 1;
-    var sampleCtx = null;
+    // Ensure all remote images permit CORS canvas sampling
     try {
-      sampleCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
+      document.querySelectorAll('img').forEach(function(img) {
+        if (!img.crossOrigin && img.src && img.src.indexOf('http') === 0) {
+          img.crossOrigin = 'anonymous';
+        }
+      });
+    } catch(_) {}
+
+    // Dedicated untainted 1x1 canvas for parsing ANY CSS color format (oklab, oklch, lab, rgb, hex, color-mix)
+    var colorCanvas = document.createElement('canvas');
+    colorCanvas.width = 1;
+    colorCanvas.height = 1;
+    var colorCtx = null;
+    try {
+      colorCtx = colorCanvas.getContext('2d', { willReadFrequently: true });
     } catch(_) {
-      sampleCtx = sampleCanvas.getContext('2d');
+      colorCtx = colorCanvas.getContext('2d');
     }
 
-    // Intelligent Luminance Analyzer: Detects real visual content passing behind a coordinate
+    function parseCssColorLuminance(cssColor) {
+      if (!cssColor || cssColor === 'transparent' || cssColor === 'rgba(0, 0, 0, 0)') return null;
+      if (!colorCtx) return null;
+      try {
+        colorCtx.clearRect(0, 0, 1, 1);
+        colorCtx.fillStyle = '#000000';
+        colorCtx.fillStyle = cssColor;
+        colorCtx.fillRect(0, 0, 1, 1);
+        var p = colorCtx.getImageData(0, 0, 1, 1).data;
+        if (p[3] < 30) return null;
+        return (0.299 * p[0] + 0.587 * p[1] + 0.114 * p[2]) / 255;
+      } catch(_) {
+        return null;
+      }
+    }
+
+    function sampleMediaLuminance(el, x, y) {
+      try {
+        var tempC = document.createElement('canvas');
+        tempC.width = 1; tempC.height = 1;
+        var tempCtx = tempC.getContext('2d');
+        var r = el.getBoundingClientRect();
+        if (r.width <= 0 || r.height <= 0) return null;
+        var u = Math.max(0, Math.min(1, (x - r.left) / r.width));
+        var v = Math.max(0, Math.min(1, (y - r.top) / r.height));
+        var nw = el.videoWidth || el.naturalWidth || el.width || 1;
+        var nh = el.videoHeight || el.naturalHeight || el.height || 1;
+        tempCtx.drawImage(el, u * nw, v * nh, 1, 1, 0, 0, 1, 1);
+        var px = tempCtx.getImageData(0, 0, 1, 1).data;
+        if (px[3] > 30) {
+          return (0.299 * px[0] + 0.587 * px[1] + 0.114 * px[2]) / 255;
+        }
+      } catch(_) {}
+      return null;
+    }
+
+    // Intelligent Luminance Analyzer: Detects real visual content passing behind a coordinate across the entire site
     function getLuminanceAt(x, y) {
       if (x < 0 || y < 0 || x > window.innerWidth || y > window.innerHeight) return null;
       var els = null;
@@ -7036,69 +7081,60 @@ if (document.readyState === 'loading') {
           continue;
         }
 
-        // 1. Check if el is an <img>
-        if (el.tagName === 'IMG' && el.complete && el.naturalWidth > 0 && sampleCtx) {
-          try {
-            var r = el.getBoundingClientRect();
-            if (r.width > 0 && r.height > 0) {
-              var u = Math.max(0, Math.min(1, (x - r.left) / r.width));
-              var v = Math.max(0, Math.min(1, (y - r.top) / r.height));
-              sampleCtx.clearRect(0, 0, 1, 1);
-              sampleCtx.drawImage(el, u * el.naturalWidth, v * el.naturalHeight, 1, 1, 0, 0, 1, 1);
-              var px = sampleCtx.getImageData(0, 0, 1, 1).data;
-              if (px[3] > 30) {
-                return (0.299 * px[0] + 0.587 * px[1] + 0.114 * px[2]) / 255;
-              }
-            }
-          } catch(_) {}
+        // 1. Check if el is a <video> (Section 02 scrub video)
+        if (el.tagName === 'VIDEO' && el.readyState >= 2 && el.videoWidth > 0) {
+          var vLum = sampleMediaLuminance(el, x, y);
+          if (vLum !== null) return vLum;
         }
 
-        // 2. Check if el is a <video>
-        if (el.tagName === 'VIDEO' && el.readyState >= 2 && el.videoWidth > 0 && sampleCtx) {
-          try {
-            var r = el.getBoundingClientRect();
-            if (r.width > 0 && r.height > 0) {
-              var u = Math.max(0, Math.min(1, (x - r.left) / r.width));
-              var v = Math.max(0, Math.min(1, (y - r.top) / r.height));
-              sampleCtx.clearRect(0, 0, 1, 1);
-              sampleCtx.drawImage(el, u * el.videoWidth, v * el.videoHeight, 1, 1, 0, 0, 1, 1);
-              var px = sampleCtx.getImageData(0, 0, 1, 1).data;
-              if (px[3] > 30) {
-                return (0.299 * px[0] + 0.587 * px[1] + 0.114 * px[2]) / 255;
-              }
-            }
-          } catch(_) {}
+        // 2. Check if el is an <img> (Section 04 client logos, Section 05/07 photo showcases)
+        if (el.tagName === 'IMG' && el.complete && el.naturalWidth > 0) {
+          var iLum = sampleMediaLuminance(el, x, y);
+          if (iLum !== null) return iLum;
         }
 
-        // 3. Check if el is a <canvas>
-        if (el.tagName === 'CANVAS' && el.width > 0 && sampleCtx) {
-          try {
-            var r = el.getBoundingClientRect();
-            if (r.width > 0 && r.height > 0) {
-              var u = Math.max(0, Math.min(1, (x - r.left) / r.width));
-              var v = Math.max(0, Math.min(1, (y - r.top) / r.height));
-              sampleCtx.clearRect(0, 0, 1, 1);
-              sampleCtx.drawImage(el, u * el.width, v * el.height, 1, 1, 0, 0, 1, 1);
-              var px = sampleCtx.getImageData(0, 0, 1, 1).data;
-              if (px[3] > 30) {
-                return (0.299 * px[0] + 0.587 * px[1] + 0.114 * px[2]) / 255;
-              }
-            }
-          } catch(_) {}
+        // 3. Check if el is a <canvas> (Section 07 3D Duck, Section 04 The Reel)
+        if (el.tagName === 'CANVAS' && el.width > 0) {
+          var cLum = sampleMediaLuminance(el, x, y);
+          if (cLum !== null) return cLum;
         }
 
-        // 4. Check computed backgroundColor
-        var bg = window.getComputedStyle(el).backgroundColor;
-        if (bg && bg !== 'transparent' && bg !== 'rgba(0, 0, 0, 0)') {
-          var m = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-          if (m) {
-            var a = m[4] !== undefined ? parseFloat(m[4]) : 1;
-            if (a > 0.15) {
-              var r = parseInt(m[1], 10), g = parseInt(m[2], 10), b = parseInt(m[3], 10);
-              return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-            }
+        // 4. Text & Heading Elements across all sections (Section 01 Hero, Section 03 Work Grid, Section 03b Statement, Section 05 Capabilities, Section 07 Reviews, Section 08 Footer)
+        var tag = el.tagName;
+        var hasDirectText = false;
+        for (var k = 0; k < el.childNodes.length; k++) {
+          if (el.childNodes[k].nodeType === 3 && el.childNodes[k].textContent.trim().length > 0) {
+            hasDirectText = true;
+            break;
           }
         }
+        if (hasDirectText || /^(H[1-6]|P|SPAN|A|BUTTON|LI|LABEL|STRONG|EM)$/.test(tag)) {
+          if (el.textContent.trim().length > 0) {
+            try {
+              var style = window.getComputedStyle(el);
+              var op = parseFloat(style.opacity);
+              if (isNaN(op) || op > 0.45) {
+                var textColor = style.color;
+                var tLum = parseCssColorLuminance(textColor);
+                if (tLum !== null && tLum > 0.52) {
+                  return tLum;
+                }
+              }
+            } catch(_) {}
+          }
+        }
+
+        // 5. Card Badges, Tags, Pills, and Buttons with light backgrounds
+        if (el.classList.contains('spec-rc-status-pill') || el.classList.contains('tag') || el.closest('[data-pad="1"]')) {
+          return 0.78;
+        }
+
+        // 6. Check computed backgroundColor (supports oklab, color-mix, rgb, hsl, hex)
+        try {
+          var bg = window.getComputedStyle(el).backgroundColor;
+          var bgLum = parseCssColorLuminance(bg);
+          if (bgLum !== null && bgLum > 0.28) return bgLum;
+        } catch(_) {}
       }
       return document.documentElement.classList.contains('spec-light-mode') ? 0.95 : 0.05;
     }
@@ -7247,30 +7283,34 @@ if (document.readyState === 'loading') {
       chromeNav.style.opacity = '1';
       chromeNav.style.pointerEvents = 'auto';
 
-      // Intelligent Dynamic Contrast: Sample 3 points across the active logo width
+      // Intelligent Dynamic Contrast: Sample 5 points across the active logo width for seamless site-wide coverage
       var activeRect = navLogo.getBoundingClientRect();
       var checkY = activeRect.top + activeRect.height / 2;
       var pts = [
-        activeRect.left + activeRect.width * 0.20,
+        activeRect.left + activeRect.width * 0.12,
+        activeRect.left + activeRect.width * 0.32,
         activeRect.left + activeRect.width * 0.50,
-        activeRect.left + activeRect.width * 0.80
+        activeRect.left + activeRect.width * 0.68,
+        activeRect.left + activeRect.width * 0.88
       ];
 
       var totalLum = 0;
+      var maxLum = 0;
       var count = 0;
       for (var j = 0; j < pts.length; j++) {
         var lum = getLuminanceAt(pts[j], checkY);
         if (lum !== null) {
           totalLum += lum;
+          if (lum > maxLum) maxLum = lum;
           count++;
         }
       }
       var avgLum = count > 0 ? (totalLum / count) : (document.documentElement.classList.contains('spec-light-mode') ? 0.95 : 0.05);
 
-      var isLight = lastIsLight ? (avgLum > 0.44) : (avgLum > 0.52);
+      var isLight = lastIsLight ? (maxLum > 0.46 || avgLum > 0.38) : (maxLum > 0.54 || avgLum > 0.44);
       lastIsLight = isLight;
 
-      var targetColor = (p < 0.25) ? (document.documentElement.classList.contains('spec-light-mode') ? '#000000' : '#FFFFFF') : (isLight ? '#000000' : '#FFFFFF');
+      var targetColor = isLight ? '#000000' : '#FFFFFF';
       document.documentElement.style.setProperty('--spec-nav-logo-color', targetColor);
       navLogo.style.setProperty('--spec-nav-logo-color', targetColor);
       navLogo.style.color = targetColor;
