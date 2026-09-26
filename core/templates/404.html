@@ -28,6 +28,9 @@
       --font-sans: 'Lora', Georgia, serif;
       --font-serif: 'Playfair Display', Georgia, serif;
       --font-mono: 'JetBrains Mono', monospace;
+      --spec-nav-logo-color: #FFFFFF;
+      --spec-nav-link-color: #f5ead8;
+      --spec-nav-link-dim: rgba(245, 234, 216, 0.65);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -50,8 +53,8 @@
     header {
       position: fixed;
       top: clamp(12px, 1.8vw, 20px);
-      left: clamp(14px, 3vw, 40px);
-      right: clamp(14px, 3vw, 40px);
+      left: clamp(20px, 4vw, 48px);
+      right: clamp(20px, 4vw, 48px);
       margin: 0 auto;
       max-width: 1440px;
       width: auto;
@@ -60,13 +63,18 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: clamp(10px, 1.2vw, 14px) clamp(18px, 2.5vw, 32px);
-      background: rgba(14, 13, 12, 0.78);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      border-radius: clamp(14px, 1.8vw, 20px);
-      box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.65), 0 1px 0 0 rgba(255, 255, 255, 0.06) inset;
+      padding: clamp(10px, 1.2vw, 14px) clamp(16px, 2.5vw, 32px);
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      direction: ltr !important;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .brand-logo {
@@ -92,16 +100,19 @@
 
     .header-nav a {
       font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text-muted);
+      font-size: 11px;
+      color: var(--spec-nav-link-dim, var(--text-muted));
       text-decoration: none;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      transition: color 0.2s;
+      padding: 6px 0;
+      border-bottom: 1px solid transparent;
+      transition: color 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
     }
 
     .header-nav a:hover {
-      color: var(--accent);
+      color: var(--spec-nav-link-color, var(--text));
+      border-bottom-color: var(--accent);
     }
 
     main {
@@ -314,10 +325,10 @@
       margin-left: 4px;
     }
     .nav-lang-switcher a {
-      color: #f5ead8;
+      color: var(--spec-nav-link-color, #f5ead8);
       text-decoration: none;
       opacity: 0.45;
-      transition: opacity 0.2s ease, color 0.2s ease;
+      transition: opacity 0.2s ease, color 0.22s ease;
       font-weight: 500;
     }
     .nav-lang-switcher a:hover {
@@ -326,11 +337,11 @@
     .nav-lang-switcher a.active {
       opacity: 1;
       font-weight: 700;
-      color: #f5ead8;
+      color: var(--spec-nav-link-color, #f5ead8);
     }
     .nav-lang-switcher .sep {
       opacity: 0.25;
-      color: #f5ead8;
+      color: var(--spec-nav-link-color, #f5ead8);
       user-select: none;
     }
 
@@ -343,25 +354,40 @@
     html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3 {
       font-family: 'Cairo', sans-serif !important;
     }
-    html[dir="rtl"] header { direction: rtl; }
+    html[dir="rtl"] header { direction: rtl !important; }
+    html[dir="rtl"] .spec-unified-logo,
+    html[dir="rtl"] .spec-chars-wrap {
+      direction: ltr !important;
+      unicode-bidi: isolate;
+    }
     html[dir="rtl"] .header-nav { flex-direction: row-reverse; }
     html[dir="rtl"] .nav-lang-switcher { margin-left: 0; margin-right: 4px; }
     html[dir="rtl"] .disc-col-3 { border-left: none; border-right: 1px solid rgba(255, 255, 255, 0.08); padding-left: 0; padding-right: clamp(16px, 2.5vw, 32px); }
     html[dir="rtl"] .editorial-item { direction: rtl; }
 
   
-    /* Unified Spec Media SVG Logo */
+    /* Unified Spec Media SVG Logo with Dynamic Contrast Transitions */
     .spec-unified-logo {
       display: inline-flex;
       align-items: center;
       text-decoration: none;
-      color: #f5ead8;
-      transition: opacity 0.25s ease, transform 0.25s ease;
+      color: var(--spec-nav-logo-color, #FFFFFF) !important;
+      transition: color 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                  fill 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.25s ease,
+                  transform 0.25s ease !important;
       flex-shrink: 0;
+      will-change: transform, color;
     }
     .spec-unified-logo:hover {
       opacity: 0.88;
       transform: scale(1.02);
+    }
+    .spec-unified-logo svg,
+    .spec-unified-logo path,
+    .spec-logo-char-img {
+      fill: currentColor !important;
+      transition: fill 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     .spec-chars-wrap {
       display: flex;
@@ -375,12 +401,11 @@
       width: clamp(10px, 1.4vw, 18px);
     }
     .spec-logo-char-img {
-      height: clamp(15px, 2vh, 22px);
+      height: clamp(16px, 2.2vh, 22px);
       width: auto;
       display: block;
       object-fit: contain;
       shape-rendering: geometricPrecision;
-      fill: currentColor;
     }
 
 </style>
@@ -462,6 +487,198 @@
     <div>&copy; 2026 Spec Media — Digital Architecture & Growth Systems. Dubai, UAE.</div>
     <div>System Status: Operational // All Engines Healthy</div>
   </footer>
+
+  <script>
+    // Intelligent Real-time Dynamic Navbar Contrast Engine
+    (function initNavbarContrastEngine() {
+      var colorCanvas = document.createElement('canvas');
+      colorCanvas.width = 1;
+      colorCanvas.height = 1;
+      var colorCtx = null;
+      try {
+        colorCtx = colorCanvas.getContext('2d', { willReadFrequently: true });
+      } catch(_) {
+        colorCtx = colorCanvas.getContext('2d');
+      }
+
+      function parseCssColorLuminance(cssColor) {
+        if (!cssColor || cssColor === 'transparent' || cssColor === 'rgba(0, 0, 0, 0)') return null;
+        if (!colorCtx) return null;
+        try {
+          colorCtx.clearRect(0, 0, 1, 1);
+          colorCtx.fillStyle = '#000000';
+          colorCtx.fillStyle = cssColor;
+          colorCtx.fillRect(0, 0, 1, 1);
+          var p = colorCtx.getImageData(0, 0, 1, 1).data;
+          if (p[3] < 30) return null;
+          return (0.299 * p[0] + 0.587 * p[1] + 0.114 * p[2]) / 255;
+        } catch(_) {
+          return null;
+        }
+      }
+
+      function sampleMediaLuminance(el, x, y) {
+        try {
+          var tempC = document.createElement('canvas');
+          tempC.width = 1; tempC.height = 1;
+          var tempCtx = tempC.getContext('2d');
+          var r = el.getBoundingClientRect();
+          if (r.width <= 0 || r.height <= 0) return null;
+          var u = Math.max(0, Math.min(1, (x - r.left) / r.width));
+          var v = Math.max(0, Math.min(1, (y - r.top) / r.height));
+          var nw = el.videoWidth || el.naturalWidth || el.width || 1;
+          var nh = el.videoHeight || el.naturalHeight || el.height || 1;
+          tempCtx.drawImage(el, u * nw, v * nh, 1, 1, 0, 0, 1, 1);
+          var px = tempCtx.getImageData(0, 0, 1, 1).data;
+          if (px[3] > 30) {
+            return (0.299 * px[0] + 0.587 * px[1] + 0.114 * px[2]) / 255;
+          }
+        } catch(_) {}
+        return null;
+      }
+
+      function getLuminanceAt(x, y) {
+        if (x < 0 || y < 0 || x > window.innerWidth || y > window.innerHeight) return null;
+        var els = null;
+        try {
+          els = document.elementsFromPoint(x, y);
+        } catch(_) {}
+        if (!els || !els.length) return null;
+
+        for (var i = 0; i < els.length; i++) {
+          var el = els[i];
+          if (el.closest('.nav') || el.closest('header') || el.classList.contains('spec-custom-cursor')) {
+            continue;
+          }
+          if (el.tagName === 'VIDEO' && el.readyState >= 2 && el.videoWidth > 0) {
+            var vLum = sampleMediaLuminance(el, x, y);
+            if (vLum !== null) return vLum;
+          }
+          if (el.tagName === 'IMG' && el.complete && el.naturalWidth > 0) {
+            var iLum = sampleMediaLuminance(el, x, y);
+            if (iLum !== null) return iLum;
+          }
+          if (el.tagName === 'CANVAS' && el.width > 0) {
+            var cLum = sampleMediaLuminance(el, x, y);
+            if (cLum !== null) return cLum;
+          }
+          var tag = el.tagName;
+          var hasDirectText = false;
+          for (var k = 0; k < el.childNodes.length; k++) {
+            if (el.childNodes[k].nodeType === 3 && el.childNodes[k].textContent.trim().length > 0) {
+              hasDirectText = true;
+              break;
+            }
+          }
+          if (hasDirectText || /^(H[1-6]|P|SPAN|A|BUTTON|LI|LABEL|STRONG|EM)$/.test(tag)) {
+            if (el.textContent.trim().length > 0) {
+              try {
+                var style = window.getComputedStyle(el);
+                var op = parseFloat(style.opacity);
+                if (isNaN(op) || op > 0.45) {
+                  var tLum = parseCssColorLuminance(style.color);
+                  if (tLum !== null && tLum > 0.52) return tLum;
+                }
+              } catch(_) {}
+            }
+          }
+          if (el.classList.contains('kpi-pill') || el.classList.contains('badge') || el.classList.contains('tag')) {
+            return 0.78;
+          }
+          try {
+            var bg = window.getComputedStyle(el).backgroundColor;
+            var bgLum = parseCssColorLuminance(bg);
+            if (bgLum !== null && bgLum > 0.28) return bgLum;
+          } catch(_) {}
+        }
+        return 0.05;
+      }
+
+      var lastLogoIsLight = false;
+      var lastLinksIsLight = false;
+
+      function updateNavContrast() {
+        var navLogo = document.querySelector('.spec-unified-logo');
+        if (!navLogo) return;
+
+        var activeRect = navLogo.getBoundingClientRect();
+        var checkY = activeRect.top + activeRect.height / 2;
+        var pts = [
+          activeRect.left + activeRect.width * 0.12,
+          activeRect.left + activeRect.width * 0.32,
+          activeRect.left + activeRect.width * 0.50,
+          activeRect.left + activeRect.width * 0.68,
+          activeRect.left + activeRect.width * 0.88
+        ];
+
+        var totalLum = 0;
+        var maxLum = 0;
+        var count = 0;
+        for (var j = 0; j < pts.length; j++) {
+          var lum = getLuminanceAt(pts[j], checkY);
+          if (lum !== null) {
+            totalLum += lum;
+            if (lum > maxLum) maxLum = lum;
+            count++;
+          }
+        }
+        var avgLum = count > 0 ? (totalLum / count) : 0.05;
+        var isLight = lastLogoIsLight ? (maxLum > 0.46 || avgLum > 0.38) : (maxLum > 0.54 || avgLum > 0.44);
+        lastLogoIsLight = isLight;
+
+        var targetLogoColor = isLight ? '#000000' : '#FFFFFF';
+        document.documentElement.style.setProperty('--spec-nav-logo-color', targetLogoColor);
+        navLogo.style.setProperty('--spec-nav-logo-color', targetLogoColor);
+        navLogo.style.color = targetLogoColor;
+        var logoSvgs = navLogo.querySelectorAll('svg, path');
+        for (var s = 0; s < logoSvgs.length; s++) {
+          logoSvgs[s].style.fill = targetLogoColor;
+        }
+
+        var navLinks = document.querySelector('.header-nav') || document.querySelector('.nav-links');
+        if (navLinks) {
+          var linksRect = navLinks.getBoundingClientRect();
+          var linksCheckY = linksRect.top + linksRect.height / 2;
+          var linksPts = [
+            linksRect.left + linksRect.width * 0.2,
+            linksRect.left + linksRect.width * 0.5,
+            linksRect.left + linksRect.width * 0.8
+          ];
+          var lTotal = 0, lMax = 0, lCount = 0;
+          for (var k = 0; k < linksPts.length; k++) {
+            var lLum = getLuminanceAt(linksPts[k], linksCheckY);
+            if (lLum !== null) {
+              lTotal += lLum;
+              if (lLum > lMax) lMax = lLum;
+              lCount++;
+            }
+          }
+          var lAvg = lCount > 0 ? (lTotal / lCount) : 0.05;
+          var linksLight = lastLinksIsLight ? (lMax > 0.46 || lAvg > 0.38) : (lMax > 0.54 || lAvg > 0.44);
+          lastLinksIsLight = linksLight;
+          var linksColor = linksLight ? '#000000' : '#f5ead8';
+          var linksDim = linksLight ? 'rgba(0, 0, 0, 0.72)' : 'rgba(245, 234, 216, 0.65)';
+          document.documentElement.style.setProperty('--spec-nav-link-color', linksColor);
+          document.documentElement.style.setProperty('--spec-nav-link-dim', linksDim);
+          navLinks.style.setProperty('--spec-nav-link-color', linksColor);
+          navLinks.style.setProperty('--spec-nav-link-dim', linksDim);
+        }
+      }
+
+      window.addEventListener('scroll', updateNavContrast, { passive: true });
+      window.addEventListener('wheel', function() {
+        requestAnimationFrame(updateNavContrast);
+      }, { passive: true });
+      window.addEventListener('resize', updateNavContrast, { passive: true });
+      window.addEventListener('load', function() {
+        updateNavContrast();
+        setTimeout(updateNavContrast, 150);
+        setTimeout(updateNavContrast, 500);
+        setTimeout(updateNavContrast, 1200);
+      });
+      updateNavContrast();
+    })();
+  </script>
 
 </body>
 </html>
