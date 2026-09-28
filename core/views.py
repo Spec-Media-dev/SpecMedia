@@ -19,6 +19,8 @@ from .supabase_service import SupabaseService
 import logging
 
 logger = logging.getLogger(__name__)
+# Cache bust for updated footer layout
+
 
 # -------------------------------------------------------------
 # Page Views
@@ -97,7 +99,11 @@ def landing_page(request):
         _LANDING_PAGE_CACHE = {}
 
     if cache_key in _LANDING_PAGE_CACHE:
-        return HttpResponse(_LANDING_PAGE_CACHE[cache_key], content_type='text/html; charset=utf-8')
+        resp = HttpResponse(_LANDING_PAGE_CACHE[cache_key], content_type='text/html; charset=utf-8')
+        resp['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        resp['Pragma'] = 'no-cache'
+        resp['Expires'] = '0'
+        return resp
 
     # Load landing page translations dynamically from disk
     import json
@@ -232,6 +238,41 @@ def landing_page(request):
     direction: rtl !important;
     font-family: 'Cairo', sans-serif !important;
     letter-spacing: normal !important;
+  }
+  html.spec-rtl .si-hero, html[lang="ar"] .si-hero {
+    direction: rtl !important;
+  }
+  html.spec-rtl .si-tagline, html[lang="ar"] .si-tagline {
+    inset-inline-start: 5vw !important;
+    inset-inline-end: auto !important;
+    text-align: right !important;
+  }
+  html.spec-rtl .si-tagline .si-h1, html[lang="ar"] .si-tagline .si-h1 {
+    font-family: 'Cairo', 'Lama Sans', sans-serif !important;
+    text-align: right !important;
+  }
+  html.spec-rtl .si-tagRight, html[lang="ar"] .si-tagRight {
+    inset-inline-start: auto !important;
+    inset-inline-end: 5vw !important;
+    text-align: right !important;
+    font-family: 'Cairo', sans-serif !important;
+  }
+  html.spec-rtl .si-labels, html[lang="ar"] .si-labels {
+    direction: rtl !important;
+    font-family: 'Cairo', sans-serif !important;
+  }
+  html.spec-rtl .si-wordmark, html[lang="ar"] .si-wordmark {
+    left: auto !important;
+    right: 5vw !important;
+    transform-origin: right top !important;
+  }
+  html.spec-rtl .si-skip, html[lang="ar"] .si-skip {
+    inset-inline-start: clamp(20px, 5vw, 44px) !important;
+    font-family: 'Cairo', ui-monospace, monospace !important;
+  }
+  html.spec-rtl .si-nav, html[lang="ar"] .si-nav {
+    justify-content: flex-start !important;
+    direction: rtl !important;
   }
   html.spec-rtl [data-screen-label="03 Work grid"] {
     direction: rtl !important;
@@ -714,7 +755,11 @@ def landing_page(request):
     # Final i18n translation pass to ensure all dynamic CMS injections are translated
     html = safe_translate_html(html, lang_map)
     _LANDING_PAGE_CACHE[cache_key] = html
-    return HttpResponse(html, content_type='text/html; charset=utf-8')
+    resp = HttpResponse(html, content_type='text/html; charset=utf-8')
+    resp['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    resp['Pragma'] = 'no-cache'
+    resp['Expires'] = '0'
+    return resp
 
 
 def admin_required(view_func):

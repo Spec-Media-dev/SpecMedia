@@ -1,0 +1,85 @@
+/* ========================================================================== */
+/* SECTION 01: HERO CSS                                                      */
+/* ========================================================================== */
+.spec-hero-copy-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6, 24px);
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.spec-hero-title {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--font-heading, "Lama Sans", sans-serif);
+  font-size: clamp(28px, 4.2vw, 66px);
+  line-height: 1.04;
+  color: #ffffff;
+}
+
+.spec-hero-desc {
+  max-width: 38ch;
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .04em;
+  font-size: 12px;
+  line-height: 2;
+  color: #a89f91;
+}
+
+#spec-hero-ambient-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(158, 27, 36, 0.08) 0%, rgba(0, 0, 0, 0.85) 65%, #000000 100%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 1;
+  will-change: opacity;
+}
+
+/* ========================================================================== */
+/* SECTION 02: MOSAIC TILES & STAGE CSS                                      */
+/* ========================================================================== */
+#spec-scene2-stage {
+  width: var(--s2-stage-width, min(90vw, 1120px));
+  aspect-ratio: var(--s2-stage-aspect, 16 / 9);
+  max-height: var(--s2-stage-max-h, 80vh);
+  height: var(--s2-stage-height, auto);
+  border-radius: 18px;
+  box-shadow: var(--s2-stage-shadow, 0 24px 60px rgba(0, 0, 0, 0.8));
+  transition: none !important;
+}
+
+#spec-scene2-stage video,
+#spec-scene2-stage img,
+#spec-scene2-video,
+#spec-master-image,
+#spec-tiles-container {
+  border-radius: inherit;
+}
+
+@media (max-width: 768px) {
+  #spec-scene2-stage {
+    width: var(--s2-stage-width, min(88vw, 420px));
+    aspect-ratio: var(--s2-stage-aspect, 9 / 16);
+    max-height: var(--s2-stage-max-h, 75vh);
+    border-radius: 14px;
+  }
+}
+
+.spec-tile {
+  transform-origin: center center;
+  box-sizing: border-box;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.spec-tile img {
+  max-width: none !important;
+  max-height: none !important;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
