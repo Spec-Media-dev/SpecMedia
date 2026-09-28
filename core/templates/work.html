@@ -83,17 +83,17 @@
     .nav {
       position: fixed;
       top: clamp(12px, 1.8vw, 20px);
-      left: clamp(20px, 4vw, 48px);
-      right: clamp(20px, 4vw, 48px);
+      left: 0;
+      right: 0;
       margin: 0 auto;
       max-width: 1440px;
-      width: auto;
+      width: 100%;
       box-sizing: border-box;
       z-index: 100;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: clamp(10px, 1.2vw, 14px) clamp(16px, 2.5vw, 32px);
+      padding: clamp(10px, 1.2vw, 14px) clamp(20px, 4vw, 48px);
       background: transparent !important;
       background-color: transparent !important;
       backdrop-filter: none !important;
@@ -836,9 +836,12 @@
     @media (max-width: 640px) {
       .nav {
         top: 10px;
-        left: 12px;
-        right: 12px;
-        padding: 8px 10px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        max-width: 1440px;
+        width: 100%;
+        padding: 10px clamp(20px, 4vw, 48px);
         border-radius: 0 !important;
         background: transparent !important;
         backdrop-filter: none !important;
