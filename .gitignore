@@ -42,4 +42,5 @@ standalone_test.html
 # Editor / tool scratch directories
 .kilo/
 .vscode/
+scratch_frames/
 
