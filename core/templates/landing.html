@@ -1485,11 +1485,12 @@ html.spec-dark-mode [ref="logoRef"] img {
   opacity: 1 !important;
   display: inline-flex;
   align-items: center;
-  color: #FFFFFF;
+  color: var(--spec-nav-logo-color, #FFFFFF) !important;
   text-decoration: none;
   flex-shrink: 0;
   pointer-events: auto !important;
   will-change: transform, color, opacity;
+  transition: fill 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 html.spec-scrolled .spec-chrome-nav-logo,
 html.spec-dark-mode .spec-chrome-nav-logo {
@@ -8233,270 +8234,253 @@ if (document.readyState === 'loading') {
   }, 50);
   setTimeout(function() { clearInterval(introBootCheckTimer); }, 5000);
 
-  // 1. Centered Hero Logo -> Animated Navbar Transition & Intelligent Dynamic Contrast (Single Logo - NO Copies)
-  function initHeroLogoFlight() {
-    return true;
+  // 1. Dynamic Navbar Logo Contrast & Content Interaction Controller
+  function initSpecLogoContrastController() {
+    var navLogo = document.querySelector('.spec-chrome-nav-logo');
+    if (!navLogo) return false;
 
-    // Remove any legacy flight logo if present
+    var frontLogo = navLogo.querySelector('.spec-nav-logo-front');
+    var svgLogo = navLogo.querySelector('.spec-logo-char-img');
+
+    // Remove legacy flight logo artifacts if present
     var oldFlight = document.getElementById('spec-flight-logo');
     if (oldFlight && oldFlight.parentNode) {
       oldFlight.parentNode.removeChild(oldFlight);
     }
 
-    var actions = chromeNav.querySelector('.spec-chrome-actions');
-
-    // Ensure all remote images permit CORS canvas sampling
-    try {
-      document.querySelectorAll('img').forEach(function(img) {
-        if (!img.crossOrigin && img.src && img.src.indexOf('http') === 0) {
-          img.crossOrigin = 'anonymous';
-        }
-      });
-    } catch(_) {}
-
-    var lastIsLight = false;
-
-    function getLiveNavLogo() {
-      return document.querySelector('.spec-chrome-nav-logo');
+    // Color luminance parser: supports rgb, rgba, and oklab (used in modern Chrome/Safari)
+    function __specParseLum(str) {
+      if (!str || str === 'transparent' || str === 'inherit' || str === 'initial') return null;
+      var m = str.match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)(?:\s*[,/]\s*([\d.]+))?\s*\)/);
+      if (m) {
+        var a = m[4] !== undefined ? parseFloat(m[4]) : 1;
+        if (a < 0.12) return null;
+        return (0.299 * parseFloat(m[1]) + 0.587 * parseFloat(m[2]) + 0.114 * parseFloat(m[3])) / 255;
+      }
+      var ok = str.match(/oklab\(\s*([\d.]+)/);
+      if (ok) {
+        var okA = str.match(/\/([\d.]+)\s*\)/);
+        if (okA && parseFloat(okA[1]) < 0.12) return null;
+        return parseFloat(ok[1]);
+      }
+      return null;
     }
 
-    var cachedNatW = 167.5;
-    var cachedNatH = 20;
-    var cachedNatX = 80;
-    var cachedNatY = 38;
-    var metricsCached = false;
-
-    function cacheNaturalMetrics() {
-      var navLogo = getLiveNavLogo();
-      if (!navLogo) return;
-      var prevT = navLogo.style.transform;
-      var prevO = navLogo.style.transformOrigin;
-      navLogo.style.transform = 'none';
-      var rect = navLogo.getBoundingClientRect();
-      navLogo.style.transform = prevT;
-      navLogo.style.transformOrigin = prevO;
-      if (rect && rect.width > 30) {
-        cachedNatW = rect.width;
-        cachedNatH = rect.height;
-        cachedNatX = rect.left;
-        cachedNatY = rect.top;
-        metricsCached = true;
-      }
+    function __specRectsOverlap(r1, r2) {
+      return !(r1.right < r2.left || r1.left > r2.right || r1.bottom < r2.top || r1.top > r2.bottom);
     }
 
-    var cachedHeroLeft = 48;
-    var cachedTargetHeroW = 512.7;
-    var heroMetricsCached = false;
-
-    function cacheHeroMetrics() {
-      var vw = window.innerWidth;
-      var title = document.querySelector('.spec-hero-title');
-      var desc = document.querySelector('.spec-hero-desc');
-      var startLeft = 48;
-      var identitiesRight = 1381.1;
-
-      if (title) {
-        var titleRect = title.getBoundingClientRect();
-        if (titleRect.left > 0) startLeft = titleRect.left;
-      }
-      if (desc) {
-        for (var nodeIdx = 0; nodeIdx < desc.childNodes.length; nodeIdx++) {
-          var node = desc.childNodes[nodeIdx];
-          if (node.nodeType === Node.TEXT_NODE && node.textContent.indexOf('identities') !== -1) {
-            try {
-              var range = document.createRange();
-              var idx = node.textContent.indexOf('identities');
-              range.setStart(node, idx);
-              range.setEnd(node, idx + 'identities'.length);
-              var r = range.getBoundingClientRect();
-              if (r && r.right > startLeft + 100) {
-                identitiesRight = r.right;
-              }
-            } catch(e) {}
-            break;
-          }
-        }
-      }
-      var targetHeroW = identitiesRight - startLeft;
-      if (vw <= 640) {
-        targetHeroW = Math.max(targetHeroW, vw - startLeft * 2);
-      }
-      cachedHeroLeft = startLeft;
-      cachedTargetHeroW = targetHeroW;
-      heroMetricsCached = true;
-    }
-
-    function updateFlight() {
-      var navLogo = getLiveNavLogo();
-      if (!navLogo) return;
-      var chromeNav = document.querySelector('.spec-landing-chrome');
-      var actions = chromeNav ? chromeNav.querySelector('.spec-chrome-actions') : null;
-
-      var scrollY = (window.lenis && typeof window.lenis.scroll === 'number')
-        ? window.lenis.scroll
-        : (window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0);
-
-      var vh = window.innerHeight;
-      var vw = window.innerWidth;
-
-      var flightDist = Math.max(220, Math.min(450, vh * 0.48));
-      var p = Math.max(0, Math.min(1, scrollY / flightDist));
-      var ease = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
-
-      if (!metricsCached) cacheNaturalMetrics();
-      if (!heroMetricsCached) cacheHeroMetrics();
-
-      var natW = cachedNatW;
-      var natH = cachedNatH;
-      var natX = cachedNatX;
-      var natY = cachedNatY;
-
-      var startLeft = cachedHeroLeft;
-      var targetHeroW = cachedTargetHeroW;
-
-      var scaleHero = targetHeroW / natW;
-      var startX = startLeft - natX;
-      var topMargin = Math.max(16, Math.min(24, vh * 0.024));
-      var startY = topMargin - natY;
-
-      // Cleanly dock navLogo at natural coordinates across all sections
-      navLogo.style.transformOrigin = '0 0';
-      navLogo.style.transform = 'none';
-      document.documentElement.style.setProperty('--spec-nav-logo-opacity', '1');
-      navLogo.style.opacity = '1';
-      navLogo.style.pointerEvents = 'auto';
-      navLogo.classList.add('spec-docked-nav');
-
-      if (!navLogo._clickScrollBound) {
-        navLogo._clickScrollBound = true;
-        navLogo.addEventListener('click', function(e) {
-          e.preventDefault();
-          if (window.lenis && typeof window.lenis.scrollTo === 'function') {
-            window.lenis.scrollTo(0, { duration: 1.2 });
-          } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        });
-      }
-
-      // Synchronize Navbar Actions: persistent visibility across all sections
-      if (actions) {
-        actions.style.opacity = '1';
-        actions.style.pointerEvents = 'auto';
-        actions.style.transform = 'none';
-      }
-
-      chromeNav.style.opacity = '1';
-      chromeNav.style.pointerEvents = 'auto';
-
-      // Dynamic contrast detection: samples actual element background behind the logo
-      function getBackgroundLuminanceBehind(el) {
-        if (!el) return false;
-        var r = el.getBoundingClientRect();
-        if (r.width === 0 || r.height === 0) return false;
-        var cx = r.left + r.width / 2;
-        var cy = r.top + r.height / 2;
-        if (cx < 0 || cy < 0 || cx > window.innerWidth || cy > window.innerHeight) return false;
-        var elements = document.elementsFromPoint ? document.elementsFromPoint(cx, cy) : [];
-        for (var i = 0; i < elements.length; i++) {
-          var elem = elements[i];
-          if (elem.closest && (elem.closest('.spec-landing-chrome') || elem.closest('.spec-chrome-nav-logo') || elem.id === 'spec-intro-hero')) {
-            continue;
-          }
-          var cs = window.getComputedStyle(elem);
-          var bg = cs.backgroundColor;
-          if (bg && bg !== 'transparent' && bg !== 'rgba(0, 0, 0, 0)') {
-            var m = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-            if (m) {
-              var alpha = m[4] !== undefined ? parseFloat(m[4]) : 1;
-              if (alpha > 0.2) {
-                var lum = (0.299 * parseInt(m[1], 10) + 0.587 * parseInt(m[2], 10) + 0.114 * parseInt(m[3], 10)) / 255;
-                return lum > 0.52;
-              }
+    function __specHasTextOverlapping(el, lr) {
+      if (!el) return false;
+      try {
+        var range = document.createRange();
+        for (var i = 0; i < el.childNodes.length; i++) {
+          var n = el.childNodes[i];
+          if (n.nodeType === 3 && n.textContent.trim().length > 0) {
+            range.selectNodeContents(n);
+            var trs = range.getClientRects();
+            for (var ti = 0; ti < trs.length; ti++) {
+              var tr = trs[ti];
+              if (tr.width > 0 && tr.height > 0 && __specRectsOverlap(tr, lr)) return true;
             }
           }
         }
-        return false;
+      } catch(_) {}
+      return false;
+    }
+
+    function __specEffectiveBgLum(startEl) {
+      var el = startEl;
+      if (el && /^(IMG|VIDEO|CANVAS|SVG)$/.test(el.tagName)) {
+        el = el.parentElement;
+      }
+      while (el && el !== document.documentElement && el !== document.body) {
+        if (el.closest && (el.closest('.spec-landing-chrome') || el.closest('.spec-chrome-nav-logo'))) return null;
+        var cs = window.getComputedStyle(el);
+        var lum = __specParseLum(cs.backgroundColor);
+        if (lum !== null) return lum;
+        var bi = cs.backgroundImage;
+        if (bi && bi !== 'none' && bi.indexOf('gradient') !== -1) {
+          var gc = bi.match(/rgba?\([^)]+\)/);
+          if (gc) {
+            lum = __specParseLum(gc[0]);
+            if (lum !== null) return lum;
+          }
+        }
+        el = el.parentElement;
+      }
+      return null;
+    }
+
+    var lastAppliedColor = '';
+
+    function checkContentBehindLogo() {
+      var logo = document.querySelector('.spec-chrome-nav-logo') || navLogo;
+      if (!logo) return;
+
+      var lr = logo.getBoundingClientRect();
+      if (lr.width === 0 || lr.height === 0) return;
+
+      var isLightMode = document.documentElement.classList.contains('spec-light-mode');
+      var contentIsLight = false;
+
+      // 1. Multi-point visual check across logo's horizontal span
+      var cy = lr.top + lr.height * 0.5;
+      var points = [
+        lr.left + 8,
+        lr.left + lr.width * 0.25,
+        lr.left + lr.width * 0.50,
+        lr.left + lr.width * 0.75,
+        lr.left + lr.width - 8
+      ];
+
+      for (var pi = 0; pi < points.length; pi++) {
+        var px = points[pi];
+        if (px < 0 || px > window.innerWidth || cy < 0 || cy > window.innerHeight) continue;
+
+        var els = document.elementsFromPoint ? document.elementsFromPoint(px, cy) : [];
+        for (var ei = 0; ei < els.length; ei++) {
+          var e = els[ei];
+          if (!e || e === document.body || e === document.documentElement) continue;
+          if (e.closest && (e.closest('.spec-landing-chrome') || e.closest('.spec-chrome-nav-logo'))) continue;
+
+          var cs = window.getComputedStyle(e);
+
+          // Direct background luminance check
+          var bgLum = __specParseLum(cs.backgroundColor);
+          if (bgLum !== null && bgLum > 0.40) {
+            contentIsLight = true;
+            break;
+          }
+
+          // Direct text luminance check (if text overlaps logo box)
+          var colLum = __specParseLum(cs.color);
+          if (colLum !== null && colLum > 0.45 && __specHasTextOverlapping(e, lr)) {
+            contentIsLight = true;
+            break;
+          }
+
+          // Hero duck tile / image card check
+          if (e.classList && e.classList.contains('si-tile')) {
+            contentIsLight = true;
+            break;
+          }
+
+          // Check effective ancestor background
+          var effLum = __specEffectiveBgLum(e);
+          if (effLum !== null && effLum > 0.40) {
+            contentIsLight = true;
+            break;
+          }
+        }
+        if (contentIsLight) break;
       }
 
-      var isLight = document.documentElement.classList.contains('spec-light-mode') || getBackgroundLuminanceBehind(navLogo);
-      if (!isLight && window.__cachedLightRanges && window.__cachedLightRanges.length > 0) {
-        var curY = scrollY + 48;
-        for (var li = 0; li < window.__cachedLightRanges.length; li++) {
-          var rng = window.__cachedLightRanges[li];
-          if (curY >= rng.top && curY <= rng.bottom) {
-            isLight = true;
+      // 2. Candidate inspection for headings, titles, tiles, badges (handles any pointer-events: none items)
+      if (!contentIsLight) {
+        var candidates = document.querySelectorAll('h1, h2, h3, h4, h5, .sm-scroll-word, .sm-scroll-badge, .spec-accordion-title, .spec-accordion-tag, .si-tile, .spec-rc-title, .spec-review-card h4, [data-screen-label="03b Statement"] span, .ig-card, article[data-card]');
+        for (var ci = 0; ci < candidates.length; ci++) {
+          var c = candidates[ci];
+          var cr = c.getBoundingClientRect();
+          if (cr.width === 0 || cr.height === 0 || !__specRectsOverlap(cr, lr)) continue;
+
+          var ccs = window.getComputedStyle(c);
+          if (ccs.visibility === 'hidden' || ccs.opacity === '0') continue;
+
+          if (c.classList.contains('si-tile')) {
+            contentIsLight = true;
+            break;
+          }
+
+          var cColL = __specParseLum(ccs.color);
+          if (cColL !== null && cColL > 0.45) {
+            if (__specHasTextOverlapping(c, lr) || c.classList.contains('sm-scroll-word') || c.classList.contains('sm-scroll-badge')) {
+              contentIsLight = true;
+              break;
+            }
+          }
+
+          var cBgL = __specParseLum(ccs.backgroundColor);
+          if (cBgL !== null && cBgL > 0.40) {
+            contentIsLight = true;
             break;
           }
         }
       }
-      var targetColor = isLight ? '#0a0a0a' : '#FFFFFF';
-      document.documentElement.style.setProperty('--spec-nav-logo-color', targetColor);
-      navLogo.style.setProperty('--spec-nav-logo-color', targetColor);
-      navLogo.style.color = targetColor;
 
-      return { scrollY: scrollY, p: p, ease: ease };
-    }
+      // Determine target color:
+      // When light content / text scrolls behind the logo, the logo transforms into vibrant brand crimson (#df1637)
+      // for instant high-contrast visual interaction and brand recognition!
+      // In full solid light mode, it uses deep obsidian (#0a0a0a). Over dark background, it stays pure white (#FFFFFF).
+      var targetColor = isLightMode
+        ? (contentIsLight ? '#0a0a0a' : '#df1637')
+        : (contentIsLight ? '#df1637' : '#FFFFFF');
 
-    window.__specUpdateFlight = updateFlight;
+      if (targetColor !== lastAppliedColor) {
+        lastAppliedColor = targetColor;
+        document.documentElement.style.setProperty('--spec-nav-logo-color', targetColor);
+        logo.style.setProperty('--spec-nav-logo-color', targetColor);
+        logo.style.color = targetColor;
 
-    function measureLightRanges() {
-      var sY = window.scrollY || window.pageYOffset || 0;
-      var lightEls = document.querySelectorAll('[data-screen-label="03 Work grid"], [data-screen-label="03b Statement"]');
-      window.__cachedLightRanges = [];
-      for (var li = 0; li < lightEls.length; li++) {
-        var r = lightEls[li].getBoundingClientRect();
-        window.__cachedLightRanges.push({ top: r.top + sY, bottom: r.bottom + sY });
+        var liveFront = logo.querySelector('.spec-nav-logo-front') || frontLogo;
+        if (liveFront) liveFront.style.color = targetColor;
+
+        var liveSvg = logo.querySelector('.spec-logo-char-img') || svgLogo;
+        if (liveSvg) {
+          liveSvg.style.fill = targetColor;
+          liveSvg.style.color = targetColor;
+          var paths = liveSvg.querySelectorAll('path');
+          for (var pi2 = 0; pi2 < paths.length; pi2++) {
+            paths[pi2].style.fill = targetColor;
+          }
+        }
       }
     }
-    measureLightRanges();
 
-    function onFlightResize() {
-      metricsCached = false;
-      heroMetricsCached = false;
-      measureLightRanges();
-      updateFlight();
-    }
-    window.addEventListener('resize', onFlightResize, { passive: true });
+    window.__specUpdateLogoContrast = checkContentBehindLogo;
+    window.__specUpdateFlight = checkContentBehindLogo;
 
-    var flightTicking = false;
-    function queueFlightUpdate() {
-      if (!flightTicking) {
-        flightTicking = true;
+    var contrastTicking = false;
+    function queueContrastUpdate() {
+      if (!contrastTicking) {
+        contrastTicking = true;
         requestAnimationFrame(function() {
-          flightTicking = false;
-          updateFlight();
+          contrastTicking = false;
+          checkContentBehindLogo();
         });
       }
     }
 
-    window.addEventListener('scroll', queueFlightUpdate, { passive: true });
+    // Scroll listeners: native scroll + lenis scroll
+    window.addEventListener('scroll', queueContrastUpdate, { passive: true });
+    window.addEventListener('resize', queueContrastUpdate, { passive: true });
 
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function() {
-        onFlightResize();
+    if (window.lenis && typeof window.lenis.on === 'function') {
+      window.lenis.on('scroll', queueContrastUpdate);
+    } else {
+      var lenisCheckTimer = setInterval(function() {
+        if (window.lenis && typeof window.lenis.on === 'function') {
+          window.lenis.on('scroll', queueContrastUpdate);
+          clearInterval(lenisCheckTimer);
+        }
+      }, 100);
+      setTimeout(function() { clearInterval(lenisCheckTimer); }, 5000);
+    }
+
+    // Click on nav logo smoothly scrolls back to top
+    if (!navLogo._clickScrollBound) {
+      navLogo._clickScrollBound = true;
+      navLogo.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+          window.lenis.scrollTo(0, { duration: 1.2 });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       });
     }
 
-    window.addEventListener('load', function() {
-      onFlightResize();
-      setTimeout(onFlightResize, 200);
-      setTimeout(onFlightResize, 800);
-    });
-
-    if (window.lenis && typeof window.lenis.on === 'function') {
-      window.lenis.on('scroll', queueFlightUpdate);
-    } else {
-      var fTimer = setInterval(function() {
-        if (window.lenis && typeof window.lenis.on === 'function') {
-          window.lenis.on('scroll', queueFlightUpdate);
-          clearInterval(fTimer);
-        }
-      }, 100);
-      setTimeout(function() { clearInterval(fTimer); }, 5000);
-    }
-
-    updateFlight();
+    checkContentBehindLogo();
     return true;
   }
 
@@ -8665,7 +8649,8 @@ if (document.readyState === 'loading') {
   function bootAllControllers() {
     var intro = initSpecIntroSequence();
     var r = initReviewsScrollOnly();
-    return intro && r;
+    var c = initSpecLogoContrastController();
+    return intro && r && c;
   }
 
   var retryPollCount = 0;
