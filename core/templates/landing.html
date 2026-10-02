@@ -346,6 +346,27 @@
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Localized Logo Overlap Effect - Layer 2 overlay */
+.spec-nav-logo-overlap {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+  clip-path: inset(100%);
+  will-change: clip-path !important;
+  transition: clip-path 0.04s ease-out !important;
+}
+.spec-nav-logo-overlap .spec-logo-overlap-svg,
+.spec-nav-logo-overlap .spec-logo-overlap-svg path {
+  fill: url(#spec-logo-overlap-grad) !important;
+  color: #df1637 !important;
+}
+
 /* =========================================================================
    03C STRATEGY ACCORDION CARD GALLERY STYLES
    ========================================================================= */
@@ -2850,6 +2871,29 @@ footer#contact div[style*="font-family:ui-monospace"] {
       <span class="spec-nav-logo-front" style="position:relative;display:inline-flex;align-items:center;color:var(--spec-nav-logo-color, #FFFFFF);">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4423 503" class="spec-logo-char-img" style="height:clamp(16px, 2.2vh, 22px);width:auto;overflow:visible;display:block;" fill="currentColor">
           <g>
+            <path d="M 73 16 L 46 35 L 24 60 L 9 88 L 2 112 L 2 176 L 11 205 L 29 235 L 47 254 L 66 268 L 88 279 L 112 286 L 277 288 L 298 293 L 318 305 L 336 327 L 344 351 L 344 371 L 340 387 L 326 410 L 311 423 L 288 433 L 43 434 L 0 500 L 286 500 L 307 496 L 339 483 L 363 466 L 384 443 L 398 419 L 407 392 L 410 373 L 408 335 L 399 306 L 382 277 L 360 254 L 343 242 L 300 225 L 278 222 L 128 222 L 106 215 L 84 198 L 72 180 L 66 160 L 66 128 L 70 113 L 86 88 L 101 76 L 123 67 L 354 66 L 394 0 L 127 0 L 100 5 Z"/>
+            <path d="M 826 22 L 789 6 L 757 0 L 504 0 L 535 66 L 755 66 L 770 69 L 791 78 L 817 100 L 832 125 L 838 147 L 836 184 L 824 211 L 801 236 L 769 252 L 751 255 L 505 255 L 506 495 L 571 495 L 572 321 L 751 321 L 780 317 L 812 306 L 849 282 L 876 252 L 892 223 L 902 190 L 904 145 L 901 126 L 890 93 L 874 66 L 847 37 Z"/>
+            <path d="M 994 499 L 1374 499 L 1375 433 L 1046 433 Z M 1016 221 L 1016 286 L 1375 286 L 1374 220 Z M 1006 8 L 1035 74 L 1375 74 L 1375 8 Z"/>
+            <path d="M 1719 5 L 1672 13 L 1633 27 L 1592 51 L 1549 90 L 1526 121 L 1504 165 L 1490 220 L 1488 264 L 1493 304 L 1510 356 L 1535 399 L 1569 437 L 1606 465 L 1654 488 L 1697 499 L 1747 502 L 1792 496 L 1825 486 L 1859 470 L 1887 450 L 1837 406 L 1800 425 L 1748 436 L 1697 432 L 1655 417 L 1629 401 L 1610 385 L 1581 349 L 1562 308 L 1554 265 L 1554 241 L 1559 209 L 1577 164 L 1600 132 L 1640 98 L 1667 84 L 1695 75 L 1720 71 L 1754 71 L 1801 82 L 1823 92 L 1847 108 L 1890 59 L 1858 36 L 1805 14 L 1765 6 Z"/>
+            <path d="M 2177 17 L 2177 486 L 2243 486 L 2244 167 L 2430 460 L 2607 168 L 2608 486 L 2674 486 L 2674 17 L 2621 18 L 2616 21 L 2429 332 L 2234 19 Z"/>
+            <path d="M 2797 500 L 3108 500 L 3150 434 L 2797 434 Z M 2797 285 L 3124 285 L 3150 220 L 2797 220 Z M 2797 74 L 3109 74 L 3150 9 L 2797 9 Z"/>
+            <path d="M 3272 9 L 3299 74 L 3439 76 L 3482 88 L 3516 107 L 3549 137 L 3567 162 L 3584 199 L 3592 240 L 3591 278 L 3578 325 L 3560 357 L 3529 391 L 3487 418 L 3446 431 L 3421 434 L 3310 434 L 3284 500 L 3444 498 L 3482 490 L 3532 469 L 3572 441 L 3608 403 L 3638 352 L 3651 314 L 3658 269 L 3656 220 L 3646 177 L 3627 134 L 3604 100 L 3573 68 L 3535 41 L 3499 24 L 3466 14 L 3433 9 Z"/>
+            <path d="M 3766 9 L 3766 500 L 3826 500 L 3826 9 Z"/>
+            <path d="M 4136 19 L 3906 499 L 3980 498 L 4163 115 L 4347 499 L 4420 499 L 4191 19 Z"/>
+          </g>
+        </svg>
+      </span>
+      <!-- Layer 2: Localized Overlap Effect - alternate color logo, dynamically masked -->
+      <span class="spec-nav-logo-overlap" id="spec-nav-logo-overlap" aria-hidden="true" style="position:absolute;top:0;left:0;width:100%;height:100%;display:inline-flex;align-items:center;pointer-events:none;clip-path:inset(100%);z-index:3;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4423 503" class="spec-logo-overlap-svg" style="height:clamp(16px, 2.2vh, 22px);width:auto;overflow:visible;display:block;" fill="url(#spec-logo-overlap-grad)">
+          <defs>
+            <linearGradient id="spec-logo-overlap-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ff4d66" />
+              <stop offset="50%" stop-color="#df1637" />
+              <stop offset="100%" stop-color="#9e1b24" />
+            </linearGradient>
+          </defs>
+          <g fill="url(#spec-logo-overlap-grad)">
             <path d="M 73 16 L 46 35 L 24 60 L 9 88 L 2 112 L 2 176 L 11 205 L 29 235 L 47 254 L 66 268 L 88 279 L 112 286 L 277 288 L 298 293 L 318 305 L 336 327 L 344 351 L 344 371 L 340 387 L 326 410 L 311 423 L 288 433 L 43 434 L 0 500 L 286 500 L 307 496 L 339 483 L 363 466 L 384 443 L 398 419 L 407 392 L 410 373 L 408 335 L 399 306 L 382 277 L 360 254 L 343 242 L 300 225 L 278 222 L 128 222 L 106 215 L 84 198 L 72 180 L 66 160 L 66 128 L 70 113 L 86 88 L 101 76 L 123 67 L 354 66 L 394 0 L 127 0 L 100 5 Z"/>
             <path d="M 826 22 L 789 6 L 757 0 L 504 0 L 535 66 L 755 66 L 770 69 L 791 78 L 817 100 L 832 125 L 838 147 L 836 184 L 824 211 L 801 236 L 769 252 L 751 255 L 505 255 L 506 495 L 571 495 L 572 321 L 751 321 L 780 317 L 812 306 L 849 282 L 876 252 L 892 223 L 902 190 L 904 145 L 901 126 L 890 93 L 874 66 L 847 37 Z"/>
             <path d="M 994 499 L 1374 499 L 1375 433 L 1046 433 Z M 1016 221 L 1016 286 L 1375 286 L 1374 220 Z M 1006 8 L 1035 74 L 1375 74 L 1375 8 Z"/>
@@ -8419,21 +8463,11 @@ if (document.readyState === 'loading') {
         return false;
       }
 
-      var isLight = document.documentElement.classList.contains('spec-light-mode') || getBackgroundLuminanceBehind(navLogo);
-      if (!isLight && window.__cachedLightRanges && window.__cachedLightRanges.length > 0) {
-        var curY = scrollY + 48;
-        for (var li = 0; li < window.__cachedLightRanges.length; li++) {
-          var rng = window.__cachedLightRanges[li];
-          if (curY >= rng.top && curY <= rng.bottom) {
-            isLight = true;
-            break;
-          }
-        }
-      }
-      var targetColor = isLight ? '#0a0a0a' : '#FFFFFF';
-      document.documentElement.style.setProperty('--spec-nav-logo-color', targetColor);
-      navLogo.style.setProperty('--spec-nav-logo-color', targetColor);
-      navLogo.style.color = targetColor;
+      // Logo color is always white (#FFFFFF) — localized overlap layer handles
+      // contrast on light backgrounds via dynamic clip-path masking.
+      document.documentElement.style.setProperty('--spec-nav-logo-color', '#FFFFFF');
+      navLogo.style.setProperty('--spec-nav-logo-color', '#FFFFFF');
+      navLogo.style.color = '#FFFFFF';
 
       return { scrollY: scrollY, p: p, ease: ease };
     }
@@ -9051,5 +9085,286 @@ if (document.readyState === 'loading') {
 } else {
   initScene07Object();
 }
+</script>
+<script>
+// =========================================================================
+// LOCALIZED LOGO OVERLAP EFFECT
+// Dynamically masks the alternate-color logo layer (dark #0a0a0a) to show
+// only where website content passes behind the navbar logo.
+// The front logo always stays white; the dark overlay reveals through a
+// clip-path mask only in regions where content (text, images, videos, cards,
+// shapes, sections) intersects the logo.
+// =========================================================================
+(function() {
+  function initLogoOverlapEffect() {
+    var overlay = document.getElementById('spec-nav-logo-overlap');
+    var navLogo = document.querySelector('.spec-chrome-nav-logo');
+    var chromeEl = document.querySelector('.spec-landing-chrome');
+    if (!overlay || !navLogo) return false;
+
+    var lastClipPath = 'inset(100%)';
+    var ticking = false;
+
+    // Checks if element or any ancestor is visually hidden
+    function isVisuallyVisible(el) {
+      var cur = el;
+      while (cur && cur !== document.body && cur !== document.documentElement) {
+        var cs = window.getComputedStyle(cur);
+        if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+        var op = parseFloat(cs.opacity);
+        if (!isNaN(op) && op < 0.05) return false;
+        cur = cur.parentElement;
+      }
+      return true;
+    }
+
+    // Determine if an element has an opaque, contrasting background color
+    function isContrastingBackground(cs) {
+      var bg = cs.backgroundColor;
+      if (!bg || bg === 'transparent' || bg === 'rgba(0, 0, 0, 0)') return false;
+      var m = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+      if (!m) return false;
+      var a = m[4] !== undefined ? parseFloat(m[4]) : 1;
+      if (a < 0.2) return false;
+      var r = parseInt(m[1], 10), g = parseInt(m[2], 10), b = parseInt(m[3], 10);
+      // Crimson brand accent (#df1637)
+      if (r > 180 && g < 80 && b < 80) return true;
+      // White or light background contrasting against deep dark theme
+      var lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      return lum > 0.35;
+    }
+
+    // Compute overlapping region(s) and return CSS clip-path string
+    function computeClipPath() {
+      var logoRect = navLogo.getBoundingClientRect();
+      if (!logoRect || logoRect.width < 5 || logoRect.height < 2) {
+        return 'inset(100%)';
+      }
+
+      var lw = logoRect.width;
+      var lh = logoRect.height;
+      var lx1 = logoRect.left;
+      var lx2 = logoRect.right;
+      var ly1 = logoRect.top;
+      var ly2 = logoRect.bottom;
+
+      var excludeSelectors = [
+        '.spec-landing-chrome',
+        '.si-wordmark',
+        '#spec-intro-wordmark',
+        '#spec-intro-hero',
+        '.si-hero',
+        '.si-stage',
+        '.si-sticky',
+        '.si-frame',
+        '.si-frameInner',
+        '.si-vid',
+        '.si-track',
+        '.pin-spacer',
+        'canvas'
+      ];
+
+      function shouldExclude(el) {
+        for (var e = 0; e < excludeSelectors.length; e++) {
+          var sel = excludeSelectors[e];
+          if (el.matches && el.matches(sel)) return true;
+          if (el.closest && el.closest(sel)) return true;
+        }
+        return false;
+      }
+
+      // Query only leaf visual content candidates (no transparent layout containers)
+      var selector = 'h1, h2, h3, h4, h5, h6, p, span, a, button, img, video, picture, [class*="badge"], [class*="pill"], [class*="btn"]';
+      var candidates = document.querySelectorAll(selector);
+      var rawBoxes = [];
+
+      for (var i = 0; i < candidates.length; i++) {
+        var el = candidates[i];
+        if (shouldExclude(el)) continue;
+
+        var r = el.getBoundingClientRect();
+        // Ignore full-viewport background wrappers
+        if (r.width >= window.innerWidth * 0.85 && r.height >= window.innerHeight * 0.65) continue;
+
+        // Quick bounding box check against navbar logo
+        if (r.bottom <= ly1 || r.top >= ly2 || r.right <= lx1 || r.left >= lx2) continue;
+        if (!isVisuallyVisible(el)) continue;
+
+        var tag = el.tagName;
+        var cs = window.getComputedStyle(el);
+
+        // 1. Media elements: images, videos inside cards
+        if (tag === 'IMG' || tag === 'VIDEO' || tag === 'PICTURE') {
+          rawBoxes.push({ left: r.left, right: r.right, top: r.top, bottom: r.bottom });
+          continue;
+        }
+
+        // 2. Elements with contrasting background fill or background image
+        if (isContrastingBackground(cs) || (cs.backgroundImage && cs.backgroundImage !== 'none')) {
+          rawBoxes.push({ left: r.left, right: r.right, top: r.top, bottom: r.bottom });
+          continue;
+        }
+
+        // 3. Leaf text elements: direct text glyph line-boxes
+        if (el.childElementCount === 0 && el.innerText && el.innerText.trim().length > 0) {
+          try {
+            var range = document.createRange();
+            range.selectNodeContents(el);
+            var crs = range.getClientRects();
+            for (var j = 0; j < crs.length; j++) {
+              var cr = crs[j];
+              if (cr.bottom > ly1 && cr.top < ly2 && cr.right > lx1 && cr.left < lx2) {
+                rawBoxes.push({ left: cr.left, right: cr.right, top: cr.top, bottom: cr.bottom });
+              }
+            }
+          } catch(e) {}
+        }
+      }
+
+      if (rawBoxes.length === 0) {
+        return 'inset(100%)';
+      }
+
+      // Convert intersecting boxes to 2D percentage coordinates relative to the logo
+      var normRects = [];
+      for (var b = 0; b < rawBoxes.length; b++) {
+        var box = rawBoxes[b];
+        var ix1 = Math.max(lx1, box.left);
+        var ix2 = Math.min(lx2, box.right);
+        var iy1 = Math.max(ly1, box.top);
+        var iy2 = Math.min(ly2, box.bottom);
+
+        if (ix2 > ix1 && iy2 > iy1) {
+          normRects.push({
+            x1: Math.max(0, (ix1 - lx1) / lw * 100),
+            x2: Math.min(100, (ix2 - lx1) / lw * 100),
+            y1: Math.max(0, (iy1 - ly1) / lh * 100),
+            y2: Math.min(100, (iy2 - ly1) / lh * 100)
+          });
+        }
+      }
+
+      if (normRects.length === 0) {
+        return 'inset(100%)';
+      }
+
+      // Merge overlapping 2D boxes that touch or overlap
+      normRects.sort(function(a, b) { return a.x1 - b.x1 || a.y1 - b.y1; });
+      var merged = [];
+      var cur = { x1: normRects[0].x1, x2: normRects[0].x2, y1: normRects[0].y1, y2: normRects[0].y2 };
+
+      for (var m = 1; m < normRects.length; m++) {
+        var next = normRects[m];
+        if (next.x1 <= cur.x2 + 1 && !(next.y2 < cur.y1 - 1 || next.y1 > cur.y2 + 1)) {
+          cur.x2 = Math.max(cur.x2, next.x2);
+          cur.y1 = Math.min(cur.y1, next.y1);
+          cur.y2 = Math.max(cur.y2, next.y2);
+        } else {
+          merged.push(cur);
+          cur = { x1: next.x1, x2: next.x2, y1: next.y1, y2: next.y2 };
+        }
+      }
+      merged.push(cur);
+
+      // Single rectangle with exact 2D coordinates
+      if (merged.length === 1) {
+        var r0 = merged[0];
+        if (r0.x1 <= 0.5 && r0.x2 >= 99.5 && r0.y1 <= 0.5 && r0.y2 >= 99.5) {
+          return 'inset(0)';
+        }
+        var px1 = r0.x1.toFixed(2) + '%';
+        var px2 = r0.x2.toFixed(2) + '%';
+        var py1 = r0.y1.toFixed(2) + '%';
+        var py2 = r0.y2.toFixed(2) + '%';
+        return 'polygon(' +
+          px1 + ' ' + py1 + ', ' +
+          px2 + ' ' + py1 + ', ' +
+          px2 + ' ' + py2 + ', ' +
+          px1 + ' ' + py2 + ')';
+      }
+
+      // Multiple separate 2D rectangles via evenodd polygon
+      var poly = [];
+      for (var k = 0; k < merged.length; k++) {
+        var mk = merged[k];
+        var mx1 = mk.x1.toFixed(2) + '%';
+        var mx2 = mk.x2.toFixed(2) + '%';
+        var my1 = mk.y1.toFixed(2) + '%';
+        var my2 = mk.y2.toFixed(2) + '%';
+        if (k > 0) poly.push(mx1 + ' ' + my1);
+        poly.push(mx1 + ' ' + my1);
+        poly.push(mx2 + ' ' + my1);
+        poly.push(mx2 + ' ' + my2);
+        poly.push(mx1 + ' ' + my2);
+        poly.push(mx1 + ' ' + my1);
+      }
+      return 'polygon(evenodd, ' + poly.join(', ') + ')';
+    }
+
+    function updateOverlay() {
+      if (!overlay || !navLogo) return;
+
+      var newClipPath = computeClipPath();
+
+      if (newClipPath !== lastClipPath) {
+        overlay.style.setProperty('clip-path', newClipPath, 'important');
+        lastClipPath = newClipPath;
+      }
+    }
+
+    function queueOverlayUpdate() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(function() {
+          ticking = false;
+          updateOverlay();
+        });
+      }
+    }
+
+    window.__specUpdateLogoOverlap = queueOverlayUpdate;
+    window.__specUpdateLogoOverlapNow = updateOverlay;
+
+    window.addEventListener('scroll', queueOverlayUpdate, { passive: true });
+    window.addEventListener('resize', queueOverlayUpdate, { passive: true });
+
+    function hookLenis() {
+      if (window.lenis && typeof window.lenis.on === 'function') {
+        window.lenis.on('scroll', queueOverlayUpdate);
+        return true;
+      }
+      return false;
+    }
+
+    if (!hookLenis()) {
+      var lenisTimer = setInterval(function() {
+        if (hookLenis()) clearInterval(lenisTimer);
+      }, 150);
+      setTimeout(function() { clearInterval(lenisTimer); }, 5000);
+    }
+
+    updateOverlay();
+
+    window.addEventListener('load', function() {
+      queueOverlayUpdate();
+      setTimeout(queueOverlayUpdate, 300);
+      setTimeout(queueOverlayUpdate, 800);
+      setTimeout(queueOverlayUpdate, 1500);
+    });
+
+    window.addEventListener('orientationchange', function() {
+      setTimeout(queueOverlayUpdate, 200);
+      setTimeout(queueOverlayUpdate, 600);
+    });
+
+    return true;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLogoOverlapEffect);
+  } else {
+    initLogoOverlapEffect();
+  }
+})();
 </script>
 </body></html>
